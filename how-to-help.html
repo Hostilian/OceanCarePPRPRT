@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Help - OceanCare Initiative</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #0a192f;
+            --light-blue: #112240;
+            --slate: #8892b0;
+            --light-slate: #a8b2d1;
+            --teal: #64ffda;
+            --gold: #d4af37;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--deep-blue);
+            color: var(--slate);
+        }
+        .font-brand {
+            font-family: 'Playfair Display', serif;
+        }
+        .text-teal { color: var(--teal); }
+        .text-gold { color: var(--gold); }
+        .bg-light-blue { background-color: var(--light-blue); }
+        .navbar-scrolled {
+            background-color: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background-color: var(--teal);
+            color: var(--deep-blue);
+            border: 1px solid var(--teal);
+        }
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--teal);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navbar -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2 text-2xl font-bold text-white">
+                <i class="fas fa-water text-teal"></i>
+                <span class="font-brand">OceanCare</span>
+            </a>
+            <ul class="hidden md:flex items-center space-x-8">
+                <li><a href="projects.html" class="text-white hover:text-teal transition">Projects</a></li>
+                <li><a href="team.html" class="text-white hover:text-teal transition">Our Team</a></li>
+                <li><a href="how-to-help.html" class="text-white hover:text-teal transition">How to Help</a></li>
+                <li><a href="index.html#news" class="text-white hover:text-teal transition">News</a></li>
+                <li><a href="login.html" class="btn btn-outline text-sm">Login</a></li>
+            </ul>
+            <button id="mobile-menu-btn" class="md:hidden text-white text-2xl"><i class="fas fa-bars"></i></button>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-light-blue z-40 flex flex-col items-center justify-center">
+        <button id="mobile-menu-close-btn" class="absolute top-6 right-6 text-white text-3xl">&times;</button>
+        <ul class="flex flex-col items-center space-y-8">
+            <li><a href="projects.html" class="text-white text-2xl hover:text-teal transition">Projects</a></li>
+            <li><a href="team.html" class="text-white text-2xl hover:text-teal transition">Our Team</a></li>
+            <li><a href="how-to-help.html" class="text-white text-2xl hover:text-teal transition">How to Help</a></li>
+            <li><a href="index.html#news" class="text-white text-2xl hover:text-teal transition">News</a></li>
+            <li><a href="login.html" class="btn btn-primary mt-4">Login</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <!-- Donation Section -->
+        <section id="donate" class="py-32">
+            <div class="container mx-auto px-6">
+                <h2 class="font-brand text-4xl text-white mb-12 text-center">Make a Donation</h2>
+                <div class="max-w-4xl mx-auto bg-light-blue p-8 rounded-lg">
+                    <h3 class="text-2xl font-semibold text-white mb-6">Donation Calculator</h3>
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <label for="donation-amount" class="block text-light-slate mb-2">Choose an amount (USD):</label>
+                            <input type="range" id="donation-amount" min="5" max="500" value="50" class="w-full h-2 bg-slate rounded-lg appearance-none cursor-pointer">
+                            <div class="text-center text-white font-bold text-2xl mt-4">
+                                $<span id="donation-value">50</span>
+                            </div>
+                        </div>
+                        <div id="impact-description" class="bg-deep-blue p-6 rounded-lg">
+                            <h4 class="text-lg font-semibold text-white mb-2">Your Impact:</h4>
+                            <p class="text-light-slate">With $50, you can help us remove 100 pounds of plastic from the ocean.</p>
+                        </div>
+                    </div>
+                    <div class="text-center mt-8">
+                        <button class="btn btn-primary">Donate Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Volunteer Section -->
+        <section id="volunteer" class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="font-brand text-4xl text-white mb-4">Become a Volunteer</h2>
+                <p class="max-w-2xl mx-auto mb-8 text-light-slate">Join our global network of volunteers and take direct action to protect our oceans. No experience required, just a passion for the planet.</p>
+                <a href="#" class="btn btn-primary">Sign Up to Volunteer</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-deep-blue border-t border-light-blue">
+        <div class="container mx-auto px-6 text-center text-slate">
+            <p>&copy; 2025 OceanCare Initiative. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenuCloseBtn = document.getElementById('mobile-menu-close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+        const toggleMenu = () => mobileMenu.classList.toggle('hidden');
+        
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        mobileMenuCloseBtn.addEventListener('click', toggleMenu);
+        mobileMenuLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // Donation Calculator
+        const donationSlider = document.getElementById('donation-amount');
+        const donationValue = document.getElementById('donation-value');
+        const impactDescription = document.getElementById('impact-description');
+
+        const updateDonationImpact = (amount) => {
+            let impactText = '';
+            if (amount < 25) {
+                impactText = `With $${amount}, you can help us provide educational materials to a classroom about ocean conservation.`;
+            } else if (amount < 100) {
+                impactText = `With $${amount}, you can help us remove ${amount * 2} pounds of plastic from the ocean.`;
+            } else if (amount < 250) {
+                impactText = `With $${amount}, you can help us plant ${Math.floor(amount / 10)} new coral fragments in a restoration site.`;
+            } else {
+                impactText = `With $${amount}, you can help fund a day of research for our marine biologists.`;
+            }
+            impactDescription.querySelector('p').textContent = impactText;
+        };
+
+        donationSlider.addEventListener('input', (e) => {
+            const amount = e.target.value;
+            donationValue.textContent = amount;
+            updateDonationImpact(amount);
+        });
+
+        // Initial impact text
+        updateDonationImpact(donationSlider.value);
+    });
+    </script>
+</body>
+</html>
