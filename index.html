@@ -244,7 +244,7 @@
             statusEl.innerHTML = '<p class="text-teal">Fetching latest news...</p>';
 
             try {
-                const response = await fetch('/api/news');
+                const response = await fetch('https://gnews.io/api/v4/search?q=ocean%20OR%20nature%20conservation&lang=en&max=6&token=d1ebf8a38da2b60015304b61977cd57c');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
