@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>OceanCare: The Awakening</title>
+
+    <!-- Tailwind CSS -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Google Fonts: Playfair Display (Brand-esque elegance) & Lato (Clean) -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+
+
+    <style>
+
+        /* * CLIENT: OceanCare Initiative
+
+         * THEME: "The Mystic Deep" (Brand/Norm Style)
+
+         */
+
+        :root {
+
+            --deep-blue: #0a192f;
+
+            --gold-accent: #d4af37;
+
+            --mystic-teal: #64ffda;
+
+        }
+
+
+        body {
+
+            font-family: 'Lato', sans-serif;
+
+            background-color: var(--deep-blue);
+
+            color: #e6f1ff;
+
+        }
+
+
+        h1, h2, h3, .brand-font {
+
+            font-family: 'Playfair Display', serif;
+
+        }
+
+
+        /* The "Brand" Header - Spiritual & Flashy */
+
+        .hero-bg {
+
+            background: linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.95)), url('https://images.unsplash.com/photo-1468581264429-2548ef9eb732?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-attachment: fixed;
+
+        }
+
+
+        .gold-text {
+
+            color: var(--gold-accent);
+
+        }
+
+
+        .btn-revolution {
+
+            background: transparent;
+
+            border: 2px solid var(--gold-accent);
+
+            color: var(--gold-accent);
+
+            transition: all 0.3s ease;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .btn-revolution:hover {
+
+            background: var(--gold-accent);
+
+            color: var(--deep-blue);
+
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+
+            transform: translateY(-2px);
+
+        }
+
+
+        .news-card {
+
+            background: #112240;
+
+            border: 1px solid #233554;
+
+            transition: transform 0.3s ease;
+
+        }
+
+
+        .news-card:hover {
+
+            transform: translateY(-5px);
+
+            border-color: var(--mystic-teal);
+
+        }
+
+
+        /* Custom Scrollbar */
+
+        ::-webkit-scrollbar {
+
+            width: 10px;
+
+        }
+
+        ::-webkit-scrollbar-track {
+
+            background: #0a192f;
+
+        }
+
+        ::-webkit-scrollbar-thumb {
+
+            background: #233554;
+
+            border-radius: 5px;
+
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+
+            background: var(--mystic-teal);
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- Navbar: Minimalist but Classy -->
+
+    <nav class="fixed w-full z-50 bg-[#0a192f]/90 backdrop-blur-sm border-b border-[#233554]">
+
+        <div class="max-w-7xl mx-auto px-4">
+
+            <div class="flex justify-between h-20 items-center">
+
+                <div class="flex items-center gap-3">
+
+                    <i class="fa-solid fa-water text-[#64ffda] text-2xl"></i>
+
+                    <span class="brand-font text-2xl font-bold text-[#e6f1ff] tracking-wider">OceanCare</span>
+
+                </div>
+
+                <div class="hidden md:flex space-x-8">
+
+                    <a href="#" class="text-[#8892b0] hover:text-[#64ffda] font-medium transition">The Cause</a>
+
+                    <a href="#news" class="text-[#8892b0] hover:text-[#64ffda] font-medium transition">The News</a>
+
+                    <a href="#contact" class="text-[#d4af37] border border-[#d4af37] px-4 py-1 rounded hover:bg-[#d4af37] hover:text-[#0a192f] transition">Get Involved</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Hero Section -->
+
+    <header class="hero-bg h-screen flex items-center justify-center text-center px-4">
+
+        <div class="max-w-4xl mt-16">
+
+                        <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+
+                            Protecting Our <span class="gold-text">Oceans</span>, Together.<br>
+
+                            <span class="text-3xl md:text-4xl font-normal text-[#8892b0]">A commitment to conservation and a healthier planet.</span>
+
+                        </h1>
+
+                        <p class="text-xl text-[#8892b0] mb-10 max-w-2xl mx-auto font-light">
+
+                            Our planet's health is intrinsically linked to the health of our oceans. We are dedicated to combating pollution and protecting marine ecosystems for future generations.
+
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row justify-center gap-6">
+
+                            <a href="#news" class="btn-revolution py-4 px-10 font-bold rounded text-sm">
+
+                                Latest News
+
+                            </a>
+
+                            <a href="#mission" class="text-[#64ffda] flex items-center justify-center hover:underline underline-offset-8 decoration-[#64ffda]">
+
+                                Our Mission <i class="fa-solid fa-arrow-down ml-2 animate-bounce"></i>
+
+                            </a>
+
+                        </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- Stats Section: Dry wit -->
+
+    <section id="mission" class="py-20 bg-[#0a192f]">
+
+        <div class="max-w-7xl mx-auto px-4">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+
+
+
+                                <!-- Stat 1 -->
+
+
+
+                                <div class="text-center p-6 border border-[#233554] rounded bg-[#112240] hover:border-[#64ffda] transition group">
+
+
+
+                                    <i class="fa-solid fa-trash-can text-4xl mb-4 text-[#8892b0] group-hover:text-[#64ffda] transition"></i>
+
+
+
+                                    <h3 class="text-2xl brand-font gold-text mb-2">50 Tons of Waste Removed</h3>
+
+
+
+                                    <p class="text-[#8892b0]">Our volunteers have collected over 50 tons of waste from coastlines and marine environments.</p>
+
+
+
+                                </div>
+
+
+
+                
+
+
+
+                                <!-- Stat 2 -->
+
+
+
+                                <div class="text-center p-6 border border-[#233554] rounded bg-[#112240] hover:border-[#64ffda] transition group">
+
+
+
+                                    <i class="fa-solid fa-fish text-4xl mb-4 text-[#8892b0] group-hover:text-[#64ffda] transition"></i>
+
+
+
+                                    <h3 class="text-2xl brand-font gold-text mb-2">Coral Reef Restoration</h3>
+
+
+
+                                    <p class="text-[#8892b0]">Our restoration projects have successfully revived local coral reefs, bringing back diverse marine life.</p>
+
+
+
+                                </div>
+
+
+
+                
+
+
+
+                                <!-- Stat 3 -->
+
+
+
+                                <div class="text-center p-6 border border-[#233554] rounded bg-[#112240] hover:border-[#64ffda] transition group">
+
+
+
+                                    <i class="fa-solid fa-hand-fist text-4xl mb-4 text-[#8892b0] group-hover:text-[#64ffda] transition"></i>
+
+
+
+                                    <h3 class="text-2xl brand-font gold-text mb-2">10,000+ Volunteers</h3>
+
+
+
+                                    <p class="text-[#8892b0]">A growing community of over 10,000 volunteers dedicated to making a difference.</p>
+
+
+
+                                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- News Section -->
+
+    <section id="news" class="py-20 bg-[#112240]">
+
+        <div class="max-w-7xl mx-auto px-4">
+
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-[#233554] pb-6">
+
+                                <div>
+
+                                    <h2 class="text-4xl md:text-5xl brand-font text-[#e6f1ff] mb-2">Recent News</h2>
+
+                                    <p class="text-[#d4af37]">The latest updates on ocean conservation efforts.</p>
+
+                                </div>
+
+                <button onclick="fetchNews()" class="mt-4 md:mt-0 text-[#64ffda] border border-[#64ffda] px-6 py-2 hover:bg-[#64ffda] hover:text-[#0a192f] transition uppercase text-xs font-bold tracking-widest">
+
+                    Refresh Feed
+
+                </button>
+
+            </div>
+
+
+            <!-- Loader -->
+
+            <div id="loader" class="hidden text-center py-12">
+
+                <i class="fa-solid fa-circle-notch fa-spin text-4xl text-[#64ffda]"></i>
+
+                <p class="mt-4 text-[#8892b0] font-mono text-sm">Summoning articles from the ether...</p>
+
+            </div>
+
+
+            <!-- Status Message -->
+
+            <div id="status-message" class="hidden bg-[#0a192f] border-l-4 border-[#d4af37] p-4 mb-8">
+
+                <p class="text-[#8892b0] font-mono text-sm" id="status-text">
+                    <strong class="text-[#d4af37]">System Note:</strong> The GNews API has been integrated. However, the free plan has restrictions (CORS) that prevent fetching live news when opening the file directly. To see live data, this page would need to be on a server.
+                    <br>
+                    Displaying representative sample articles for this prototype.
+                </p>
+
+            </div>
+
+
+            <!-- Grid -->
+
+            <div id="news-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Content injected here -->
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Newsletter -->
+
+    <section id="contact" class="py-24 text-center relative overflow-hidden">
+
+        <div class="absolute inset-0 bg-[#d4af37] opacity-5 z-0"></div>
+
+                <div class="relative z-10 max-w-2xl mx-auto px-4">
+
+                    <h2 class="text-4xl brand-font text-[#e6f1ff] mb-6">Stay Connected</h2>
+
+                    <p class="text-[#8892b0] mb-8">Subscribe to our newsletter for updates on our projects, events, and success stories.</p>
+
+        
+
+                    <form class="flex flex-col sm:flex-row gap-4" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+
+                        <input type="email" placeholder="Enter your email address" class="bg-[#0a192f] border border-[#233554] text-[#e6f1ff] px-6 py-3 w-full focus:outline-none focus:border-[#64ffda] transition font-mono text-sm">
+
+                        <button type="submit" class="bg-[#d4af37] text-[#0a192f] font-bold px-8 py-3 hover:bg-[#fff] transition uppercase tracking-widest text-sm">
+
+                            Submit
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+    </section>
+
+
+    <!-- Footer -->
+
+    <footer class="bg-[#020c1b] text-[#8892b0] py-8 text-center font-mono text-xs">
+
+        <p>&copy; 2025 OceanCare Initiative. Dedicated to preserving our oceans.</p>
+
+    </footer>
+
+
+    <!-- LOGIC -->
+
+    <script>
+
+        // USER API KEY
+
+        const API_KEY = 'd1ebf8a38da2b60015304b61977cd57c';
+
+
+
+        // FALLBACK DATA (If API fails)
+
+                const MOCK_DATA = [
+
+                    {
+
+                        title: "The Impact of Plastic Pollution on Marine Life",
+
+                        description: "A look into the effects of plastic waste on ocean ecosystems and the species that inhabit them.",
+
+                        image: "https://images.unsplash.com/photo-1613155660713-63d70767d878?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+
+                        url: "#",
+
+                        source: { name: "Conservation Today" },
+
+                        publishedAt: "2025-11-20T10:00:00Z"
+
+                    },
+
+                    {
+
+                        title: "Global Sea Temperatures Continue to Rise",
+
+                        description: "Recent studies show a significant increase in ocean temperatures, with widespread implications for coral reefs and weather patterns.",
+
+                        image: "https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+
+                        url: "#",
+
+                        source: { name: "Climate Science Journal" },
+
+                        publishedAt: "2025-11-19T14:30:00Z"
+
+                    },
+
+                    {
+
+                        title: "New Study Tracks Whale Migration Patterns",
+
+                        description: "Researchers have released new findings on the migration routes of humpback whales, offering insights into their behavior.",
+
+                        image: "https://images.unsplash.com/photo-1516683037166-241d9d3d831e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+
+                        url: "#",
+
+                        source: { name: "Marine Biology Weekly" },
+
+                        publishedAt: "2025-11-18T09:15:00Z"
+
+                    }
+
+                ];
+
+
+        async function fetchNews() {
+
+            const container = document.getElementById('news-container');
+
+            const loader = document.getElementById('loader');
+
+            const statusMsg = document.getElementById('status-message');
+
+            const statusText = document.getElementById('status-text');
+
+
+
+            container.innerHTML = '';
+
+            loader.classList.remove('hidden');
+
+            statusMsg.classList.add('hidden');
+
+
+            try {
+
+                // Query: 'ocean' OR 'nature'
+
+                const url = `https://gnews.io/api/v4/search?q=ocean%20nature&lang=en&image=required&max=6&apikey=${API_KEY}`;
+
+
+
+                const response = await fetch(url);
+
+
+
+                // If GNews rejects us (Limit reached or CORS), we throw error to trigger fallback
+
+                if (!response.ok) throw new Error(`API HTTP ${response.status}`);
+
+
+
+                const data = await response.json();
+
+
+
+                if (data.articles && data.articles.length > 0) {
+
+                    renderNews(data.articles);
+
+                } else {
+
+                    throw new Error("Zero articles found.");
+
+                }
+
+
+            } catch (error) {
+
+                console.log("Using fallback data:", error);
+
+                                statusMsg.classList.remove('hidden');
+
+                                renderNews(MOCK_DATA);
+
+            } finally {
+
+                loader.classList.add('hidden');
+
+            }
+
+        }
+
+
+        function renderNews(articles) {
+
+            const container = document.getElementById('news-container');
+
+
+
+            articles.forEach(article => {
+
+                // Formatting date to look nice
+
+                const date = new Date(article.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+
+
+                const card = `
+
+                    <div class="news-card flex flex-col h-full group">
+
+                        <div class="h-48 overflow-hidden relative">
+
+                            <img src="${article.image}"
+
+                                 alt="News Image"
+
+                                 class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition duration-700"
+
+                                 onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+
+                            <div class="absolute top-0 left-0 bg-[#d4af37] text-[#0a192f] text-xs font-bold px-3 py-1">
+
+                                ${date}
+
+                            </div>
+
+                        </div>
+
+                        <div class="p-6 flex flex-col flex-grow">
+
+                            <div class="text-[#64ffda] text-xs font-mono mb-2 uppercase tracking-widest">
+
+                                ${article.source.name}
+
+                            </div>
+
+                            <h3 class="text-xl brand-font text-[#e6f1ff] mb-3 leading-tight group-hover:text-[#d4af37] transition">
+
+                                <a href="${article.url}" target="_blank">${article.title}</a>
+
+                            </h3>
+
+                            <p class="text-[#8892b0] text-sm mb-6 line-clamp-3 flex-grow font-light">
+
+                                ${article.description}
+
+                            </p>
+
+                            <a href="${article.url}" target="_blank" class="mt-auto inline-block text-[#64ffda] text-sm font-bold uppercase tracking-widest hover:text-[#d4af37] transition">
+
+                                Read More &rarr;
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+                container.innerHTML += card;
+
+            });
+
+        }
+
+
+        // Run on load
+
+        document.addEventListener('DOMContentLoaded', fetchNews);
+
+    </script>
+
+</body>
+
+</html>
