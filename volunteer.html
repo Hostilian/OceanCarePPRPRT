@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Projects - OceanCare Initiative</title>
+    <title>Volunteer - OceanCare Initiative</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -25,19 +25,10 @@
             font-family: 'Playfair Display', serif;
         }
         .text-teal { color: var(--teal); }
-        .text-gold { color: var(--gold); }
         .bg-light-blue { background-color: var(--light-blue); }
         .navbar-scrolled {
             background-color: rgba(10, 25, 47, 0.85);
             backdrop-filter: blur(10px);
-        }
-        .project-card {
-            border: 1px solid #1e2d4b;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
         }
         .btn {
             display: inline-block;
@@ -56,14 +47,21 @@
             background-color: transparent;
             color: var(--teal);
         }
-        .btn-outline {
-            background-color: transparent;
-            color: var(--gold);
-            border: 1px solid var(--gold);
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--deep-blue);
+            border: 1px solid var(--slate);
+            border-radius: 4px;
+            color: white;
+            transition: border-color 0.3s;
         }
-        .btn-outline:hover {
-            background-color: var(--gold);
-            color: var(--deep-blue);
+        .form-input:focus {
+            outline: none;
+            border-color: var(--teal);
+        }
+        .form-checkbox {
+            accent-color: var(--teal);
         }
     </style>
 </head>
@@ -102,38 +100,55 @@
     </div>
 
     <main>
-        <!-- Projects Section -->
-        <section id="projects" class="py-32">
+        <!-- Volunteer Form Section -->
+        <section id="volunteer-form" class="py-32">
             <div class="container mx-auto px-6">
-                <h2 class="font-brand text-4xl text-white mb-12 text-center">Our Core Projects</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Project 1 -->
-                    <div class="project-card bg-light-blue rounded-lg overflow-hidden flex flex-col">
-                        <img src="https://images.unsplash.com/photo-1598335687192-09b8a3e13634?auto=format&fit=crop&w=800&q=80" alt="Coral Reef Restoration" class="w-full h-48 object-cover">
-                        <div class="p-6 flex flex-col flex-grow">
-                            <h3 class="text-xl font-semibold text-white mb-4">Coral Reef Restoration</h3>
-                            <p class="text-light-slate mb-4 flex-grow">We are actively restoring damaged coral reefs by planting resilient coral species and creating artificial reefs. Our goal is to revive these vital ecosystems.</p>
-                            <a href="#" class="text-gold font-semibold hover:underline mt-auto">Learn More &rarr;</a>
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="font-brand text-4xl text-white mb-4">Join the Movement</h2>
+                    <p class="text-light-slate mb-8">Volunteers are the lifeblood of our organization. By giving your time and skills, you can make a tangible impact on the health of our oceans. Fill out the form below to get started.</p>
+                </div>
+                <div class="max-w-3xl mx-auto bg-light-blue p-8 rounded-lg">
+                    <form id="signup-form">
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name" class="block text-light-slate mb-2">Full Name</label>
+                                <input type="text" id="name" name="name" class="form-input" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-light-slate mb-2">Email Address</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                            </div>
                         </div>
-                    </div>
-                    <!-- Project 2 -->
-                    <div class="project-card bg-light-blue rounded-lg overflow-hidden flex flex-col">
-                        <img src="https://images.unsplash.com/photo-1578692793931-9d568d91b45a?auto=format&fit=crop&w=800&q=80" alt="Plastic-Free Oceans" class="w-full h-48 object-cover">
-                        <div class="p-6 flex flex-col flex-grow">
-                            <h3 class="text-xl font-semibold text-white mb-4">Plastic-Free Oceans</h3>
-                            <p class="text-light-slate mb-4 flex-grow">Our teams organize large-scale beach and ocean cleanups, removing tons of plastic waste. We also work with corporations to reduce plastic production.</p>
-                            <a href="#" class="text-gold font-semibold hover:underline mt-auto">Learn More &rarr;</a>
+                        <div class="mb-6">
+                            <label class="block text-light-slate mb-2">Areas of Interest (select all that apply)</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <label class="flex items-center space-x-3">
+                                    <input type="checkbox" name="interest" value="cleanup" class="form-checkbox h-5 w-5">
+                                    <span class="text-white">Beach & Ocean Cleanups</span>
+                                </label>
+                                <label class="flex items-center space-x-3">
+                                    <input type="checkbox" name="interest" value="advocacy" class="form-checkbox h-5 w-5">
+                                    <span class="text-white">Online Advocacy & Social Media</span>
+                                </label>
+                                <label class="flex items-center space-x-3">
+                                    <input type="checkbox" name="interest" value="events" class="form-checkbox h-5 w-5">
+                                    <span class="text-white">Event Support (Local & Virtual)</span>
+                                </label>
+                                <label class="flex items-center space-x-3">
+                                    <input type="checkbox" name="interest" value="research" class="form-checkbox h-5 w-5">
+                                    <span class="text-white">Data Entry & Research Support</span>
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                    <!-- Project 3 -->
-                    <div class="project-card bg-light-blue rounded-lg overflow-hidden flex flex-col">
-                        <img src="https://images.unsplash.com/photo-1549996232-3c6b39435a23?auto=format&fit=crop&w=800&q=80" alt="Marine Life Protection" class="w-full h-48 object-cover">
-                        <div class="p-6 flex flex-col flex-grow">
-                            <h3 class="text-xl font-semibold text-white mb-4">Marine Life Protection</h3>
-                            <p class="text-light-slate mb-4 flex-grow">We advocate for the creation of marine protected areas and work to combat illegal fishing and poaching of endangered species.</p>
-                            <a href="#" class="text-gold font-semibold hover:underline mt-auto">Learn More &rarr;</a>
+                        <div class="mb-6">
+                            <label for="message" class="block text-light-slate mb-2">Why do you want to volunteer?</label>
+                            <textarea id="message" name="message" rows="4" class="form-input"></textarea>
                         </div>
-                    </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary w-full md:w-auto">Submit Application</button>
+                        </div>
+                    </form>
+                    <div id="form-feedback" class="text-center mt-6"></div>
                 </div>
             </div>
         </section>
@@ -169,6 +184,16 @@
         mobileMenuBtn.addEventListener('click', toggleMenu);
         mobileMenuCloseBtn.addEventListener('click', toggleMenu);
         mobileMenuLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // Handle form submission
+        const signupForm = document.getElementById('signup-form');
+        const formFeedback = document.getElementById('form-feedback');
+
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            formFeedback.innerHTML = '<p class="text-teal">Thank you for your interest! We have received your application and will be in touch soon.</p>';
+            signupForm.reset();
+        });
     });
     </script>
 </body>
