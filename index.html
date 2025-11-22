@@ -5,218 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OceanCare - Yeah, the Ocean's Dying. What Else Is New?</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        :root {
-            --deep-blue: #0a192f;
-            --light-blue: #112240;
-            --slate: #8892b0;
-            --light-slate: #a8b2d1;
-            --teal: #64ffda;
-            --gold: #d4af37;
-        }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--deep-blue);
-            color: var(--slate);
-        }
-        .font-brand {
-            font-family: 'Playfair Display', serif;
-        }
-        .text-teal { color: var(--teal); }
-        .text-gold { color: var(--gold); }
-        .bg-light-blue { background-color: var(--light-blue); }
-        .navbar-scrolled {
-            background-color: rgba(10, 25, 47, 0.85);
-            backdrop-filter: blur(10px);
-        }
-        .stat-card, .news-card {
-            border: 1px solid #1e2d4b;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .stat-card:hover, .news-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
-        }
-        .btn {
-            display: inline-block;
-            padding: 12px 28px;
-            border-radius: 4px;
-            font-weight: 600;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        .btn-primary {
-            background-color: var(--teal);
-            color: var(--deep-blue);
-            border: 1px solid var(--teal);
-        }
-        .btn-primary:hover {
-            background-color: transparent;
-            color: var(--teal);
-        }
-        .btn-outline {
-            background-color: transparent;
-            color: var(--gold);
-            border: 1px solid var(--gold);
-        }
-        .btn-outline:hover {
-            background-color: var(--gold);
-            color: var(--deep-blue);
-        }
-    </style>
 </head>
-<body class="antialiased">
+<body>
+    <!-- Floating shapes background -->
+    <div id="shapes-container" class="shapes"></div>
 
-    <!-- Header & Navbar -->
-    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center gap-2 text-2xl font-bold text-white">
-                <i class="fas fa-water text-teal"></i>
-                <span class="font-brand">OceanCare</span>
-            </a>
-            <ul class="hidden md:flex items-center space-x-8">
-                <li><a href="projects.html" class="text-white hover:text-teal transition">Projects</a></li>
-                <li><a href="team.html" class="text-white hover:text-teal transition">Our Team</a></li>
-                <li><a href="how-to-help.html" class="text-white hover:text-teal transition">How to Help</a></li>
-                <li><a href="volunteer.html" class="text-white hover:text-teal transition">Volunteer</a></li>
+    <!-- Navigation -->
+    <nav class="nav glass">
+        <div class="nav-content">
+            <a href="#hero" class="logo">🌊 OceanCare</a>
+            <ul class="nav-menu">
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#help">Help</a></li>
+                <li><a href="#volunteer">Volunteer</a></li>
             </ul>
-            <button id="mobile-menu-btn" class="md:hidden text-white text-2xl"><i class="fas fa-bars"></i></button>
-        </nav>
-    </header>
+        </div>
+    </nav>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden fixed inset-0 bg-light-blue z-40 flex flex-col items-center justify-center">
-        <button id="mobile-menu-close-btn" class="absolute top-6 right-6 text-white text-3xl">&times;</button>
-        <ul class="flex flex-col items-center space-y-8">
-            <li><a href="projects.html" class="text-white text-2xl hover:text-teal transition">Projects</a></li>
-            <li><a href="team.html" class="text-white text-2xl hover:text-teal transition">Our Team</a></li>
-            <li><a href="how-to-help.html" class="text-white text-2xl hover:text-teal transition">How to Help</a></li>
-            <li><a href="volunteer.html" class="text-white text-2xl hover:text-teal transition">Volunteer</a></li>
-        </ul>
-    </div>
+    <!-- Hero -->
+    <section id="hero" class="hero parallax-bg">
+        <div class="hero-content">
+            <h1 class="neon-text">Yeah, the Ocean's Dying</h1>
+            <p class="hero-sub">We're out here trying to save it. What else are we gonna do?</p>
+            <a href="#help" class="btn btn-neon">Throw Some Money At It</a>
+        </div>
+        <canvas id="cursor-canvas" class="cursor-canvas"></canvas>
+    </section>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="h-screen bg-cover bg-center bg-no-repeat flex items-center" style="background-image: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.8)), url('https://images.unsplash.com/photo-1501696461415-6bd6660c6742?auto=format&fit=crop&w=1950&q=80');">
-            <div class="container mx-auto px-6 text-center text-white">
-                <h1 class="font-brand text-5xl md:text-7xl mb-4">The Ocean's in Trouble</h1>
-                <p class="text-lg md:text-xl max-w-3xl mx-auto text-light-slate mb-8">We're trying to help. We do cleanups, we fund research, we fight the people destroying it. It's not gonna save everything, but it's something.</p>
-                <a href="#involved" class="btn btn-primary">Get Involved</a>
+    <!-- Projects -->
+    <section id="projects" class="section">
+        <h2 class="section-title">What We're Actually Doing</h2>
+        <div class="cards-grid">
+            <div class="card glass scroll-fade">
+                <div class="card-icon">🪸</div>
+                <h3>Coral Reefs</h3>
+                <p>We're gluing corals back together with the precision of a drunk guy fixing a screen door. It's working though, somehow.</p>
             </div>
-        </section>
+            <div class="card glass scroll-fade">
+                <div class="card-icon">♻️</div>
+                <h3>Plastic Cleanup</h3>
+                <p>You know what's wild? There's more plastic in the ocean than fish. And people still use plastic straws. Go figure.</p>
+            </div>
+            <div class="card glass scroll-fade">
+                <div class="card-icon">🐋</div>
+                <h3>Whale Protection</h3>
+                <p>Whales are basically underwater cows. Except they're smarter than us and weigh 200 tons. We're protecting them. You're welcome.</p>
+            </div>
+        </div>
+    </section>
 
-        <!-- About Us Section -->
-        <section id="about" class="py-20">
-            <div class="container mx-auto px-6">
-                <div class="grid md:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <h2 class="font-brand text-4xl text-white mb-4">What We Do</h2>
-                        <p class="mb-4">Look, the oceans are dying. Plastic everywhere, fish populations collapsing, coral bleaching. It's depressing. We started this thing because we figured somebody should actually do something about it.</p>
-                        <p class="mb-6">We clean up beaches, we do research, we push governments to care. We work with local communities who live near the ocean and understand what's really happening. We're not gonna fix everything, but we try. Every bit helps.</p>
-                        <a href="#impact" class="text-teal font-semibold hover:underline">See What We're Doing &rarr;</a>
-                    </div>
-                    <div class="relative h-80">
-                        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover rounded-lg shadow-lg">
-                    </div>
+    <!-- Team -->
+    <section id="team" class="section">
+        <h2 class="section-title">The People Who Actually Care</h2>
+        <div class="team-grid">
+            <div class="team-card glass scroll-fade">
+                <div class="avatar">SC</div>
+                <h3>Sarah Chen</h3>
+                <p class="role">Director</p>
+                <p>Sarah knows more about fish than you know about breathing. Which is concerning because you do it every day.</p>
+            </div>
+            <div class="team-card glass scroll-fade">
+                <div class="avatar">MJ</div>
+                <h3>Marcus Johnson</h3>
+                <p class="role">Outreach</p>
+                <p>Marcus talks to people about saving the ocean. They don't listen. He talks anyway. That's called dedication.</p>
+            </div>
+            <div class="team-card glass scroll-fade">
+                <div class="avatar">ER</div>
+                <h3>Dr. Elena Rodriguez</h3>
+                <p class="role">Research</p>
+                <p>Elena has a PhD in stuff underwater. The water doesn't care. But we do, so that's something.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Help -->
+    <section id="help" class="section">
+        <h2 class="section-title">Give Some Money</h2>
+        <div class="donation-tiers">
+            <div class="tier glass scroll-fade">
+                <h3>$10</h3>
+                <p>That's a coffee. Your coffee dies so fishies live.</p>
+                <button class="btn btn-neon" onclick="alert('Pretend you donated $10. Thanks.')">Donate</button>
+            </div>
+            <div class="tier glass scroll-fade">
+                <h3>$50</h3>
+                <p>A decent bottle of wine. Or you could have... no, this is definitely better.</p>
+                <button class="btn btn-neon" onclick="alert('Pretend you donated $50. You\'re basically a saint.')">Donate</button>
+            </div>
+            <div class="tier glass scroll-fade">
+                <h3>$500</h3>
+                <p>A used laptop. Now you're getting serious.</p>
+                <button class="btn btn-neon" onclick="alert('Pretend you donated $500. You\'re insane. Thank you.')">Donate</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Volunteer -->
+    <section id="volunteer" class="section">
+        <h2 class="section-title">Give Your Time</h2>
+        <div class="form-container glass scroll-fade">
+            <form id="volunteer-form">
+                <div class="form-group">
+                    <label for="name">What do we call you?</label>
+                    <input type="text" id="name" name="name" required>
                 </div>
-            </div>
-        </section>
-
-        <!-- Get Involved Section -->
-        <section id="involved" class="py-20 bg-light-blue text-center">
-            <div class="container mx-auto px-6">
-                <h2 class="font-brand text-4xl text-white mb-4">You Can Help</h2>
-                <p class="max-w-2xl mx-auto mb-8 text-light-slate">Volunteer. Donate. Tell other people about it. Any of those things work.</p>
-                <div class="flex flex-col md:flex-row justify-center items-center gap-6">
-                    <a href="volunteer.html" class="btn btn-primary">Volunteer</a>
-                    <a href="how-to-help.html" class="btn btn-outline">Donate</a>
+                <div class="form-group">
+                    <label for="email">How do we yell at you later?</label>
+                    <input type="email" id="email" name="email" required>
                 </div>
-            </div>
-        </section>
-
-        <!-- Latest News Section -->
-        <section id="news" class="py-20">
-            <div class="container mx-auto px-6">
-                <h2 class="font-brand text-4xl text-white mb-8 text-center">Latest News</h2>
-                <div id="news-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- News articles will be injected here -->
+                <div class="form-group">
+                    <label for="message">Say something. Or don't.</label>
+                    <textarea id="message" name="message" rows="4"></textarea>
                 </div>
-            </div>
-        </section>
-    </main>
+                <button type="submit" class="btn btn-neon">Alright, Let's Go</button>
+                <p id="form-msg" class="form-msg"></p>
+            </form>
+        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="py-8 bg-deep-blue border-t border-light-blue">
-        <div class="container mx-auto px-6 text-center text-slate">
-            <p>&copy; 2025 OceanCare Initiative. All Rights Reserved.</p>
-        </div>
+    <footer class="footer">
+        <p>The ocean is dying, but at least we're having a laugh about it.</p>
+        <p>&copy; 2025 OceanCare Initiative</p>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Navbar scroll effect
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('navbar-scrolled');
-                } else {
-                    navbar.classList.remove('navbar-scrolled');
-                }
-            });
-
-            // Mobile menu toggle
-            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            const mobileMenuCloseBtn = document.getElementById('mobile-menu-close-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-
-            const toggleMenu = () => mobileMenu.classList.toggle('hidden');
-
-            mobileMenuBtn.addEventListener('click', toggleMenu);
-            mobileMenuCloseBtn.addEventListener('click', toggleMenu);
-            mobileMenuLinks.forEach((link) => link.addEventListener('click', toggleMenu));
-
-            // Fetch and display news
-            const newsContainer = document.getElementById('news-container');
-            const url = '/api/news';
-
-            fetch(url)
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.articles) {
-                        newsContainer.innerHTML = data.articles
-                            .map(
-                                (article) => `
-                        <div class="news-card bg-light-blue rounded-lg overflow-hidden">
-                            <img src="${article.image}" alt="${
-                                    article.title
-                                }" class="w-full h-48 object-cover">
-                            <div class="p-6">
-                                <h3 class="font-semibold text-lg text-white mb-2">${
-                                    article.title
-                                }</h3>
-                                <p class="text-sm mb-4">${
-                                    article.description
-                                }</p>
-                                <a href="${
-                                    article.url
-                                }" target="_blank" rel="noopener noreferrer" class="text-teal font-semibold hover:underline">Read More &rarr;</a>
-                            </div>
-                        </div>
-                    `
-                            )
-                            .join('');
-                    } else {
-                        newsContainer.innerHTML =
-                            '<p class="text-center col-span-full">Failed to load news. Please try again later.</p>';
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error fetching news:', error);
-                    newsContainer.innerHTML =
-                        '<p class="text-center col-span-full">Failed to load news. Please try again later.</p>';
-                });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

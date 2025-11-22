@@ -40,11 +40,11 @@ const app = {
     const glow = this.ctx.createRadialGradient(x, y, 0, x, y, 30);
     glow.addColorStop(0, 'rgba(100,255,218,0.5)');
     glow.addColorStop(1, 'rgba(100,255,218,0)');
-    
+
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.fillStyle = glow;
     this.ctx.fillRect(x - 30, y - 30, 60, 60);
-    
+
     // Trail particles
     if (Math.random() > 0.7) {
       this.particles.push({
@@ -55,7 +55,7 @@ const app = {
         vy: (Math.random() - 0.5) * 2
       });
     }
-    
+
     this.particles = this.particles.filter(p => {
       p.life -= 0.02;
       p.x += p.vx;
@@ -92,7 +92,7 @@ const app = {
   floatingShapes() {
     const container = document.getElementById('shapes-container');
     if (!container) return;
-    
+
     const colors = ['#64ffda', '#ff0080', '#0080ff'];
     for (let i = 0; i < 5; i++) {
       const shape = document.createElement('div');
@@ -100,7 +100,7 @@ const app = {
       const size = 50 + Math.random() * 200;
       const color = colors[Math.floor(Math.random() * colors.length)];
       const delay = Math.random() * 5;
-      
+
       shape.className = `shape ${type}`;
       shape.style.cssText = `
         width: ${size}px;
@@ -135,7 +135,7 @@ const app = {
         }
       });
     });
-    
+
     // Highlight active nav item
     window.addEventListener('scroll', () => {
       let current = '';
@@ -156,17 +156,17 @@ const app = {
   formHandler() {
     const form = document.getElementById('volunteer-form');
     if (!form) return;
-    
+
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const name = document.getElementById('name').value;
       const email = document.getElementById('email').value;
       const msg = document.getElementById('form-msg');
-      
+
       msg.textContent = `Thanks, ${name}. We got your email (${email}). We'll reach out when we're not saving fish.`;
       msg.style.color = '#64ffda';
       msg.style.animation = 'neonGlow 2s infinite';
-      
+
       form.reset();
       this.playSound(400);
       setTimeout(() => { msg.textContent = ''; }, 5000);
@@ -188,12 +188,12 @@ const app = {
       const ctx = new AudioContext();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      
+
       osc.frequency.value = freq;
       osc.type = 'sine';
       gain.gain.setValueAtTime(0.1, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration / 1000);
-      
+
       osc.connect(gain);
       gain.connect(ctx.destination);
       osc.start(ctx.currentTime);
