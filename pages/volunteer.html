@@ -242,6 +242,7 @@
       }
 
       const button = document.getElementById('forecastButton');
+      const originalText = button.textContent;
       button.textContent = '⏳ Loading...';
       button.disabled = true;
 
@@ -253,8 +254,8 @@
         const geoData = await geoRes.json();
 
         if (!geoData || geoData.length === 0) {
-          alert('Location not found. Please try another location.');
-          button.textContent = 'Get Forecast';
+          showForecastError(`Location "${location}" not found. Try a city name like "San Francisco" or "Miami."`);
+          button.textContent = originalText;
           button.disabled = false;
           return;
         }
@@ -271,20 +272,29 @@
         const uvData = await uvRes.json();
 
         if (condData.success && condData.data) {
-          displayVolunteerForecast(condData.data, uvData);
+          displayVolunteerForecast(condData.data, uvData, location);
+          document.getElementById('forecastError').style.display = 'none';
+        } else {
+          showForecastError('Unable to fetch weather forecast. Please try another location.');
         }
 
-        button.textContent = 'Get Forecast';
+        button.textContent = originalText;
         button.disabled = false;
       } catch (error) {
         console.error('Forecast error:', error);
-        alert('Could not fetch forecast. Please try again.');
-        button.textContent = 'Get Forecast';
+        showForecastError('Connection error. Please check your internet and try again.');
+        button.textContent = originalText;
         button.disabled = false;
       }
     });
 
-    function displayVolunteerForecast(conditions, uvData) {
+    function showForecastError(message) {
+      const errorDiv = document.getElementById('forecastError');
+      errorDiv.innerHTML = `<div style="padding: 1rem; background: rgba(255, 107, 107, 0.2); border-left: 4px solid #FF6B6B; border-radius: 8px; color: #FFB6B6;">⚠️ ${message}</div>`;
+      errorDiv.style.display = 'block';
+    }
+
+    function displayVolunteerForecast(conditions, uvData, location) {
       const content = document.getElementById('forecastContent');
       const grid = document.getElementById('forecastGrid');
 
@@ -295,20 +305,28 @@
       const waves = parseFloat(conditions.waveHeight);
       const humidity = parseFloat(conditions.humidity);
 
-      // Extract UV index if available
+      // Extract UV index if available with fallback handling
       let uvDisplay = '';
       if (uvData && uvData.success && uvData.uv) {
         const uvIndex = uvData.uv.index || 0;
         const uvRec = uvData.uv.recommendation || 'Standard sun protection';
         const uvColor = uvIndex > 8 ? '#FF6B6B' : uvIndex > 5 ? '#FDD835' : '#00C853';
 
+        const riskLevel = uvIndex > 8 ? '🔴 VERY HIGH' : uvIndex > 5 ? '🟡 HIGH' : '🟢 MODERATE';
+        const spfRec = uvIndex > 8 ? 'SPF 50+ - Limit outdoor time' : uvIndex > 5 ? 'SPF 30+ - Wear protective clothing' : 'SPF 15+ - Standard protection';
+
         uvDisplay = `
         <div style="background: linear-gradient(135deg, ${uvColor}20 0%, ${uvColor}10 100%); border-left: 4px solid ${uvColor}; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
           <div style="font-size: 0.9rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">☀️ UV Safety Index</div>
-          <div style="font-size: 1.4rem; font-weight: bold; color: ${uvColor}; margin-bottom: 0.5rem;">${uvIndex.toFixed(1)} ${uvIndex > 8 ? '🔴 VERY HIGH' : uvIndex > 5 ? '🟡 HIGH' : '🟢 MODERATE'}</div>
-          <div style="font-size: 0.9rem; color: #ccc;">${uvRec}</div>
+          <div style="font-size: 1.4rem; font-weight: bold; color: ${uvColor}; margin-bottom: 0.5rem;">${uvIndex.toFixed(1)} - ${riskLevel}</div>
+          <div style="font-size: 0.9rem; color: #ccc;">📋 ${spfRec}</div>
+          <div style="font-size: 0.85rem; color: #aaa; margin-top: 0.5rem;">💡 Tip: Wear UV-blocking clothes and reapply sunscreen every 2 hours</div>
         </div>
         `;
+      } else if (uvData && !uvData.success) {
+        uvDisplay = `<div style="background: rgba(255, 107, 107, 0.15); border-left: 4px solid #FF6B6B; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+          <div style="color: #FFB6B6; font-size: 0.9rem;">⚠️ UV data unavailable - Remember to bring sunscreen!</div>
+        </div>`;
       }
 
       // Determine ideal days
@@ -336,9 +354,9 @@
         </div>
 
         <div style="background: linear-gradient(135deg, #FDD835 0%, #FBC02D 100%); color: #0a1929; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(253, 216, 53, 0.3);">
-          <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 0.5rem;">CURRENT CONDITIONS</div>
+          <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 0.5rem;">CURRENT CONDITIONS IN ${location.toUpperCase()}</div>
           <div style="font-size: 1.3rem; font-weight: bold;">🌡️ ${temp.toFixed(1)}°C</div>
-          <div style="font-size: 0.95rem;">Wind: ${wind.toFixed(1)} km/h | Waves: ${waves.toFixed(1)}m</div>
+          <div style="font-size: 0.95rem;">Wind: ${wind.toFixed(1)} km/h | Waves: ${waves.toFixed(1)}m | Humidity: ${humidity.toFixed(0)}%</div>
           ${uvDisplay}
         </div>
 

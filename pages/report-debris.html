@@ -357,7 +357,6 @@ textarea { resize: vertical; min-height: 120px; }
   </footer>
 
   <script>
-  <script>
 const form = document.getElementById('debrisForm');
 const geoButton = document.getElementById('geoButton');
 const photoInput = document.getElementById('photo');
@@ -547,51 +546,79 @@ function displayOceanConditions(conditions, marineData) {
   // Norm MacDonald: "Marine weather from Storm Glass. More specific than regular weather.
   // Like asking a fish what the water's like versus asking a person on shore."
   let marineMarkup = '';
+  let marineStatus = '';
+
   if (marineData && marineData.success && marineData.marineWeather?.hours?.length > 0) {
     const currentHour = marineData.marineWeather.hours[0];
-    const waveHeight = currentHour.waveHeight?.[0]?.value || currentHour.waveHeight?.value || 'N/A';
-    const swellDirection = currentHour.swellDirection?.[0]?.value || currentHour.swellDirection?.value || 'N/A';
-    const waterTemp = currentHour.waterTemperature?.[0]?.value || currentHour.waterTemperature?.value || 'N/A';
+    const waveHeight = (currentHour.waveHeight?.[0]?.value || currentHour.waveHeight?.value || 0).toFixed(2);
+    const swellDirection = (currentHour.swellDirection?.[0]?.value || currentHour.swellDirection?.value || 0).toFixed(0);
+    const waterTemp = (currentHour.waterTemperature?.[0]?.value || currentHour.waterTemperature?.value || 0).toFixed(1);
+
+    marineStatus = '✅ Live marine data from Storm Glass';
 
     marineMarkup = `
       <div style="padding: 1rem; background: linear-gradient(135deg, rgba(0, 119, 190, 0.3), rgba(0, 168, 204, 0.2)); border-radius: 8px; border-left: 3px solid var(--blue);">
-        <div style="font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">⛵ Marine Weather (Storm Glass)</div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
-          <div><div style="font-size: 0.75rem; color: #666;">Wave Height</div><div style="font-size: 1.2rem; font-weight: bold; color: var(--blue);">${waveHeight}m</div></div>
-          <div><div style="font-size: 0.75rem; color: #666;">Swell Direction</div><div style="font-size: 1.2rem; font-weight: bold; color: var(--teal);">${swellDirection}°</div></div>
-          <div><div style="font-size: 0.75rem; color: #666;">Water Temp</div><div style="font-size: 1.2rem; font-weight: bold; color: var(--teal);">${waterTemp}°C</div></div>
+        <div style="font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem; font-weight: bold;">⛵ Marine Weather Data (Storm Glass)</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+          <div style="padding: 0.8rem; background: rgba(0, 119, 190, 0.2); border-radius: 6px;">
+            <div style="font-size: 0.7rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Wave Height</div>
+            <div style="font-size: 1.3rem; font-weight: bold; color: var(--blue); margin-top: 0.3rem;">${waveHeight}m</div>
+          </div>
+          <div style="padding: 0.8rem; background: rgba(0, 168, 204, 0.2); border-radius: 6px;">
+            <div style="font-size: 0.7rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Swell Direction</div>
+            <div style="font-size: 1.3rem; font-weight: bold; color: var(--teal); margin-top: 0.3rem;">${swellDirection}°</div>
+          </div>
+          <div style="padding: 0.8rem; background: rgba(0, 168, 204, 0.15); border-radius: 6px;">
+            <div style="font-size: 0.7rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Water Temp</div>
+            <div style="font-size: 1.3rem; font-weight: bold; color: var(--teal); margin-top: 0.3rem;">${waterTemp}°C</div>
+          </div>
         </div>
+        <div style="margin-top: 0.8rem; padding: 0.6rem; background: rgba(0, 200, 83, 0.15); border-left: 2px solid #00C853; border-radius: 4px;">
+          <div style="font-size: 0.8rem; color: #00FF88;">💡 Marine data helps us understand debris movement patterns</div>
+        </div>
+      </div>
+    `;
+  } else if (marineData && !marineData.success) {
+    marineStatus = '⚠️ Marine data unavailable (check API key setup)';
+    marineMarkup = `
+      <div style="padding: 1rem; background: rgba(255, 193, 7, 0.15); border-radius: 8px; border-left: 3px solid #FDD835;">
+        <div style="font-size: 0.85rem; color: #FFD54F;">⚠️ Marine weather data unavailable. This feature requires Storm Glass API key registration at <a href="https://stormglass.io/" style="color: #FDD835; text-decoration: underline;" target="_blank">stormglass.io</a></div>
       </div>
     `;
   }
 
   content.innerHTML = `
-    <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center;">
-      <div style="font-size: 0.8rem; color: #666;">Temperature</div>
-      <div style="font-size: 1.5rem; font-weight: bold; color: var(--teal);">${conditions.temperature}°C</div>
-    </div>
-    <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center;">
-      <div style="font-size: 0.8rem; color: #666;">Wind Speed</div>
-      <div style="font-size: 1.5rem; font-weight: bold; color: var(--blue);">${conditions.windSpeed} km/h</div>
-    </div>
-    <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center;">
-      <div style="font-size: 0.8rem; color: #666;">Wave Height</div>
-      <div style="font-size: 1.5rem; font-weight: bold; color: var(--teal);">${conditions.waveHeight}m</div>
-    </div>
-    <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center;">
-      <div style="font-size: 0.8rem; color: #666;">Humidity</div>
-      <div style="font-size: 1.5rem; font-weight: bold; color: var(--blue);">${conditions.humidity}%</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.8rem; margin-bottom: 1rem;">
+      <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center; border-left: 3px solid var(--teal);">
+        <div style="font-size: 0.8rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px;">Temperature</div>
+        <div style="font-size: 1.5rem; font-weight: bold; color: var(--teal); margin-top: 0.4rem;">${conditions.temperature}°C</div>
+      </div>
+      <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center; border-left: 3px solid var(--blue);">
+        <div style="font-size: 0.8rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px;">Wind Speed</div>
+        <div style="font-size: 1.5rem; font-weight: bold; color: var(--blue); margin-top: 0.4rem;">${conditions.windSpeed} km/h</div>
+      </div>
+      <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center; border-left: 3px solid var(--teal);">
+        <div style="font-size: 0.8rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px;">Wave Height</div>
+        <div style="font-size: 1.5rem; font-weight: bold; color: var(--teal); margin-top: 0.4rem;">${conditions.waveHeight}m</div>
+      </div>
+      <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center; border-left: 3px solid var(--blue);">
+        <div style="font-size: 0.8rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px;">Humidity</div>
+        <div style="font-size: 1.5rem; font-weight: bold; color: var(--blue); margin-top: 0.4rem;">${conditions.humidity}%</div>
+      </div>
     </div>
     ${conditions.airQuality ? `
     <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center;">
       <div style="font-size: 0.8rem; color: #666;">Air Quality</div>
-      <div style="font-size: 1.5rem; font-weight: bold; color: ${conditions.airQuality.includes('Good') ? '#00C853' : conditions.airQuality.includes('Moderate') ? '#FDD835' : '#FF6B6B'};">${conditions.airQuality.split('(')[0].trim()}</div>
+      <div style="font-size: 1.5rem; font-weight: bold; color: ${conditions.airQuality.includes('Good') ? '#00C853' : conditions.airQuality.includes('Moderate') ? '#FDD835' : '#FF6B6B'}; margin-top: 0.4rem;">${conditions.airQuality.split('(')[0].trim()}</div>
     </div>
     ` : ''}
     ${marineMarkup}
   `;
 
-  timestamp.textContent = `Updated: ${new Date().toLocaleTimeString()}`;
+  timestamp.innerHTML = `<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding: 0.8rem; background: rgba(253, 216, 53, 0.1); border-radius: 6px;">
+    <span style="font-size: 0.9rem; color: #FFD54F;">Updated: ${new Date().toLocaleTimeString()}</span>
+    <span style="font-size: 0.85rem; color: #FDD835;">${marineStatus}</span>
+  </div>`;
   card.style.display = 'block';
 }
 
@@ -665,6 +692,50 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   clearMessages();
 
+  // ✅ Validation before submission
+  const location = document.getElementById('location').value.trim();
+  const debrisType = document.getElementById('debrisType').value;
+  const quantity = document.getElementById('quantity').value;
+  const description = document.getElementById('description').value.trim();
+  const latitude = document.getElementById('latitude').value.trim();
+  const longitude = document.getElementById('longitude').value.trim();
+
+  // Comprehensive validation
+  if (!location) {
+    showError('📍 Please enter or capture your location');
+    return;
+  }
+
+  if (!debrisType) {
+    showError('🗑️ Please select the type of debris');
+    return;
+  }
+
+  if (!quantity) {
+    showError('📦 Please specify the quantity of debris');
+    return;
+  }
+
+  if (!description || description.length < 10) {
+    showError('📝 Please describe the debris in at least 10 characters');
+    return;
+  }
+
+  if (!latitude || !longitude) {
+    showError('📍 Please capture your location using the geolocation button');
+    return;
+  }
+
+  // Validate coordinates are in valid ranges
+  const lat = parseFloat(latitude);
+  const lon = parseFloat(longitude);
+
+  if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+    showError('⚠️ Invalid coordinates. Please use the location button to capture coordinates.');
+    return;
+  }
+
+  // Form is valid - proceed with submission
   const submitBtn = form.querySelector('.btn-submit');
   const submitLoader = document.getElementById('submitLoader');
   const submitText = document.getElementById('submitText');
@@ -675,20 +746,32 @@ form.addEventListener('submit', async (e) => {
 
   try {
     const formData = new FormData();
-    formData.append('location', document.getElementById('location').value);
-    formData.append('debrisType', document.getElementById('debrisType').value);
-    formData.append('quantity', document.getElementById('quantity').value);
-    formData.append('description', document.getElementById('description').value);
-    formData.append('latitude', document.getElementById('latitude').value);
-    formData.append('longitude', document.getElementById('longitude').value);
+    formData.append('location', location);
+    formData.append('debrisType', debrisType);
+    formData.append('quantity', quantity);
+    formData.append('description', description);
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
 
     if (photoInput.files[0]) {
+      // Validate photo file
+      const file = photoInput.files[0];
+      const maxSize = 5 * 1024 * 1024; // 5MB
+
+      if (file.size > maxSize) {
+        showError('📷 Photo is too large. Maximum size is 5MB.');
+        submitBtn.disabled = false;
+        submitLoader.style.display = 'none';
+        submitText.textContent = '🚨 Submit Debris Report';
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = async (event) => {
         formData.append('photoBase64', event.target.result);
         await submitReport(formData, submitBtn, submitLoader, submitText);
       };
-      reader.readAsDataURL(photoInput.files[0]);
+      reader.readAsDataURL(file);
     } else {
       await submitReport(formData, submitBtn, submitLoader, submitText);
     }
@@ -702,21 +785,28 @@ form.addEventListener('submit', async (e) => {
 
 async function submitReport(formData, submitBtn, submitLoader, submitText) {
   try {
-    const res = await fetch('/api/report-debris', { method: 'POST', body: formData });
+    const res = await fetch('/api/report-debris', {
+      method: 'POST',
+      body: formData
+    });
+
     const data = await res.json();
 
     if (res.ok && data.success) {
       showSuccessModal();
       form.reset();
       photoPreview.style.display = 'none';
+      // Reset location button UI
+      geoButton.classList.remove('active');
+      geoButton.textContent = '📍 Get My Location';
     } else {
-      showError(data.message || 'Failed to submit report');
+      showError(data.message || 'Failed to submit report. Please try again.');
       submitBtn.disabled = false;
       submitLoader.style.display = 'none';
       submitText.textContent = '🚨 Submit Debris Report';
     }
   } catch (error) {
-    showError('Network error: ' + error.message);
+    showError('❌ Network error: ' + error.message + '. Please check your connection and try again.');
     submitBtn.disabled = false;
     submitLoader.style.display = 'none';
     submitText.textContent = '🚨 Submit Debris Report';

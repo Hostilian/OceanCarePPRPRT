@@ -684,11 +684,12 @@ document.getElementById('calculateImpactBtn').addEventListener('click', () => {
 document.getElementById('getClimateBtn').addEventListener('click', async () => {
   const location = document.getElementById('climateLocation').value.trim();
   if (!location) {
-    alert('Please enter a location');
+    showClimateError('Please enter a location (e.g., "San Francisco" or "Great Barrier Reef")');
     return;
   }
 
   const button = document.getElementById('getClimateBtn');
+  const originalText = button.textContent;
   button.textContent = '⏳ Loading climate data...';
   button.disabled = true;
 
@@ -700,8 +701,8 @@ document.getElementById('getClimateBtn').addEventListener('click', async () => {
     const geoData = await geoRes.json();
 
     if (!geoData || geoData.length === 0) {
-      alert('Location not found. Please try another location.');
-      button.textContent = 'Get Climate Trends';
+      showClimateError(`Location "${location}" not found. Try "Pacific Coast," "Florida," or "Great Barrier Reef."`);
+      button.textContent = originalText;
       button.disabled = false;
       return;
     }
@@ -717,25 +718,43 @@ document.getElementById('getClimateBtn').addEventListener('click', async () => {
       document.getElementById('climateTemp').textContent = trends.averageTemperature.replace('°C', '');
       document.getElementById('climatePrecip').textContent = trends.totalPrecipitation.replace('mm', '');
       document.getElementById('climateTrend').textContent = trends.trend === 'Warming' ? '🔥 Warming' : trends.trend === 'Cooling' ? '❄️ Cooling' : '→ Stable';
-      document.getElementById('climateNote').textContent = `Climate analysis for ${location}: ${trends.daysCounted} days of data analyzed.`;
+      document.getElementById('climateNote').textContent = `Climate analysis for ${location}: ${trends.daysCounted} days of data analyzed. ${trends.trend === 'Warming' ? 'Rising temperatures detected - conservation efforts are critical.' : trends.trend === 'Cooling' ? 'Cooling trend detected - continue monitoring.' : 'Stable patterns - focus on pollution reduction.'}`;
       document.getElementById('climateResults').style.display = 'block';
+      document.getElementById('climateError').style.display = 'none';
 
       setTimeout(() => {
         document.getElementById('climateResults').scrollIntoView({ behavior: 'smooth' });
       }, 100);
+    } else if (climateData.message) {
+      showClimateError(`⚠️ ${climateData.message}`);
     } else {
-      alert('Climate data unavailable. Please try another location.');
+      showClimateError('Climate data unavailable. Please try another location.');
     }
 
-    button.textContent = 'Get Climate Trends';
+    button.textContent = originalText;
     button.disabled = false;
   } catch (error) {
     console.error('Climate error:', error);
-    alert('Could not fetch climate data. Please try again.');
-    button.textContent = 'Get Climate Trends';
+    showClimateError('Connection error. Please check your internet and try again.');
+    button.textContent = originalText;
     button.disabled = false;
   }
 });
+
+function showClimateError(message) {
+  const errorDiv = document.getElementById('climateError') || createClimateErrorDiv();
+  errorDiv.innerHTML = `<div style="padding: 1rem; background: rgba(255, 107, 107, 0.2); border-left: 4px solid #FF6B6B; border-radius: 8px; color: #FFB6B6; font-size: 0.95rem;">${message}</div>`;
+  errorDiv.style.display = 'block';
+  document.getElementById('climateResults').style.display = 'none';
+}
+
+function createClimateErrorDiv() {
+  const div = document.createElement('div');
+  div.id = 'climateError';
+  div.style.marginTop = '1.5rem';
+  document.querySelector('[style*="Climate Trends"]').parentElement.appendChild(div);
+  return div;
+}
 
 document.addEventListener('DOMContentLoaded', fetchNews);
   </script>

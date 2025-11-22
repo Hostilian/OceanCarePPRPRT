@@ -10,13 +10,18 @@ const port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname)));
 app.use(express.json());
 
-const db = new sqlite3.Database(':memory:', () => {
-  // Norm MacDonald: "You know, I remember when databases were real. On disk.
-  // Now we just keep 'em in memory like they're made of dreams or something.
-  // Refreshingly honest if you ask me - at least it's not pretending."
-  console.log('Database ready');
-  initDB();
+// Persistent SQLite database - stores data even after server restart
+// Database file is created in the project root directory
+const dbPath = path.join(__dirname, 'oceancare.db');
+const db = new sqlite3.Database(dbPath, (err) => {
+  if (err) {
+    console.error('Database connection error:', err);
+  } else {
+    console.log(`✅ Database initialized at: ${dbPath}`);
+    initDB();
+  }
 });
+
 
 function initDB() {
   // Norm: "Database schemas. The art of organizing data before you realize
@@ -388,13 +393,46 @@ app.get('/api/marine-weather', async (req, res) => {
     });
   }
 
+  // Validate coordinates are within valid ranges
+  const lat = parseFloat(latitude);
+  const lon = parseFloat(longitude);
+  if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid coordinates. Latitude must be -90 to 90, Longitude -180 to 180.'
+    });
+  }
+
   try {
     const params = 'waveHeight,swellDirection,swellHeight,windSpeed,waterTemperature,airTemperature';
     const url = `https://api.stormglass.io/v2/weather/point?lat=${latitude}&lng=${longitude}&params=${params}`;
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000); // 5-second timeout
+
     const stormRes = await fetch(url, {
-      headers: { 'Authorization': stormGlassKey }
+      headers: { 'Authorization': stormGlassKey },
+      signal: controller.signal
     });
+
+    clearTimeout(timeout);
+
+    // Handle different error status codes
+    if (stormRes.status === 402) {
+      return res.status(402).json({
+        success: false,
+        message: 'Storm Glass API quota exceeded. Free tier allows 50 requests/day. Try again tomorrow or upgrade.',
+        statusCode: 402
+      });
+    }
+
+    if (stormRes.status === 401 || stormRes.status === 403) {
+      return res.status(401).json({
+        success: false,
+        message: 'Storm Glass API key invalid or unauthorized. Check stormglass.io account.',
+        statusCode: stormRes.status
+      });
+    }
 
     if (!stormRes.ok) {
       throw new Error(`Storm Glass API error: ${stormRes.status}`);
@@ -410,9 +448,19 @@ app.get('/api/marine-weather', async (req, res) => {
     });
   } catch (error) {
     console.error('Marine weather error:', error);
+
+    // Handle specific error types
+    if (error.name === 'AbortError') {
+      return res.status(504).json({
+        success: false,
+        message: 'Storm Glass API request timed out. Service may be slow, try again in a moment.',
+        statusCode: 504
+      });
+    }
+
     res.status(500).json({
       success: false,
-      message: 'Unable to fetch marine weather data',
+      message: 'Unable to fetch marine weather data. Storm Glass API may be temporarily unavailable.',
       error: error.message
     });
   }
@@ -434,12 +482,45 @@ app.get('/api/uv-index', async (req, res) => {
     });
   }
 
+  // Validate coordinates
+  const lat = parseFloat(latitude);
+  const lon = parseFloat(longitude);
+  if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid coordinates. Latitude must be -90 to 90, Longitude -180 to 180.'
+    });
+  }
+
   try {
     const url = `https://api.openuv.io/api/v1/uv?lat=${latitude}&lng=${longitude}`;
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+
     const uvRes = await fetch(url, {
-      headers: { 'x-access-token': openuvKey }
+      headers: { 'x-access-token': openuvKey },
+      signal: controller.signal
     });
+
+    clearTimeout(timeout);
+
+    // Handle different error status codes
+    if (uvRes.status === 402) {
+      return res.status(402).json({
+        success: false,
+        message: 'OpenUV API quota exceeded. Free tier allows 50 requests/day. Try again tomorrow.',
+        statusCode: 402
+      });
+    }
+
+    if (uvRes.status === 401 || uvRes.status === 403) {
+      return res.status(401).json({
+        success: false,
+        message: 'OpenUV API key invalid. Check openuv.io account.',
+        statusCode: uvRes.status
+      });
+    }
 
     if (!uvRes.ok) {
       throw new Error(`OpenUV API error: ${uvRes.status}`);
@@ -449,15 +530,16 @@ app.get('/api/uv-index', async (req, res) => {
 
     // Extract key info for volunteers
     const safeExposure = uvData.result?.safe_exposure_time || {};
+    const uvIndex = uvData.result?.uv || 0;
 
     res.json({
       success: true,
       uv: {
-        index: uvData.result?.uv || 0,
+        index: uvIndex,
         safeExposure: safeExposure,
-        safeTime: uvData.result?.safe_exposure_time?.st1 || 'Check at stormglass.io',
-        recommendation: uvData.result?.uv > 8 ? 'HIGH - Use SPF 50+ sunscreen, limit outdoor time'
-                       : uvData.result?.uv > 5 ? 'MODERATE - Use SPF 30+ sunscreen'
+        safeTime: uvData.result?.safe_exposure_time?.st1 || 'Check at openuv.io',
+        recommendation: uvIndex > 8 ? 'HIGH - Use SPF 50+ sunscreen, limit outdoor time'
+                       : uvIndex > 5 ? 'MODERATE - Use SPF 30+ sunscreen'
                        : 'LOW - Standard sun protection sufficient'
       },
       timestamp: new Date().toISOString(),
@@ -465,9 +547,18 @@ app.get('/api/uv-index', async (req, res) => {
     });
   } catch (error) {
     console.error('UV Index error:', error);
+
+    if (error.name === 'AbortError') {
+      return res.status(504).json({
+        success: false,
+        message: 'OpenUV API request timed out. Try again in a moment.',
+        statusCode: 504
+      });
+    }
+
     res.status(500).json({
       success: false,
-      message: 'Unable to fetch UV Index data',
+      message: 'Unable to fetch UV Index data. OpenUV API may be temporarily unavailable.',
       error: error.message
     });
   }
@@ -489,17 +580,57 @@ app.get('/api/climate-trends', async (req, res) => {
     });
   }
 
+  // Validate coordinates
+  const lat = parseFloat(latitude);
+  const lon = parseFloat(longitude);
+  if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid coordinates. Latitude must be -90 to 90, Longitude -180 to 180.'
+    });
+  }
+
   try {
     // Get 90-day climate history
     const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${latitude},${longitude}/last90days?unitGroup=metric&include=days&key=${visualCrossingKey}&contentType=json`;
 
-    const climateRes = await fetch(url);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+
+    const climateRes = await fetch(url, { signal: controller.signal });
+
+    clearTimeout(timeout);
+
+    // Handle different error status codes
+    if (climateRes.status === 402) {
+      return res.status(402).json({
+        success: false,
+        message: 'Visual Crossing API quota exceeded. Free tier allows 1000 requests/day. Try again tomorrow.',
+        statusCode: 402
+      });
+    }
+
+    if (climateRes.status === 401 || climateRes.status === 403) {
+      return res.status(401).json({
+        success: false,
+        message: 'Visual Crossing API key invalid. Check visualcrossing.com account.',
+        statusCode: climateRes.status
+      });
+    }
 
     if (!climateRes.ok) {
       throw new Error(`Visual Crossing API error: ${climateRes.status}`);
     }
 
     const climateData = await climateRes.json();
+
+    // Check if we got valid data
+    if (!climateData.days || climateData.days.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'No climate data found for this location. Try a major city or landmark.'
+      });
+    }
 
     // Calculate trends from historical data
     const days = climateData.days || [];
@@ -525,9 +656,18 @@ app.get('/api/climate-trends', async (req, res) => {
     });
   } catch (error) {
     console.error('Climate trends error:', error);
+    
+    if (error.name === 'AbortError') {
+      return res.status(504).json({
+        success: false,
+        message: 'Visual Crossing API request timed out. Try again in a moment.',
+        statusCode: 504
+      });
+    }
+
     res.status(500).json({
       success: false,
-      message: 'Unable to fetch climate trends data',
+      message: 'Unable to fetch climate trends data. Visual Crossing API may be temporarily unavailable.',
       error: error.message
     });
   }
