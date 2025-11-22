@@ -522,21 +522,48 @@ if (document.readyState === 'loading') {
 // That's why we fetch real-time conditions—so you can tell it exactly what you're seeing."
 async function fetchOceanConditions(lat, lon) {
   try {
-    const res = await fetch(`/api/ocean-conditions-cached?latitude=${lat}&longitude=${lon}`);
-    const data = await res.json();
+    // Fetch both open-meteo and storm glass data
+    const [weatherRes, marineRes] = await Promise.all([
+      fetch(`/api/ocean-conditions-cached?latitude=${lat}&longitude=${lon}`),
+      fetch(`/api/marine-weather?latitude=${lat}&longitude=${lon}`)
+    ]);
 
-    if (data.success && data.data) {
-      displayOceanConditions(data.data);
+    const weatherData = await weatherRes.json();
+    const marineData = await marineRes.json();
+
+    if (weatherData.success && weatherData.data) {
+      displayOceanConditions(weatherData.data, marineData);
     }
   } catch (error) {
     console.log('Ocean conditions unavailable (no internet or API down)');
   }
 }
 
-function displayOceanConditions(conditions) {
+function displayOceanConditions(conditions, marineData) {
   const card = document.getElementById('oceanConditionsCard');
   const content = document.getElementById('oceanConditionsContent');
   const timestamp = document.getElementById('conditionsTimestamp');
+
+  // Norm MacDonald: "Marine weather from Storm Glass. More specific than regular weather.
+  // Like asking a fish what the water's like versus asking a person on shore."
+  let marineMarkup = '';
+  if (marineData && marineData.success && marineData.marineWeather?.hours?.length > 0) {
+    const currentHour = marineData.marineWeather.hours[0];
+    const waveHeight = currentHour.waveHeight?.[0]?.value || currentHour.waveHeight?.value || 'N/A';
+    const swellDirection = currentHour.swellDirection?.[0]?.value || currentHour.swellDirection?.value || 'N/A';
+    const waterTemp = currentHour.waterTemperature?.[0]?.value || currentHour.waterTemperature?.value || 'N/A';
+    
+    marineMarkup = `
+      <div style="padding: 1rem; background: linear-gradient(135deg, rgba(0, 119, 190, 0.3), rgba(0, 168, 204, 0.2)); border-radius: 8px; border-left: 3px solid var(--blue);">
+        <div style="font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">⛵ Marine Weather (Storm Glass)</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+          <div><div style="font-size: 0.75rem; color: #666;">Wave Height</div><div style="font-size: 1.2rem; font-weight: bold; color: var(--blue);">${waveHeight}m</div></div>
+          <div><div style="font-size: 0.75rem; color: #666;">Swell Direction</div><div style="font-size: 1.2rem; font-weight: bold; color: var(--teal);">${swellDirection}°</div></div>
+          <div><div style="font-size: 0.75rem; color: #666;">Water Temp</div><div style="font-size: 1.2rem; font-weight: bold; color: var(--teal);">${waterTemp}°C</div></div>
+        </div>
+      </div>
+    `;
+  }
 
   content.innerHTML = `
     <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center;">
@@ -561,6 +588,7 @@ function displayOceanConditions(conditions) {
       <div style="font-size: 1.5rem; font-weight: bold; color: ${conditions.airQuality.includes('Good') ? '#00C853' : conditions.airQuality.includes('Moderate') ? '#FDD835' : '#FF6B6B'};">${conditions.airQuality.split('(')[0].trim()}</div>
     </div>
     ` : ''}
+    ${marineMarkup}
   `;
 
   timestamp.textContent = `Updated: ${new Date().toLocaleTimeString()}`;

@@ -263,11 +263,15 @@
 
         // Norm MacDonald: "Now we fetch conditions for this location.
         // Our server handles it with grace—and caching, which is basically the internet's way of being efficient."
-        const condRes = await fetch(`/api/ocean-conditions-cached?latitude=${lat}&longitude=${lon}`);
+        const [condRes, uvRes] = await Promise.all([
+          fetch(`/api/ocean-conditions-cached?latitude=${lat}&longitude=${lon}`),
+          fetch(`/api/uv-index?latitude=${lat}&longitude=${lon}`)
+        ]);
         const condData = await condRes.json();
+        const uvData = await uvRes.json();
 
         if (condData.success && condData.data) {
-          displayVolunteerForecast(condData.data);
+          displayVolunteerForecast(condData.data, uvData);
         }
 
         button.textContent = 'Get Forecast';
@@ -280,7 +284,7 @@
       }
     });
 
-    function displayVolunteerForecast(conditions) {
+    function displayVolunteerForecast(conditions, uvData) {
       const content = document.getElementById('forecastContent');
       const grid = document.getElementById('forecastGrid');
 
@@ -290,6 +294,22 @@
       const wind = parseFloat(conditions.windSpeed);
       const waves = parseFloat(conditions.waveHeight);
       const humidity = parseFloat(conditions.humidity);
+
+      // Extract UV index if available
+      let uvDisplay = '';
+      if (uvData && uvData.success && uvData.uv) {
+        const uvIndex = uvData.uv.index || 0;
+        const uvRec = uvData.uv.recommendation || 'Standard sun protection';
+        const uvColor = uvIndex > 8 ? '#FF6B6B' : uvIndex > 5 ? '#FDD835' : '#00C853';
+        
+        uvDisplay = `
+        <div style="background: linear-gradient(135deg, ${uvColor}20 0%, ${uvColor}10 100%); border-left: 4px solid ${uvColor}; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+          <div style="font-size: 0.9rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">☀️ UV Safety Index</div>
+          <div style="font-size: 1.4rem; font-weight: bold; color: ${uvColor}; margin-bottom: 0.5rem;">${uvIndex.toFixed(1)} ${uvIndex > 8 ? '🔴 VERY HIGH' : uvIndex > 5 ? '🟡 HIGH' : '🟢 MODERATE'}</div>
+          <div style="font-size: 0.9rem; color: #ccc;">${uvRec}</div>
+        </div>
+        `;
+      }
 
       // Determine ideal days
       let bestDay = 'Next Calm Day';
@@ -319,6 +339,7 @@
           <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 0.5rem;">CURRENT CONDITIONS</div>
           <div style="font-size: 1.3rem; font-weight: bold;">🌡️ ${temp.toFixed(1)}°C</div>
           <div style="font-size: 0.95rem;">Wind: ${wind.toFixed(1)} km/h | Waves: ${waves.toFixed(1)}m</div>
+          ${uvDisplay}
         </div>
 
         <div style="background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); color: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);">
