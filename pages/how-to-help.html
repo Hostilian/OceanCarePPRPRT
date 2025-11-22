@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Make a Donation - OceanCare Initiative</title>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo">🌊 OceanCare Initiative</div>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../pages/projects.html">Projects</a></li>
+        <li><a href="../pages/team.html">Team</a></li>
+        <li><a href="volunteer.html">Volunteer</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <h1>Support Ocean Conservation</h1>
+    <p>Every donation helps us protect marine ecosystems and restore ocean health</p>
+  </section>
+
+  <section class="section">
+    <div class="donation-container">
+      <div class="donation-form-wrapper">
+        <h2>Make Your Impact</h2>
+        <form id="donationForm" class="donation-form">
+          <div class="form-group">
+            <label for="donorName">Your Name *</label>
+            <input type="text" id="donorName" name="donorName" required placeholder="Enter your full name">
+          </div>
+
+          <div class="form-group">
+            <label for="donorEmail">Email Address *</label>
+            <input type="email" id="donorEmail" name="donorEmail" required placeholder="your.email@example.com">
+          </div>
+
+          <div class="form-group">
+            <label for="donationAmount">Donation Amount ($) *</label>
+            <input type="number" id="donationAmount" name="donationAmount" required min="1" placeholder="50" step="0.01">
+          </div>
+
+          <div class="form-group">
+            <label for="donationPurpose">Choose Impact Area</label>
+            <select id="donationPurpose" name="donationPurpose">
+              <option value="">-- Select a project --</option>
+              <option value="coral">Coral Reef Restoration</option>
+              <option value="marine">Marine Life Protection</option>
+              <option value="cleanup">Ocean Cleanup</option>
+              <option value="research">Research & Monitoring</option>
+              <option value="education">Community Education</option>
+              <option value="general">General Fund</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+        </form>
+      </div>
+
+      <div class="calculator-wrapper">
+        <h2>Impact Calculator</h2>
+        <div class="calculator">
+          <div class="input-group">
+            <label>Your Donation Amount</label>
+            <div class="amount-input">
+              <span>$</span>
+              <input type="number" id="calcAmount" placeholder="50" min="1" step="0.01">
+            </div>
+          </div>
+
+          <div class="impact-results">
+            <h3>Your Impact</h3>
+            <div class="impact-item">
+              <span class="impact-label">🪸 Coral fragments restored:</span>
+              <span class="impact-value" id="coralCount">0</span>
+            </div>
+            <div class="impact-item">
+              <span class="impact-label">🐢 Animals protected:</span>
+              <span class="impact-value" id="animalCount">0</span>
+            </div>
+            <div class="impact-item">
+              <span class="impact-label">♻️ Kg of waste removed:</span>
+              <span class="impact-value" id="wasteCount">0</span>
+            </div>
+            <div class="impact-item">
+              <span class="impact-label">📚 Students educated:</span>
+              <span class="impact-value" id="studentCount">0</span>
+            </div>
+          </div>
+
+          <div class="impact-note">
+            <p>*Based on average project costs and outcomes. Your donation may be distributed across multiple projects.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="donation-tiers">
+    <h2>Popular Donation Amounts</h2>
+    <div class="tiers-grid">
+      <div class="tier">
+        <div class="tier-amount">$25</div>
+        <div class="tier-impact">Protect 5 coral fragments</div>
+      </div>
+      <div class="tier">
+        <div class="tier-amount">$50</div>
+        <div class="tier-impact">Remove 10 kg of ocean waste</div>
+      </div>
+      <div class="tier">
+        <div class="tier-amount">$100</div>
+        <div class="tier-impact">Educate 5 students</div>
+      </div>
+      <div class="tier">
+        <div class="tier-amount">$250</div>
+        <div class="tier-impact">Support 1 cleanup event</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="../pages/projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <p>&copy; 2025 OceanCare Initiative. 🌊</p>
+  </footer>
+
+  <script>
+    const calcAmountInput = document.getElementById('calcAmount');
+    const coralCount = document.getElementById('coralCount');
+    const animalCount = document.getElementById('animalCount');
+    const wasteCount = document.getElementById('wasteCount');
+    const studentCount = document.getElementById('studentCount');
+    const donationAmountInput = document.getElementById('donationAmount');
+
+    function updateCalculator() {
+      const amount = parseFloat(calcAmountInput.value) || 0;
+      coralCount.textContent = Math.floor(amount / 5);
+      animalCount.textContent = Math.floor(amount / 10);
+      wasteCount.textContent = Math.floor(amount * 2);
+      studentCount.textContent = Math.floor(amount / 20);
+    }
+
+    function updateDonationAmount() {
+      const amount = parseFloat(donationAmountInput.value) || 0;
+      calcAmountInput.value = amount;
+      updateCalculator();
+    }
+
+    calcAmountInput.addEventListener('input', updateCalculator);
+    donationAmountInput.addEventListener('input', updateDonationAmount);
+
+    document.getElementById('donationForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('donorName').value;
+      const email = document.getElementById('donorEmail').value;
+      const amount = document.getElementById('donationAmount').value;
+
+      // Submit donation
+      fetch('/api/donate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          donorName: name,
+          donorEmail: email,
+          amount: parseFloat(amount),
+          purpose: document.getElementById('donationPurpose').value || 'general'
+        })
+      }).then(res => res.json()).then(data => {
+        if (data.success) {
+          // Show thank you page or modal
+          showThankYou(name, amount);
+        }
+      }).catch(err => {
+        alert('Error processing donation: ' + err.message);
+      });
+    });
+
+    function showThankYou(name, amount) {
+      const thankyouHTML = `
+        <div class="thank-you-modal">
+          <div class="thank-you-content">
+            <h2>Thank You, ${name}!</h2>
+            <p>Your donation of $${amount} has been received.</p>
+            <p>A confirmation email has been sent to your email address.</p>
+            <p class="thank-you-message">Your support helps us protect our oceans for future generations.</p>
+            <a href="../index.html" class="btn btn-primary">Back to Home</a>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', thankyouHTML);
+    }
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a1929 0%, #1a3a52 100%);
+      color: #e0e0e0;
+      line-height: 1.6;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(10, 25, 41, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid #0077BE;
+      padding: 1.5rem 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #FDD835;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #e0e0e0;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #FDD835;
+    }
+
+    .page-hero {
+      margin-top: 80px;
+      background: linear-gradient(180deg, #0a1929 0%, #1a5276 100%);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .page-hero h1 {
+      font-size: 3rem;
+      color: #FDD835;
+      margin-bottom: 1rem;
+    }
+
+    .page-hero p {
+      font-size: 1.1rem;
+      color: #a0a0a0;
+    }
+
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .donation-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .donation-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .donation-form-wrapper,
+    .calculator-wrapper {
+      background: rgba(0, 119, 190, 0.1);
+      border: 1px solid rgba(0, 168, 204, 0.3);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .donation-form-wrapper h2,
+    .calculator-wrapper h2 {
+      color: #FDD835;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #e0e0e0;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 168, 204, 0.3);
+      border-radius: 6px;
+      color: #e0e0e0;
+      font-size: 1rem;
+    }
+
+    .form-group input::placeholder {
+      color: #707070;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #FDD835;
+      box-shadow: 0 0 10px rgba(253, 216, 53, 0.2);
+    }
+
+    .calculator {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .input-group {
+      margin-bottom: 1rem;
+    }
+
+    .input-group label {
+      color: #e0e0e0;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .amount-input {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .amount-input span {
+      font-size: 1.5rem;
+      color: #FDD835;
+      font-weight: bold;
+    }
+
+    .amount-input input {
+      flex: 1;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 168, 204, 0.3);
+      border-radius: 6px;
+      color: #e0e0e0;
+      font-size: 1rem;
+    }
+
+    .impact-results {
+      background: rgba(0, 168, 204, 0.15);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 168, 204, 0.2);
+    }
+
+    .impact-results h3 {
+      color: #FDD835;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .impact-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(0, 168, 204, 0.1);
+    }
+
+    .impact-item:last-child {
+      border-bottom: none;
+    }
+
+    .impact-label {
+      color: #a0a0a0;
+    }
+
+    .impact-value {
+      color: #FDD835;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .impact-note {
+      font-size: 0.85rem;
+      color: #707070;
+      font-style: italic;
+    }
+
+    .donation-tiers {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .donation-tiers h2 {
+      color: #FDD835;
+      font-size: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .tier {
+      background: rgba(0, 119, 190, 0.1);
+      border: 1px solid rgba(0, 168, 204, 0.3);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: all 0.3s;
+    }
+
+    .tier:hover {
+      border-color: #FDD835;
+      box-shadow: 0 0 30px rgba(253, 216, 53, 0.3);
+      transform: translateY(-5px);
+    }
+
+    .tier-amount {
+      font-size: 2rem;
+      color: #FDD835;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .tier-impact {
+      color: #a0a0a0;
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0077BE, #00A8CC);
+      color: white;
+      box-shadow: 0 0 30px rgba(0, 119, 190, 0.4);
+      width: 100%;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 0 50px rgba(0, 119, 190, 0.8);
+      transform: translateY(-2px);
+    }
+
+    .footer {
+      background: rgba(10, 25, 41, 0.95);
+      border-top: 1px solid rgba(0, 168, 204, 0.2);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: #a0a0a0;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links a {
+      color: #FDD835;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .thank-you-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .thank-you-content {
+      background: rgba(10, 25, 41, 0.95);
+      border: 2px solid #FDD835;
+      border-radius: 12px;
+      padding: 3rem;
+      text-align: center;
+      max-width: 500px;
+    }
+
+    .thank-you-content h2 {
+      color: #FDD835;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .thank-you-content p {
+      color: #a0a0a0;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .thank-you-message {
+      color: #e0e0e0;
+      font-style: italic;
+      margin: 2rem 0;
+    }
+  </style>
+</body>
+</html>

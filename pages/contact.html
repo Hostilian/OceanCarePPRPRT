@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - OceanCare Initiative</title>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo">🌊 OceanCare Initiative</div>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../pages/projects.html">Projects</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <h1>Get In Touch</h1>
+    <p>We'd love to hear from you. Reach out with questions, feedback, or inquiries.</p>
+  </section>
+
+  <section class="section">
+    <div class="contact-grid">
+      <div class="contact-form-wrapper">
+        <h2>Send us a Message</h2>
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="contactName">Name *</label>
+            <input type="text" id="contactName" name="contactName" required>
+          </div>
+
+          <div class="form-group">
+            <label for="contactEmail">Email *</label>
+            <input type="email" id="contactEmail" name="contactEmail" required>
+          </div>
+
+          <div class="form-group">
+            <label for="contactSubject">Subject *</label>
+            <input type="text" id="contactSubject" name="contactSubject" required>
+          </div>
+
+          <div class="form-group">
+            <label for="contactMessage">Message *</label>
+            <textarea id="contactMessage" name="contactMessage" required rows="5"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+      </div>
+
+      <div class="contact-info">
+        <h2>Contact Information</h2>
+
+        <div class="info-block">
+          <h3>📍 Headquarters</h3>
+          <p>OceanCare Initiative<br>123 Marine Way<br>Coastal City, CA 90210<br>USA</p>
+        </div>
+
+        <div class="info-block">
+          <h3>📞 Phone</h3>
+          <p>General Inquiries: (555) 123-4567<br>Donations: (555) 123-4568<br>Volunteers: (555) 123-4569<br>Emergency: (555) 123-5555</p>
+        </div>
+
+        <div class="info-block">
+          <h3>✉️ Email</h3>
+          <p>info@oceancare.org<br>donate@oceancare.org<br>volunteers@oceancare.org<br>careers@oceancare.org</p>
+        </div>
+
+        <div class="info-block">
+          <h3>🌐 Follow Us</h3>
+          <p>Social Media:<br><a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">Instagram</a> | <a href="#">LinkedIn</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="../pages/projects.html">Projects</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <p>&copy; 2025 OceanCare Initiative. 🌊</p>
+  </footer>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const data = {
+        contactName: document.getElementById('contactName').value,
+        contactEmail: document.getElementById('contactEmail').value,
+        contactSubject: document.getElementById('contactSubject').value,
+        contactMessage: document.getElementById('contactMessage').value,
+      };
+
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      }).then(res => res.json()).then(result => {
+        if (result.success) {
+          alert('Thank you! Your message has been sent. We\'ll respond within 24 hours.');
+          document.getElementById('contactForm').reset();
+        }
+      }).catch(err => {
+        alert('Error sending message: ' + err.message);
+      });
+    });
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a1929 0%, #1a3a52 100%);
+      color: #e0e0e0;
+      line-height: 1.6;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(10, 25, 41, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid #0077BE;
+      padding: 1.5rem 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #FDD835;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #e0e0e0;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #FDD835;
+    }
+
+    .page-hero {
+      margin-top: 80px;
+      background: linear-gradient(180deg, #0a1929 0%, #1a5276 100%);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .page-hero h1 {
+      font-size: 3rem;
+      color: #FDD835;
+      margin-bottom: 1rem;
+    }
+
+    .page-hero p {
+      font-size: 1.1rem;
+      color: #a0a0a0;
+    }
+
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .contact-form-wrapper,
+    .contact-info {
+      background: rgba(0, 119, 190, 0.1);
+      border: 1px solid rgba(0, 168, 204, 0.3);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .contact-form-wrapper h2,
+    .contact-info h2 {
+      color: #FDD835;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #e0e0e0;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 168, 204, 0.3);
+      border-radius: 6px;
+      color: #e0e0e0;
+      font-size: 1rem;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #FDD835;
+      box-shadow: 0 0 10px rgba(253, 216, 53, 0.2);
+    }
+
+    .btn {
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      background: linear-gradient(135deg, #0077BE, #00A8CC);
+      color: white;
+      box-shadow: 0 0 30px rgba(0, 119, 190, 0.4);
+      width: 100%;
+    }
+
+    .btn:hover {
+      box-shadow: 0 0 50px rgba(0, 119, 190, 0.8);
+      transform: translateY(-2px);
+    }
+
+    .info-block {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(0, 168, 204, 0.2);
+    }
+
+    .info-block:last-child {
+      border-bottom: none;
+    }
+
+    .info-block h3 {
+      color: #FDD835;
+      margin-bottom: 0.75rem;
+    }
+
+    .info-block p {
+      color: #a0a0a0;
+      line-height: 1.8;
+    }
+
+    .info-block a {
+      color: #00A8CC;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .info-block a:hover {
+      color: #FDD835;
+    }
+
+    .footer {
+      background: rgba(10, 25, 41, 0.95);
+      border-top: 1px solid rgba(0, 168, 204, 0.2);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: #a0a0a0;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links a {
+      color: #FDD835;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+  </style>
+</body>
+</html>
