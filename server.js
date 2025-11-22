@@ -220,7 +220,7 @@ app.get('/api/ocean-conditions', async (req, res) => {
 
   try {
     const { latitude, longitude } = req.query;
-    
+
     if (!latitude || !longitude) {
       return res.status(400).json({ success: false, message: 'Latitude and longitude required' });
     }
@@ -267,7 +267,7 @@ app.get('/api/geocode-location', async (req, res) => {
 
   try {
     const { latitude, longitude } = req.query;
-    
+
     if (!latitude || !longitude) {
       return res.status(400).json({ success: false, message: 'Latitude and longitude required' });
     }
@@ -334,16 +334,16 @@ app.get('/api/get-maps-key', (req, res) => {
   // Norm MacDonald: "Google Maps API key. Stored safely in environment variables.
   // Not exposed to the frontend. Well, not directly. We proxy it through here.
   // It's called 'defense in depth.' Or is it? Either way, it's better than hardcoding."
-  
+
   const mapsKey = process.env.GOOGLE_MAPS_API_KEY;
-  
+
   if (!mapsKey) {
     return res.status(500).json({
       success: false,
       message: 'Google Maps API key not configured'
     });
   }
-  
+
   res.json({
     success: true,
     apiKey: mapsKey,
@@ -355,15 +355,15 @@ app.get('/api/debris-reports', (req, res) => {
   // Norm: "Fetch all debris reports. For mapping.
   // We query the database, convert lat/long to map markers,
   // and hand it all back. The ocean's crime scene, visualized."
-  
-  db.all(`SELECT id, location, latitude, longitude, debrisType, quantity, description, createdAt 
-          FROM debris_reports 
-          ORDER BY createdAt DESC 
+
+  db.all(`SELECT id, location, latitude, longitude, debrisType, quantity, description, createdAt
+          FROM debris_reports
+          ORDER BY createdAt DESC
           LIMIT 100`, (err, rows) => {
     if (err) {
       return res.status(500).json({ success: false, message: 'Failed to fetch debris reports' });
     }
-    
+
     res.json({
       success: true,
       data: rows || [],

@@ -379,7 +379,7 @@ async function loadGoogleMapsScript() {
   try {
     const res = await fetch('/api/get-maps-key');
     const data = await res.json();
-    
+
     if (data.success && data.apiKey) {
       const script = document.createElement('script');
       script.src = `https://maps.googleapis.com/maps/api/js?key=${data.apiKey}&libraries=maps,marker,places`;
@@ -398,10 +398,10 @@ async function loadGoogleMapsScript() {
 
 async function initializeDebrisMap() {
   const mapElement = document.getElementById('debrisMap');
-  
+
   // Default center: Pacific Ocean (environmental hotspot)
   const defaultCenter = { lat: 34.0195, lng: -118.4912 }; // Santa Monica Beach
-  
+
   debrisMap = new google.maps.Map(mapElement, {
     zoom: 4,
     center: defaultCenter,
@@ -423,7 +423,7 @@ async function loadDebrisReports() {
   try {
     const res = await fetch('/api/debris-reports');
     const data = await res.json();
-    
+
     if (data.success && data.data && data.data.length > 0) {
       clearMarkers();
       debrisReportTypes = {};
@@ -432,10 +432,10 @@ async function loadDebrisReports() {
       data.data.forEach(report => {
         if (report.latitude && report.longitude) {
           addDebrisMarker(report);
-          
+
           // Track debris types for statistics
           debrisReportTypes[report.debrisType] = (debrisReportTypes[report.debrisType] || 0) + 1;
-          
+
           // Estimate weight: small=0.5kg, medium=2kg, large=10kg, massive=50kg
           const weightMap = { small: 0.5, medium: 2, large: 10, massive: 50 };
           totalDebrisKg += weightMap[report.quantity] || 0;
@@ -454,7 +454,7 @@ async function loadDebrisReports() {
 function addDebrisMarker(report) {
   // Norm: "Each marker is a story of human carelessness.
   // We mark it, we remember it, we do something about it."
-  
+
   const marker = new google.maps.Marker({
     position: { lat: parseFloat(report.latitude), lng: parseFloat(report.longitude) },
     map: debrisMap,
@@ -497,7 +497,7 @@ function clearMarkers() {
 
 function updateMapStats(totalReports) {
   document.getElementById('totalReports').textContent = totalReports;
-  
+
   // Find most common debris type
   let mostCommon = '--';
   let maxCount = 0;
@@ -518,13 +518,13 @@ if (document.readyState === 'loading') {
   loadGoogleMapsScript();
 }
 
-// Norm MacDonald Commentary: "You know, the ocean has opinions about your location. 
+// Norm MacDonald Commentary: "You know, the ocean has opinions about your location.
 // That's why we fetch real-time conditions—so you can tell it exactly what you're seeing."
 async function fetchOceanConditions(lat, lon) {
   try {
     const res = await fetch(`/api/ocean-conditions-cached?latitude=${lat}&longitude=${lon}`);
     const data = await res.json();
-    
+
     if (data.success && data.data) {
       displayOceanConditions(data.data);
     }
@@ -537,7 +537,7 @@ function displayOceanConditions(conditions) {
   const card = document.getElementById('oceanConditionsCard');
   const content = document.getElementById('oceanConditionsContent');
   const timestamp = document.getElementById('conditionsTimestamp');
-  
+
   content.innerHTML = `
     <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center;">
       <div style="font-size: 0.8rem; color: #666;">Temperature</div>
@@ -562,18 +562,18 @@ function displayOceanConditions(conditions) {
     </div>
     ` : ''}
   `;
-  
+
   timestamp.textContent = `Updated: ${new Date().toLocaleTimeString()}`;
   card.style.display = 'block';
 }
 
-// Norm MacDonald Commentary: "Reverse geocoding: basically asking the earth 'Hey, what's your address?' 
+// Norm MacDonald Commentary: "Reverse geocoding: basically asking the earth 'Hey, what's your address?'
 // We use Nominatim because it doesn't charge you money, which is more than we can say for most things."
 async function reverseGeocode(lat, lon) {
   try {
     const res = await fetch(`/api/geocode-location?latitude=${lat}&longitude=${lon}`);
     const data = await res.json();
-    
+
     if (data.success && data.data) {
       const locationInput = document.getElementById('location');
       const displayName = data.data.split(',')[0]; // Get first part (most specific)
@@ -611,15 +611,15 @@ geoButton.addEventListener('click', () => {
     async (position) => {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
-      
+
       document.getElementById('latitude').value = lat.toFixed(6);
       document.getElementById('longitude').value = lon.toFixed(6);
-      
-      // Norm MacDonald: "We do two things now: get pretty names for coordinates, 
+
+      // Norm MacDonald: "We do two things now: get pretty names for coordinates,
       // and check the ocean's current mood. The ocean's always got something to say."
       await reverseGeocode(lat, lon);
       await fetchOceanConditions(lat, lon);
-      
+
       geoButton.classList.add('active');
       geoButton.textContent = '✅ Location Captured';
       geoButton.disabled = false;

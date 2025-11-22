@@ -27,14 +27,14 @@
     <div class="ocean-forecast-section" style="background: linear-gradient(135deg, rgba(0, 77, 190, 0.05), rgba(0, 168, 204, 0.05)); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; border-left: 4px solid var(--teal, #00A8CC);">
       <h2 style="color: #0077BE; margin-top: 0;">🌊 Optimal Cleanup Schedule</h2>
       <p style="color: #555; margin-bottom: 1.5rem;">Enter your location to see the best times to volunteer based on ocean conditions and weather forecasts.</p>
-      
+
       <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; margin-bottom: 1.5rem; align-items: end;">
         <div>
           <input type="text" id="forecastLocation" placeholder="Enter your city or beach location..." style="width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;">
         </div>
         <button type="button" id="forecastButton" style="padding: 0.75rem 2rem; background: linear-gradient(135deg, #0077BE, #00A8CC); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Get Forecast</button>
       </div>
-      
+
       <div id="forecastContent" style="display: none;">
         <div id="forecastGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;"></div>
         <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #FF6B6B; display: none;" id="warningBox"></div>
@@ -231,8 +231,8 @@
       document.body.insertAdjacentHTML('beforeend', confirmHTML);
     }
 
-    // Norm MacDonald Commentary: "Forecasting ocean conditions for volunteers—we're basically asking 
-    // the ocean 'Hey, when would be a good time for my friends to come clean you up?' 
+    // Norm MacDonald Commentary: "Forecasting ocean conditions for volunteers—we're basically asking
+    // the ocean 'Hey, when would be a good time for my friends to come clean you up?'
     // The ocean doesn't answer in words, but the data's pretty clear."
     document.getElementById('forecastButton').addEventListener('click', async () => {
       const location = document.getElementById('forecastLocation').value.trim();
@@ -251,7 +251,7 @@
           headers: { 'User-Agent': 'OceanCare-Initiative' }
         });
         const geoData = await geoRes.json();
-        
+
         if (!geoData || geoData.length === 0) {
           alert('Location not found. Please try another location.');
           button.textContent = 'Get Forecast';
@@ -260,8 +260,8 @@
         }
 
         const { lat, lon } = geoData[0];
-        
-        // Norm MacDonald: "Now we fetch conditions for this location. 
+
+        // Norm MacDonald: "Now we fetch conditions for this location.
         // Our server handles it with grace—and caching, which is basically the internet's way of being efficient."
         const condRes = await fetch(`/api/ocean-conditions-cached?latitude=${lat}&longitude=${lon}`);
         const condData = await condRes.json();
