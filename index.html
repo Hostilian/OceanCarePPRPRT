@@ -157,54 +157,71 @@
     </footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('navbar-scrolled');
-            } else {
-                navbar.classList.remove('navbar-scrolled');
-            }
-        });
+        document.addEventListener('DOMContentLoaded', () => {
+            // Navbar scroll effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('navbar-scrolled');
+                } else {
+                    navbar.classList.remove('navbar-scrolled');
+                }
+            });
 
-        // Mobile menu toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenuCloseBtn = document.getElementById('mobile-menu-close-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenuCloseBtn = document.getElementById('mobile-menu-close-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
 
-        const toggleMenu = () => mobileMenu.classList.toggle('hidden');
-        
-        mobileMenuBtn.addEventListener('click', toggleMenu);
-        mobileMenuCloseBtn.addEventListener('click', toggleMenu);
-        mobileMenuLinks.forEach(link => link.addEventListener('click', toggleMenu));
+            const toggleMenu = () => mobileMenu.classList.toggle('hidden');
 
-        // Fetch and display news
-        const newsContainer = document.getElementById('news-container');
-        fetch('/api/news')
-            .then(response => response.json())
-            .then(data => {
-                if (data.articles) {
-                    newsContainer.innerHTML = data.articles.map(article => `
+            mobileMenuBtn.addEventListener('click', toggleMenu);
+            mobileMenuCloseBtn.addEventListener('click', toggleMenu);
+            mobileMenuLinks.forEach((link) => link.addEventListener('click', toggleMenu));
+
+            // Fetch and display news
+            const newsContainer = document.getElementById('news-container');
+            const apiKey = 'd1ebf8a38da2b60015304b61977cd57c';
+            const url = `https://gnews.io/api/v4/search?q=ocean%20OR%20nature%20conservation&lang=en&max=6&token=${apiKey}`;
+
+            fetch(url)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.articles) {
+                        newsContainer.innerHTML = data.articles
+                            .map(
+                                (article) => `
                         <div class="news-card bg-light-blue rounded-lg overflow-hidden">
-                            <img src="${article.image}" alt="${article.title}" class="w-full h-48 object-cover">
+                            <img src="${article.image}" alt="${
+                                    article.title
+                                }" class="w-full h-48 object-cover">
                             <div class="p-6">
-                                <h3 class="font-semibold text-lg text-white mb-2">${article.title}</h3>
-                                <p class="text-sm mb-4">${article.description}</p>
-                                <a href="${article.url}" target="_blank" rel="noopener noreferrer" class="text-teal font-semibold hover:underline">Read More &rarr;</a>
+                                <h3 class="font-semibold text-lg text-white mb-2">${
+                                    article.title
+                                }</h3>
+                                <p class="text-sm mb-4">${
+                                    article.description
+                                }</p>
+                                <a href="${
+                                    article.url
+                                }" target="_blank" rel="noopener noreferrer" class="text-teal font-semibold hover:underline">Read More &rarr;</a>
                             </div>
                         </div>
-                    `).join('');
-                } else {
-                    newsContainer.innerHTML = '<p class="text-center col-span-full">Failed to load news. Please try again later.</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching news:', error);
-                newsContainer.innerHTML = '<p class="text-center col-span-full">Failed to load news. Please try again later.</p>';
-            });
-    });
+                    `
+                            )
+                            .join('');
+                    } else {
+                        newsContainer.innerHTML =
+                            '<p class="text-center col-span-full">Failed to load news. Please try again later.</p>';
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error fetching news:', error);
+                    newsContainer.innerHTML =
+                        '<p class="text-center col-span-full">Failed to load news. Please try again later.</p>';
+                });
+        });
     </script>
 </body>
 </html>
