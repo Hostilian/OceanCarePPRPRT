@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fetch = require('node-fetch');
 const sqlite3 = require('sqlite3').verbose();
+const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 const app = express();
@@ -10,9 +11,96 @@ const port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname)));
 app.use(express.json());
 
+// Rate limiting middleware
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+const strictLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 10, // limit each IP to 10 requests per hour
+  message: 'Too many requests to this endpoint. Please try again in an hour.',
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: (req) => req.method === 'GET' // Don't rate-limit GET requests
+});
+
+// Apply general rate limiter to all requests
+app.use(generalLimiter);
+
+// Apply strict rate limiter to sensitive POST endpoints
+app.post('/api/donate', strictLimiter);
+app.post('/api/volunteer', strictLimiter);
+app.post('/api/report-debris', strictLimiter);
+app.post('/api/contact', strictLimiter);
+
 // Persistent SQLite database - stores data even after server restart
 // Database file is created in the project root directory
 const dbPath = path.join(__dirname, 'oceancare.db');
+const backupDir = path.join(__dirname, '.backups');
+const fs = require('fs');
+
+// Ensure backup directory exists
+if (!fs.existsSync(backupDir)) {
+  fs.mkdirSync(backupDir, { recursive: true });
+}
+
+// Database backup function
+function backupDatabase() {
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+  const backupPath = path.join(backupDir, `oceancare-${timestamp}.db`);
+
+  try {
+    if (fs.existsSync(dbPath)) {
+      fs.copyFileSync(dbPath, backupPath);
+      console.log(`✅ Database backup created: ${backupPath}`);
+
+      // Clean up old backups (keep last 30 days)
+      const now = Date.now();
+      const thirtyDaysAgo = now - (30 * 24 * 60 * 60 * 1000);
+
+      fs.readdirSync(backupDir).forEach(file => {
+        const filePath = path.join(backupDir, file);
+        const stats = fs.statSync(filePath);
+        if (stats.mtimeMs < thirtyDaysAgo) {
+          fs.unlinkSync(filePath);
+          console.log(`🗑️  Old backup deleted: ${file}`);
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Database backup error:', error);
+  }
+}
+
+// Perform initial backup on startup
+backupDatabase();
+
+// Schedule daily backups at 2 AM
+const scheduleBackup = () => {
+  const now = new Date();
+  const target = new Date();
+  target.setHours(2, 0, 0, 0);
+
+  if (now > target) {
+    target.setDate(target.getDate() + 1);
+  }
+
+  const timeUntilBackup = target - now;
+
+  setTimeout(() => {
+    backupDatabase();
+    // Repeat daily
+    setInterval(backupDatabase, 24 * 60 * 60 * 1000);
+  }, timeUntilBackup);
+};
+
+scheduleBackup();
+
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Database connection error:', err);
@@ -139,12 +227,61 @@ app.post('/api/donate', (req, res) => {
   // Sometimes people give twice. We're only grateful once. That's economics."
 
   const { name, email, amount, purpose } = req.body;
-  if (!name || !email || !amount) return res.status(400).json({ success: false });
+
+  // Validate required fields
+  if (!name || !email || !amount) {
+    return res.status(400).json({
+      success: false,
+      message: 'Name, email, and amount are required.'
+    });
+  }
+
+  // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Please enter a valid email address.'
+    });
+  }
+
+  // Validate name length
+  if (name.trim().length < 2 || name.trim().length > 100) {
+    return res.status(400).json({
+      success: false,
+      message: 'Name must be between 2 and 100 characters.'
+    });
+  }
+
+  // Validate amount is a positive number
+  const amountNum = parseFloat(amount);
+  if (isNaN(amountNum) || amountNum <= 0 || amountNum > 1000000) {
+    return res.status(400).json({
+      success: false,
+      message: 'Donation amount must be a number between $0.01 and $1,000,000.'
+    });
+  }
+
+  // Validate purpose length if provided
+  if (purpose && purpose.trim().length > 500) {
+    return res.status(400).json({
+      success: false,
+      message: 'Purpose must be 500 characters or less.'
+    });
+  }
 
   db.run('INSERT OR IGNORE INTO users (name, email) VALUES (?, ?)', [name, email]);
   db.run('INSERT INTO donations (email, name, amount, purpose) VALUES (?, ?, ?, ?)',
-    [email, name, amount, purpose],
-    function() { res.json({ success: true, id: this.lastID }); }
+    [email, name.trim(), amountNum, purpose?.trim() || null],
+    function(err) {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: 'Database error while recording donation.'
+        });
+      }
+      res.json({ success: true, id: this.lastID, message: 'Thank you for your donation!' });
+    }
   );
 });
 
@@ -156,11 +293,70 @@ app.post('/api/volunteer', (req, res) => {
   // If they're serious about the ocean, they'll come back."
 
   const { name, email, phone, location, area, experience, availability } = req.body;
-  if (!name || !email || !location) return res.status(400).json({ success: false });
+
+  // Validate required fields
+  if (!name || !email || !location) {
+    return res.status(400).json({
+      success: false,
+      message: 'Name, email, and location are required.'
+    });
+  }
+
+  // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Please enter a valid email address.'
+    });
+  }
+
+  // Validate name length
+  if (name.trim().length < 2 || name.trim().length > 100) {
+    return res.status(400).json({
+      success: false,
+      message: 'Name must be between 2 and 100 characters.'
+    });
+  }
+
+  // Validate phone if provided
+  if (phone && phone.trim().length > 0) {
+    const phoneRegex = /^[\d\-\s\+\(\)]+$/;
+    if (!phoneRegex.test(phone) || phone.replace(/\D/g, '').length < 7) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please enter a valid phone number (at least 7 digits).'
+      });
+    }
+  }
+
+  // Validate location length
+  if (location.trim().length < 2 || location.trim().length > 100) {
+    return res.status(400).json({
+      success: false,
+      message: 'Location must be between 2 and 100 characters.'
+    });
+  }
+
+  // Validate experience length if provided
+  if (experience && experience.trim().length > 1000) {
+    return res.status(400).json({
+      success: false,
+      message: 'Experience description must be 1000 characters or less.'
+    });
+  }
 
   db.run('INSERT INTO volunteers (name, email, phone, location, area, experience, availability) VALUES (?, ?, ?, ?, ?, ?, ?)',
-    [name, email, phone, location, area, experience, availability],
-    function() { res.json({ success: true, id: this.lastID }); }
+    [name.trim(), email.trim(), phone?.trim() || null, location.trim(), area?.trim() || null, experience?.trim() || null, availability?.trim() || null],
+    function(err) {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: 'Database error while recording volunteer signup.'
+        });
+      }
+      res.json({ success: true, id: this.lastID, message: 'Thank you for volunteering! We will contact you soon.' });
+    }
   );
 });
 
@@ -198,7 +394,67 @@ app.post('/api/contact', (req, res) => {
   // But we respond with success: true. Because the customer is always right.
   // Even when they're wrong. Especially when they're wrong."
 
-  res.json({ success: true });
+  const { name, email, phone, subject, message } = req.body;
+
+  // Validate required fields
+  if (!name || !email || !message) {
+    return res.status(400).json({
+      success: false,
+      message: 'Name, email, and message are required.'
+    });
+  }
+
+  // Validate email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Please enter a valid email address.'
+    });
+  }
+
+  // Validate name length
+  if (name.trim().length < 2 || name.trim().length > 100) {
+    return res.status(400).json({
+      success: false,
+      message: 'Name must be between 2 and 100 characters.'
+    });
+  }
+
+  // Validate phone if provided
+  if (phone && phone.trim().length > 0) {
+    const phoneRegex = /^[\d\-\s\+\(\)]+$/;
+    if (!phoneRegex.test(phone) || phone.replace(/\D/g, '').length < 7) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please enter a valid phone number (at least 7 digits).'
+      });
+    }
+  }
+
+  // Validate message length
+  if (message.trim().length < 10 || message.trim().length > 5000) {
+    return res.status(400).json({
+      success: false,
+      message: 'Message must be between 10 and 5000 characters.'
+    });
+  }
+
+  // Validate subject if provided
+  if (subject && subject.trim().length > 200) {
+    return res.status(400).json({
+      success: false,
+      message: 'Subject must be 200 characters or less.'
+    });
+  }
+
+  // For now, just log and respond with success
+  console.log('Contact form submission:', { name, email, phone, subject, message, timestamp: new Date().toISOString() });
+
+  res.json({
+    success: true,
+    message: 'Thank you for contacting us. We will review your message and respond within 24-48 hours.'
+  });
 });
 
 // Debris Report
@@ -209,11 +465,89 @@ app.post('/api/report-debris', (req, res) => {
   // The ocean's gonna get in trouble. This time, we got witnesses."
 
   const { location, debrisType, quantity, description, latitude, longitude, photoBase64 } = req.body;
-  if (!location || !debrisType || !quantity) return res.status(400).json({ success: false, message: 'Missing required fields' });
+
+  // Validate required fields
+  if (!location || !debrisType || !quantity) {
+    return res.status(400).json({
+      success: false,
+      message: 'Location, debris type, and quantity are required.'
+    });
+  }
+
+  // Validate location length
+  if (location.trim().length < 2 || location.trim().length > 200) {
+    return res.status(400).json({
+      success: false,
+      message: 'Location must be between 2 and 200 characters.'
+    });
+  }
+
+  // Validate debrisType
+  const validTypes = ['plastic', 'fishing_net', 'glass', 'metal', 'foam', 'rubber', 'wood', 'other'];
+  if (!validTypes.includes(debrisType.toLowerCase())) {
+    return res.status(400).json({
+      success: false,
+      message: `Debris type must be one of: ${validTypes.join(', ')}`
+    });
+  }
+
+  // Validate quantity is a positive number
+  const quantityNum = parseInt(quantity);
+  if (isNaN(quantityNum) || quantityNum <= 0 || quantityNum > 10000) {
+    return res.status(400).json({
+      success: false,
+      message: 'Quantity must be a number between 1 and 10,000 items.'
+    });
+  }
+
+  // Validate description length if provided
+  if (description && description.trim().length > 1000) {
+    return res.status(400).json({
+      success: false,
+      message: 'Description must be 1000 characters or less.'
+    });
+  }
+
+  // Validate coordinates if provided
+  if (latitude !== null && latitude !== undefined) {
+    const lat = parseFloat(latitude);
+    if (isNaN(lat) || lat < -90 || lat > 90) {
+      return res.status(400).json({
+        success: false,
+        message: 'Latitude must be between -90 and 90.'
+      });
+    }
+  }
+
+  if (longitude !== null && longitude !== undefined) {
+    const lon = parseFloat(longitude);
+    if (isNaN(lon) || lon < -180 || lon > 180) {
+      return res.status(400).json({
+        success: false,
+        message: 'Longitude must be between -180 and 180.'
+      });
+    }
+  }
+
+  // Validate photoBase64 size if provided (max 5MB base64)
+  if (photoBase64 && photoBase64.length > 5242880) {
+    return res.status(413).json({
+      success: false,
+      message: 'Photo must be 5MB or smaller.'
+    });
+  }
 
   db.run('INSERT INTO debris_reports (location, debrisType, quantity, description, latitude, longitude, photoBase64) VALUES (?, ?, ?, ?, ?, ?, ?)',
-    [location, debrisType, quantity, description || '', latitude || null, longitude || null, photoBase64 || null],
-    function() { res.json({ success: true, id: this.lastID, message: 'Debris report recorded' }); }
+    [location.trim(), debrisType.toLowerCase(), quantityNum, description?.trim() || '', latitude || null, longitude || null, photoBase64 || null],
+    function(err) {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: 'Database error while recording debris report.'
+        });
+      }
+      res.json({ success: true, id: this.lastID, message: 'Debris report recorded. Thank you for helping protect our oceans!' });
+    }
   );
 });
 
@@ -656,7 +990,7 @@ app.get('/api/climate-trends', async (req, res) => {
     });
   } catch (error) {
     console.error('Climate trends error:', error);
-    
+
     if (error.name === 'AbortError') {
       return res.status(504).json({
         success: false,
