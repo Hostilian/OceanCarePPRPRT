@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "lint": "eslint . --ext .js,.html"
+    "lint": "eslint . --ext .js",
+    "test": "jest"
   },
   "dependencies": {
     "express": "^4.19.2",

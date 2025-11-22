@@ -65,7 +65,6 @@
                 <li><a href="how-to-help.html" class="text-white hover:text-teal transition">How to Help</a></li>
                 <li><a href="volunteer.html" class="text-white hover:text-teal transition">Volunteer</a></li>
                 <li><a href="index.html#news" class="text-white hover:text-teal transition">News</a></li>
-                <li><a href="login.html" class="btn btn-outline text-sm">Login</a></li>
             </ul>
             <button id="mobile-menu-btn" class="md:hidden text-white text-2xl"><i class="fas fa-bars"></i></button>
         </nav>
@@ -80,7 +79,6 @@
             <li><a href="how-to-help.html" class="text-white text-2xl hover:text-teal transition">How to Help</a></li>
             <li><a href="volunteer.html" class="text-white text-2xl hover:text-teal transition">Volunteer</a></li>
             <li><a href="index.html#news" class="text-white text-2xl hover:text-teal transition">News</a></li>
-            <li><a href="login.html" class="btn btn-primary mt-4">Login</a></li>
         </ul>
     </div>
 
@@ -88,24 +86,24 @@
         <!-- Donation Section -->
         <section id="donate" class="py-32">
             <div class="container mx-auto px-6">
-                <h2 class="font-brand text-4xl text-white mb-12 text-center">Make a Donation</h2>
+                <h2 class="font-brand text-4xl text-white mb-12 text-center">Give Money If You Can</h2>
                 <div class="max-w-4xl mx-auto bg-light-blue p-8 rounded-lg">
-                    <h3 class="text-2xl font-semibold text-white mb-6">Donation Calculator</h3>
+                    <h3 class="text-2xl font-semibold text-white mb-6">See What Your Money Does</h3>
                     <div class="grid md:grid-cols-2 gap-8 items-center">
                         <div>
-                            <label for="donation-amount" class="block text-light-slate mb-2">Choose an amount (USD):</label>
+                            <label for="donation-amount" class="block text-light-slate mb-2">Pick an amount:</label>
                             <input type="range" id="donation-amount" min="5" max="500" value="50" class="w-full h-2 bg-slate rounded-lg appearance-none cursor-pointer">
                             <div class="text-center text-white font-bold text-2xl mt-4">
                                 $<span id="donation-value">50</span>
                             </div>
                         </div>
                         <div id="impact-description" class="bg-deep-blue p-6 rounded-lg">
-                            <h4 class="text-lg font-semibold text-white mb-2">Your Impact:</h4>
-                            <p class="text-light-slate">With $50, you can help us remove 100 pounds of plastic from the ocean.</p>
+                            <h4 class="text-lg font-semibold text-white mb-2">What Happens:</h4>
+                            <p class="text-light-slate">With $50, we can pull about 100 pounds of plastic out of the ocean. Not nothing.</p>
                         </div>
                     </div>
                     <div class="text-center mt-8">
-                        <button class="btn btn-primary">Donate Now</button>
+                        <button class="btn btn-primary">Donate</button>
                     </div>
                 </div>
             </div>
@@ -114,9 +112,9 @@
         <!-- Volunteer Section -->
         <section id="volunteer" class="py-20">
             <div class="container mx-auto px-6 text-center">
-                <h2 class="font-brand text-4xl text-white mb-4">Become a Volunteer</h2>
-                <p class="max-w-2xl mx-auto mb-8 text-light-slate">Join our global network of volunteers and take direct action to protect our oceans. No experience required, just a passion for the planet.</p>
-                <a href="volunteer.html" class="btn btn-primary">Sign Up to Volunteer</a>
+                <h2 class="font-brand text-4xl text-white mb-4">Or Give Your Time</h2>
+                <p class="max-w-2xl mx-auto mb-8 text-light-slate">We need people to help. Doesn't matter if you know anything. We'll teach you. Just show up and help.</p>
+                <a href="volunteer.html" class="btn btn-primary">Volunteer</a>
             </div>
         </section>
     </main>
@@ -147,7 +145,7 @@
         const mobileMenuLinks = mobileMenu.querySelectorAll('a');
 
         const toggleMenu = () => mobileMenu.classList.toggle('hidden');
-        
+
         mobileMenuBtn.addEventListener('click', toggleMenu);
         mobileMenuCloseBtn.addEventListener('click', toggleMenu);
         mobileMenuLinks.forEach(link => link.addEventListener('click', toggleMenu));
@@ -160,13 +158,13 @@
         const updateDonationImpact = (amount) => {
             let impactText = '';
             if (amount < 25) {
-                impactText = `With $${amount}, you can help us provide educational materials to a classroom about ocean conservation.`;
+                impactText = `With $${amount}, we can print and send info about ocean conservation to schools.`;
             } else if (amount < 100) {
-                impactText = `With $${amount}, you can help us remove ${amount * 2} pounds of plastic from the ocean.`;
+                impactText = `With $${amount}, we can remove about ${amount * 2} pounds of plastic from the ocean.`;
             } else if (amount < 250) {
-                impactText = `With $${amount}, you can help us plant ${Math.floor(amount / 10)} new coral fragments in a restoration site.`;
+                impactText = `With $${amount}, we can plant ${Math.floor(amount / 10)} new coral fragments in a reef.`;
             } else {
-                impactText = `With $${amount}, you can help fund a day of research for our marine biologists.`;
+                impactText = `With $${amount}, we can fund a marine biologist to do research for a day.`;
             }
             impactDescription.querySelector('p').textContent = impactText;
         };

@@ -56,7 +56,6 @@
                 <li><a href="how-to-help.html" class="text-white hover:text-teal transition">How to Help</a></li>
                 <li><a href="volunteer.html" class="text-white hover:text-teal transition">Volunteer</a></li>
                 <li><a href="index.html#news" class="text-white hover:text-teal transition">News</a></li>
-                <li><a href="login.html" class="btn btn-outline text-sm">Login</a></li>
             </ul>
             <button id="mobile-menu-btn" class="md:hidden text-white text-2xl"><i class="fas fa-bars"></i></button>
         </nav>
@@ -71,7 +70,6 @@
             <li><a href="how-to-help.html" class="text-white text-2xl hover:text-teal transition">How to Help</a></li>
             <li><a href="volunteer.html" class="text-white text-2xl hover:text-teal transition">Volunteer</a></li>
             <li><a href="index.html#news" class="text-white text-2xl hover:text-teal transition">News</a></li>
-            <li><a href="login.html" class="btn btn-primary mt-4">Login</a></li>
         </ul>
     </div>
 
@@ -79,28 +77,28 @@
         <!-- Team Section -->
         <section id="team" class="py-32">
             <div class="container mx-auto px-6">
-                <h2 class="font-brand text-4xl text-white mb-12 text-center">Meet Our Team</h2>
+                <h2 class="font-brand text-4xl text-white mb-12 text-center">The People Who Work Here</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Team Member 1 -->
                     <div class="team-card text-center bg-light-blue p-8 rounded-lg">
                         <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Dr. Anya Sharma" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-teal">
                         <h3 class="text-xl font-semibold text-white">Dr. Anya Sharma</h3>
-                        <p class="text-teal mb-2">Lead Marine Biologist</p>
-                        <p class="text-light-slate">Anya has dedicated her life to studying coral reef ecosystems and is a leading expert in climate-resilient coral species.</p>
+                        <p class="text-teal mb-2">Marine Biologist</p>
+                        <p class="text-light-slate">Anya knows everything about coral. She spent years studying them, and now she's trying to save them. It's hard work.</p>
                     </div>
                     <!-- Team Member 2 -->
                     <div class="team-card text-center bg-light-blue p-8 rounded-lg">
                         <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Ben Carter" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-teal">
                         <h3 class="text-xl font-semibold text-white">Ben Carter</h3>
-                        <p class="text-teal mb-2">Director of Operations</p>
-                        <p class="text-light-slate">Ben coordinates our global cleanup efforts, managing logistics for volunteers and equipment in remote locations.</p>
+                        <p class="text-teal mb-2">Operations</p>
+                        <p class="text-light-slate">Ben makes sure everything actually happens. Logistics, volunteers, equipment. Without him, we'd just be talking about cleaning the ocean instead of actually doing it.</p>
                     </div>
                     <!-- Team Member 3 -->
                     <div class="team-card text-center bg-light-blue p-8 rounded-lg">
                         <img src="https://randomuser.me/api/portraits/women/78.jpg" alt="Chloe Garcia" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-teal">
                         <h3 class="text-xl font-semibold text-white">Chloe Garcia</h3>
-                        <p class="text-teal mb-2">Community Outreach Lead</p>
-                        <p class="text-light-slate">Chloe works with local communities, empowering them to become guardians of their own marine environments through education and support.</p>
+                        <p class="text-teal mb-2">Community Work</p>
+                        <p class="text-light-slate">Chloe works with the people who actually live by the ocean. She listens to what they need and helps them protect their home. That's the real work.</p>
                     </div>
                 </div>
             </div>
@@ -133,7 +131,7 @@
         const mobileMenuLinks = mobileMenu.querySelectorAll('a');
 
         const toggleMenu = () => mobileMenu.classList.toggle('hidden');
-        
+
         mobileMenuBtn.addEventListener('click', toggleMenu);
         mobileMenuCloseBtn.addEventListener('click', toggleMenu);
         mobileMenuLinks.forEach(link => link.addEventListener('click', toggleMenu));

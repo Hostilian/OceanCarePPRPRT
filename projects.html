@@ -82,7 +82,6 @@
                 <li><a href="how-to-help.html" class="text-white hover:text-teal transition">How to Help</a></li>
                 <li><a href="volunteer.html" class="text-white hover:text-teal transition">Volunteer</a></li>
                 <li><a href="index.html#news" class="text-white hover:text-teal transition">News</a></li>
-                <li><a href="login.html" class="btn btn-outline text-sm">Login</a></li>
             </ul>
             <button id="mobile-menu-btn" class="md:hidden text-white text-2xl"><i class="fas fa-bars"></i></button>
         </nav>
@@ -97,7 +96,6 @@
             <li><a href="how-to-help.html" class="text-white text-2xl hover:text-teal transition">How to Help</a></li>
             <li><a href="volunteer.html" class="text-white text-2xl hover:text-teal transition">Volunteer</a></li>
             <li><a href="index.html#news" class="text-white text-2xl hover:text-teal transition">News</a></li>
-            <li><a href="login.html" class="btn btn-primary mt-4">Login</a></li>
         </ul>
     </div>
 
@@ -105,14 +103,14 @@
         <!-- Projects Section -->
         <section id="projects" class="py-32">
             <div class="container mx-auto px-6">
-                <h2 class="font-brand text-4xl text-white mb-12 text-center">Our Core Projects</h2>
+                <h2 class="font-brand text-4xl text-white mb-12 text-center">What We're Actually Doing</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Project 1 -->
                     <div class="project-card bg-light-blue rounded-lg overflow-hidden flex flex-col">
                         <img src="https://images.unsplash.com/photo-1598335687192-09b8a3e13634?auto=format&fit=crop&w=800&q=80" alt="Coral Reef Restoration" class="w-full h-48 object-cover">
                         <div class="p-6 flex flex-col flex-grow">
-                            <h3 class="text-xl font-semibold text-white mb-4">Coral Reef Restoration</h3>
-                            <p class="text-light-slate mb-4 flex-grow">We are actively restoring damaged coral reefs by planting resilient coral species and creating artificial reefs. Our goal is to revive these vital ecosystems.</p>
+                            <h3 class="text-xl font-semibold text-white mb-4">Coral Reefs</h3>
+                            <p class="text-light-slate mb-4 flex-grow">The reefs are bleaching and dying. We're trying to regrow them by planting coral and protecting the ones that are left. It's slow work but it matters.</p>
                             <a href="#" class="text-gold font-semibold hover:underline mt-auto">Learn More &rarr;</a>
                         </div>
                     </div>
@@ -120,8 +118,8 @@
                     <div class="project-card bg-light-blue rounded-lg overflow-hidden flex flex-col">
                         <img src="https://images.unsplash.com/photo-1578692793931-9d568d91b45a?auto=format&fit=crop&w=800&q=80" alt="Plastic-Free Oceans" class="w-full h-48 object-cover">
                         <div class="p-6 flex flex-col flex-grow">
-                            <h3 class="text-xl font-semibold text-white mb-4">Plastic-Free Oceans</h3>
-                            <p class="text-light-slate mb-4 flex-grow">Our teams organize large-scale beach and ocean cleanups, removing tons of plastic waste. We also work with corporations to reduce plastic production.</p>
+                            <h3 class="text-xl font-semibold text-white mb-4">Plastic Cleanup</h3>
+                            <p class="text-light-slate mb-4 flex-grow">There's too much plastic in the ocean. We organize cleanups and pull it out. We also tell companies to stop making so much of it. One of those works better than the other.</p>
                             <a href="#" class="text-gold font-semibold hover:underline mt-auto">Learn More &rarr;</a>
                         </div>
                     </div>
@@ -129,8 +127,8 @@
                     <div class="project-card bg-light-blue rounded-lg overflow-hidden flex flex-col">
                         <img src="https://images.unsplash.com/photo-1549996232-3c6b39435a23?auto=format&fit=crop&w=800&q=80" alt="Marine Life Protection" class="w-full h-48 object-cover">
                         <div class="p-6 flex flex-col flex-grow">
-                            <h3 class="text-xl font-semibold text-white mb-4">Marine Life Protection</h3>
-                            <p class="text-light-slate mb-4 flex-grow">We advocate for the creation of marine protected areas and work to combat illegal fishing and poaching of endangered species.</p>
+                            <h3 class="text-xl font-semibold text-white mb-4">Marine Life</h3>
+                            <p class="text-light-slate mb-4 flex-grow">Fish are being overfished. Some species are nearly gone. We fight illegal fishing and push for protected areas where nothing can be killed. It's working, sort of.</p>
                             <a href="#" class="text-gold font-semibold hover:underline mt-auto">Learn More &rarr;</a>
                         </div>
                     </div>
@@ -165,7 +163,7 @@
         const mobileMenuLinks = mobileMenu.querySelectorAll('a');
 
         const toggleMenu = () => mobileMenu.classList.toggle('hidden');
-        
+
         mobileMenuBtn.addEventListener('click', toggleMenu);
         mobileMenuCloseBtn.addEventListener('click', toggleMenu);
         mobileMenuLinks.forEach(link => link.addEventListener('click', toggleMenu));
