@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Marine Debris - OceanCare Initiative</title>
+  <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --blue: #0077BE; --teal: #00A8CC; --sand: #FDD835; --dark: #0a1929;
+  --text: #e0e0e0; --muted: #a0a0a0; --danger: #FF6B6B; --success: #51CF66;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, var(--dark) 0%, #1a3a52 100%);
+  color: var(--text); line-height: 1.6;
+  min-height: 100vh;
+}
+
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 1000;
+  background: rgba(10, 25, 41, 0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 119, 190, 0.2); padding: 1rem 2rem;
+}
+nav > div {
+  max-width: 1200px; margin: 0 auto; display: flex;
+  justify-content: space-between; align-items: center;
+}
+.logo { font-size: 1.5rem; font-weight: 700; color: var(--sand); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { color: var(--text); text-decoration: none; transition: color 0.3s; font-size: 0.95rem; }
+.nav-links a:hover { color: var(--sand); }
+@media (max-width: 768px) { .nav-links { display: none; } }
+
+.hero {
+  margin-top: 70px; min-height: 50vh; display: flex;
+  align-items: center; justify-content: center; text-align: center;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(0, 119, 190, 0.15)), 
+              linear-gradient(180deg, var(--dark) 0%, #1a5276 100%);
+}
+.hero-content { max-width: 700px; }
+.hero h1 { font-size: clamp(2rem, 8vw, 3.5rem); margin-bottom: 1rem; color: #FF6B6B; text-shadow: 0 0 20px rgba(255, 107, 107, 0.3); }
+.hero p { font-size: 1.1rem; color: var(--muted); line-height: 1.8; }
+
+.container { max-width: 800px; margin: 0 auto; padding: 3rem 2rem; }
+.form-card {
+  background: linear-gradient(135deg, rgba(0, 119, 190, 0.1), rgba(0, 168, 204, 0.08));
+  border: 1px solid rgba(0, 168, 204, 0.3); border-radius: 15px;
+  padding: 2.5rem; box-shadow: 0 8px 32px rgba(0, 119, 190, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.form-group {
+  margin-bottom: 1.8rem; display: flex; flex-direction: column;
+}
+label {
+  font-weight: 600; margin-bottom: 0.7rem; color: var(--sand);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.required { color: #FF6B6B; }
+.hint { font-size: 0.85rem; color: var(--muted); font-weight: 400; display: block; margin-top: 0.3rem; }
+
+input, select, textarea {
+  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(0, 168, 204, 0.3);
+  color: var(--text); padding: 0.9rem 1rem; border-radius: 8px;
+  font-size: 1rem; transition: all 0.3s; font-family: inherit;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none; border-color: var(--sand); background: rgba(253, 216, 53, 0.08);
+  box-shadow: 0 0 20px rgba(253, 216, 53, 0.2);
+}
+
+input[type="file"] { padding: 0.6rem; cursor: pointer; }
+input[type="file"]::file-selector-button {
+  background: linear-gradient(135deg, var(--blue), var(--teal));
+  color: white; border: none; padding: 0.6rem 1.2rem;
+  border-radius: 6px; cursor: pointer; font-weight: 600;
+  transition: all 0.3s;
+}
+input[type="file"]::file-selector-button:hover {
+  transform: translateY(-2px); box-shadow: 0 0 20px rgba(0, 119, 190, 0.4);
+}
+
+.file-preview {
+  margin-top: 1rem; max-width: 100%; border-radius: 8px;
+  max-height: 300px; object-fit: cover; border: 2px solid rgba(0, 168, 204, 0.5);
+}
+
+textarea { resize: vertical; min-height: 120px; }
+
+.geolocation-button {
+  background: rgba(0, 168, 204, 0.2); border: 1px solid var(--teal);
+  color: var(--teal); padding: 0.7rem 1.2rem; border-radius: 6px;
+  cursor: pointer; font-weight: 600; transition: all 0.3s;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.9rem;
+}
+.geolocation-button:hover {
+  background: rgba(0, 168, 204, 0.3); box-shadow: 0 0 15px rgba(0, 168, 204, 0.3);
+}
+.geolocation-button.active {
+  background: rgba(81, 207, 102, 0.2); border-color: #51CF66;
+  color: #51CF66;
+}
+
+.btn {
+  padding: 1rem 2rem; border: none; border-radius: 8px;
+  font-size: 1rem; font-weight: 600; cursor: pointer;
+  text-decoration: none; transition: all 0.3s;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.5rem;
+}
+.btn-submit {
+  background: linear-gradient(135deg, #FF6B6B, #FF5252);
+  color: white; width: 100%; box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+  margin-top: 1.5rem;
+}
+.btn-submit:hover {
+  box-shadow: 0 0 50px rgba(255, 107, 107, 0.6); transform: translateY(-2px);
+}
+.btn-submit:disabled {
+  opacity: 0.5; cursor: not-allowed; transform: none;
+}
+
+.modal {
+  display: none; position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7);
+  z-index: 2000; justify-content: center; align-items: center;
+  animation: fadeIn 0.3s;
+}
+.modal.active { display: flex; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.modal-content {
+  background: linear-gradient(135deg, rgba(0, 119, 190, 0.15), rgba(0, 168, 204, 0.15)),
+              rgba(10, 25, 41, 0.98);
+  border: 1px solid rgba(0, 168, 204, 0.3); border-radius: 15px;
+  padding: 2.5rem; max-width: 500px; text-align: center;
+  position: relative; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.4s ease-out;
+}
+.modal-close {
+  position: absolute; top: 1rem; right: 1rem;
+  background: none; border: none; color: var(--muted);
+  font-size: 2rem; cursor: pointer; transition: color 0.3s;
+}
+.modal-close:hover { color: var(--sand); }
+
+.success-icon {
+  font-size: 4rem; margin-bottom: 1rem;
+  animation: bounce 0.6s ease-out;
+}
+@keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+.modal h2 { color: #51CF66; margin-bottom: 1rem; font-size: 1.8rem; }
+.modal p { color: var(--muted); margin-bottom: 1.5rem; line-height: 1.8; }
+.modal .btn {
+  background: linear-gradient(135deg, var(--blue), var(--teal));
+  color: white; width: 100%;
+}
+.modal .btn:hover {
+  box-shadow: 0 0 30px rgba(0, 119, 190, 0.4); transform: translateY(-2px);
+}
+
+.loading {
+  display: inline-block; width: 20px; height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%; border-top-color: white;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.error-message {
+  background: rgba(255, 107, 107, 0.15); border-left: 4px solid #FF6B6B;
+  color: #FF8787; padding: 1rem; border-radius: 6px;
+  margin-bottom: 1.5rem; display: none;
+}
+.error-message.show { display: block; }
+
+.success-message {
+  background: rgba(81, 207, 102, 0.15); border-left: 4px solid #51CF66;
+  color: #69db7c; padding: 1rem; border-radius: 6px;
+  margin-bottom: 1.5rem; display: none;
+}
+.success-message.show { display: block; }
+
+.info-box {
+  background: rgba(0, 168, 204, 0.1); border: 1px solid rgba(0, 168, 204, 0.3);
+  border-radius: 8px; padding: 1.2rem; margin-bottom: 2rem;
+  color: var(--muted); font-size: 0.9rem;
+}
+.info-box strong { color: var(--teal); }
+
+.footer {
+  background: rgba(10, 25, 41, 0.95); border-top: 1px solid rgba(0, 168, 204, 0.2);
+  padding: 2.5rem; text-align: center; color: var(--muted);
+  font-size: 0.9rem; margin-top: 3rem;
+}
+.footer-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.footer-links a { color: var(--sand); text-decoration: none; transition: color 0.3s; }
+.footer-links a:hover { color: var(--teal); }
+
+@media (max-width: 768px) {
+  .container { padding: 2rem 1rem; }
+  .form-card { padding: 1.5rem; }
+  .hero { margin-top: 70px; min-height: 35vh; }
+  .hero h1 { font-size: 2rem; margin-bottom: 0.7rem; }
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div>
+      <div class="logo">🌊 OceanCare</div>
+      <ul class="nav-links">
+        <li><a href="../index.html#mission">Home</a></li>
+        <li><a href="../pages/projects.html">Projects</a></li>
+        <li><a href="report-debris.html">Report Debris</a></li>
+        <li><a href="../pages/how-to-help.html">Donate</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>🚨 Report Ocean Debris</h1>
+      <p>Help us track marine pollution. Report debris sightings with photos and location. Every report helps us protect our oceans.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="info-box">
+      <strong>Your Report Helps:</strong> All debris reports are analyzed by our team to identify pollution hotspots and coordinate cleanup efforts. Your data is invaluable to ocean conservation.
+    </div>
+
+    <div class="form-card">
+      <div class="error-message" id="errorMsg"></div>
+      <div class="success-message" id="successMsg"></div>
+
+      <form id="debrisForm" class="debris-form">
+        <div class="form-group">
+          <label>Location/City <span class="required">*</span></label>
+          <input type="text" id="location" name="location" required placeholder="e.g., Santa Monica Beach" maxlength="100">
+          <span class="hint">Where did you spot the debris?</span>
+        </div>
+
+        <div class="form-group">
+          <label>Debris Type <span class="required">*</span></label>
+          <select id="debrisType" name="debrisType" required>
+            <option value="">Select a type...</option>
+            <option value="plastic-bags">Plastic Bags</option>
+            <option value="bottles">Bottles & Caps</option>
+            <option value="fishing-nets">Fishing Nets</option>
+            <option value="styrofoam">Styrofoam</option>
+            <option value="metal">Metal/Cans</option>
+            <option value="mixed">Mixed Plastic</option>
+            <option value="other">Other</option>
+          </select>
+          <span class="hint">Select the primary debris type you observed</span>
+        </div>
+
+        <div class="form-group">
+          <label>Estimated Quantity <span class="required">*</span></label>
+          <select id="quantity" name="quantity" required>
+            <option value="">Select quantity...</option>
+            <option value="small">Small (handful)</option>
+            <option value="medium">Medium (bucket-sized)</option>
+            <option value="large">Large (requires cleanup crew)</option>
+            <option value="massive">Massive (extensive pollution)</option>
+          </select>
+          <span class="hint">Estimate how much debris you saw</span>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="description" name="description" placeholder="Describe the debris, any damage to marine life, or additional details..."></textarea>
+          <span class="hint">Optional: Any observations that might help our team?</span>
+        </div>
+
+        <div class="form-group">
+          <label>Photo (Optional)</label>
+          <input type="file" id="photo" name="photo" accept="image/*" capture="environment">
+          <img id="photoPreview" class="file-preview" style="display: none;">
+          <span class="hint">Upload a photo of the debris. Use your device camera for best results.</span>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <button type="button" class="geolocation-button" id="geoButton">
+            📍 Get My Location
+          </button>
+          <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+            <input type="text" id="latitude" name="latitude" placeholder="Latitude (optional)" style="flex: 1;" readonly>
+            <input type="text" id="longitude" name="longitude" placeholder="Longitude (optional)" style="flex: 1;" readonly>
+          </div>
+          <span class="hint">Or enter coordinates manually</span>
+        </div>
+
+        <button type="submit" class="btn btn-submit">
+          <span id="submitText">🚨 Submit Debris Report</span>
+          <span class="loading" id="submitLoader" style="display: none;"></span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="successModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div class="success-icon">✅</div>
+      <h2>Report Submitted!</h2>
+      <p>Thank you for helping protect our oceans. Your debris report has been recorded and will be reviewed by our conservation team. Together, we're making a difference.</p>
+      <button onclick="backHome()" class="btn">Return to Home</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="../pages/projects.html">Projects</a>
+      <a href="../pages/contact.html">Contact</a>
+      <a href="#">Privacy</a>
+    </div>
+    <p>&copy; 2025 OceanCare. Protecting oceans, one action at a time. 🌊</p>
+  </footer>
+
+  <script>
+const form = document.getElementById('debrisForm');
+const geoButton = document.getElementById('geoButton');
+const photoInput = document.getElementById('photo');
+const photoPreview = document.getElementById('photoPreview');
+const errorMsg = document.getElementById('errorMsg');
+const successMsg = document.getElementById('successMsg');
+
+// Photo preview
+photoInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      photoPreview.src = event.target.result;
+      photoPreview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+// Geolocation
+geoButton.addEventListener('click', () => {
+  if (!navigator.geolocation) {
+    showError('Geolocation not supported by your browser');
+    return;
+  }
+
+  geoButton.disabled = true;
+  geoButton.textContent = '📍 Getting location...';
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      document.getElementById('latitude').value = position.coords.latitude.toFixed(6);
+      document.getElementById('longitude').value = position.coords.longitude.toFixed(6);
+      geoButton.classList.add('active');
+      geoButton.textContent = '✅ Location Captured';
+      geoButton.disabled = false;
+    },
+    (error) => {
+      showError('Could not get location: ' + error.message);
+      geoButton.disabled = false;
+      geoButton.textContent = '📍 Get My Location';
+    }
+  );
+});
+
+// Form submission
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  clearMessages();
+
+  const submitBtn = form.querySelector('.btn-submit');
+  const submitLoader = document.getElementById('submitLoader');
+  const submitText = document.getElementById('submitText');
+
+  submitBtn.disabled = true;
+  submitLoader.style.display = 'inline-block';
+  submitText.textContent = 'Submitting...';
+
+  try {
+    const formData = new FormData();
+    formData.append('location', document.getElementById('location').value);
+    formData.append('debrisType', document.getElementById('debrisType').value);
+    formData.append('quantity', document.getElementById('quantity').value);
+    formData.append('description', document.getElementById('description').value);
+    formData.append('latitude', document.getElementById('latitude').value);
+    formData.append('longitude', document.getElementById('longitude').value);
+
+    if (photoInput.files[0]) {
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        formData.append('photoBase64', event.target.result);
+        await submitReport(formData, submitBtn, submitLoader, submitText);
+      };
+      reader.readAsDataURL(photoInput.files[0]);
+    } else {
+      await submitReport(formData, submitBtn, submitLoader, submitText);
+    }
+  } catch (error) {
+    showError('Error processing form: ' + error.message);
+    submitBtn.disabled = false;
+    submitLoader.style.display = 'none';
+    submitText.textContent = '🚨 Submit Debris Report';
+  }
+});
+
+async function submitReport(formData, submitBtn, submitLoader, submitText) {
+  try {
+    const res = await fetch('/api/report-debris', { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      showSuccessModal();
+      form.reset();
+      photoPreview.style.display = 'none';
+    } else {
+      showError(data.message || 'Failed to submit report');
+      submitBtn.disabled = false;
+      submitLoader.style.display = 'none';
+      submitText.textContent = '🚨 Submit Debris Report';
+    }
+  } catch (error) {
+    showError('Network error: ' + error.message);
+    submitBtn.disabled = false;
+    submitLoader.style.display = 'none';
+    submitText.textContent = '🚨 Submit Debris Report';
+  }
+}
+
+function showError(msg) {
+  errorMsg.textContent = msg;
+  errorMsg.classList.add('show');
+  setTimeout(() => errorMsg.classList.remove('show'), 5000);
+}
+
+function showSuccessModal() {
+  document.getElementById('successModal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('successModal').classList.remove('active');
+}
+
+function backHome() {
+  window.location.href = '../index.html';
+}
+
+function clearMessages() {
+  errorMsg.classList.remove('show');
+  successMsg.classList.remove('show');
+}
+  </script>
+</body>
+</html>

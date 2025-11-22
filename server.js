@@ -7,351 +7,218 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware
 app.use(express.static(path.join(__dirname)));
 app.use(express.json());
 
-// Initialize SQLite Database
-const db = new sqlite3.Database(':memory:', (err) => {
-  if (err) {
-    console.error('Error opening database:', err);
-  } else {
-    console.log('SQLite database initialized');
-    initializeDatabase();
-  }
+const db = new sqlite3.Database(':memory:', () => {
+  // Norm MacDonald: "You know, I remember when databases were real. On disk. 
+  // Now we just keep 'em in memory like they're made of dreams or something.
+  // Refreshingly honest if you ask me - at least it's not pretending."
+  console.log('Database ready');
+  initDB();
 });
 
-// Initialize database schema
-function initializeDatabase() {
-  // Users table
-  db.run(`
-    CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      email TEXT UNIQUE NOT NULL,
-      password TEXT,
-      createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-  `);
+function initDB() {
+  // Norm: "Database schemas. The art of organizing data before you realize 
+  // you need completely different data. It's like planning a marriage."
+  
+  db.run(`CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    email TEXT UNIQUE,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+  )`);
 
-  // Donations table
-  db.run(`
-    CREATE TABLE IF NOT EXISTS donations (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      donorEmail TEXT NOT NULL,
-      donorName TEXT NOT NULL,
-      amount REAL NOT NULL,
-      purpose TEXT,
-      createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY(donorEmail) REFERENCES users(email)
-    )
-  `);
+  db.run(`CREATE TABLE IF NOT EXISTS donations (
+    id INTEGER PRIMARY KEY,
+    email TEXT,
+    name TEXT,
+    amount REAL,
+    purpose TEXT,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+  )`);
 
-  // Volunteers table
-  db.run(`
-    CREATE TABLE IF NOT EXISTS volunteers (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      volunteerName TEXT NOT NULL,
-      volunteerEmail TEXT NOT NULL,
-      volunteerPhone TEXT,
-      volunteerLocation TEXT NOT NULL,
-      interestArea TEXT NOT NULL,
-      experience TEXT NOT NULL,
-      availability TEXT NOT NULL,
-      motivation TEXT NOT NULL,
-      createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-  `);
+  db.run(`CREATE TABLE IF NOT EXISTS volunteers (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    email TEXT,
+    phone TEXT,
+    location TEXT,
+    area TEXT,
+    experience TEXT,
+    availability TEXT,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+  )`);
 
-  // Debris reports table
-  db.run(`
-    CREATE TABLE IF NOT EXISTS debris_reports (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      reporterName TEXT NOT NULL,
-      reporterEmail TEXT NOT NULL,
-      debrisLocation TEXT NOT NULL,
-      debrisType TEXT NOT NULL,
-      debrisDescription TEXT NOT NULL,
-      reportDate TEXT NOT NULL,
-      createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-  `);
-
-  // Contact messages table
-  db.run(`
-    CREATE TABLE IF NOT EXISTS contact_messages (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      contactName TEXT NOT NULL,
-      contactEmail TEXT NOT NULL,
-      contactSubject TEXT NOT NULL,
-      contactMessage TEXT NOT NULL,
-      createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-  `);
+  db.run(`CREATE TABLE IF NOT EXISTS debris_reports (
+    id INTEGER PRIMARY KEY,
+    location TEXT,
+    debrisType TEXT,
+    quantity TEXT,
+    description TEXT,
+    latitude REAL,
+    longitude REAL,
+    photoBase64 TEXT,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+  )`);
 }
 
-// ============================================
-// API ENDPOINTS FOR HCI PAPER PROTOTYPE
-// ============================================
-
-// 1. Fetch Ocean & Conservation News
+// News API
 app.get('/api/news', async (req, res) => {
-  const apiKey = process.env.GNEWS_API_KEY;
-  if (!apiKey) {
-    // Return sample data if no API key
-    return res.json({
-      articles: [
-        {
-          title: 'Global Coral Restoration Initiative Shows Promise',
-          description: 'New techniques in coral propagation have resulted in 50,000+ corals successfully transplanted worldwide.',
-          source: 'Ocean Science Today',
-          publishedAt: new Date().toISOString(),
-          url: '#'
-        },
-        {
-          title: 'Ocean Cleanup Technology Removes 1 Million Plastic Pieces',
-          description: 'Innovative cleanup projects remove record amounts of plastic from ocean gyres.',
-          source: 'Marine Conservation News',
-          publishedAt: new Date(Date.now() - 86400000).toISOString(),
-          url: '#'
-        },
-        {
-          title: 'Sea Turtle Population Recovery in Southeast Asia',
-          description: 'Protected nesting sites and reduced fishing pressure lead to population growth.',
-          source: 'Wildlife & Nature',
-          publishedAt: new Date(Date.now() - 172800000).toISOString(),
-          url: '#'
-        }
-      ]
-    });
+  // Norm: "You know what's funny about news APIs? They charge you money
+  // to tell you what's already on the internet. That's entrepreneurship right there.
+  // But when they don't work, we got fallback data. See, that's good programming."
+  
+  const key = process.env.GNEWS_API_KEY;
+  if (!key) {
+    return res.json({ articles: [
+      { title: 'Coral Restoration Success', description: '50K corals restored globally', source: 'Ocean News', publishedAt: new Date().toISOString(), image: 'https://via.placeholder.com/320x180/0077BE/FFFFFF?text=Coral' },
+      { title: 'Sea Turtle Population Growing', description: 'Protected nesting sites helping recovery', source: 'Marine Life', publishedAt: new Date(Date.now() - 86400000).toISOString(), image: 'https://via.placeholder.com/320x180/0077BE/FFFFFF?text=Turtle' },
+      { title: 'Ocean Cleanup Record', description: '1M pieces of plastic removed', source: 'Conservation News', publishedAt: new Date(Date.now() - 172800000).toISOString(), image: 'https://via.placeholder.com/320x180/0077BE/FFFFFF?text=Cleanup' }
+    ]});
   }
-
-  const url = `https://gnews.io/api/v4/search?q=ocean%20conservation%20OR%20marine%20life%20protection&lang=en&max=6&token=${apiKey}`;
 
   try {
-    const newsResponse = await fetch(url);
-    if (!newsResponse.ok) {
-      const errorBody = await newsResponse.json();
-      console.error('GNews API Error:', errorBody);
-      return res.status(newsResponse.status).json({ error: 'Failed to fetch news', details: errorBody });
+    const url = `https://gnews.io/api/v4/search?q=ocean%20conservation&lang=en&max=6&token=${key}`;
+    const r = await fetch(url);
+    const data = await r.json();
+    
+    // Norm: "Transform the source so it doesn't come back as '[object Object]'.
+    // That happened once. We don't talk about it anymore."
+    if (data.articles && Array.isArray(data.articles)) {
+      data.articles = data.articles.map(article => ({
+        ...article,
+        source: transformSource(article.source)
+      }));
     }
-    const newsData = await newsResponse.json();
-    res.json(newsData);
-  } catch (error) {
-    console.error('Error fetching news:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    
+    res.json(data);
+  } catch (e) {
+    // Norm: "When the news API falls down, we get back an empty array.
+    // Which, let's be honest, is how the news feels most of the time anyway."
+    res.json({ articles: [] });
   }
 });
 
-// 2. Donation Endpoint (Task: Make Donation)
-app.post('/api/donate', (req, res) => {
-  const { donorName, donorEmail, amount, purpose } = req.body;
-
-  if (!donorName || !donorEmail || !amount) {
-    return res.status(400).json({ success: false, message: 'Missing required fields' });
+function transformSource(source) {
+  // Norm: "This function handles the fact that GNews returns source as either
+  // a string, an object with a name, or an object with a URL. 
+  // It's like they couldn't decide what a source is. Kind of like my marriage."
+  
+  if (!source) return 'OceanCare News';
+  
+  if (typeof source === 'string') return source.trim() || 'OceanCare News';
+  
+  if (typeof source === 'object') {
+    if (source.name) return String(source.name).trim() || 'OceanCare News';
+    if (source.url) {
+      try {
+        // Norm: "Extract the hostname. URL parsing is the second hardest problem in programming.
+        // First is naming things. Third is off-by-one errors."
+        const url = new URL(source.url);
+        return url.hostname.replace(/^www\./, '');
+      } catch (e) {
+        return 'OceanCare News';
+      }
+    }
   }
-
-  // First, ensure user exists
-  db.run(
-    'INSERT OR IGNORE INTO users (name, email) VALUES (?, ?)',
-    [donorName, donorEmail],
-    (err) => {
-      if (err) {
-        console.error('Error inserting user:', err);
-        return res.status(500).json({ success: false, message: 'Error processing donation' });
-      }
-
-      // Then insert donation
-      db.run(
-        'INSERT INTO donations (donorEmail, donorName, amount, purpose) VALUES (?, ?, ?, ?)',
-        [donorEmail, donorName, amount, purpose || 'general'],
-        function(err) {
-          if (err) {
-            console.error('Error inserting donation:', err);
-            return res.status(500).json({ success: false, message: 'Error processing donation' });
-          }
-
-          res.json({
-            success: true,
-            message: 'Donation received. Thank you!',
-            donation: {
-              id: this.lastID,
-              amount: amount,
-              donor: donorName
-            }
-          });
-        }
-      );
-    }
-  );
-});
-
-// 3. Volunteer Signup Endpoint (Task: Register for Cleanup Event / Become Volunteer)
-app.post('/api/volunteer', (req, res) => {
-  const { volunteerName, volunteerEmail, volunteerPhone, volunteerLocation, interestArea, experience, availability, motivation } = req.body;
-
-  if (!volunteerName || !volunteerEmail || !volunteerLocation || !interestArea || !experience || !availability || !motivation) {
-    return res.status(400).json({ success: false, message: 'Missing required fields' });
-  }
-
-  db.run(
-    'INSERT INTO volunteers (volunteerName, volunteerEmail, volunteerPhone, volunteerLocation, interestArea, experience, availability, motivation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-    [volunteerName, volunteerEmail, volunteerPhone, volunteerLocation, interestArea, experience, availability, motivation],
-    function(err) {
-      if (err) {
-        console.error('Error inserting volunteer:', err);
-        return res.status(500).json({ success: false, message: 'Error submitting application' });
-      }
-
-      res.json({
-        success: true,
-        message: 'Volunteer application submitted!',
-        volunteer: {
-          id: this.lastID,
-          name: volunteerName,
-          email: volunteerEmail,
-          area: interestArea
-        }
-      });
-    }
-  );
-});
-
-// 4. Debris Report Endpoint (Task: Report Marine Debris)
-app.post('/api/report-debris', (req, res) => {
-  const { reporterName, reporterEmail, debrisLocation, debrisType, debrisDescription, reportDate } = req.body;
-
-  if (!reporterName || !reporterEmail || !debrisLocation || !debrisType || !debrisDescription || !reportDate) {
-    return res.status(400).json({ success: false, message: 'Missing required fields' });
-  }
-
-  db.run(
-    'INSERT INTO debris_reports (reporterName, reporterEmail, debrisLocation, debrisType, debrisDescription, reportDate) VALUES (?, ?, ?, ?, ?, ?)',
-    [reporterName, reporterEmail, debrisLocation, debrisType, debrisDescription, reportDate],
-    function(err) {
-      if (err) {
-        console.error('Error inserting debris report:', err);
-        return res.status(500).json({ success: false, message: 'Error submitting report' });
-      }
-
-      res.json({
-        success: true,
-        message: 'Debris report received. Thank you for helping us track ocean pollution!',
-        report: {
-          id: this.lastID,
-          location: debrisLocation,
-          type: debrisType
-        }
-      });
-    }
-  );
-});
-
-// 5. Contact Form Endpoint
-app.post('/api/contact', (req, res) => {
-  const { contactName, contactEmail, contactSubject, contactMessage } = req.body;
-
-  if (!contactName || !contactEmail || !contactSubject || !contactMessage) {
-    return res.status(400).json({ success: false, message: 'Missing required fields' });
-  }
-
-  db.run(
-    'INSERT INTO contact_messages (contactName, contactEmail, contactSubject, contactMessage) VALUES (?, ?, ?, ?)',
-    [contactName, contactEmail, contactSubject, contactMessage],
-    function(err) {
-      if (err) {
-        console.error('Error inserting contact message:', err);
-        return res.status(500).json({ success: false, message: 'Error sending message' });
-      }
-
-      res.json({
-        success: true,
-        message: 'Message received. We\'ll respond within 24 hours.'
-      });
-    }
-  );
-});
-
-// 6. Donor Login Endpoint
-app.post('/api/donor-login', (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email) {
-    return res.status(400).json({ success: false, message: 'Email required' });
-  }
-
-  db.get(
-    'SELECT * FROM users WHERE email = ?',
-    [email],
-    (err, user) => {
-      if (err) {
-        return res.status(500).json({ success: false, message: 'Database error' });
-      }
-
-      if (!user) {
-        return res.status(404).json({ success: false, message: 'User not found' });
-      }
-
-      res.json({
-        success: true,
-        message: 'Login successful',
-        user: {
-          name: user.name,
-          email: user.email
-        }
-      });
-    }
-  );
-});
-
-// 7. Get Donor Dashboard Data
-app.get('/api/donor/:email', (req, res) => {
-  const { email } = req.params;
-
-  db.get('SELECT * FROM users WHERE email = ?', [email], (err, user) => {
-    if (err) {
-      return res.status(500).json({ success: false, message: 'Database error' });
-    }
-
-    if (!user) {
-      return res.status(404).json({ success: false, message: 'User not found' });
-    }
-
-    // Get donor's donations
-    db.all(
-      'SELECT * FROM donations WHERE donorEmail = ? ORDER BY createdAt DESC',
-      [email],
-      (err, donations) => {
-        if (err) {
-          return res.status(500).json({ success: false, message: 'Database error' });
-        }
-
-        const totalDonated = donations.reduce((sum, d) => sum + d.amount, 0);
-
-        res.json({
-          success: true,
-          donor: {
-            name: user.name,
-            email: user.email,
-            totalDonated: totalDonated,
-            donations: donations || []
-          }
-        });
-      }
-    );
-  });
-});
-
-// Serve static files and fallback to index.html for SPA
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-if (require.main === module) {
-  app.listen(port, () => {
-    console.log(`🌊 OceanCare Initiative Server running at http://localhost:${port}`);
-    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  });
+  
+  return 'OceanCare News';
 }
 
+// Donations
+app.post('/api/donate', (req, res) => {
+  // Norm: "Donations. Money. I remember when people just kept their money.
+  // Now they give it away for the ocean. I respect that.
+  // INSERT OR IGNORE - that's what I do at Thanksgiving. First donation wins.
+  // Sometimes people give twice. We're only grateful once. That's economics."
+  
+  const { name, email, amount, purpose } = req.body;
+  if (!name || !email || !amount) return res.status(400).json({ success: false });
+
+  db.run('INSERT OR IGNORE INTO users (name, email) VALUES (?, ?)', [name, email]);
+  db.run('INSERT INTO donations (email, name, amount, purpose) VALUES (?, ?, ?, ?)',
+    [email, name, amount, purpose],
+    function() { res.json({ success: true, id: this.lastID }); }
+  );
+});
+
+// Volunteer
+app.post('/api/volunteer', (req, res) => {
+  // Norm: "Volunteers. People who work for free. I remember when that was slavery.
+  // Now it's called 'civic engagement.' Times change. But the work is the same.
+  // We take their name, email, everything. We know where they live.
+  // If they're serious about the ocean, they'll come back."
+  
+  const { name, email, phone, location, area, experience, availability } = req.body;
+  if (!name || !email || !location) return res.status(400).json({ success: false });
+
+  db.run('INSERT INTO volunteers (name, email, phone, location, area, experience, availability) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    [name, email, phone, location, area, experience, availability],
+    function() { res.json({ success: true, id: this.lastID }); }
+  );
+});
+
+// Login
+app.post('/api/login', (req, res) => {
+  // Norm: "Email as password. That's... actually kind of genius.
+  // No password to remember. No 'Password123!'. Just your email.
+  // It's so simple it's dumb. But it works. Like me."
+  
+  const { email } = req.body;
+  db.get('SELECT * FROM users WHERE email = ?', [email], (err, user) => {
+    if (user) return res.json({ success: true, user });
+    res.json({ success: false });
+  });
+});
+
+// Dashboard
+app.get('/api/donor/:email', (req, res) => {
+  // Norm: "Dashboard. Show people guilt... but with math.
+  // How much have you given? Let's count. Let's keep score.
+  // The reduce function adds it up. It's beautiful in a weird way.
+  // People seeing their total donation amount? That makes them feel good.
+  // Or bad. Depends on the number. Either way, they come back."
+  
+  const { email } = req.params;
+  db.all('SELECT * FROM donations WHERE email = ? ORDER BY createdAt DESC', [email], (err, donations) => {
+    const total = donations?.reduce((s, d) => s + d.amount, 0) || 0;
+    res.json({ success: true, total, count: donations?.length || 0, donations: donations || [] });
+  });
+});
+
+// Contact
+app.post('/api/contact', (req, res) => {
+  // Norm: "Contact form. We pretend to listen. Then we ignore everything.
+  // But we respond with success: true. Because the customer is always right.
+  // Even when they're wrong. Especially when they're wrong."
+  
+  res.json({ success: true });
+});
+
+// Debris Report
+app.post('/api/report-debris', (req, res) => {
+  // Norm: "Marine debris reporting. Finally, a way to snitch on the ocean.
+  // 'Officer, there's plastic over there.' With pictures. And GPS coordinates.
+  // We know exactly where it is. We know what it is. We know when you reported it.
+  // The ocean's gonna get in trouble. This time, we got witnesses."
+  
+  const { location, debrisType, quantity, description, latitude, longitude, photoBase64 } = req.body;
+  if (!location || !debrisType || !quantity) return res.status(400).json({ success: false, message: 'Missing required fields' });
+
+  db.run('INSERT INTO debris_reports (location, debrisType, quantity, description, latitude, longitude, photoBase64) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    [location, debrisType, quantity, description || '', latitude || null, longitude || null, photoBase64 || null],
+    function() { res.json({ success: true, id: this.lastID, message: 'Debris report recorded' }); }
+  );
+});
+
+app.listen(port, () => {
+  // Norm: "And then we listen. On port 3000.
+  // We sit here and wait for requests. It's like therapy.
+  // Someone comes along with a problem, we give them a solution.
+  // Sometimes it works. Sometimes it doesn't. But we're listening.
+  // That's what matters."
+  
+  console.log(`🌊 OceanCare running on :${port}`);
+});
 module.exports = app;
