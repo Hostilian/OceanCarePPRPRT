@@ -182,8 +182,7 @@
 
             // Fetch and display news
             const newsContainer = document.getElementById('news-container');
-            const apiKey = 'd1ebf8a38da2b60015304b61977cd57c';
-            const url = `https://gnews.io/api/v4/search?q=ocean%20OR%20nature%20conservation&lang=en&max=6&token=${apiKey}`;
+            const url = '/api/news';
 
             fetch(url)
                 .then((response) => response.json())

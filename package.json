@@ -4,7 +4,13 @@
   "description": "A local server for the OceanCare website.",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "lint": "eslint . --ext .js,.html"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "dotenv": "^16.4.5",
+    "node-fetch": "^2.7.0"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
