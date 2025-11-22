@@ -372,6 +372,167 @@ app.get('/api/debris-reports', (req, res) => {
   });
 });
 
+// Marine-specific weather from Storm Glass
+app.get('/api/marine-weather', async (req, res) => {
+  // Norm MacDonald: "Storm Glass. For when Open-Meteo isn't ocean-y enough.
+  // Waves, swell, water temperature. This is what the fish would care about,
+  // if they were sophisticated enough to use APIs."
+
+  const { latitude, longitude } = req.query;
+  const stormGlassKey = process.env.STORM_GLASS_API_KEY;
+
+  if (!stormGlassKey) {
+    return res.status(400).json({
+      success: false,
+      message: 'Storm Glass API key not configured. Register at stormglass.io for free tier.'
+    });
+  }
+
+  try {
+    const params = 'waveHeight,swellDirection,swellHeight,windSpeed,waterTemperature,airTemperature';
+    const url = `https://api.stormglass.io/v2/weather/point?lat=${latitude}&lng=${longitude}&params=${params}`;
+
+    const stormRes = await fetch(url, {
+      headers: { 'Authorization': stormGlassKey }
+    });
+
+    if (!stormRes.ok) {
+      throw new Error(`Storm Glass API error: ${stormRes.status}`);
+    }
+
+    const stormData = await stormRes.json();
+
+    res.json({
+      success: true,
+      marineWeather: stormData,
+      timestamp: new Date().toISOString(),
+      source: 'Storm Glass API'
+    });
+  } catch (error) {
+    console.error('Marine weather error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Unable to fetch marine weather data',
+      error: error.message
+    });
+  }
+});
+
+// UV Index data from OpenUV for volunteer safety
+app.get('/api/uv-index', async (req, res) => {
+  // Norm MacDonald: "UV Index. Because our volunteers are about to spend hours
+  // in the sun cleaning up garbage. We owe it to them to tell them when the
+  // sun is angriest."
+
+  const { latitude, longitude } = req.query;
+  const openuvKey = process.env.OPENUV_API_KEY;
+
+  if (!openuvKey) {
+    return res.status(400).json({
+      success: false,
+      message: 'OpenUV API key not configured. Register at openuv.io for free tier (50 req/day).'
+    });
+  }
+
+  try {
+    const url = `https://api.openuv.io/api/v1/uv?lat=${latitude}&lng=${longitude}`;
+
+    const uvRes = await fetch(url, {
+      headers: { 'x-access-token': openuvKey }
+    });
+
+    if (!uvRes.ok) {
+      throw new Error(`OpenUV API error: ${uvRes.status}`);
+    }
+
+    const uvData = await uvRes.json();
+
+    // Extract key info for volunteers
+    const safeExposure = uvData.result?.safe_exposure_time || {};
+
+    res.json({
+      success: true,
+      uv: {
+        index: uvData.result?.uv || 0,
+        safeExposure: safeExposure,
+        safeTime: uvData.result?.safe_exposure_time?.st1 || 'Check at stormglass.io',
+        recommendation: uvData.result?.uv > 8 ? 'HIGH - Use SPF 50+ sunscreen, limit outdoor time' 
+                       : uvData.result?.uv > 5 ? 'MODERATE - Use SPF 30+ sunscreen'
+                       : 'LOW - Standard sun protection sufficient'
+      },
+      timestamp: new Date().toISOString(),
+      source: 'OpenUV API'
+    });
+  } catch (error) {
+    console.error('UV Index error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Unable to fetch UV Index data',
+      error: error.message
+    });
+  }
+});
+
+// Climate trends from Visual Crossing
+app.get('/api/climate-trends', async (req, res) => {
+  // Norm MacDonald: "Climate trends. Long-term data so our donors can see
+  // the bigger picture. 30, 60, 90 days of temperature and precipitation.
+  // It's like a crystal ball, but with statistics."
+
+  const { latitude, longitude } = req.query;
+  const visualCrossingKey = process.env.VISUAL_CROSSING_API_KEY;
+
+  if (!visualCrossingKey) {
+    return res.status(400).json({
+      success: false,
+      message: 'Visual Crossing API key not configured. Register at visualcrossing.com for free tier (1k req/day).'
+    });
+  }
+
+  try {
+    // Get 90-day climate history
+    const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${latitude},${longitude}/last90days?unitGroup=metric&include=days&key=${visualCrossingKey}&contentType=json`;
+
+    const climateRes = await fetch(url);
+
+    if (!climateRes.ok) {
+      throw new Error(`Visual Crossing API error: ${climateRes.status}`);
+    }
+
+    const climateData = await climateRes.json();
+
+    // Calculate trends from historical data
+    const days = climateData.days || [];
+    const tempAvg = days.length > 0 
+      ? (days.reduce((sum, d) => sum + (d.temp || 0), 0) / days.length).toFixed(1)
+      : 0;
+    const precipTotal = days.length > 0
+      ? (days.reduce((sum, d) => sum + (d.precip || 0), 0)).toFixed(1)
+      : 0;
+
+    res.json({
+      success: true,
+      climateTrends: {
+        period: '90-day historical',
+        averageTemperature: `${tempAvg}°C`,
+        totalPrecipitation: `${precipTotal}mm`,
+        daysCounted: days.length,
+        trend: tempAvg > 20 ? 'Warming' : tempAvg < 10 ? 'Cooling' : 'Stable'
+      },
+      rawData: climateData,
+      timestamp: new Date().toISOString(),
+      source: 'Visual Crossing API'
+    });
+  } catch (error) {
+    console.error('Climate trends error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Unable to fetch climate trends data',
+      error: error.message
+    });
+  }
+});
+
 app.listen(port, () => {
   // Norm: "And then we listen. On port 3000.
   // We sit here and wait for requests. It's like therapy.
