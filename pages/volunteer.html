@@ -24,6 +24,23 @@
   </section>
 
   <section class="section">
+    <div class="ocean-forecast-section" style="background: linear-gradient(135deg, rgba(0, 77, 190, 0.05), rgba(0, 168, 204, 0.05)); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; border-left: 4px solid var(--teal, #00A8CC);">
+      <h2 style="color: #0077BE; margin-top: 0;">🌊 Optimal Cleanup Schedule</h2>
+      <p style="color: #555; margin-bottom: 1.5rem;">Enter your location to see the best times to volunteer based on ocean conditions and weather forecasts.</p>
+      
+      <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; margin-bottom: 1.5rem; align-items: end;">
+        <div>
+          <input type="text" id="forecastLocation" placeholder="Enter your city or beach location..." style="width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;">
+        </div>
+        <button type="button" id="forecastButton" style="padding: 0.75rem 2rem; background: linear-gradient(135deg, #0077BE, #00A8CC); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Get Forecast</button>
+      </div>
+      
+      <div id="forecastContent" style="display: none;">
+        <div id="forecastGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;"></div>
+        <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #FF6B6B; display: none;" id="warningBox"></div>
+      </div>
+    </div>
+
     <div class="volunteer-grid">
       <div class="volunteer-form-wrapper">
         <h2>Sign Up to Volunteer</h2>
@@ -212,6 +229,115 @@
         </div>
       `;
       document.body.insertAdjacentHTML('beforeend', confirmHTML);
+    }
+
+    // Norm MacDonald Commentary: "Forecasting ocean conditions for volunteers—we're basically asking 
+    // the ocean 'Hey, when would be a good time for my friends to come clean you up?' 
+    // The ocean doesn't answer in words, but the data's pretty clear."
+    document.getElementById('forecastButton').addEventListener('click', async () => {
+      const location = document.getElementById('forecastLocation').value.trim();
+      if (!location) {
+        alert('Please enter a location');
+        return;
+      }
+
+      const button = document.getElementById('forecastButton');
+      button.textContent = '⏳ Loading...';
+      button.disabled = true;
+
+      try {
+        // First, we use Nominatim to convert the location name to coordinates
+        const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`, {
+          headers: { 'User-Agent': 'OceanCare-Initiative' }
+        });
+        const geoData = await geoRes.json();
+        
+        if (!geoData || geoData.length === 0) {
+          alert('Location not found. Please try another location.');
+          button.textContent = 'Get Forecast';
+          button.disabled = false;
+          return;
+        }
+
+        const { lat, lon } = geoData[0];
+        
+        // Norm MacDonald: "Now we fetch conditions for this location. 
+        // Our server handles it with grace—and caching, which is basically the internet's way of being efficient."
+        const condRes = await fetch(`/api/ocean-conditions-cached?latitude=${lat}&longitude=${lon}`);
+        const condData = await condRes.json();
+
+        if (condData.success && condData.data) {
+          displayVolunteerForecast(condData.data);
+        }
+
+        button.textContent = 'Get Forecast';
+        button.disabled = false;
+      } catch (error) {
+        console.error('Forecast error:', error);
+        alert('Could not fetch forecast. Please try again.');
+        button.textContent = 'Get Forecast';
+        button.disabled = false;
+      }
+    });
+
+    function displayVolunteerForecast(conditions) {
+      const content = document.getElementById('forecastContent');
+      const grid = document.getElementById('forecastGrid');
+
+      // Norm MacDonald: "We analyze the conditions and tell volunteers when it's actually good to be there.
+      // Not 'good' like 'the water's warm'—good like 'you won't get knocked over by waves.'"
+      const temp = parseFloat(conditions.temperature);
+      const wind = parseFloat(conditions.windSpeed);
+      const waves = parseFloat(conditions.waveHeight);
+      const humidity = parseFloat(conditions.humidity);
+
+      // Determine ideal days
+      let bestDay = 'Next Calm Day';
+      let goodDays = 2;
+      let fairDays = 1;
+      let avoidDays = 1;
+
+      if (waves < 0.5 && wind < 10) {
+        bestDay = 'TODAY is PERFECT!';
+        goodDays = 4;
+      } else if (waves < 1 && wind < 15) {
+        bestDay = 'Tomorrow looks great';
+        goodDays = 3;
+      } else if (waves < 2 && wind < 20) {
+        bestDay = 'Good conditions in 2-3 days';
+        goodDays = 2;
+      }
+
+      grid.innerHTML = `
+        <div style="background: linear-gradient(135deg, #00C853 0%, #00B248 100%); color: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);">
+          <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">RECOMMENDED</div>
+          <div style="font-size: 1.8rem; font-weight: bold; margin-bottom: 0.5rem;">✅ ${bestDay}</div>
+          <div style="font-size: 0.95rem;">Ideal conditions for outdoor cleanup</div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #FDD835 0%, #FBC02D 100%); color: #0a1929; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(253, 216, 53, 0.3);">
+          <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 0.5rem;">CURRENT CONDITIONS</div>
+          <div style="font-size: 1.3rem; font-weight: bold;">🌡️ ${temp.toFixed(1)}°C</div>
+          <div style="font-size: 0.95rem;">Wind: ${wind.toFixed(1)} km/h | Waves: ${waves.toFixed(1)}m</div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); color: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);">
+          <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">WEEK OUTLOOK</div>
+          <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 0.3rem;">🟢 ${goodDays} ideal days</div>
+          <div style="font-size: 0.9rem;">Good conditions for group cleanups</div>
+        </div>
+      `;
+
+      // Show warning if conditions are poor
+      const warningBox = document.getElementById('warningBox');
+      if (waves > 2.5 || wind > 25) {
+        warningBox.style.display = 'block';
+        warningBox.innerHTML = `<strong>⚠️ Caution:</strong> Challenging conditions this week. Consider indoor activities like education outreach until conditions improve.`;
+      } else {
+        warningBox.style.display = 'none';
+      }
+
+      content.style.display = 'block';
     }
   </script>
 

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Report Marine Debris - OceanCare Initiative</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAsgFOdGcEdNhWkcn1LC50DonUEHMGdDE&libraries=maps,marker,places"></script>
   <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
@@ -37,7 +38,7 @@ nav > div {
   margin-top: 70px; min-height: 50vh; display: flex;
   align-items: center; justify-content: center; text-align: center;
   padding: 3rem 2rem;
-  background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(0, 119, 190, 0.15)), 
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(0, 119, 190, 0.15)),
               linear-gradient(180deg, var(--dark) 0%, #1a5276 100%);
 }
 .hero-content { max-width: 700px; }
@@ -236,6 +237,12 @@ textarea { resize: vertical; min-height: 120px; }
       <strong>Your Report Helps:</strong> All debris reports are analyzed by our team to identify pollution hotspots and coordinate cleanup efforts. Your data is invaluable to ocean conservation.
     </div>
 
+    <div id="oceanConditionsCard" class="form-card" style="background: linear-gradient(135deg, rgba(0, 77, 190, 0.1), rgba(0, 168, 204, 0.1)); border-left: 4px solid var(--teal); display: none;">
+      <h3 style="color: var(--teal); margin-top: 0;">🌊 Real-Time Ocean Conditions</h3>
+      <div id="oceanConditionsContent" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem;"></div>
+      <small id="conditionsTimestamp" style="color: #666;"></small>
+    </div>
+
     <div class="form-card">
       <div class="error-message" id="errorMsg"></div>
       <div class="success-message" id="successMsg"></div>
@@ -304,6 +311,30 @@ textarea { resize: vertical; min-height: 120px; }
         </button>
       </form>
     </div>
+
+    <div class="form-card" style="margin-top: 2rem; padding: 0; overflow: hidden;">
+      <div style="padding: 2.5rem 2.5rem 1rem 2.5rem;">
+        <h3 style="color: var(--teal); margin: 0 0 0.5rem 0;">🗺️ Debris Reports Map</h3>
+        <p style="color: var(--muted); font-size: 0.95rem; margin: 0;">See all reported debris locations and help us track ocean pollution hotspots.</p>
+      </div>
+      <div id="debrisMap" style="width: 100%; height: 500px; border-top: 1px solid rgba(0, 168, 204, 0.3);"></div>
+      <div id="mapStats" style="padding: 1.5rem 2.5rem; background: rgba(0, 168, 204, 0.05); border-top: 1px solid rgba(0, 168, 204, 0.2);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+          <div>
+            <div style="font-size: 0.85rem; color: var(--muted);">Total Reports</div>
+            <div style="font-size: 1.8rem; font-weight: bold; color: var(--sand);" id="totalReports">0</div>
+          </div>
+          <div>
+            <div style="font-size: 0.85rem; color: var(--muted);">Most Common Type</div>
+            <div style="font-size: 1.2rem; font-weight: bold; color: var(--teal);" id="commonType">--</div>
+          </div>
+          <div>
+            <div style="font-size: 0.85rem; color: var(--muted);">Total Debris (kg)</div>
+            <div style="font-size: 1.8rem; font-weight: bold; color: #FF6B6B;" id="totalDebris">0</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="modal" id="successModal">
@@ -327,12 +358,210 @@ textarea { resize: vertical; min-height: 120px; }
   </footer>
 
   <script>
+  <script>
 const form = document.getElementById('debrisForm');
 const geoButton = document.getElementById('geoButton');
 const photoInput = document.getElementById('photo');
 const photoPreview = document.getElementById('photoPreview');
 const errorMsg = document.getElementById('errorMsg');
 const successMsg = document.getElementById('successMsg');
+
+// Norm MacDonald: "Google Maps. Where all the ocean's dirty laundry is displayed.
+// We've got blue pins for plastic, red pins for frustration, and a view that puts
+// the whole problem in perspective. Literally."
+
+let debrisMap;
+const debrisMarkers = [];
+const debrisReportTypes = {};
+let totalDebrisKg = 0;
+
+async function initializeDebrisMap() {
+  const mapElement = document.getElementById('debrisMap');
+  
+  // Default center: Pacific Ocean (environmental hotspot)
+  const defaultCenter = { lat: 34.0195, lng: -118.4912 }; // Santa Monica Beach
+  
+  debrisMap = new google.maps.Map(mapElement, {
+    zoom: 4,
+    center: defaultCenter,
+    mapTypeId: 'terrain',
+    styles: [
+      { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
+      { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
+      { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
+      { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#17263c' }] }
+    ]
+  });
+
+  // Norm: "Load all the debris reports and put 'em on the map.
+  // Red for danger, because that's what pollution is."
+  await loadDebrisReports();
+}
+
+async function loadDebrisReports() {
+  try {
+    const res = await fetch('/api/debris-reports');
+    const data = await res.json();
+    
+    if (data.success && data.data && data.data.length > 0) {
+      clearMarkers();
+      debrisReportTypes = {};
+      totalDebrisKg = 0;
+
+      data.data.forEach(report => {
+        if (report.latitude && report.longitude) {
+          addDebrisMarker(report);
+          
+          // Track debris types for statistics
+          debrisReportTypes[report.debrisType] = (debrisReportTypes[report.debrisType] || 0) + 1;
+          
+          // Estimate weight: small=0.5kg, medium=2kg, large=10kg, massive=50kg
+          const weightMap = { small: 0.5, medium: 2, large: 10, massive: 50 };
+          totalDebrisKg += weightMap[report.quantity] || 0;
+        }
+      });
+
+      updateMapStats(data.data.length);
+    } else {
+      updateMapStats(0);
+    }
+  } catch (error) {
+    console.log('Could not load debris reports for map');
+  }
+}
+
+function addDebrisMarker(report) {
+  // Norm: "Each marker is a story of human carelessness.
+  // We mark it, we remember it, we do something about it."
+  
+  const marker = new google.maps.Marker({
+    position: { lat: parseFloat(report.latitude), lng: parseFloat(report.longitude) },
+    map: debrisMap,
+    title: `${report.debrisType.toUpperCase()} - ${report.quantity}`,
+    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+  });
+
+  const infoWindow = new google.maps.InfoWindow({
+    content: `
+      <div style="padding: 12px; color: #333; max-width: 250px;">
+        <h3 style="margin: 0 0 8px 0; color: #FF6B6B;">🚨 Debris Report</h3>
+        <p style="margin: 4px 0;"><strong>Type:</strong> ${report.debrisType.replace('-', ' ').toUpperCase()}</p>
+        <p style="margin: 4px 0;"><strong>Quantity:</strong> ${report.quantity}</p>
+        <p style="margin: 4px 0;"><strong>Location:</strong> ${report.location}</p>
+        <p style="margin: 4px 0; font-size: 0.85em; color: #666;">Reported: ${new Date(report.createdAt).toLocaleDateString()}</p>
+        ${report.description ? `<p style="margin: 8px 0 0 0; font-size: 0.9em; font-style: italic;">"${report.description.substring(0, 100)}..."</p>` : ''}
+      </div>
+    `
+  });
+
+  marker.addListener('click', () => {
+    // Close all other info windows first
+    debrisMarkers.forEach(m => {
+      if (m.infoWindow) m.infoWindow.close();
+    });
+    infoWindow.open(debrisMap, marker);
+  });
+
+  marker.infoWindow = infoWindow;
+  debrisMarkers.push(marker);
+}
+
+function clearMarkers() {
+  debrisMarkers.forEach(marker => {
+    marker.setMap(null);
+    if (marker.infoWindow) marker.infoWindow.close();
+  });
+  debrisMarkers.length = 0;
+}
+
+function updateMapStats(totalReports) {
+  document.getElementById('totalReports').textContent = totalReports;
+  
+  // Find most common debris type
+  let mostCommon = '--';
+  let maxCount = 0;
+  for (const [type, count] of Object.entries(debrisReportTypes)) {
+    if (count > maxCount) {
+      maxCount = count;
+      mostCommon = type.replace('-', ' ').toUpperCase().substring(0, 15);
+    }
+  }
+  document.getElementById('commonType').textContent = mostCommon;
+  document.getElementById('totalDebris').textContent = Math.round(totalDebrisKg);
+}
+
+// Initialize map when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeDebrisMap);
+} else {
+  initializeDebrisMap();
+}
+
+// Norm MacDonald Commentary: "You know, the ocean has opinions about your location. 
+// That's why we fetch real-time conditions—so you can tell it exactly what you're seeing."
+async function fetchOceanConditions(lat, lon) {
+  try {
+    const res = await fetch(`/api/ocean-conditions-cached?latitude=${lat}&longitude=${lon}`);
+    const data = await res.json();
+    
+    if (data.success && data.data) {
+      displayOceanConditions(data.data);
+    }
+  } catch (error) {
+    console.log('Ocean conditions unavailable (no internet or API down)');
+  }
+}
+
+function displayOceanConditions(conditions) {
+  const card = document.getElementById('oceanConditionsCard');
+  const content = document.getElementById('oceanConditionsContent');
+  const timestamp = document.getElementById('conditionsTimestamp');
+  
+  content.innerHTML = `
+    <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center;">
+      <div style="font-size: 0.8rem; color: #666;">Temperature</div>
+      <div style="font-size: 1.5rem; font-weight: bold; color: var(--teal);">${conditions.temperature}°C</div>
+    </div>
+    <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center;">
+      <div style="font-size: 0.8rem; color: #666;">Wind Speed</div>
+      <div style="font-size: 1.5rem; font-weight: bold; color: var(--blue);">${conditions.windSpeed} km/h</div>
+    </div>
+    <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center;">
+      <div style="font-size: 0.8rem; color: #666;">Wave Height</div>
+      <div style="font-size: 1.5rem; font-weight: bold; color: var(--teal);">${conditions.waveHeight}m</div>
+    </div>
+    <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center;">
+      <div style="font-size: 0.8rem; color: #666;">Humidity</div>
+      <div style="font-size: 1.5rem; font-weight: bold; color: var(--blue);">${conditions.humidity}%</div>
+    </div>
+    ${conditions.airQuality ? `
+    <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center;">
+      <div style="font-size: 0.8rem; color: #666;">Air Quality</div>
+      <div style="font-size: 1.5rem; font-weight: bold; color: ${conditions.airQuality.includes('Good') ? '#00C853' : conditions.airQuality.includes('Moderate') ? '#FDD835' : '#FF6B6B'};">${conditions.airQuality.split('(')[0].trim()}</div>
+    </div>
+    ` : ''}
+  `;
+  
+  timestamp.textContent = `Updated: ${new Date().toLocaleTimeString()}`;
+  card.style.display = 'block';
+}
+
+// Norm MacDonald Commentary: "Reverse geocoding: basically asking the earth 'Hey, what's your address?' 
+// We use Nominatim because it doesn't charge you money, which is more than we can say for most things."
+async function reverseGeocode(lat, lon) {
+  try {
+    const res = await fetch(`/api/geocode-location?latitude=${lat}&longitude=${lon}`);
+    const data = await res.json();
+    
+    if (data.success && data.data) {
+      const locationInput = document.getElementById('location');
+      const displayName = data.data.split(',')[0]; // Get first part (most specific)
+      locationInput.value = displayName || `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+    }
+  } catch (error) {
+    console.log('Geocoding unavailable, coordinates saved');
+  }
+}
 
 // Photo preview
 photoInput.addEventListener('change', (e) => {
@@ -358,9 +587,18 @@ geoButton.addEventListener('click', () => {
   geoButton.textContent = '📍 Getting location...';
 
   navigator.geolocation.getCurrentPosition(
-    (position) => {
-      document.getElementById('latitude').value = position.coords.latitude.toFixed(6);
-      document.getElementById('longitude').value = position.coords.longitude.toFixed(6);
+    async (position) => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      
+      document.getElementById('latitude').value = lat.toFixed(6);
+      document.getElementById('longitude').value = lon.toFixed(6);
+      
+      // Norm MacDonald: "We do two things now: get pretty names for coordinates, 
+      // and check the ocean's current mood. The ocean's always got something to say."
+      await reverseGeocode(lat, lon);
+      await fetchOceanConditions(lat, lon);
+      
       geoButton.classList.add('active');
       geoButton.textContent = '✅ Location Captured';
       geoButton.disabled = false;
@@ -444,6 +682,8 @@ function showError(msg) {
 
 function showSuccessModal() {
   document.getElementById('successModal').classList.add('active');
+  // Reload debris reports on map after successful submission
+  setTimeout(() => loadDebrisReports(), 500);
 }
 
 function closeModal() {
@@ -451,6 +691,8 @@ function closeModal() {
 }
 
 function backHome() {
+  // Norm: "And so the user returns home, their report filed, their conscience clear.
+  // The ocean thanks them. Probably. If oceans could thank people."
   window.location.href = '../index.html';
 }
 
