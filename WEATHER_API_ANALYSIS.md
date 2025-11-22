@@ -40,12 +40,13 @@
 
 ### 5. **Google Maps** ✅ INTEGRATED
 - **Purpose**: Interactive mapping for debris locations
-- **API Key**: YES (Your key: AIzaSyDAsgFOdGcEdNhWkcn1LC50DonUEHMGdDE)
+- **API Key**: YES (Stored securely in .env, loaded via `/api/get-maps-key`)
 - **CORS**: N/A (Script-based API)
 - **Rate Limit**: Free tier available
 - **Data**: Map visualization, markers, info windows
 - **Status**: ✅ **ACTIVE** - Used in debris report page for debris mapping
 - **Ocean Features**: Debris hotspot visualization, location markers
+- **Security**: ✅ API key NOT hardcoded - loaded dynamically from secure endpoint
 
 ---
 

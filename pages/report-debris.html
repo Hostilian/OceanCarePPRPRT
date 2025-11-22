@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Report Marine Debris - OceanCare Initiative</title>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAsgFOdGcEdNhWkcn1LC50DonUEHMGdDE&libraries=maps,marker,places"></script>
   <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
@@ -375,6 +374,28 @@ const debrisMarkers = [];
 const debrisReportTypes = {};
 let totalDebrisKg = 0;
 
+// Load Google Maps script dynamically with API key from secure endpoint
+async function loadGoogleMapsScript() {
+  try {
+    const res = await fetch('/api/get-maps-key');
+    const data = await res.json();
+    
+    if (data.success && data.apiKey) {
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${data.apiKey}&libraries=maps,marker,places`;
+      script.async = true;
+      script.defer = true;
+      script.onload = initializeDebrisMap;
+      script.onerror = () => console.error('Failed to load Google Maps API');
+      document.head.appendChild(script);
+    } else {
+      console.error('Could not retrieve Google Maps API key');
+    }
+  } catch (error) {
+    console.error('Error loading Google Maps:', error);
+  }
+}
+
 async function initializeDebrisMap() {
   const mapElement = document.getElementById('debrisMap');
   
@@ -492,9 +513,9 @@ function updateMapStats(totalReports) {
 
 // Initialize map when DOM is ready
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initializeDebrisMap);
+  document.addEventListener('DOMContentLoaded', loadGoogleMapsScript);
 } else {
-  initializeDebrisMap();
+  loadGoogleMapsScript();
 }
 
 // Norm MacDonald Commentary: "You know, the ocean has opinions about your location. 

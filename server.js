@@ -331,11 +331,18 @@ app.get('/api/ocean-conditions-cached', async (req, res) => {
 });
 
 app.get('/api/get-maps-key', (req, res) => {
-  // Norm MacDonald: "Google Maps API key. We're not hiding it in the frontend—
-  // we're proxying it through our server. Smart? Maybe. Safe? Absolutely not.
-  // But it works, and sometimes that's the best we can do."
+  // Norm MacDonald: "Google Maps API key. Stored safely in environment variables.
+  // Not exposed to the frontend. Well, not directly. We proxy it through here.
+  // It's called 'defense in depth.' Or is it? Either way, it's better than hardcoding."
   
-  const mapsKey = 'AIzaSyDAsgFOdGcEdNhWkcn1LC50DonUEHMGdDE';
+  const mapsKey = process.env.GOOGLE_MAPS_API_KEY;
+  
+  if (!mapsKey) {
+    return res.status(500).json({
+      success: false,
+      message: 'Google Maps API key not configured'
+    });
+  }
   
   res.json({
     success: true,
