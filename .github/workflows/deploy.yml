@@ -15,17 +15,26 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository using git
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
+      - name: Create _site directory with static files
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp -r pages _site/
+          cp -r styles _site/ 2>/dev/null || true
+          cp -r assets _site/ 2>/dev/null || true
+          # Create a simple index in _site pointing to main index.html
+          echo '<meta http-equiv="refresh" content="0;url=index.html">' > _site/README.md
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload the entire repository
-          path: '.'
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
