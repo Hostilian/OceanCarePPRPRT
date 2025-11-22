@@ -552,7 +552,7 @@ function displayOceanConditions(conditions, marineData) {
     const waveHeight = currentHour.waveHeight?.[0]?.value || currentHour.waveHeight?.value || 'N/A';
     const swellDirection = currentHour.swellDirection?.[0]?.value || currentHour.swellDirection?.value || 'N/A';
     const waterTemp = currentHour.waterTemperature?.[0]?.value || currentHour.waterTemperature?.value || 'N/A';
-    
+
     marineMarkup = `
       <div style="padding: 1rem; background: linear-gradient(135deg, rgba(0, 119, 190, 0.3), rgba(0, 168, 204, 0.2)); border-radius: 8px; border-left: 3px solid var(--blue);">
         <div style="font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">⛵ Marine Weather (Storm Glass)</div>

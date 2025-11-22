@@ -456,7 +456,7 @@ app.get('/api/uv-index', async (req, res) => {
         index: uvData.result?.uv || 0,
         safeExposure: safeExposure,
         safeTime: uvData.result?.safe_exposure_time?.st1 || 'Check at stormglass.io',
-        recommendation: uvData.result?.uv > 8 ? 'HIGH - Use SPF 50+ sunscreen, limit outdoor time' 
+        recommendation: uvData.result?.uv > 8 ? 'HIGH - Use SPF 50+ sunscreen, limit outdoor time'
                        : uvData.result?.uv > 5 ? 'MODERATE - Use SPF 30+ sunscreen'
                        : 'LOW - Standard sun protection sufficient'
       },
@@ -503,7 +503,7 @@ app.get('/api/climate-trends', async (req, res) => {
 
     // Calculate trends from historical data
     const days = climateData.days || [];
-    const tempAvg = days.length > 0 
+    const tempAvg = days.length > 0
       ? (days.reduce((sum, d) => sum + (d.temp || 0), 0) / days.length).toFixed(1)
       : 0;
     const precipTotal = days.length > 0

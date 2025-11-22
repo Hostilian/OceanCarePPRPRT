@@ -719,7 +719,7 @@ document.getElementById('getClimateBtn').addEventListener('click', async () => {
       document.getElementById('climateTrend').textContent = trends.trend === 'Warming' ? '🔥 Warming' : trends.trend === 'Cooling' ? '❄️ Cooling' : '→ Stable';
       document.getElementById('climateNote').textContent = `Climate analysis for ${location}: ${trends.daysCounted} days of data analyzed.`;
       document.getElementById('climateResults').style.display = 'block';
-      
+
       setTimeout(() => {
         document.getElementById('climateResults').scrollIntoView({ behavior: 'smooth' });
       }, 100);
