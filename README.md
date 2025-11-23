@@ -133,13 +133,17 @@ See docs/OCEANCARE_MEGA_GUIDE.md → Deployment Guide section
 ## 🏗️ Architecture
 
 ```
-Frontend:   9 HTML pages + CSS + JavaScript
-Backend:    Express.js (15 endpoints)
-Database:   SQLite with 4 tables
+Frontend:   9 HTML pages + CSS + JavaScript (public/)
+Backend:    Express.js (15 endpoints) in src/
+Database:   SQLite with 4 tables (oceancare.db)
 APIs:       8 integrated (all free tier)
-Testing:    Jest + Supertest (21 tests)
+Testing:    Jest + Supertest (21 tests) in tests/
 Deploy:     Vercel or Heroku ready
+Config:     Environment-based (config/)
+Docs:       Comprehensive guide (docs/)
 ```
+
+**📁 See [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md) for complete folder organization**
 
 ---
 
