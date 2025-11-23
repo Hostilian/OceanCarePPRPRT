@@ -21,23 +21,32 @@
   <section class="page-hero">
     <h1>Join Our Volunteer Community</h1>
     <p>Help us protect and restore our oceans. Make a direct impact with hands-on conservation work.</p>
+    <div style="margin-top: 2rem; padding: 1rem; background: rgba(0, 168, 204, 0.2); border-radius: 10px; border: 1px solid rgba(0, 168, 204, 0.4);">
+      <p style="font-size: 0.9rem; color: var(--teal); font-weight: 600; margin: 0;">📡 Real-time weather forecasts + UV safety data + Optimal cleanup scheduling</p>
+    </div>
   </section>
 
   <section class="section">
-    <div class="ocean-forecast-section" style="background: linear-gradient(135deg, rgba(0, 77, 190, 0.05), rgba(0, 168, 204, 0.05)); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; border-left: 4px solid var(--teal, #00A8CC);">
-      <h2 style="color: #0077BE; margin-top: 0;">🌊 Optimal Cleanup Schedule</h2>
-      <p style="color: #555; margin-bottom: 1.5rem;">Enter your location to see the best times to volunteer based on ocean conditions and weather forecasts.</p>
+    <div class="ocean-forecast-section" style="background: linear-gradient(135deg, rgba(0, 77, 190, 0.12), rgba(0, 168, 204, 0.12)); border-radius: 16px; padding: 3rem 2rem; margin-bottom: 3rem; border: 2px solid rgba(0, 168, 204, 0.4);">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <h2 style="color: var(--teal); margin: 0 0 0.75rem 0; font-size: 2rem;">🌊 Optimal Cleanup Schedule</h2>
+        <p style="color: rgba(224, 224, 224, 0.85); margin-bottom: 1rem; font-size: 1.05rem;">Enter your location to see the best times to volunteer based on ocean conditions and weather forecasts</p>
+        <div style="display: inline-block; padding: 0.6rem 1.2rem; background: rgba(0, 168, 204, 0.2); border-radius: 8px; border: 1px solid rgba(0, 168, 204, 0.4);">
+          <span style="color: var(--teal); font-weight: 600; font-size: 0.9rem;">📡 Open-Meteo + OpenUV + Nominatim APIs</span>
+        </div>
+      </div>
 
       <div style="display: grid; grid-template-columns: 1fr auto; gap: 1rem; margin-bottom: 1.5rem; align-items: end;">
         <div>
-          <input type="text" id="forecastLocation" placeholder="Enter your city or beach location..." style="width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; color: var(--teal); font-weight: bold; font-size: 1.05rem;">📍 Your Location</label>
+          <input type="text" id="forecastLocation" placeholder="Enter your city or beach location..." style="width: 100%; padding: 1rem; border: 2px solid rgba(0, 168, 204, 0.5); border-radius: 10px; font-size: 1rem; background: rgba(255, 255, 255, 0.1); color: var(--text);">
         </div>
-        <button type="button" id="forecastButton" style="padding: 0.75rem 2rem; background: linear-gradient(135deg, #0077BE, #00A8CC); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Get Forecast</button>
+        <button type="button" id="forecastButton" style="padding: 1rem 2.5rem; background: linear-gradient(135deg, #0077BE, #00A8CC); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1.05rem; box-shadow: 0 4px 15px rgba(0, 119, 190, 0.3); white-space: nowrap;">Get Forecast</button>
       </div>
 
       <div id="forecastContent" style="display: none;">
-        <div id="forecastGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;"></div>
-        <div style="background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #FF6B6B; display: none;" id="warningBox"></div>
+        <div id="forecastGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;"></div>
+        <div style="background: rgba(255, 107, 107, 0.2); padding: 1.25rem; border-radius: 10px; border-left: 4px solid #FF6B6B; display: none; color: #FFB6B6;" id="warningBox"></div>
       </div>
     </div>
 
