@@ -4,7 +4,7 @@
 
 ---
 
-## Phase 1: Days 1-3 — CRITICAL PATH: API Key Registration & Test Unlock
+## Phase 1: Days 1-3 — CRITICAL PATH: API Key Registration & Test Unlock (Storm Glass ✅)
 
 ### Day 1 (Nov 23, Sunday) — Register APIs (2-2.5 hours)
 
@@ -12,19 +12,19 @@
 
 | Task | Time | Owner | Status |
 |------|------|-------|--------|
-| Register Storm Glass API | 15 min | Developer | ⏳ START |
+| Register Storm Glass API | 15 min | Developer | ✅ DONE (Nov 23) |
 | Register OpenUV API | 10 min | Developer | ⏳ TODO |
 | Register Visual Crossing API | 15 min | Developer | ⏳ TODO |
-| Update `.env` file | 5 min | Developer | ⏳ TODO |
-| Run validation script | 5 min | Developer | ⏳ TODO |
-| First `npm test` run | 10 min | Developer | ⏳ TODO |
+| Update `.env` file | 5 min | Developer | ⏳ TODO (Storm Glass in place) |
+| Run validation script | 5 min | Developer | ⏳ TODO (shows 3/5 until keys added) |
+| First `npm test` run | 10 min | Developer | ⏳ TODO (OpenUV & Visual Crossing specs pending) |
 | **Subtotal Day 1** | **60 min** | | |
 
 **Expected Outcome**: 
-- ✅ All 3 API keys registered
-- ✅ `.env` updated
-- ✅ Validation script passes
-- ✅ Initial test run complete
+- ✅ Storm Glass key validated and checked into `.env`
+- ⏳ OpenUV & Visual Crossing keys registered and stored
+- ⏳ Validation script showing 5/5 configured
+- ⏳ Initial test run complete (21/21) once keys are active
 
 **Failure Mode & Recovery**:
 - If keys not working: Use troubleshooting guide in `API_REGISTRATION_QUICK_START.md`
@@ -41,7 +41,7 @@
 
 | Task | Time | Owner | Notes |
 |------|------|-------|-------|
-| Run `npm test` (full suite) | 15 min | Developer | Should show 16/21 → 21/21 |
+| Run `npm test` (full suite) | 15 min | Developer | Currently flags OpenUV/Visual Crossing specs → re-run after keys |
 | Analyze test output | 15 min | Developer | Document failures if any |
 | Fix any remaining issues | 30-60 min | Developer | Likely none; buffer for edge cases |
 | Verify all endpoints | 30 min | Developer | Hit each endpoint manually |
@@ -49,14 +49,14 @@
 | **Subtotal Days 2-3** | **2-3 hours** | | |
 
 **Expected Outcome**:
-- ✅ 21/21 tests passing consistently
+- ✅ 21/21 tests passing consistently (after remaining keys configured)
 - ✅ All API endpoints responding <1 second
 - ✅ No console errors on server startup
 - ✅ Database persisting data correctly
 - ✅ Test documentation complete
 
 **Checklist**:
-- [ ] `npm test` shows "21 passed, 0 failed"
+- [ ] `npm test` shows "21 passed, 0 failed" (requires OpenUV & Visual Crossing keys)
 - [ ] Server starts without warnings: `npm start`
 - [ ] Can call all 8 API endpoints without errors
 - [ ] Database file (`ocean_data.db`) exists and grows
@@ -180,7 +180,7 @@ Test on **real devices** (iPhone, Android) OR browser devtools:
 
 ```
 ✅ TESTING (Critical)
-  [ ] npm test shows 21/21 passing
+  [ ] npm test shows 21/21 passing (completes after OpenUV & Visual Crossing keys)
   [ ] All API endpoints responding
   [ ] Database operations working (create, read, update)
   [ ] No console errors on startup
@@ -234,7 +234,7 @@ Test on **real devices** (iPhone, Android) OR browser devtools:
 
 | Metric | Target | Status |
 |--------|--------|--------|
-| **Tests Passing** | 21/21 ✅ | Expected Day 1-3 |
+| **Tests Passing** | 21/21 ✅ | Expected Day 1-3 (after OpenUV & Visual Crossing keys) |
 | **Code Quality** | Zero critical issues | Expected Day 4 |
 | **Mobile Devices Tested** | ≥3 (real or emulated) | Expected Day 5-6 |
 | **Accessibility Score** | ≥90 (Lighthouse) | Expected Day 6-7 |
@@ -252,7 +252,7 @@ Test on **real devices** (iPhone, Android) OR browser devtools:
 
 | Phase | Estimated Hours | Actual Hours | Status |
 |-------|-----------------|--------------|--------|
-| **Days 1-3: API Registration & Test Unlock** | 2-2.5 | TBD | 🔴 IN PROGRESS |
+| **Days 1-3: API Registration & Test Unlock** | 2-2.5 | TBD | 🔴 IN PROGRESS (Storm Glass ✅; OpenUV/Visual Crossing pending) |
 | **Day 4: Code Quality & Polish** | 2-3 | TBD | 🟡 PENDING |
 | **Days 5-7: Mobile & Accessibility** | 5-7 | TBD | 🟡 PENDING |
 | **Friday: Validation & Docs** | 2 | TBD | 🟡 PENDING |
@@ -272,7 +272,8 @@ Test on **real devices** (iPhone, Android) OR browser devtools:
 ## Dependencies & Blockers
 
 ### Hard Blockers (must complete first):
-- ✅ **API Keys Registered** (Days 1-3) → Unlocks test suite
+- ✅ **Storm Glass Key Active** (completed Nov 23)
+- ⏳ **OpenUV & Visual Crossing Keys Registered** → Unlocks full validation suite
 
 ### Soft Blockers (shouldn't block other work):
 - Real devices for testing (can use Chrome DevTools if unavailable)

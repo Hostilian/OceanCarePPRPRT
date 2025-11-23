@@ -12,8 +12,7 @@
 ```
 COMPLETED ✅                          REMAINING 🟡
 ─────────────────────────────────────────────────────
-✅ 6/8 APIs active                   🟡 2 API keys pending
-✅ Database setup (SQLite)           🟡 Full E2E testing
+✅ 6/8 APIs active (Storm Glass live) 🟡 2 API keys pending (OpenUV, Visual Crossing)
 ✅ Backend endpoints ready            🟡 Manual feature testing
 ✅ Frontend pages built              🟡 Production deployment
 ✅ Form validation                   🟡 Launch announcement
@@ -133,13 +132,15 @@ npm start
 npm test
 ```
 
-**Expected result**:
+**Expected result after OpenUV & Visual Crossing keys are configured**:
 ```
 PASS  server.test.js
-  ✓ 21 tests passed
-  ✓ 0 tests failed
-  ✓ All APIs validated
+   ✓ 21 tests passed
+   ✓ 0 tests failed
+   ✓ All APIs validated
 ```
+
+**Current behavior**: Storm Glass-dependent tests already pass; expect failures on the UV index and climate trend specs until the new keys are added.
 
 **If any tests fail**:
 - Check `.env` file has no `your_` placeholders
@@ -152,13 +153,13 @@ PASS  server.test.js
 
 **Test on Homepage** (`http://localhost:3000`)
 - [ ] News section loads (6 articles)
-- [ ] Climate Trends section appears (with search box)
+- [ ] Climate Trends section appears (with search box) — data populates after Visual Crossing key is active
 - [ ] Try entering a city → should show temp, precipitation, trend
 - [ ] Check browser console for any errors (F12)
 
 **Test on Debris Report** (`http://localhost:3000/pages/report-debris.html`)
 - [ ] Allow location access (popup)
-- [ ] Ocean Conditions card loads with temperature, wind, waves
+- [ ] Ocean Conditions card loads with temperature, wind, waves (Storm Glass already live)
 - [ ] Marine Weather shows wave height, swell direction
 - [ ] Google Map appears with debris markers
 - [ ] Form validation works (try submitting empty form)
@@ -166,7 +167,7 @@ PASS  server.test.js
 **Test on Volunteer Page** (`http://localhost:3000/pages/volunteer.html`)
 - [ ] Enter location (e.g., "San Francisco")
 - [ ] Click "Get Forecast"
-- [ ] UV Index appears with color indicator (green/yellow/red)
+- [ ] UV Index appears with color indicator (green/yellow/red) once OpenUV key is configured
 - [ ] Shows SPF recommendation
 - [ ] Week forecast displays below
 
@@ -290,11 +291,11 @@ PHASE 2: .env Update
 
 PHASE 3: Testing
 - [ ] Server starts with npm start
-- [ ] npm test shows 21/21 tests passing
+- [ ] npm test shows 21/21 tests passing (after OpenUV & Visual Crossing keys)
 - [ ] Homepage loads & news shows
-- [ ] Climate Trends section works
+- [ ] Climate Trends section works (requires Visual Crossing key)
 - [ ] Debris Report map loads
-- [ ] UV Index on volunteer page shows
+- [ ] UV Index on volunteer page shows (requires OpenUV key)
 - [ ] No console errors (F12)
 
 PHASE 4: Deployment Prep
@@ -329,7 +330,7 @@ NEXT: See WEEK3_DEPLOYMENT_GUIDE.md for live deployment
 
 You'll know you're done when:
 
-✅ All 3 API keys registered and active  
+✅ Storm Glass key active; OpenUV & Visual Crossing registered and active  
 ✅ `.env` file updated with no placeholders  
 ✅ `npm test` shows 21/21 passing  
 ✅ Homepage Climate Trends works (enter city → see data)  

@@ -3,7 +3,7 @@
 /**
  * OceanCare Implementation Status & Execution Dashboard
  * This script shows current project status and what's ready to execute
- * 
+ *
  * Usage: node implementation-status.js
  */
 

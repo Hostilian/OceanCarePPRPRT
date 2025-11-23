@@ -1,5 +1,5 @@
 # OceanCare Initiative - Implementation & Testing Checklist
-**Status**: Week 1, Day 1 - API Registration Phase  
+**Status**: Week 1, Day 1 - API Registration Phase (Storm Glass ✅; OpenUV & Visual Crossing pending)  
 **Date Started**: November 23, 2025  
 **Target Completion**: November 26-28, 2025 (3-4 weeks)
 
@@ -10,12 +10,10 @@
 ### ✅ Day 1: API Registration (TODAY)
 
 #### Critical Path Items:
-- [ ] **Storm Glass API Registration**
+- [x] **Storm Glass API Registration** *(completed Nov 23 — key validated and in `.env`)*
   - URL: https://stormglass.io/
-  - Sign up and get API key
   - Expected quota: 50 requests/day (free)
-  - Test endpoint validation
-  - Time estimate: 15-20 minutes
+  - Endpoint validation already verified via CLI
 
 - [ ] **OpenUV API Registration**
   - URL: https://openuv.io/
@@ -32,7 +30,7 @@
   - Time estimate: 15-20 minutes
 
 #### Post-Registration Tasks:
-- [ ] Update `.env` file with all 3 API keys
+- [ ] Update `.env` file with remaining OpenUV & Visual Crossing API keys (Storm Glass already present)
 - [ ] Verify `.env` syntax is correct
 - [ ] Run `npm test` to validate integration
 - [ ] Check server startup with all APIs configured
@@ -43,7 +41,7 @@
 # After updating .env, verify syntax
 node -e "require('dotenv').config(); console.log('✅ Environment loaded successfully')"
 
-# Test Storm Glass (after adding key to .env)
+# Test Storm Glass (already active)
 curl -H "Authorization: Bearer %STORMGLASS_API_KEY%" ^
   "https://api.stormglass.io/v2/weather/point?lat=37.7749&lng=-122.4194&params=windSpeed,waveHeight"
 
@@ -70,7 +68,7 @@ curl "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services
 - [ ] Validate error handling for API failures
 
 #### Target Metrics:
-- [ ] 21/21 tests passing
+- [ ] 21/21 tests passing (achievable once OpenUV & Visual Crossing keys are configured)
 - [ ] 0 console errors during server startup
 - [ ] All API endpoints respond within 3 seconds
 - [ ] Database backup system verified
@@ -111,11 +109,11 @@ npm run perf:check
 ### ⏳ Days 6-7: Automated Testing
 
 #### Tasks:
-- [ ] Run full Jest test suite
+- [ ] Run full Jest test suite (expect OpenUV/Visual Crossing specs to pass once keys are in `.env`)
   ```bash
   npm test
   ```
-- [ ] Achieve 100% test pass rate (21/21)
+- [ ] Achieve 100% test pass rate (21/21) after remaining keys configured
 - [ ] Check code coverage
   ```bash
   npm test -- --coverage
@@ -157,14 +155,14 @@ npm run perf:check
 #### Homepage Testing:
 - [ ] All navigation links functional
 - [ ] News feed displays correctly
-- [ ] Climate trends data loads
+- [ ] Climate trends data loads (requires Visual Crossing key; expect placeholder until configured)
 - [ ] Responsive on mobile (375px width)
 - [ ] Responsive on tablet (768px width)
 - [ ] Responsive on desktop (1024px+ width)
 
 #### Debris Reporting Page:
 - [ ] Geolocation feature works (Chrome, Firefox, Safari)
-- [ ] Marine weather data displays (requires Storm Glass API)
+- [ ] Marine weather data displays (requires Storm Glass API — already active)
 - [ ] Photo upload accepts JPG/PNG
 - [ ] File size limit enforced (5MB max)
 - [ ] Debris type dropdown has all options
@@ -172,8 +170,7 @@ npm run perf:check
 - [ ] Form submission successful
 - [ ] Success notification displays
 
-#### Volunteer Page:
-- [ ] UV index data displays (requires OpenUV API)
+- [ ] UV index data displays (requires OpenUV API — pending key registration)
 - [ ] UV safety information loads
 - [ ] Form validation works
 - [ ] Phone number validation (7+ digits)

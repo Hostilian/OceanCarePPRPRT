@@ -2,7 +2,7 @@
 
 **Start Date**: November 23, 2025  
 **Phase**: PHASE 1 - API Registration (Critical Path)  
-**Estimated Duration**: 2-3 hours to complete Day 1
+**Estimated Duration**: 2-3 hours to complete remaining Day 1 work
 
 ---
 
@@ -13,31 +13,17 @@
 - All npm dependencies installed
 - Database backup system active
 - Rate limiting configured
-- Test suite ready (16/21 passing)
+- Test suite ready (Storm Glass-dependent specs passing; OpenUV & Visual Crossing tests pending keys)
 
-### ⏳ TODO - Register 3 APIs (Next 2 hours)
+### ⏳ TODO - Register Remaining 2 APIs (Next 1 hour)
 
-Your job is to get 3 free API keys. Here's exactly what to do:
+Storm Glass is already registered and validated. Your job now is to collect the final two free API keys so the validation suite can go fully green.
 
 ---
 
 ## Task 1: Storm Glass API (15-20 minutes)
 
-**What**: Marine weather data API  
-**Free Tier**: 50 requests/day  
-**Your Action**:
-
-1. Open browser → https://stormglass.io/
-2. Click "Sign Up" button
-3. Enter email and password
-4. Check email for verification link (click it)
-5. Login to dashboard
-6. Find "API Keys" section
-7. Create new key (name it "OceanCare-Primary")
-8. **Copy the key** (click copy button)
-9. Paste it in notepad temporarily
-
-✅ **Mark done when**: You have the API key saved
+**Status**: ✅ Completed on Nov 23 — key is already registered, validated, and stored in `.env`. Keep these instructions for onboarding or re-registration if the key ever needs to be rotated.
 
 ---
 
@@ -45,6 +31,8 @@ Your job is to get 3 free API keys. Here's exactly what to do:
 
 **What**: UV index data API  
 **Free Tier**: 50 requests/day  
+**Status**: ⏳ Pending — completing this unlocks UV monitoring, CLI validation, and the Jest suite.
+
 **Your Action**:
 
 1. Open browser → https://openuv.io/
@@ -65,6 +53,8 @@ Your job is to get 3 free API keys. Here's exactly what to do:
 
 **What**: Climate/weather forecast API  
 **Free Tier**: 1,000 requests/day (most generous!)  
+**Status**: ⏳ Pending — required for climate trends on the homepage and final test coverage.
+
 **Your Action**:
 
 1. Open browser → https://www.visualcrossing.com/
@@ -83,7 +73,7 @@ Your job is to get 3 free API keys. Here's exactly what to do:
 
 ## Task 4: Update .env File (5-10 minutes)
 
-**What**: Add all 3 API keys to configuration  
+**What**: Add the remaining API keys to configuration  
 **Your Action**:
 
 1. Open `.env` file in project root
@@ -93,7 +83,7 @@ Your job is to get 3 free API keys. Here's exactly what to do:
    OPENUV_API_KEY=your_openuv_api_key_here
    VISUAL_CROSSING_API_KEY=your_visual_crossing_api_key_here
    ```
-3. Replace each `your_*_api_key_here` with actual keys from notepad
+3. Replace the placeholders with actual keys from notepad (Storm Glass should already contain a live value—leave it in place).
 4. **Do not add quotes** - just paste raw key
 5. Save file (Ctrl+S)
 
@@ -118,7 +108,18 @@ Run validation script:
 node validate-api-keys.js
 ```
 
-Expected output:
+**Current output** (before registering the remaining keys):
+```
+✅ Storm Glass API ✓
+❌ OpenUV API — Missing API key
+❌ Visual Crossing API — Missing API key
+✅ Google Maps API ✓
+✅ GNews API ✓
+
+Status: 3/5 APIs configured
+```
+
+**Expected output after OpenUV & Visual Crossing keys are added**:
 ```
 ✅ Storm Glass API ✓
 ✅ OpenUV API ✓
@@ -148,10 +149,12 @@ If some fail, double-check:
 npm test
 ```
 
-Expected result:
+Expected result once OpenUV & Visual Crossing are configured:
 - 21/21 tests passing
 - 0 failures
 - 0 errors
+
+**Current behavior**: Storm Glass–dependent specs already pass; the UV index and climate trend tests remain red until those two keys are in `.env`.
 
 If some still fail:
 - They might need real API quota (first request uses quota)
@@ -186,6 +189,8 @@ If some still fail:
    
    Should get JSON response with news articles
 
+   *Tip*: You can also hit `/api/marine-weather` to confirm the Storm Glass key is active. `/api/uv-index` and `/api/climate-trends` return missing-key messages until their credentials are added.
+
 3. Stop server: Press Ctrl+C
 
 ✅ **Mark done when**: Server starts and responds to requests
@@ -194,14 +199,12 @@ If some still fail:
 
 ## Summary: Week 1 Day 1
 
-### Total Time Required: 2-3 hours
-- API 1 registration: 15-20 min
-- API 2 registration: 10-15 min
-- API 3 registration: 15-20 min
-- Update .env: 5-10 min
-- Validation: 5-10 min
-- Test suite: 5 min
-- Server test: 3 min
+### Remaining Time Required: ~60 minutes
+- OpenUV registration: 10-15 min
+- Visual Crossing registration: 15-20 min
+- Update `.env`: 5-10 min
+- Validation + tests: 10-15 min
+- Server spot-check: 3 min
 
 ### What Happens Next
 Once Day 1 complete:
@@ -234,9 +237,9 @@ Once Day 1 complete:
 ## You're Ready!
 
 Everything is set up. You just need to:
-1. ✅ Get 3 API keys (2-3 hours)
-2. ✅ Add them to .env (10 minutes)
-3. ✅ Run validation (5 minutes)
+1. ✅ Keep the Storm Glass key active (already complete)
+2. ⏳ Register OpenUV & Visual Crossing API keys (≈30-40 minutes total)
+3. ⏳ Add the new keys to `.env`, re-run validation/tests, and confirm 5/5 APIs working
 
 Then move to Days 2-7 for testing and optimization.
 

@@ -1,49 +1,49 @@
 # OceanCare Initiative - Quick Reference Card
 
-## 🚀 LAUNCH IN 3 STEPS (30 MINUTES)
+## 🚀 LAUNCH IN 3 STEPS (ABOUT 40 MINUTES)
 
-### Step 1: Register 3 Free API Keys (15 minutes)
+### Step 1: Register Remaining API Keys (15 minutes)
 ```
-1. Storm Glass: https://stormglass.io/
-   → Sign up → Get API key → Add to .env
-   
-2. OpenUV: https://openuv.io/
-   → Sign up → Get API key → Add to .env
-   
-3. Visual Crossing: https://visualcrossing.com/
-   → Sign up → Get API key → Add to .env
+1. OpenUV: https://openuv.io/
+   → Sign up → Verify email → Copy key → Add to .env
+
+2. Visual Crossing: https://visualcrossing.com/
+   → Sign up → Verify email → Copy key → Add to .env
+
+Storm Glass ✅ Registered Nov 23 — keep credentials handy for future resets.
 ```
 
-### Step 2: Test Locally (10 minutes)
+### Step 2: Test Locally (15 minutes)
 ```bash
 npm install          # Install dependencies
-npm test            # Run tests (should all pass)
-npm start           # Start server on http://localhost:3000
-# Test in browser - all features should work
+npm test             # Expect full pass after keys are added (UV & climate specs fail beforehand)
+npm start            # Start server on http://localhost:3000
+# Spot-check UV widget + climate trends once new keys are live
 ```
 
-### Step 3: Deploy to Production (5 minutes)
+### Step 3: Deploy to Production (10 minutes)
 ```bash
-# Choose ONE:
-vercel              # Easiest (Vercel)
-OR heroku create oceancare && git push heroku main  # Heroku
-OR docker build -t oceancare . && docker run oceancare  # Docker
+# Choose ONE after validation:
+vercel
+# or
+heroku create oceancare && git push heroku main
+# or
+docker build -t oceancare . && docker run oceancare
 ```
 
 ---
 
 ## 📋 WHAT'S READY TO GO
 
-✅ **8 APIs Integrated**
+✅ **8 APIs Planned (6 live today)**
 - GNews (News)
 - Open-Meteo (Weather)
 - Nominatim (Location)
 - Google Maps (Debris Map)
 - OpenAQ (Air Quality)
-- Storm Glass (Marine Weather) *
-- OpenUV (UV Index) *
-- Visual Crossing (Climate) *
-(*Requires key registration)
+- Storm Glass (Marine Weather) ✅
+- OpenUV (UV Index) ❌ (register now)
+- Visual Crossing (Climate) ❌ (register now)
 
 ✅ **All Pages Functional**
 - Homepage with news & climate trends
@@ -82,26 +82,26 @@ OR docker build -t oceancare . && docker run oceancare  # Docker
 
 ## 🔑 YOUR TODO
 
-1. **Create .env file**
+1. **Confirm `.env` file**
    ```env
    GNEWS_API_KEY=d1ebf8a38da2b60015304b61977cd57c
    GOOGLE_MAPS_API_KEY=AIzaSyDAsgFOdGcEdNhWkcn1LC50DonUEHMGdDE
-   STORMGLASS_API_KEY=your_key_here
+   STORMGLASS_API_KEY=your_key_here_or_existing
    OPENUV_API_KEY=your_key_here
    VISUAL_CROSSING_API_KEY=your_key_here
    PORT=3000
    NODE_ENV=production
    ```
 
-2. **Register 3 API Keys** (links above)
+2. **Register 2 API Keys** (OpenUV + Visual Crossing)
 
-3. **Run `npm test`** - Should pass all 18+ tests
+3. **Update `.env` with new keys** (remove any `your_` placeholders)
 
 4. **Run `npm start`** - Server should start on :3000
 
-5. **Test in browser** - Visit http://localhost:3000
+5. **Test in browser** - Verify UV index + climate trends now populate
 
-6. **Deploy** - Follow DEPLOYMENT_GUIDE.md
+6. **Deploy** - Follow DEPLOYMENT_GUIDE.md once validation is green
 
 ---
 
@@ -193,11 +193,11 @@ docker run -p 3000:3000 oceancare
 
 ## ✨ HIGHLIGHTS
 
-🌊 **8 APIs** - All 8 working, 3 need free registration  
+🌊 **8 APIs** - 6 live today; OpenUV & Visual Crossing unlock after registration  
 📱 **Responsive** - Works on mobile, tablet, desktop  
 🔒 **Secure** - Environment variables for secrets  
 ⚡ **Fast** - Cached queries, optimized images  
-🧪 **Tested** - 18+ comprehensive tests  
+🧪 **Tested** - 18+ comprehensive tests (2 suites waiting on final keys)  
 📚 **Documented** - 4 detailed guides  
 🎨 **Beautiful** - Glassmorphic ocean-themed design  
 💾 **Persistent** - Data survives server restart  
@@ -217,12 +217,12 @@ docker run -p 3000:3000 oceancare
 ## ⏱️ TIME ESTIMATE
 
 ```
-Register 3 API keys:  10-15 min
-Local testing:         5-10 min
-Deploy to production:  5-10 min
-Post-launch testing:   5-10 min
-─────────────────────────────
-TOTAL:                30-45 min
+Register remaining API keys:   10-15 min
+Local validation (tests + manual): 15 min
+Deploy to production:           10-15 min
+Post-launch smoke check:         5-10 min
+─────────────────────────────────────
+TOTAL:                           ~40-55 min
 ```
 
 ---
@@ -230,33 +230,33 @@ TOTAL:                30-45 min
 ## 🎯 NEXT ACTIONS (IN ORDER)
 
 ```
-1. ☐ Create .env file with API keys
-2. ☐ Register 3 free API keys
-3. ☐ Run: npm install
-4. ☐ Run: npm test (all should pass)
-5. ☐ Run: npm start
-6. ☐ Visit: http://localhost:3000
-7. ☐ Test all pages work
+1. ☐ Confirm `.env` exists (Storm Glass key already stored)
+2. ☐ Register OpenUV + Visual Crossing keys
+3. ☐ Update `.env` with new keys
+4. ☐ Run: npm install (if not done recently)
+5. ☐ Run: npm test (expect full pass once keys added)
+6. ☐ Run: npm start
+7. ☐ Visit: http://localhost:3000 and verify UV + climate widgets
 8. ☐ Choose deployment platform
 9. ☐ Deploy using DEPLOYMENT_GUIDE.md
-10. ☐ Verify production site works
-11. ☐ Setup monitoring & backups
-12. ☐ Share with your team! 🎉
+10. ☐ Verify production site works end-to-end
+11. ☐ Set up monitoring & backups
+12. ☐ Share launch with your team! 🎉
 ```
 
 ---
 
-## 🌊 OCEANCARE INITIATIVE - PRODUCTION READY
+## 🌊 OCEANCARE INITIATIVE - ALMOST LAUNCH READY
 
-**Your platform is ready to make waves in ocean conservation!**
+**Your platform is prepped — two quick key registrations stand between you and launch.**
 
-Everything you need is in place. Just register 3 free API keys and you're launching. The entire project has been polished, tested, and documented.
+Once OpenUV and Visual Crossing are active and `.env` is refreshed, the final tests will pass and deployment is clear.
 
-**Go save some oceans! 🌊**
+**Finish the keys, verify the live data, then make waves! 🌊**
 
 ---
 
-*Implementation Date: November 22, 2025*  
-*Status: ✅ PRODUCTION READY*  
-*Launch Time: 30-45 minutes*  
+*Implementation Date: November 22, 2025 (updated Nov 23 for key status)*  
+*Status: 🟡 Awaiting OpenUV & Visual Crossing keys*  
+*Launch Time After Keys: ~30-40 minutes*  
 *Your Cost: $0*  
