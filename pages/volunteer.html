@@ -189,15 +189,25 @@
     document.getElementById('volunteerForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
-      const formData = {
-        volunteerName: document.getElementById('volunteerName').value,
-        volunteerEmail: document.getElementById('volunteerEmail').value,
-        volunteerPhone: document.getElementById('volunteerPhone').value,
-        volunteerLocation: document.getElementById('volunteerLocation').value,
-        interestArea: document.getElementById('interestArea').value,
-        experience: document.getElementById('experience').value,
-        availability: document.getElementById('availability').value,
-        motivation: document.getElementById('motivation').value,
+      const name = document.getElementById('volunteerName').value.trim();
+      const email = document.getElementById('volunteerEmail').value.trim();
+      const phone = document.getElementById('volunteerPhone').value.trim();
+      const location = document.getElementById('volunteerLocation').value.trim();
+      const area = document.getElementById('interestArea').value;
+      const experienceLevel = document.getElementById('experience').value;
+      const availability = document.getElementById('availability').value;
+      const motivation = document.getElementById('motivation').value.trim();
+
+      const experienceSummary = motivation ? `${experienceLevel}: ${motivation}` : experienceLevel;
+
+      const payload = {
+        name,
+        email,
+        phone,
+        location,
+        area,
+        experience: experienceSummary,
+        availability
       };
 
       fetch('/api/volunteer', {
@@ -205,10 +215,10 @@
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       }).then(res => res.json()).then(data => {
         if (data.success) {
-          showConfirmation(formData.volunteerName, formData.volunteerEmail);
+          showConfirmation(name, email);
         }
       }).catch(err => {
         alert('Error submitting application: ' + err.message);

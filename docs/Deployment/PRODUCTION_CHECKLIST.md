@@ -1,8 +1,9 @@
 # OceanCare Initiative - Production Checklist
 
 **Version**: 1.0.0  
-**Status**: ✅ Production Ready  
+**Status**: 🟡 Launch Blocked — OpenUV & Visual Crossing keys pending  
 **Date**: November 2025
+**Immediate Focus**: Register remaining API keys, update `.env`, rerun validation/tests.
 
 ---
 
@@ -26,9 +27,9 @@
 - [x] OpenAQ API configured (fallback data)
 - [x] Nominatim geocoding configured and tested
 - [x] Google Maps API key configured and tested
-- [ ] Storm Glass API key registered
-- [ ] OpenUV API key registered
-- [ ] Visual Crossing API key registered
+- [x] Storm Glass API key registered (verified Nov 23)
+- [ ] OpenUV API key registered (pending)
+- [ ] Visual Crossing API key registered (pending)
 
 ### Frontend & UI/UX
 - [x] Homepage loads correctly
@@ -39,7 +40,7 @@
 - [x] Accessibility (WCAG AA) compliant
 - [x] Dark mode theme renders correctly
 - [x] All 6 news articles display properly
-- [x] Climate Trends section functional
+- [ ] Climate Trends section functional (Visual Crossing key required)
 - [x] Donation calculator working
 - [x] Contact form submits successfully
 
@@ -51,7 +52,7 @@
 - [x] Photo upload preview working
 - [x] Map displays debris reports
 - [x] Debris submission successful
-- [ ] Marine Weather (Storm Glass) data showing
+- [x] Marine Weather (Storm Glass) data showing (verified Nov 23)
 - [x] Modal confirmation displays after submission
 
 ### Volunteer Page
@@ -81,14 +82,14 @@
 - [x] No hardcoded database paths
 
 ### Deployment Configuration
-- [ ] .env file created with all keys
+- [ ] .env file created with all required keys (Storm Glass ✅, OpenUV & Visual Crossing pending)
 - [ ] .env added to .gitignore
 - [ ] package.json dependencies locked (package-lock.json)
 - [ ] Node.js version specified (v18+)
 - [ ] PORT environment variable works
 - [ ] NODE_ENV defaults to production
 - [ ] npm start runs without errors
-- [ ] npm test passes all tests
+- [ ] npm test passes all tests (UV & climate suites green after keys)
 
 ### Security
 - [x] No API keys in source code

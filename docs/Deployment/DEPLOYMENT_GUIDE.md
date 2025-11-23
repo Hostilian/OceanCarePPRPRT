@@ -1,6 +1,6 @@
 # OceanCare Initiative - Deployment & Production Guide
 
-**Status**: ✅ Ready for Production  
+**Status**: 🟡 Launch Blocked — OpenUV & Visual Crossing keys pending  
 **Last Updated**: November 2025  
 **Version**: 1.0.0
 
@@ -9,21 +9,21 @@
 ## Pre-Deployment Checklist
 
 ### ✅ Code Quality
-- [x] All 8 APIs implemented and tested
+- [ ] All 8 APIs implemented and tested (Storm Glass ✅; OpenUV & Visual Crossing awaiting keys)
 - [x] Form validation on all user inputs
 - [x] Error handling with user-friendly messages
 - [x] Database migrated to persistent SQLite
-- [x] Test suite includes 15+ endpoints
+- [x] Test suite covers 18 endpoints (OpenUV & Visual Crossing specs pass once keys are active)
 - [x] Code linted and formatted
 - [x] Security best practices implemented
 
 ### ⚠️ Configuration
-- [ ] All 3 API keys registered (Storm Glass, OpenUV, Visual Crossing)
+- [ ] Storm Glass key verified; OpenUV & Visual Crossing keys registered and active
 - [ ] `.env` file created with all keys
 - [ ] `.env` added to `.gitignore` (NOT in Git)
 - [ ] `oceancare.db` database file created
 - [ ] `npm install` completed without errors
-- [ ] `npm test` passes all tests
+- [ ] `npm test` passes all tests (OpenUV & Visual Crossing suites green post-key)
 - [ ] `npm start` runs without warnings
 
 ### 🔒 Security
@@ -53,9 +53,9 @@ cd OceanCarePPRPRT
 # Install all dependencies
 npm install
 
-# Create .env file with all API keys
+# Create .env file with required API keys
 cp .env.example .env
-# Edit .env and add your API keys
+# Edit .env, confirm Storm Glass value, and add OpenUV & Visual Crossing keys
 
 # Run tests
 npm test
@@ -67,9 +67,9 @@ npm start
 
 **Verify all features work**:
 - [ ] Homepage loads with news
-- [ ] Climate Trends section responds to location input
-- [ ] Debris Report page shows ocean conditions
-- [ ] Volunteer page shows forecast with UV safety
+- [ ] Climate Trends section responds to location input (Visual Crossing key required)
+- [ ] Debris Report page shows ocean conditions (Storm Glass ✅ — multi-day visuals improve once Visual Crossing key is added)
+- [ ] Volunteer page shows forecast with UV safety (OpenUV key required)
 - [ ] Contact/Donation forms submit
 - [ ] No console errors
 
@@ -294,7 +294,7 @@ PORT=3000
 # API Keys (ALL REQUIRED)
 GNEWS_API_KEY=your_key
 GOOGLE_MAPS_API_KEY=your_key
-STORMGLASS_API_KEY=your_key
+STORMGLASS_API_KEY=existing_key
 OPENUV_API_KEY=your_key
 VISUAL_CROSSING_API_KEY=your_key
 
@@ -322,7 +322,7 @@ curl https://oceancare.example.com/api/get-maps-key
 ### 2. Monitor APIs
 
 ```bash
-# Test all 8 APIs are working
+# Test all 8 APIs are working (OpenUV & Visual Crossing endpoints return live data once keys are active)
 # 1. News
 curl https://oceancare.example.com/api/news
 

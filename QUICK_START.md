@@ -52,6 +52,8 @@ docker build -t oceancare . && docker run oceancare
 - Donation with impact calculator
 - Contact & team pages
 
+*(Volunteer UV index and homepage climate-trend insights unlock fully once the remaining keys are configured.)*
+
 ✅ **Professional Features**
 - Form validation (client + server)
 - Error handling with fallbacks
@@ -123,7 +125,7 @@ docker build -t oceancare . && docker run oceancare
 ## 📚 DOCUMENTATION REFERENCE
 
 **Quick Start**: README.md  
-**API Setup**: API_SETUP_GUIDE.md (for registering 3 keys)  
+**API Setup**: API_SETUP_GUIDE.md (remaining OpenUV & Visual Crossing steps)  
 **Deployment**: DEPLOYMENT_GUIDE.md (for production)  
 **Pre-Launch**: PRODUCTION_CHECKLIST.md (verification)  
 **What Changed**: IMPLEMENTATION_SUMMARY.md (this work)  

@@ -168,8 +168,8 @@
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          donorName: name,
-          donorEmail: email,
+          name: name,
+          email: email,
           amount: parseFloat(amount),
           purpose: document.getElementById('donationPurpose').value || 'general'
         })

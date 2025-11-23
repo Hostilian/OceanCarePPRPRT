@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="812" viewBox="0 0 375 812">
+  <rect width="375" height="812" fill="#f7f4ef" />
+  <rect x="18" y="26" width="339" height="760" rx="18" fill="#ffffff" stroke="#c9b9a3" stroke-width="3" />
+  <text x="50%" y="70" text-anchor="middle" font-family="Courier New, monospace" font-size="24" fill="#333333">Report Issue</text>
+  <text x="50%" y="110" text-anchor="middle" font-family="Courier New, monospace" font-size="16" fill="#555555">Task 2 - Step 2</text>
+  <rect x="52" y="150" width="271" height="180" rx="12" fill="#ffffff" stroke="#94a3ff" stroke-width="2" />
+  <path d="M 100 190 L 140 230 L 170 210 L 210 250 L 240 220 L 280 260" stroke="#2e6bc1" stroke-width="4" fill="none" />
+  <text x="62" y="176" font-family="Courier New, monospace" font-size="12" fill="#475569">Photo added</text>
+  <text x="52" y="360" font-family="Courier New, monospace" font-size="14" fill="#555555">Location</text>
+  <rect x="52" y="370" width="271" height="44" rx="8" fill="#f3f4f6" stroke="#bfc4ca" stroke-width="2" />
+  <text x="64" y="395" font-family="Courier New, monospace" font-size="14" fill="#475569">Sunset Beach North Entrance</text>
+  <text x="52" y="440" font-family="Courier New, monospace" font-size="14" fill="#555555">Description</text>
+  <rect x="52" y="450" width="271" height="140" rx="10" fill="#f3f4f6" stroke="#bfc4ca" stroke-width="2" />
+  <text x="64" y="480" font-family="Courier New, monospace" font-size="14" fill="#475569">Large pile of bottles and fishing line near lifeguard chair.</text>
+  <rect x="52" y="614" width="271" height="60" rx="12" fill="#78c47a" />
+  <text x="188" y="650" text-anchor="middle" font-family="Courier New, monospace" font-size="18" fill="#ffffff">Submit Report</text>
+  <rect x="94" y="690" width="187" height="64" rx="16" fill="#ffffff" stroke="#f0b429" stroke-width="3" />
+  <text x="188" y="720" text-anchor="middle" font-family="Courier New, monospace" font-size="14" fill="#965f00">Report Submitted Card</text>
+  <path d="M 188 614 L 188 594" stroke="#cc4444" stroke-width="4" marker-end="url(#arrow)" />
+  <text x="190" y="582" text-anchor="middle" font-family="Courier New, monospace" font-size="14" fill="#cc4444">Tap to finish</text>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#cc4444" />
+    </marker>
+  </defs>
+</svg>

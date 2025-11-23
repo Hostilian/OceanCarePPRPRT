@@ -1,7 +1,7 @@
 # OceanCare Initiative - API Setup & Configuration Guide
 
-**Project Status**: Production-Ready Ocean Conservation Platform  
-**Total APIs Integrated**: 8 (5 free, no registration needed + 3 requiring free registration)  
+**Project Status**: Week 1 integration in progress — Storm Glass live, OpenUV & Visual Crossing pending  
+**Total APIs Integrated**: 8 planned (5 no-registration + 3 keyed; 6 active today)  
 **Total API Cost**: $0 - All using free tiers
 
 ---
@@ -24,7 +24,7 @@
    # Server runs on http://localhost:3000
    ```
 
-4. **Register 3 free API keys** (next section) to unlock full functionality
+4. **Register the remaining free API keys** (OpenUV & Visual Crossing) to unlock full functionality
 
 ---
 
@@ -46,19 +46,19 @@
 
 ### ⚠️ Requires Free Registration (10 minutes setup each)
 
-#### 1. **Storm Glass API** - Marine Weather Data
+#### 1. **Storm Glass API** - Marine Weather Data (✅ Registered Nov 23)
 **What it does**: Provides ocean-specific data (wave height, swell direction, water temperature)
 
 **Used on**: Debris Report page (Marine Weather Box)
 
-**Setup Steps**:
+**Setup Steps** (for reference or re-registration):
 1. Visit: https://stormglass.io/
 2. Click "Sign Up" → Create free account
 3. Go to Dashboard → API Keys → Copy your key
 4. Paste into `.env`:
-   ```env
-   STORMGLASS_API_KEY=your_key_here
-   ```
+  ```env
+  STORMGLASS_API_KEY=your_key_here
+  ```
 5. Restart server: `npm start`
 6. Debris Report page will now show live marine weather data
 
@@ -153,7 +153,7 @@ GOOGLE_MAPS_API_KEY=AIzaSyDAsgFOdGcEdNhWkcn1LC50DonUEHMGdDE
 # Storm Glass API - Marine weather (waves, swell, water temp)
 # Get free key at: https://stormglass.io/
 # Free tier: 50 requests/day (register, then activate key)
-STORMGLASS_API_KEY=your_stormglass_api_key_here
+STORMGLASS_API_KEY=existing_stormglass_api_key
 
 # OpenUV API - UV Index safety recommendations
 # Get free key at: https://openuv.io/
@@ -246,7 +246,7 @@ Run the comprehensive test suite:
 npm test
 ```
 
-**Coverage**: 15+ endpoints tested including:
+**Coverage**: 18 endpoints ready — OpenUV & Visual Crossing specs pass once keys are configured. Includes:
 - News fetching
 - Donation processing
 - Volunteer registration
@@ -258,7 +258,7 @@ npm test
 
 ## Deployment Checklist
 
-- [ ] All 3 API keys registered and added to `.env`
+- [ ] Storm Glass key verified, OpenUV & Visual Crossing keys registered and added to `.env`
 - [ ] Database file (`oceancare.db`) created and accessible
 - [ ] `.env` file created with all credentials
 - [ ] `.env` file added to `.gitignore` (NOT committed to GitHub)
@@ -337,13 +337,13 @@ npm test
 
 ## Next Steps
 
-1. **Register 3 free API keys** (10-15 minutes total)
-2. **Add keys to `.env`** (2 minutes)
-3. **Run tests** to verify everything works (1 minute)
-4. **Test each page** to see APIs displaying (5 minutes)
+1. **Register OpenUV & Visual Crossing keys** (10-15 minutes total — Storm Glass already active)
+2. **Add new keys to `.env`** and confirm no placeholders remain (2 minutes)
+3. **Run tests** to verify UV/climate suites now pass (1-2 minutes)
+4. **Test each page** to confirm live data (5 minutes)
 5. **Deploy** to production with confidence!
 
-**Estimated Total Setup Time: 20-30 minutes**
+**Estimated Remaining Setup Time: 20-30 minutes once keys are issued**
 
 ---
 

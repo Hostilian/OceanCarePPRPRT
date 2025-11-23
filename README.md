@@ -2,7 +2,7 @@
 
 🌊 **A production-ready ocean conservation website with integrated APIs, real-time weather data, volunteer tracking, and environmental impact measurement.**
 
-**Status**: ✅ Production Ready | **Version**: 1.0.0 | **APIs**: 8 Integrated | **Cost**: $0 (All free tiers)
+**Status**: 🟡 Launch Blocked (OpenUV & Visual Crossing keys pending) | **Version**: 1.0.0 | **APIs**: 8 planned (6 active today) | **Cost**: $0 (All free tiers)
 
 ---
 
@@ -12,12 +12,13 @@
 # 1. Install dependencies
 npm install
 
-# 2. Create .env with API keys
+# 2. Create or update .env with API keys
 cp .env.example .env
-# Edit .env and add your 3 free API keys (see below)
+# Edit .env and confirm Storm Glass key exists, then add OpenUV & Visual Crossing keys (see below)
 
 # 3. Run tests
 npm test
+# Expect UV + climate suites to pass once the remaining keys are configured
 
 # 4. Start the server
 npm start
@@ -45,9 +46,9 @@ npm start
 5. **Google Maps** - Interactive debris mapping
 
 #### Free Registration Required (10 min setup) ⚠️
-6. **Storm Glass** - Marine-specific weather (wave height, swell, water temperature)
-7. **OpenUV** - UV Index with sun safety recommendations
-8. **Visual Crossing** - 90-day climate trend analysis
+6. **Storm Glass** - Marine-specific weather (wave height, swell, water temperature) — ✅ Registered Nov 23
+7. **OpenUV** - UV Index with sun safety recommendations — ❌ Pending key
+8. **Visual Crossing** - 90-day climate trend analysis — ❌ Pending key
 
 **Total Cost**: $0 - All using free tiers!
 
@@ -68,7 +69,7 @@ npm start
 - ✅ SQL injection prevention (parameterized queries)
 
 ### 🧪 Testing & Quality
-- ✅ 15+ endpoint tests with Jest + Supertest
+- ✅ 18 endpoint tests with Jest + Supertest (OpenUV + Visual Crossing suites unlock after keys)
 - ✅ Error handling for all API failures
 - ✅ Graceful fallbacks when APIs unavailable
 - ✅ Form validation (client + server)
@@ -155,13 +156,13 @@ cp .env.example .env
 # (Other 5 APIs work without registration)
 ```
 
-### Step 3: Finalize Free API Keys (10 minutes)
+### Step 3: Finalize Remaining Free API Keys (10 minutes)
 
 | API | Steps | Link |
 |-----|-------|------|
 | **Storm Glass** | ✅ Completed Nov 23 (reference steps in guide) | https://stormglass.io/ |
-| **OpenUV** | 1. Sign up 2. Get API key 3. Add to `.env` | https://openuv.io/ |
-| **Visual Crossing** | 1. Sign up 2. Get API key 3. Paste to `.env` | https://visualcrossing.com/ |
+| **OpenUV** | ❌ Pending — Sign up → verify email → copy key → add to `.env` | https://openuv.io/ |
+| **Visual Crossing** | ❌ Pending — Sign up → verify email → copy key → add to `.env` | https://visualcrossing.com/ |
 
 **See API_SETUP_GUIDE.md for detailed instructions!**
 
@@ -174,7 +175,7 @@ npm start
 ### Step 5: Run Tests
 ```bash
 npm test
-# Runs 15+ comprehensive endpoint tests
+# Runs 18 comprehensive endpoint tests (final two suites require OpenUV & Visual Crossing keys)
 ```
 
 ---
@@ -187,9 +188,9 @@ GNEWS_API_KEY=d1ebf8a38da2b60015304b61977cd57c
 GOOGLE_MAPS_API_KEY=AIzaSyDAsgFOdGcEdNhWkcn1LC50DonUEHMGdDE
 
 # === Register for free (see API_SETUP_GUIDE.md) ===
-STORMGLASS_API_KEY=abc123...(already set) # Marine weather (alias STORM_GLASS_API_KEY also supported)
-OPENUV_API_KEY=your_key_here           # UV Index
-VISUAL_CROSSING_API_KEY=your_key_here  # Climate trends
+STORMGLASS_API_KEY=existing_storm_glass_key   # Marine weather (alias STORM_GLASS_API_KEY also supported)
+OPENUV_API_KEY=your_key_here                 # UV Index (pending)
+VISUAL_CROSSING_API_KEY=your_key_here        # Climate trends (pending)
 
 # === Server ===
 PORT=3000
@@ -345,7 +346,7 @@ docker run -p 3000:3000 -e GNEWS_API_KEY=... oceancare
 Before deploying to production, see **PRODUCTION_CHECKLIST.md**
 
 Quick checklist:
-- [ ] All 3 API keys registered
+- [ ] Storm Glass key verified, OpenUV & Visual Crossing keys registered
 - [ ] npm test passes all tests
 - [ ] No console errors
 - [ ] Database file created (oceancare.db)
@@ -441,7 +442,7 @@ Open source - feel free to use and modify for ocean conservation!
 
 ---
 
-**Last Updated**: November 2025 | **Status**: Production Ready ✅
+**Last Updated**: November 2025 (updated Nov 23 for API status) | **Status**: 🟡 Awaiting OpenUV & Visual Crossing keys
 
 
 - Ocean-themed color palette (blues, teals, sand)
