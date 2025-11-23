@@ -1,12 +1,12 @@
 {
   "name": "oceancare-initiative",
   "version": "1.0.0",
-  "description": "OceanCare Initiative - HCI Paper Prototype for ocean conservation website with donation, volunteer, and debris reporting features.",
-  "main": "server.js",
+  "description": "OceanCare Initiative - Production-ready ocean conservation platform with real-time environmental data, volunteer tracking, and impact measurement.",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
-    "lint": "eslint server.js server.test.js --max-warnings=0",
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "lint": "eslint src/server.js tests/server.test.js --max-warnings=0",
     "test": "jest"
   },
   "keywords": [

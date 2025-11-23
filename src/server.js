@@ -3,12 +3,12 @@ const path = require('path');
 const fetch = require('node-fetch');
 const sqlite3 = require('sqlite3').verbose();
 const rateLimit = require('express-rate-limit');
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '../config/.env') });
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 
 // Rate limiting middleware
@@ -37,11 +37,10 @@ app.post('/api/donate', strictLimiter);
 app.post('/api/volunteer', strictLimiter);
 app.post('/api/report-debris', strictLimiter);
 app.post('/api/contact', strictLimiter);
-
 // Persistent SQLite database - stores data even after server restart
 // Database file is created in the project root directory
-const dbPath = path.join(__dirname, 'oceancare.db');
-const backupDir = path.join(__dirname, '.backups');
+const dbPath = path.join(__dirname, '../oceancare.db');
+const backupDir = path.join(__dirname, '../.backups');
 const fs = require('fs');
 
 // Ensure backup directory exists
