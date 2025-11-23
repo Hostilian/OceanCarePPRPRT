@@ -228,18 +228,25 @@ textarea { resize: vertical; min-height: 120px; }
     <div class="hero-content">
       <h1>🚨 Report Ocean Debris</h1>
       <p>Help us track marine pollution. Report debris sightings with photos and location. Every report helps us protect our oceans.</p>
+      <div style="margin-top: 2rem; padding: 1rem; background: rgba(255, 107, 107, 0.2); border-radius: 10px; border: 1px solid rgba(255, 107, 107, 0.4);">
+        <p style="font-size: 0.9rem; color: #FFB6B6; font-weight: 600; margin: 0;">📡 Real-time weather + GPS mapping + Ocean conditions</p>
+      </div>
     </div>
   </section>
 
   <div class="container">
-    <div class="info-box">
-      <strong>Your Report Helps:</strong> All debris reports are analyzed by our team to identify pollution hotspots and coordinate cleanup efforts. Your data is invaluable to ocean conservation.
+    <div class="info-box" style="background: linear-gradient(135deg, rgba(0, 168, 204, 0.15), rgba(0, 168, 204, 0.05)); border: 2px solid rgba(0, 168, 204, 0.3); padding: 1.5rem;">
+      <strong style="color: var(--teal); font-size: 1.1rem;">🎯 Your Report Helps:</strong>
+      <p style="margin: 0.5rem 0 0 0; color: rgba(224, 224, 224, 0.9);">All debris reports are analyzed by our team to identify pollution hotspots and coordinate cleanup efforts. Your data is invaluable to ocean conservation.</p>
     </div>
 
-    <div id="oceanConditionsCard" class="form-card" style="background: linear-gradient(135deg, rgba(0, 77, 190, 0.1), rgba(0, 168, 204, 0.1)); border-left: 4px solid var(--teal); display: none;">
-      <h3 style="color: var(--teal); margin-top: 0;">🌊 Real-Time Ocean Conditions</h3>
-      <div id="oceanConditionsContent" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem;"></div>
-      <small id="conditionsTimestamp" style="color: #666;"></small>
+    <div id="oceanConditionsCard" class="form-card" style="background: linear-gradient(135deg, rgba(0, 77, 190, 0.12), rgba(0, 168, 204, 0.12)); border: 2px solid var(--teal); display: none; margin-bottom: 2rem;">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <h3 style="color: var(--teal); margin: 0 0 0.5rem 0; font-size: 1.5rem;">🌊 Real-Time Ocean Conditions</h3>
+        <p style="color: rgba(224, 224, 224, 0.8); font-size: 0.95rem;">Live data for your location</p>
+      </div>
+      <div id="oceanConditionsContent" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;"></div>
+      <div id="conditionsTimestamp" style="text-align: center; padding: 1rem; background: rgba(0, 168, 204, 0.1); border-radius: 8px;"></div>
     </div>
 
     <div class="form-card">
@@ -311,25 +318,29 @@ textarea { resize: vertical; min-height: 120px; }
       </form>
     </div>
 
-    <div class="form-card" style="margin-top: 2rem; padding: 0; overflow: hidden;">
-      <div style="padding: 2.5rem 2.5rem 1rem 2.5rem;">
-        <h3 style="color: var(--teal); margin: 0 0 0.5rem 0;">🗺️ Debris Reports Map</h3>
-        <p style="color: var(--muted); font-size: 0.95rem; margin: 0;">See all reported debris locations and help us track ocean pollution hotspots.</p>
+    <div class="form-card" style="margin-top: 3rem; padding: 0; overflow: hidden; border: 2px solid rgba(0, 168, 204, 0.4);">
+      <div style="padding: 2.5rem 2.5rem 1.5rem 2.5rem; background: linear-gradient(135deg, rgba(0, 168, 204, 0.12), rgba(0, 119, 190, 0.08)); text-align: center;">
+        <h3 style="color: var(--teal); margin: 0 0 0.75rem 0; font-size: 1.8rem;">🗺️ Interactive Debris Reports Map</h3>
+        <p style="color: rgba(224, 224, 224, 0.85); font-size: 1.05rem; margin: 0 0 1rem 0;">See all reported debris locations and help us track ocean pollution hotspots</p>
+        <div style="display: inline-block; padding: 0.6rem 1.2rem; background: rgba(0, 168, 204, 0.2); border-radius: 8px; border: 1px solid rgba(0, 168, 204, 0.4);">
+          <span style="color: var(--teal); font-weight: 600; font-size: 0.9rem;">📡 Powered by Google Maps API + GPS Data</span>
+        </div>
       </div>
-      <div id="debrisMap" style="width: 100%; height: 500px; border-top: 1px solid rgba(0, 168, 204, 0.3);"></div>
-      <div id="mapStats" style="padding: 1.5rem 2.5rem; background: rgba(0, 168, 204, 0.05); border-top: 1px solid rgba(0, 168, 204, 0.2);">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-          <div>
-            <div style="font-size: 0.85rem; color: var(--muted);">Total Reports</div>
-            <div style="font-size: 1.8rem; font-weight: bold; color: var(--sand);" id="totalReports">0</div>
+      <div id="debrisMap" style="width: 100%; height: 550px; border-top: 2px solid rgba(0, 168, 204, 0.3);"></div>
+      <div id="mapStats" style="padding: 2rem 2.5rem; background: linear-gradient(135deg, rgba(0, 168, 204, 0.1), rgba(0, 168, 204, 0.05)); border-top: 2px solid rgba(0, 168, 204, 0.3);">
+        <h4 style="color: var(--teal); margin: 0 0 1.5rem 0; text-align: center; font-size: 1.3rem;">📊 Pollution Statistics</h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem;">
+          <div style="text-align: center; padding: 1.5rem; background: rgba(253, 216, 53, 0.15); border-radius: 10px; border: 1px solid rgba(253, 216, 53, 0.3);">
+            <div style="font-size: 0.9rem; color: rgba(253, 216, 53, 0.9); font-weight: 600; margin-bottom: 0.5rem;">Total Reports</div>
+            <div style="font-size: 2.5rem; font-weight: bold; color: var(--sand);" id="totalReports">0</div>
           </div>
-          <div>
-            <div style="font-size: 0.85rem; color: var(--muted);">Most Common Type</div>
-            <div style="font-size: 1.2rem; font-weight: bold; color: var(--teal);" id="commonType">--</div>
+          <div style="text-align: center; padding: 1.5rem; background: rgba(0, 168, 204, 0.15); border-radius: 10px; border: 1px solid rgba(0, 168, 204, 0.3);">
+            <div style="font-size: 0.9rem; color: rgba(0, 168, 204, 0.9); font-weight: 600; margin-bottom: 0.5rem;">Most Common Type</div>
+            <div style="font-size: 1.4rem; font-weight: bold; color: var(--teal);" id="commonType">--</div>
           </div>
-          <div>
-            <div style="font-size: 0.85rem; color: var(--muted);">Total Debris (kg)</div>
-            <div style="font-size: 1.8rem; font-weight: bold; color: #FF6B6B;" id="totalDebris">0</div>
+          <div style="text-align: center; padding: 1.5rem; background: rgba(255, 107, 107, 0.15); border-radius: 10px; border: 1px solid rgba(255, 107, 107, 0.3);">
+            <div style="font-size: 0.9rem; color: rgba(255, 107, 107, 0.9); font-weight: 600; margin-bottom: 0.5rem;">Total Debris (kg)</div>
+            <div style="font-size: 2.5rem; font-weight: bold; color: #FF6B6B;" id="totalDebris">0</div>
           </div>
         </div>
       </div>
