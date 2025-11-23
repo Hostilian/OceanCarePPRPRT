@@ -6,6 +6,8 @@
 **Timeline**: All work is non-blocking for launch, but critical for quality  
 **Exit Condition**: Security audit complete, multi-device testing complete, Lighthouse 90+
 
+**API Keys Status**: Storm Glass ✅ (validated Nov 23). Register OpenUV & Visual Crossing keys during Week 2 so QA can validate those live endpoints and publish-ready `.env` values.
+
 ---
 
 ## WEEK 2 OVERVIEW
@@ -162,6 +164,8 @@ Status: ✅ SAFE FROM XSS
 - [ ] Verify: API keys NOT visible in response body
 - [ ] Expected: Keys stay on server, not sent to frontend
 
+Storm Glass traffic should already pass this check. Once OpenUV & Visual Crossing keys are registered and added to `.env`, repeat the same verification for their endpoints.
+
 **Step 2**: Server Logs
 - [ ] Terminal where server is running
 - [ ] Make API call (submit form)
@@ -179,6 +183,8 @@ findstr /r "STORMGLASS_API_KEY\|OPENUV_API_KEY\|VISUAL_CROSSING_API_KEY" server.
 - [ ] Open .env file
 - [ ] Verify it's NOT in Git: `git status` should NOT show .env
 - [ ] Check .gitignore contains `.env`
+
+Confirm the existing Storm Glass key remains in `.env`, then add the newly registered OpenUV & Visual Crossing keys so upcoming deployment work uses real credentials.
 
 **Documentation**: Add to audit results
 ```markdown
@@ -212,6 +218,8 @@ for /L %i in (1,1,20) do node validate-api-keys.js
 - [ ] Expect: After 10 requests (limit), subsequent requests get rate limited
 - [ ] Verify: 429 Too Many Requests status code appears
 - [ ] Verify: After waiting 15 minutes, limit resets
+
+`validate-api-keys.js` should report Storm Glass as configured. The script will flip fully green once OpenUV & Visual Crossing keys are registered and present in `.env`.
 
 **Documentation**: Add results
 ```markdown
@@ -284,9 +292,9 @@ For each device/browser combination, test:
 - [ ] Success messages display after submit
 
 **API Features**
-- [ ] Marine weather displays properly on Debris Report
-- [ ] UV index displays properly on Volunteer page
-- [ ] Climate trends display on homepage
+- [ ] Marine weather displays properly on Debris Report (Storm Glass already live)
+- [ ] UV index displays properly on Volunteer page (requires newly registered OpenUV key)
+- [ ] Climate trends display on homepage (requires newly registered Visual Crossing key)
 - [ ] News feed scrolls smoothly
 - [ ] Maps display and are interactive
 
@@ -468,6 +476,7 @@ If any test fails:
 - [ ] CORS: Properly configured ✅
 - [ ] Rate limiting: Active ✅
 - [ ] Documented in `SECURITY_AUDIT_RESULTS.md` ✅
+- [ ] OpenUV & Visual Crossing keys registered and stored alongside the validated Storm Glass key ✅
 
 **Multi-Device Testing**:
 - [ ] Tested on 3+ desktop resolutions ✅

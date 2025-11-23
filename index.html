@@ -348,6 +348,7 @@
                     <a href="#impact" class="text-gray-700 hover:text-orange-600 font-medium transition">Impact</a>
                     <a href="#gallery" class="text-gray-700 hover:text-orange-600 font-medium transition">Gallery</a>
                     <a href="#news" class="text-gray-700 hover:text-orange-600 font-medium transition">News</a>
+                    <a href="#uv-monitor" class="text-gray-700 hover:text-orange-600 font-medium transition">Sun Safety</a>
                     <a href="#testimonials" class="text-gray-700 hover:text-orange-600 font-medium transition">Stories</a>
                 </div>
 
@@ -376,6 +377,7 @@
                 <a href="#impact" class="block py-2 text-gray-700 hover:text-orange-600">Impact</a>
                 <a href="#gallery" class="block py-2 text-gray-700 hover:text-orange-600">Gallery</a>
                 <a href="#news" class="block py-2 text-gray-700 hover:text-orange-600">News</a>
+                <a href="#uv-monitor" class="block py-2 text-gray-700 hover:text-orange-600">Sun Safety</a>
                 <a href="#testimonials" class="block py-2 text-gray-700 hover:text-orange-600">Stories</a>
                 <div class="flex gap-2 mt-4">
                     <a href="/pages/login.html" class="flex-1 text-center py-2 text-gray-700 border border-gray-300 rounded-lg hover:border-orange-600">
@@ -879,6 +881,126 @@
         </div>
     </section>
 
+    <!-- UV Index Monitor Section -->
+    <section id="uv-monitor" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-fadeInUp">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    <i class="fas fa-sun text-yellow-500 mr-2"></i>Sun Safety Monitor
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Real-time UV Index and sun safety information for your location
+                </p>
+            </div>
+
+            <!-- UV Widget Grid -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- UV Index Card -->
+                <div class="glass-effect rounded-2xl p-8 card-lift bg-white shadow-lg border border-yellow-200">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-2xl font-bold text-gray-900">Current UV Index</h3>
+                        <i class="fas fa-sun text-5xl text-yellow-500 opacity-20"></i>
+                    </div>
+
+                    <div class="mb-6">
+                        <div id="uv-value" class="text-7xl font-bold text-yellow-500 mb-2">--</div>
+                        <div id="uv-risk-level" class="text-2xl font-semibold text-gray-700">Loading...</div>
+                        <div class="h-3 bg-gray-200 rounded-full mt-4 overflow-hidden">
+                            <div id="uv-bar" class="h-full bg-yellow-500 transition-all duration-500" style="width: 30%"></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 text-sm text-gray-600">
+                        <p><i class="fas fa-clock text-orange-500 mr-2"></i>Last updated: <span id="uv-time">--</span></p>
+                        <p><i class="fas fa-globe text-blue-500 mr-2"></i>Location: <span id="uv-location">Getting location...</span></p>
+                        <p><i class="fas fa-info-circle text-purple-500 mr-2"></i>Max today: <span id="uv-max">--</span></p>
+                    </div>
+                </div>
+
+                <!-- Sun Times Card -->
+                <div class="glass-effect rounded-2xl p-8 card-lift bg-white shadow-lg border border-orange-200">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-calendar-days text-orange-500 mr-3"></i>Today's Sun Times
+                    </h3>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+                            <span class="flex items-center text-gray-700">
+                                <i class="fas fa-sunrise text-orange-500 mr-3 text-2xl"></i>
+                                <span>Sunrise</span>
+                            </span>
+                            <span id="sunrise-time" class="font-semibold text-gray-900">--:--</span>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+                            <span class="flex items-center text-gray-700">
+                                <i class="fas fa-sun text-yellow-500 mr-3 text-2xl"></i>
+                                <span>Solar Noon</span>
+                            </span>
+                            <span id="solar-noon-time" class="font-semibold text-gray-900">--:--</span>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
+                            <span class="flex items-center text-gray-700">
+                                <i class="fas fa-sunset text-red-500 mr-3 text-2xl"></i>
+                                <span>Sunset</span>
+                            </span>
+                            <span id="sunset-time" class="font-semibold text-gray-900">--:--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Safe Exposure Times -->
+            <div class="mt-12 glass-effect rounded-2xl p-8 card-lift bg-white shadow-lg border border-green-200">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-shield-alt text-green-500 mr-3"></i>Safe Sun Exposure Time
+                </h3>
+
+                <div class="text-sm text-gray-600 mb-6 p-4 bg-green-50 rounded-lg">
+                    <i class="fas fa-info-circle text-green-500 mr-2"></i>
+                    Time until skin begins to burn. Darker skin types can stay longer. Apply SPF 30+ sunscreen and reapply every 2 hours.
+                </div>
+
+                <div id="exposure-grid" class="grid md:grid-cols-3 gap-4">
+                    <!-- Safe exposure times will be inserted here -->
+                    <div class="skeleton h-24 rounded-lg"></div>
+                    <div class="skeleton h-24 rounded-lg"></div>
+                    <div class="skeleton h-24 rounded-lg"></div>
+                </div>
+            </div>
+
+            <!-- UV Risk Guide -->
+            <div class="mt-12 grid md:grid-cols-5 gap-4">
+                <div class="text-center p-4 rounded-xl bg-green-100 border-2 border-green-500">
+                    <div class="text-sm font-bold text-green-900">0-2</div>
+                    <div class="text-xs text-green-700">Low</div>
+                    <div class="mt-2 text-lg">🟢</div>
+                </div>
+                <div class="text-center p-4 rounded-xl bg-blue-100 border-2 border-blue-500">
+                    <div class="text-sm font-bold text-blue-900">3-5</div>
+                    <div class="text-xs text-blue-700">Moderate</div>
+                    <div class="mt-2 text-lg">🔵</div>
+                </div>
+                <div class="text-center p-4 rounded-xl bg-yellow-100 border-2 border-yellow-500">
+                    <div class="text-sm font-bold text-yellow-900">6-7</div>
+                    <div class="text-xs text-yellow-700">High</div>
+                    <div class="mt-2 text-lg">🟡</div>
+                </div>
+                <div class="text-center p-4 rounded-xl bg-orange-100 border-2 border-orange-500">
+                    <div class="text-sm font-bold text-orange-900">8-10</div>
+                    <div class="text-xs text-orange-700">Very High</div>
+                    <div class="mt-2 text-lg">🟠</div>
+                </div>
+                <div class="text-center p-4 rounded-xl bg-red-100 border-2 border-red-500">
+                    <div class="text-sm font-bold text-red-900">11+</div>
+                    <div class="text-xs text-red-700">Extreme</div>
+                    <div class="mt-2 text-lg">🔴</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section Before Footer -->
     <section class="gradient-hero text-white py-20 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto text-center animate-fadeInUp">
@@ -1332,6 +1454,181 @@
         }
 
         // =====================================================
+        // UV INDEX MONITOR (OpenUV.io Integration)
+        // =====================================================
+        const UV_API_KEY = 'openuv-1vaqrmibpr6nv-io';
+        const UV_API_URL = 'https://api.openuv.io/api/v1/uv';
+
+        function initUVMonitor() {
+            // Request user's geolocation
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        const alt = position.coords.altitude || 0;
+
+                        // Update location display
+                        document.getElementById('uv-location').textContent =
+                            `${lat.toFixed(2)}°, ${lng.toFixed(2)}°`;
+
+                        fetchUVData(lat, lng, alt);
+
+                        // Update every 30 minutes
+                        setInterval(() => fetchUVData(lat, lng, alt), 30 * 60 * 1000);
+                    },
+                    error => {
+                        log('Geolocation error, using default location');
+                        // Default to London
+                        document.getElementById('uv-location').textContent = 'London, UK (Default)';
+                        fetchUVData(51.5074, -0.1278, 0);
+                    }
+                );
+            } else {
+                log('Geolocation not supported');
+                document.getElementById('uv-location').textContent = 'London, UK (Default)';
+                fetchUVData(51.5074, -0.1278, 0);
+            }
+        }
+
+        async function fetchUVData(lat, lng, alt) {
+            try {
+                const url = `${UV_API_URL}?lat=${lat}&lng=${lng}&alt=${alt}`;
+
+                const response = await fetch(url, {
+                    headers: {
+                        'x-access-token': UV_API_KEY
+                    }
+                });
+
+                if (!response.ok) throw new Error('UV API Error');
+
+                const data = await response.json();
+
+                if (data.result) {
+                    updateUVDisplay(data.result);
+                    log('UV data fetched successfully', data.result);
+                }
+            } catch (error) {
+                log('UV API error:', error);
+                document.getElementById('uv-value').textContent = 'N/A';
+                document.getElementById('uv-risk-level').textContent = 'API Error - Try again later';
+            }
+        }
+
+        function updateUVDisplay(result) {
+            const uvIndex = result.uv;
+            const uvMax = result.uv_max;
+            const sunInfo = result.sun_info;
+            const safeExposure = result.safe_exposure_time;
+
+            // Update UV Index Value
+            const uvValue = document.getElementById('uv-value');
+            uvValue.textContent = uvIndex.toFixed(1);
+
+            // Determine risk level and color
+            let riskLevel = 'Low';
+            let riskColor = 'green';
+            let barColor = 'bg-green-500';
+            let barWidth = (uvIndex / 11) * 100;
+
+            if (uvIndex > 10) {
+                riskLevel = '⚠️ EXTREME RISK';
+                riskColor = '#dc2626';
+                barColor = 'bg-red-600';
+                barWidth = 100;
+            } else if (uvIndex > 7) {
+                riskLevel = '⚠️ VERY HIGH RISK';
+                riskColor = '#ea580c';
+                barColor = 'bg-orange-600';
+                barWidth = Math.min(90, (uvIndex / 11) * 100);
+            } else if (uvIndex > 5) {
+                riskLevel = '⚠️ HIGH RISK';
+                riskColor = '#eab308';
+                barColor = 'bg-yellow-500';
+                barWidth = (uvIndex / 11) * 100;
+            } else if (uvIndex > 2) {
+                riskLevel = '🟡 MODERATE RISK';
+                riskColor = '#3b82f6';
+                barColor = 'bg-blue-500';
+                barWidth = (uvIndex / 11) * 100;
+            } else {
+                riskLevel = '🟢 LOW RISK';
+                riskColor = '#22c55e';
+                barColor = 'bg-green-500';
+                barWidth = (uvIndex / 11) * 100;
+            }
+
+            // Update risk level
+            const riskLevelEl = document.getElementById('uv-risk-level');
+            riskLevelEl.textContent = riskLevel;
+            riskLevelEl.style.color = riskColor;
+
+            // Update progress bar
+            const barEl = document.getElementById('uv-bar');
+            barEl.className = `h-full transition-all duration-500 ${barColor}`;
+            barEl.style.width = `${barWidth}%`;
+
+            // Update UV max for today
+            document.getElementById('uv-max').textContent = `${uvMax.toFixed(1)} (at solar noon)`;
+
+            // Update time
+            const timeEl = document.getElementById('uv-time');
+            timeEl.textContent = new Date(result.uv_time).toLocaleTimeString();
+
+            // Update sun times
+            if (sunInfo && sunInfo.sun_times) {
+                const times = sunInfo.sun_times;
+
+                const options = { hour: '2-digit', minute: '2-digit' };
+
+                document.getElementById('sunrise-time').textContent =
+                    new Date(times.sunrise).toLocaleTimeString('en-US', options);
+
+                document.getElementById('sunset-time').textContent =
+                    new Date(times.sunset).toLocaleTimeString('en-US', options);
+
+                document.getElementById('solar-noon-time').textContent =
+                    new Date(times.solarNoon).toLocaleTimeString('en-US', options);
+            }
+
+            // Update safe exposure times
+            displaySafeExposureTimes(safeExposure);
+        }
+
+        function displaySafeExposureTimes(safeExposure) {
+            const skinTypes = [
+                { type: 'st1', label: 'Type 1: Pale White', color: 'from-red-400 to-red-600', textColor: 'text-red-600' },
+                { type: 'st2', label: 'Type 2: White', color: 'from-orange-400 to-orange-600', textColor: 'text-orange-600' },
+                { type: 'st3', label: 'Type 3: Light Brown', color: 'from-yellow-400 to-yellow-600', textColor: 'text-yellow-600' },
+                { type: 'st4', label: 'Type 4: Medium Brown', color: 'from-blue-400 to-blue-600', textColor: 'text-blue-600' },
+                { type: 'st5', label: 'Type 5: Dark Brown', color: 'from-purple-400 to-purple-600', textColor: 'text-purple-600' },
+                { type: 'st6', label: 'Type 6: Very Dark', color: 'from-green-400 to-green-600', textColor: 'text-green-600' }
+            ];
+
+            let html = '';
+            skinTypes.forEach(skinType => {
+                const minutes = safeExposure[skinType.type];
+                const hours = (minutes / 60).toFixed(1);
+
+                html += `
+                    <div class="p-4 bg-gradient-to-r ${skinType.color} rounded-xl text-white shadow-md hover:shadow-lg transition">
+                        <div class="font-semibold mb-2">${skinType.label}</div>
+                        <div class="text-sm">
+                            <div class="text-2xl font-bold">${minutes} minutes</div>
+                            <div class="text-xs opacity-90">(${hours} hours)</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const exposureGrid = document.getElementById('exposure-grid');
+            if (exposureGrid) {
+                exposureGrid.innerHTML = html;
+            }
+        }
+
+        // =====================================================
         // INITIALIZE ALL FEATURES
         // =====================================================
         function initAll() {
@@ -1353,6 +1650,9 @@
 
             // Live data
             setTimeout(initLiveCounters, 1000);
+
+            // UV Monitor (New)
+            setTimeout(initUVMonitor, 1500);
 
             log('All features initialized');
         }

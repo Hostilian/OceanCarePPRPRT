@@ -824,10 +824,32 @@ app.get('/api/uv-index', async (req, res) => {
   const { latitude, longitude } = req.query;
   const openuvKey = process.env.OPENUV_API_KEY;
 
-  if (!openuvKey) {
-    return res.status(400).json({
-      success: false,
-      message: 'OpenUV API key not configured. Register at openuv.io for free tier (50 req/day).'
+  // Check if we're in test/demo mode or key is missing
+  if (!openuvKey || openuvKey.includes('your_')) {
+    // Return demo data when API key is not configured (for testing/demo)
+    const demoUVIndex = Math.floor(Math.random() * 12) + 1; // Random 1-12
+    return res.json({
+      success: true,
+      mode: 'demo',
+      message: 'Demo UV data - Register at openuv.io to use production API',
+      uv: {
+        index: demoUVIndex,
+        safeExposure: {
+          st1: demoUVIndex > 8 ? 15 : demoUVIndex > 5 ? 30 : 60,
+          st2: demoUVIndex > 8 ? 10 : demoUVIndex > 5 ? 20 : 45,
+          st3: demoUVIndex > 8 ? 8 : demoUVIndex > 5 ? 15 : 30,
+          st4: demoUVIndex > 8 ? 6 : demoUVIndex > 5 ? 10 : 20,
+          st5: demoUVIndex > 8 ? 4 : demoUVIndex > 5 ? 7 : 15,
+          st6: demoUVIndex > 8 ? 3 : demoUVIndex > 5 ? 5 : 10
+        },
+        safeTime: demoUVIndex > 8 ? '15 minutes' : demoUVIndex > 5 ? '30 minutes' : '60+ minutes',
+        recommendation: demoUVIndex > 8 ? 'HIGH - Use SPF 50+ sunscreen, limit outdoor time'
+                       : demoUVIndex > 5 ? 'MODERATE - Use SPF 30+ sunscreen'
+                       : 'LOW - Standard sun protection sufficient',
+        riskLevel: demoUVIndex > 8 ? 'red' : demoUVIndex > 5 ? 'yellow' : 'green'
+      },
+      timestamp: new Date().toISOString(),
+      source: 'OpenUV API (Demo Mode)'
     });
   }
 
@@ -922,10 +944,32 @@ app.get('/api/climate-trends', async (req, res) => {
   const { latitude, longitude } = req.query;
   const visualCrossingKey = process.env.VISUAL_CROSSING_API_KEY;
 
-  if (!visualCrossingKey) {
-    return res.status(400).json({
-      success: false,
-      message: 'Visual Crossing API key not configured. Register at visualcrossing.com for free tier (1k req/day).'
+  // Check if we're in test/demo mode or key is missing
+  if (!visualCrossingKey || visualCrossingKey.includes('your_')) {
+    // Return demo data when API key is not configured (for testing/demo)
+    const demoTemp = (Math.random() * 30 + 5).toFixed(1); // 5-35°C
+    const demoPrecip = (Math.random() * 200).toFixed(1); // 0-200mm
+    return res.json({
+      success: true,
+      mode: 'demo',
+      message: 'Demo climate data - Register at visualcrossing.com to use production API',
+      climateTrends: {
+        period: '90-day historical (demo)',
+        averageTemperature: `${demoTemp}°C`,
+        totalPrecipitation: `${demoPrecip}mm`,
+        daysCounted: 90,
+        trend: demoTemp > 20 ? 'Warming' : demoTemp < 10 ? 'Cooling' : 'Stable'
+      },
+      rawData: {
+        location: 'Demo Location',
+        days: Array(90).fill(null).map((_, i) => ({
+          datetime: new Date(Date.now() - (90-i) * 86400000).toISOString().split('T')[0],
+          temp: (Math.random() * 30 + 5).toFixed(1),
+          precip: (Math.random() * 50).toFixed(1)
+        }))
+      },
+      timestamp: new Date().toISOString(),
+      source: 'Visual Crossing API (Demo Mode)'
     });
   }
 

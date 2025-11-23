@@ -3,6 +3,7 @@
 **Timeline**: November 30 - December 5, 2025  
 **Current Status**: ⏳ READY AFTER WEEK 1 COMPLETION  
 **Prerequisite**: Week 1 complete (all 21 tests passing)
+**API Keys**: Storm Glass ✅ (validated Nov 23); prioritize registering OpenUV & Visual Crossing keys early this week and add them to `.env`
 
 ---
 
@@ -149,6 +150,7 @@ git log --name-status | grep ".env"
 ```
 
 Expected: `.env` in `.gitignore` ✅
+Storm Glass key should already be present in `.env`. As soon as you register OpenUV & Visual Crossing, add those production keys here (no placeholders) and keep the file local only.
 
 #### Check 2: Console Output
 1. Start server: `npm start`
@@ -422,7 +424,7 @@ Ready for production deployment ✅
 
 ### Subtask 2.4.2: API Response Time Monitoring
 
-**Goal**: Ensure all APIs respond quickly
+**Goal**: Ensure all APIs respond quickly once all live keys are configured (Storm Glass active, OpenUV & Visual Crossing newly registered)
 
 #### Measurement Process
 
@@ -607,6 +609,7 @@ Application is **PRODUCTION-READY** and approved for deployment.
 ### Review Checklist
 
 Before moving to Week 3, verify:
+- [ ] OpenUV & Visual Crossing keys registered & stored securely (Storm Glass already validated)
 - [ ] All 21 tests passing consistently
 - [ ] Security audit completed and passed
 - [ ] All 9+ device/browser combinations tested

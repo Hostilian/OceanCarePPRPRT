@@ -3,6 +3,7 @@
 **Timeline**: December 6-15, 2025  
 **Current Status**: ⏳ READY AFTER WEEK 2 COMPLETION  
 **Prerequisite**: Week 2 complete (QA sign-off)
+**API Keys**: Storm Glass ✅ (validated Nov 23); register & add OpenUV + Visual Crossing keys before deployment
 
 ---
 
@@ -59,6 +60,8 @@ By end of Week 3, OceanCare Initiative is **live and accessible to users**.
 3. Click "Add"
 
 **CRITICAL**: Copy from your `.env` file, do NOT include the placeholder text
+
+**Reminder**: Storm Glass is already active—copy the existing value from `.env`. Complete registration for OpenUV & Visual Crossing before adding those production values.
 
 #### Step 4: Configure Project Settings
 1. **Framework Preset**: Node.js (should auto-detect)
@@ -121,6 +124,8 @@ By end of Week 3, OceanCare Initiative is **live and accessible to users**.
    GOOGLE_MAPS_API_KEY=your_key
    NODE_ENV=production
    ```
+
+**Reminder**: Reuse the verified Storm Glass key from `.env`. Ensure OpenUV & Visual Crossing registration is complete so you can supply production-ready keys here as well.
 
 #### Step 5: Enable Auto-Deploy
 1. In "Deploy" tab
@@ -219,6 +224,8 @@ By end of Week 3, OceanCare Initiative is **live and accessible to users**.
 1. Homepage should show 7-day forecast
 2. Network request to `api/climate-trends` shows HTTP 200
 3. Data displays temperature trends
+
+If OpenUV or Visual Crossing requests fail, double-check those keys were registered and added to the Vercel environment before retrying.
 
 **Success Criteria**:
 - [ ] All 5 APIs responding from production
@@ -645,7 +652,7 @@ Checklist for [DATE]:
 
 ## 📋 Complete Checklist Before Final Launch
 
-- [ ] Week 1 complete (API keys registered, 21/21 tests passing)
+- [ ] Week 1 key work complete (Storm Glass validated ✅; OpenUV & Visual Crossing keys registered & in `.env`, 21/21 tests passing)
 - [ ] Week 2 complete (QA sign-off, security audit passed)
 - [ ] Vercel deployment successful
 - [ ] All 5 pages verified in production

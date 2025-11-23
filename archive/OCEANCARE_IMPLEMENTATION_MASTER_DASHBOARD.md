@@ -11,9 +11,9 @@
 | **Cost** | $0 launch (SQLite MVP) | ✅ CONFIRMED | 100% |
 | **Team** | 1-2 developers | TBD | 85% |
 | **Success Probability** | 91% | - | - |
-| **Current Completion** | 85% → 100% | 🔴 IN PROGRESS | - |
+| **Current Completion** | 90% → 100% | 🔴 IN PROGRESS | - |
 
-**Status**: 🔴 **CRITICAL PATH ACTIVE** — Days 1-3: API Registration (blocker)
+**Status**: 🔴 **CRITICAL PATH ACTIVE** — Days 1-3: Finalize OpenUV & Visual Crossing keys (Storm Glass ✅)
 **Next Milestone**: Dec 1 (tests 21/21 ✅) → Dec 8 (deploy ✅) → Dec 16 (live ✅)
 
 ---
@@ -23,15 +23,15 @@
 ### WEEK 1: Setup & Optimization (Nov 23-29, 2025)
 **Goal**: 85% → 100% readiness | **Focus**: API keys & test unlock
 
-#### Days 1-3: 🔴 **CRITICAL PATH** — Unlock Testing Suite
-- **Task**: Register 3 free APIs (Storm Glass, OpenUV, Visual Crossing)
-- **Time**: 60-75 minutes
+#### Days 1-3: 🔴 **CRITICAL PATH** — Finalize API Keys & Re-Validate
+- **Task**: Register remaining free APIs (OpenUV, Visual Crossing) — Storm Glass already active
+- **Time**: 30-45 minutes
 - **Effort**: 1 developer
 - **Dependencies**: None (can start NOW)
-- **Deliverable**: `.env` updated, `npm test` shows 21/21 ✅
-- **Blocker Status**: YES — everything downstream waits for this
+- **Deliverable**: `.env` updated, `npm test` reconfirmed 21/21 ✅ with live data
+- **Blocker Status**: YES — documentation, QA, and launch schedule depend on these keys
 - **Risk**: LOW (straightforward registration, clear steps provided)
-- **Guide**: `API_REGISTRATION_QUICK_START.md`
+- **Guide**: `API_REGISTRATION_QUICK_START.md` (Storm Glass section is reference-only)
 
 #### Days 4-7: 🟡 **STANDARD TRACK** — Polish & Mobile Testing
 - **Task**: Code review, mobile device testing, accessibility audit

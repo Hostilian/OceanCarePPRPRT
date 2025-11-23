@@ -149,15 +149,17 @@ npm install
 # Copy template
 cp .env.example .env
 
-# Edit .env and add these 3 API keys:
+# Edit .env and confirm the API keys:
+# - Storm Glass ✅ already configured (Nov 23 validation)
+# - Add OpenUV & Visual Crossing once keys are issued
 # (Other 5 APIs work without registration)
 ```
 
-### Step 3: Register 3 Free API Keys (10 minutes)
+### Step 3: Finalize Free API Keys (10 minutes)
 
 | API | Steps | Link |
 |-----|-------|------|
-| **Storm Glass** | 1. Sign up 2. Copy API key 3. Paste to `.env` | https://stormglass.io/ |
+| **Storm Glass** | ✅ Completed Nov 23 (reference steps in guide) | https://stormglass.io/ |
 | **OpenUV** | 1. Sign up 2. Get API key 3. Add to `.env` | https://openuv.io/ |
 | **Visual Crossing** | 1. Sign up 2. Get API key 3. Paste to `.env` | https://visualcrossing.com/ |
 
@@ -185,7 +187,7 @@ GNEWS_API_KEY=d1ebf8a38da2b60015304b61977cd57c
 GOOGLE_MAPS_API_KEY=AIzaSyDAsgFOdGcEdNhWkcn1LC50DonUEHMGdDE
 
 # === Register for free (see API_SETUP_GUIDE.md) ===
-STORMGLASS_API_KEY=your_key_here       # Marine weather
+STORMGLASS_API_KEY=abc123...(already set) # Marine weather (alias STORM_GLASS_API_KEY also supported)
 OPENUV_API_KEY=your_key_here           # UV Index
 VISUAL_CROSSING_API_KEY=your_key_here  # Climate trends
 

@@ -1,16 +1,18 @@
 # 🎯 WEEK 1 EXECUTION GUIDE - API Keys + Testing
 ## Days 1-7: Make Features Work
 
-**Goal**: Register 3 API keys + achieve 21/21 tests passing  
+**Goal**: Register remaining OpenUV & Visual Crossing API keys + maintain 21/21 tests passing once all keys active  
 **Effort**: 40-50 hours  
 **Timeline**: Must complete Days 1-3 (API keys) on schedule  
-**Exit Condition**: All 5 APIs functional, all tests passing, all pages working
+**Exit Condition**: Storm Glass validated ✅; OpenUV & Visual Crossing registered and tested; all 5 APIs functional, all tests passing, all pages working
 
 ---
 
 ## DAY 1 DETAILED WALKTHROUGH (Monday)
 
 ### Task 1.1: Register Storm Glass API (20 minutes)
+
+**Status**: Completed Nov 23 and validated. Keep these steps for reference or if the key needs re-registration.
 
 **Step 1**: Open browser tab: https://stormglass.io
 
@@ -52,6 +54,8 @@
 
 ### Task 1.2: Register OpenUV API (20 minutes)
 
+**Status**: Pending—complete these steps next to unlock UV data tests.
+
 **Step 1**: Open new browser tab: https://openuv.io
 
 **Step 2**: Click "Sign Up Free" button (top right or center)
@@ -81,6 +85,8 @@
 ---
 
 ### Task 1.3: Register Visual Crossing API (20 minutes)
+
+**Status**: Pending—complete these steps to enable climate trend data.
 
 **Step 1**: Open new browser tab: https://visualcrossing.com
 
@@ -151,6 +157,8 @@ OPENUV_API_KEY=your_openuv_key_here
 VISUAL_CROSSING_API_KEY=your_visual_crossing_key_here
 ```
 
+Storm Glass should already be populated—focus on adding OpenUV & Visual Crossing once their keys are obtained.
+
 **Step 4**: Replace placeholders with actual keys from notepad:
 ```env
 STORMGLASS_API_KEY=abc123def456xyz789...
@@ -186,7 +194,7 @@ cd c:\Users\Hostilian\collab-connect\OceanCarePPRPRT
 node validate-api-keys.js
 ```
 
-**Step 4**: Expected output:
+**Step 4**: Expected output once every key is in place:
 ```
 ✅ GNEWS_API_KEY: CONFIGURED
 ✅ GOOGLE_MAPS_API_KEY: CONFIGURED
@@ -196,6 +204,8 @@ node validate-api-keys.js
 
 All 5 APIs are configured. Run 'npm test' to verify.
 ```
+
+**Current Status**: Storm Glass already shows ✅. Until OpenUV & Visual Crossing keys are registered, the script reports `❌ Missing API key` for those two entries—this is expected and resolves as soon as you add the real keys.
 
 **Troubleshooting**:
 - If any show ❌: Check .env file for typos or missing keys
@@ -227,6 +237,8 @@ Tests:       21 passed, 21 total
 
 **Success Condition**: **21 passed** (not 16 passed)
 
+Storm Glass tests already pass; expect the UV and climate trend specs to fail until their keys are configured.
+
 **If Not All Passing**:
 1. Check .env file for typos
 2. Run `node validate-api-keys.js` again
@@ -238,11 +250,12 @@ Tests:       21 passed, 21 total
 
 ### END OF DAY 1 CHECKLIST
 
-- [ ] All 3 API keys registered
-- [ ] All 3 keys copied correctly
-- [ ] .env file updated with real keys
-- [ ] `node validate-api-keys.js` shows all 5 ✅
-- [ ] `npm test` shows 21/21 passing
+- [x] Storm Glass API key registered and validated (Nov 23)
+- [ ] OpenUV API key registered and copied
+- [ ] Visual Crossing API key registered and copied
+- [ ] `.env` updated with all live keys (only Storm Glass present today)
+- [ ] `node validate-api-keys.js` shows 5/5 ✅ (currently 3/5 until remaining keys added)
+- [ ] `npm test` shows 21/21 passing (requires OpenUV & Visual Crossing keys)
 - [ ] No console errors or warnings
 - [ ] Server starts cleanly with `npm start`
 
@@ -261,7 +274,7 @@ Tests:       21 passed, 21 total
 1. **Homepage** (/)
    - [ ] Page loads without errors
    - [ ] News feed visible and populated
-   - [ ] Climate trends section visible
+   - [ ] Climate trends section visible (fully populates after Visual Crossing key is active)
    - [ ] All images load
    - [ ] No console errors (F12)
 
@@ -274,7 +287,7 @@ Tests:       21 passed, 21 total
 
 3. **Volunteer** (/pages/volunteer.html)
    - [ ] Page loads
-   - [ ] UV index displays (shows sun/SPF info)
+   - [ ] UV index displays (shows sun/SPF info) — expect missing data until OpenUV key is configured
    - [ ] Weather forecast visible
    - [ ] Form fields present (name, email, etc.)
    - [ ] Submit works
@@ -282,7 +295,7 @@ Tests:       21 passed, 21 total
 4. **Report Debris** (/pages/report-debris.html)
    - [ ] Page loads
    - [ ] "Get Location" button works (allows geolocation)
-   - [ ] Marine weather displays (waves, water temp)
+   - [ ] Marine weather displays (waves, water temp) — should already pass with the active Storm Glass key
    - [ ] Form fields present
    - [ ] Submit works
 
@@ -311,17 +324,23 @@ Tests:       21 passed, 21 total
 - [ ] Shows wave height, water temperature
 - [ ] No console errors
 
+Storm Glass is already validated, so this check should succeed now.
+
 **2. Test UV Index** (Volunteer page)
 - [ ] UV index displays
 - [ ] Shows SPF recommendations
 - [ ] Shows sun safety info
 - [ ] No console errors
 
+These items complete once the OpenUV API key is registered and active; expect errors until then.
+
 **3. Test Climate Trends** (Homepage)
 - [ ] Climate section displays
 - [ ] Shows temperature trend
 - [ ] Shows precipitation trend
 - [ ] No console errors
+
+Visual Crossing responses populate after its key is added—treat missing data as expected until registration is done.
 
 **4. Test News Feed** (Homepage)
 - [ ] News articles appear
@@ -345,7 +364,7 @@ Tests:       21 passed, 21 total
 ```cmd
 npm test
 ```
-Expected: 21/21 passing ✅
+Expected: 21/21 passing ✅ once all keys are in place (current runs flag the OpenUV & Visual Crossing specs until those keys are registered)
 
 **Every Afternoon**:
 - Test one page deeply on 3 devices:
@@ -415,15 +434,17 @@ Or change port in .env: `PORT=3001`
 ## SUCCESS INDICATORS
 
 **After Day 1**:
-- [ ] 3 API keys registered
-- [ ] .env updated
-- [ ] Tests show 21/21
-- [ ] Validation script green ✅
+- [x] Storm Glass API key registered and validated
+- [ ] OpenUV API key registered
+- [ ] Visual Crossing API key registered
+- [ ] `.env` updated with all live keys (currently Storm Glass only)
+- [ ] Tests show 21/21 (will complete after remaining keys are active)
+- [ ] Validation script green ✅ (pending remaining keys)
 
 **After Day 3**:
 - [ ] All pages load without errors
 - [ ] All forms submit successfully
-- [ ] All APIs responding correctly
+- [ ] All APIs responding correctly (OpenUV & Visual Crossing pending key registration)
 - [ ] No console errors
 - [ ] Database saving data
 

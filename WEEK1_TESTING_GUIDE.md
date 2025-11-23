@@ -4,6 +4,8 @@
 **Estimated Duration**: 2-3 hours  
 **Current Status**: ⏳ READY FOR EXECUTION
 
+**API Keys Status**: Storm Glass ✅ (validated Nov 23). OpenUV & Visual Crossing need registration; expect related checks to stay pending until those keys are added to `.env`.
+
 ---
 
 ## Phase 1: Automated Validation (15 minutes)
@@ -57,6 +59,8 @@ node validate-api-keys.js
 - Tests GNews API (news feed)
 - Provides sample data from each
 
+**Current Expectations**: Storm Glass returns ✅ because the key is active. OpenUV and Visual Crossing calls will show ❌ until their keys are registered and added to `.env`. Re-run the script right after each registration to confirm activation.
+
 **Expected Output** (if all keys registered):
 ```
 ═══ Testing Storm Glass API ═══
@@ -96,6 +100,8 @@ node validate-api-keys.js
 3. Verify no extra spaces in .env file
 4. Copy the key again and update .env
 
+*Note*: Until OpenUV & Visual Crossing keys are obtained, the script reports `Missing API key` for those sections—this is expected for the current environment.
+
 ---
 
 ## Phase 3: Test Suite Execution (30 minutes)
@@ -128,6 +134,8 @@ npm test
   - Rate limiting
   - Database persistence
   - Error fallbacks
+
+**Current Expectations**: With only Storm Glass configured, tests depending on OpenUV (`/api/uv-index`) and Visual Crossing (`/api/climate-trends`) return failures. Registering and adding those keys is required for a full green run.
 
 **Expected Output** (21 tests):
 ```
@@ -180,11 +188,11 @@ Time:        8.234s
 
 **Test**: `GET /api/uv-index returns UV data`
 - **Cause**: OpenUV key not activated
-- **Solution**: Check OpenUV dashboard, click Activate if needed
+- **Solution**: Check OpenUV dashboard, click Activate if needed (expected failure until the key is registered)
 
 **Test**: `GET /api/climate-trends returns Visual Crossing data`
 - **Cause**: Visual Crossing key not working
-- **Solution**: Verify key in .env, re-check registration, retry
+- **Solution**: Verify key in .env, re-check registration, retry (expected failure until the key is registered)
 
 **Test**: `POST /api/volunteer registers volunteer`
 - **Cause**: Database issue or missing field
@@ -231,25 +239,18 @@ Open a new browser window and visit: **http://localhost:3000**
 **URL**: http://localhost:3000
 
 **Test Checklist**:
-- [ ] Page loads without errors (check DevTools console - F12)
-- [ ] Navigation menu visible and clickable
-- [ ] News feed displays 6+ articles
   - Check article titles visible
   - Check article links work
-- [ ] Weather widget shows current conditions
   - Check temperature, wind, description display
-- [ ] Climate trends section visible
-  - Check 90-day forecast displayed
-- [ ] "How to Help" section visible
+  - [ ] Check 90-day forecast displayed (requires Visual Crossing key; expect placeholder until registered)
   - Check donation and volunteer call-to-action buttons
-- [ ] No red error messages in console (F12 > Console tab)
-- [ ] Page loads in <3 seconds
 
 **Issues to Document**:
 - Any text not displaying correctly
 - Any API data missing or showing "Loading..."
 - Any error messages in console
 - Page taking >5 seconds to load
+- Visual Crossing data missing due to unregistered key (expected until configured)
 
 ---
 
@@ -288,6 +289,7 @@ Open a new browser window and visit: **http://localhost:3000**
 - Look for request to `api/marine-weather`
 - Should show `200` response code
 - Response should include: `waveHeight`, `windSpeed`, `waterTemp`
+- Storm Glass is already live, so this check should pass.
 
 **Issues to Document**:
 - Weather data not appearing
@@ -331,14 +333,15 @@ Open a new browser window and visit: **http://localhost:3000**
 - Open DevTools Network tab (F12 > Network)
 - Change the location input field
 - Look for request to `api/uv-index`
-- Should show `200` response
-- Response should include: `uv` (number), `category`, `spf`
+- Should show `200` response once the OpenUV key is configured. Until then you will see an error response noting the missing key.
+- Response should include: `uv` (number), `category`, `spf` after registration.
 
 **Issues to Document**:
 - UV data not showing
 - SPF recommendations missing
 - Form not submitting
 - Validation not working
+- Missing UV data while key is unregistered (expected; mark once key added)
 
 ---
 
@@ -426,14 +429,15 @@ After completing all tests, document the results:
 
 ## Automated Tests
 - Setup Helper: 6/6 checks passed ✅
-- API Validation: 5/5 APIs working ✅
-- Test Suite: 21/21 tests passed ✅
+- API Validation: Storm Glass ✅, OpenUV ⏳ (register), Visual Crossing ⏳ (register), Google Maps ✅, GNews ✅
+- Test Suite: 21/21 tests passed ✅ (requires all API keys; expect OpenUV/Visual Crossing tests to remain pending until keys are active)
 
 ## Manual Testing
 - Homepage: ✅ All sections working
 - Debris Report: ✅ Storm Glass integration verified
-- Volunteer: ✅ OpenUV integration verified
+- Volunteer: ⏳ OpenUV integration pending key activation
 - Donation: ✅ Impact calculator working
+- Climate Trends: ⏳ Visual Crossing integration pending key activation
 - Contact: ✅ Form submission working
 - Other Pages: ✅ All loading correctly
 
@@ -529,13 +533,13 @@ npm test
 
 ✅ **All Automated Tests Pass**:
 - Setup helper: 6/6
-- API validation: 5/5 APIs working
-- Test suite: 21/21 tests
+- API validation: Storm Glass, Google Maps, GNews working; OpenUV & Visual Crossing move to ✅ once keys registered
+- Test suite: 21/21 tests (requires OpenUV & Visual Crossing keys to complete)
 
 ✅ **Manual Testing Complete**:
 - All 7 pages load without errors
 - All forms can submit data
-- All integrations work (Storm Glass, OpenUV, Visual Crossing)
+- Storm Glass integration working; OpenUV & Visual Crossing integrations ready to verify post-registration
 - No blocking console errors
 
 ✅ **Performance Acceptable**:
@@ -551,5 +555,7 @@ npm test
 ---
 
 **Next Steps**: When all tests pass, you're ready to move to Week 2 (Quality Assurance & Security)
+
+**Immediate Action**: Register OpenUV & Visual Crossing API keys, add them to `.env`, and re-run validation/tests to flip remaining items to ✅.
 
 **Need help?** Check troubleshooting sections above or review error messages carefully - they usually explain what's wrong.

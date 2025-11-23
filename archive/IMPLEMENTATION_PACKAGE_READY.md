@@ -12,7 +12,7 @@ You now have a **complete, detailed, 3-week implementation plan** with:
 ✅ **Week 1 Plan**: Days 1-7 — API setup, testing, mobile optimization
 ✅ **Week 2 Plan**: Days 6-10 — Security audit, comprehensive QA
 ✅ **Week 3 Plan**: Days 11-21 — Production deployment, team training, launch
-✅ **Day 1 Quick Start**: 60-75 min guide to register 3 APIs (THE CRITICAL BLOCKER)
+✅ **Day 1 Quick Start**: 30-45 min guide to finish OpenUV & Visual Crossing keys (Storm Glass ✅)
 ✅ **API Registration Guide**: Step-by-step with troubleshooting
 ✅ **All Resources Linked**: Every guide interconnected, cross-referenced
 
@@ -21,27 +21,28 @@ You now have a **complete, detailed, 3-week implementation plan** with:
 ## THE 5 CORE DOCUMENTS (READ IN THIS ORDER)
 
 ### 📄 1. DAY1_QUICK_START.md (START HERE - 15 min read)
-**What it is**: Ultra-quick guide to your first 60-75 minutes
+**What it is**: Ultra-quick guide to your first 30-45 minutes
 **Key points**:
-- 3 APIs to register (Storm Glass, OpenUV, Visual Crossing)
+- Remaining APIs to register (OpenUV, Visual Crossing — Storm Glass already live)
 - Exact steps (copy-paste ready)
-- Expected results
+- Expected results with validation checkpoints
 - Quick troubleshooting
 
-**Action**: Read this NOW. Start API registration today.
+**Action**: Read this NOW. Finish API registration today.
 
 ---
 
-### 📋 2. API_REGISTRATION_QUICK_START.md (60-75 min execution)
+### 📋 2. API_REGISTRATION_QUICK_START.md (30-45 min execution)
 **What it is**: Detailed step-by-step API registration guide
 **Sections**:
-- 3-part registration (15 min each)
-- `.env` file update
+- Storm Glass reference (completed Nov 23)
+- OpenUV & Visual Crossing registration walkthroughs
+- `.env` file update + alias notes
 - Validation script
 - Full test suite run
 - Comprehensive troubleshooting
 
-**Action**: Execute this today (Days 1-3) to unlock tests.
+**Action**: Execute this today (Days 1-3) to keep tests green with live data.
 
 ---
 
@@ -107,7 +108,7 @@ You now have a **complete, detailed, 3-week implementation plan** with:
 
 ```
 WEEK 1 (Nov 23-29): Setup & Optimize
-├─ Days 1-3 (60-75 min): 🔴 REGISTER APIS (CRITICAL)
+├─ Days 1-3 (30-45 min): 🔴 FINALIZE OPENUV & VISUAL CROSSING KEYS (CRITICAL)
 ├─ Days 4-7 (8-10 hrs): Test, polish, mobile
 └─ Target: 21/21 tests ✅
 
@@ -128,13 +129,13 @@ TOTAL: 60-75 hours over 3+ weeks
 ## YOUR 3-MINUTE ORIENTATION
 
 **Q: Where do I start?**
-A: Read `DAY1_QUICK_START.md` (15 min). Then execute the 60-75 min API registration.
+A: Read `DAY1_QUICK_START.md` (15 min). Then finish the 30-45 min OpenUV & Visual Crossing registration.
 
 **Q: What's the critical blocker?**
-A: API key registration (Days 1-3). Everything waits for this. Once done, tests unlock (21/21).
+A: Finalizing the remaining API keys (Days 1-3). Storm Glass is done; OpenUV & Visual Crossing unlock full data and keep tests green.
 
 **Q: How long is this really going to take?**
-A: 60-75 total hours over 3-4 weeks. Full-time = 3 weeks (13-15 hrs/week). Part-time = 4 weeks (15-20 hrs/week).
+A: 60-75 total hours over 3-4 weeks. Full-time = 3 weeks (13-15 hrs/week). Part-time = 4 weeks (15-20 hrs/week). Day 1 effort remaining: 30-45 minutes.
 
 **Q: Will it actually work?**
 A: 91% success probability. All risks documented with mitigation plans. Code is production-ready.
@@ -171,17 +172,16 @@ A: Week 3 success criteria: Live URL ✅ + 24h uptime ✅ + team trained ✅. De
 
 ## EXECUTION PATH (WHAT YOU DO NOW)
 
-### ✅ TODAY (Nov 23) — 60-75 MINUTES
+### ✅ TODAY (Nov 23) — 30-45 MINUTES REMAINING
 1. Read: `DAY1_QUICK_START.md` (15 min)
-2. Register 3 APIs (40 min):
-   - Storm Glass: https://stormglass.io/
+2. Register remaining APIs (20-25 min):
    - OpenUV: https://openuv.io/
    - Visual Crossing: https://visualcrossing.com/
-3. Update `.env` file with 3 keys (5 min)
+3. Confirm `.env` includes Storm Glass key + add new keys (5 min)
 4. Run validation script (5 min)
-5. Run `npm test` — expect 21/21 ✅ (10 min)
+5. Run `npm test` — expect 21/21 ✅ (10 min) and capture output
 
-**Success**: 21/21 tests passing screenshot captured
+**Success**: 21/21 tests passing screenshot captured with live OpenUV & Visual Crossing data
 
 ---
 
@@ -281,8 +281,8 @@ RESULT: 🎊 OCEANCARE IS LIVE 🎊
 ☑️ You have Git installed (check: git -v)
 ☑️ Project folder is at: C:\Users\Hostilian\collab-connect\OceanCarePPRPRT
 ☑️ You can edit .env file with any text editor
-☑️ You have about 60-75 minutes for Day 1 task
-☑️ You're ready to register 3 API keys
+☑️ You have about 30-45 minutes for the remaining Day 1 task
+☑️ You're ready to register the OpenUV & Visual Crossing API keys (Storm Glass ✅)
 ```
 
 If all checked ✅, you're ready to begin!
@@ -301,9 +301,9 @@ If all checked ✅, you're ready to begin!
 
 **What you need to do NOW:**
 1. Read: `DAY1_QUICK_START.md`
-2. Execute: Register 3 APIs (60-75 min)
-3. Verify: 21/21 tests passing
-4. Celebrate: You've unlocked the test suite! 🎉
+2. Execute: Register OpenUV & Visual Crossing (30-45 min)
+3. Verify: 21/21 tests passing with live keys
+4. Celebrate: Full data pipeline unlocked! 🎉
 
 **After today**: Continue with Days 2-7, Week 2 QA, Week 3 deployment per the plans.
 
@@ -332,4 +332,4 @@ If all checked ✅, you're ready to begin!
 
 ## 🎯 YOUR MISSION (In One Sentence)
 
-**Today**: Register 3 APIs (60-75 min). Next 3 weeks: Test, polish, deploy, train team, go live. Success probability: 91%. You got this! 💪
+**Today**: Finish OpenUV & Visual Crossing keys (30-45 min). Next 3 weeks: Test, polish, deploy, train team, go live. Success probability: 91%. You got this! 💪

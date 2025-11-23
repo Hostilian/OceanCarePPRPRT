@@ -2,7 +2,7 @@
 
 **Timestamp**: Nov 23, 2025, 2:00 PM
 **Status**: ✅ **READY FOR IMMEDIATE EXECUTION**
-**Next Action**: Read `DAY1_QUICK_START.md` → Execute API registration (60-75 min)
+**Next Action**: Read `DAY1_QUICK_START.md` → Finish OpenUV & Visual Crossing keys (30-45 min)
 
 ---
 
@@ -12,13 +12,13 @@
 
 **1. DAY1_QUICK_START.md** ⚡ **START HERE**
 - 15-min read, ultra-clear Day 1 instructions
-- Copy-paste ready API registration steps
+- Copy-paste ready OpenUV & Visual Crossing registration steps (Storm Glass ✅)
 - Expected results & quick troubleshooting
-- **Your first 60-75 minutes mapped out**
+- **Your remaining 30-45 minutes mapped out**
 
 **2. API_REGISTRATION_QUICK_START.md** 📋
-- Detailed 3-API registration guide
-- Step-by-step for Storm Glass, OpenUV, Visual Crossing
+- Detailed registration guide (Storm Glass reference + OpenUV & Visual Crossing execution)
+- Step-by-step for remaining APIs
 - Validation script usage
 - Full test suite execution
 - Comprehensive troubleshooting section
@@ -33,7 +33,7 @@
 
 **4. WEEK1_IMPLEMENTATION_PLAN.md** 📅
 - Days 1-7 detailed roadmap
-- API registration (critical path: 60-75 min)
+- API registration wrap-up (critical path: 30-45 min remaining)
 - Mobile testing procedures (3+ devices)
 - Accessibility audit (WCAG AA)
 - Browser compatibility matrix
@@ -94,13 +94,13 @@
 1. ✅ You're reading this summary ← You are here
 2. 📖 Open: `DAY1_QUICK_START.md`
 3. ⏱️ Read it (15 minutes)
-4. 🚀 Start API registration (below)
+4. 🚀 Finish OpenUV & Visual Crossing registration (below)
 
-### **TODAY** (60-75 minutes)
-1. Register or verify Storm Glass API (15 min) → https://stormglass.io/
+### **TODAY** (30-45 minutes remaining)
+1. Confirm Storm Glass key is active (already done Nov 23)
 2. Register OpenUV API (10 min) → https://openuv.io/
 3. Register Visual Crossing API (15 min) → https://visualcrossing.com/
-4. Update `.env` file with 3 keys (5 min)
+4. Update `.env` with new keys (5 min) — keep Storm Glass entry intact
 5. Run validation script: `node validate-api-keys.js` (5 min)
 6. Run tests: `npm test` (10 min) → **Expect: 21/21 ✅**
 
@@ -137,11 +137,11 @@
 
 ```
 TODAY (Nov 23):
-├─ ⏱️  60-75 minutes
+├─ ⏱️  30-45 minutes remaining
 ├─ 🔴 CRITICAL: Must complete today or everything pushes back
-├─ Task: Register 3 APIs (Storm Glass, OpenUV, Visual Crossing)
-├─ Deliverable: .env updated, npm test shows 21/21 ✅
-└─ Result: Unlock entire test suite
+├─ Task: Finalize OpenUV & Visual Crossing keys (Storm Glass ✅)
+├─ Deliverable: .env updated with all keys, npm test shows 21/21 ✅
+└─ Result: Unlock full live data pipeline
 
 THEN (Nov 24-29):
 ├─ Mobile testing, code polish, accessibility audit
@@ -199,9 +199,9 @@ OPTIONAL POST-LAUNCH (Jan 2026+):
 ## 🎯 YOUR ONE JOB TODAY
 
 **Read**: `DAY1_QUICK_START.md` (15 min)
-**Execute**: Register 3 APIs (40 min)
+**Execute**: Register OpenUV & Visual Crossing (30-45 min) — Storm Glass already done
 **Test**: Run validation + npm test (20 min)
-**Result**: 21/21 tests passing ✅
+**Result**: 21/21 tests passing ✅ with live data
 
 **That's it. That's your only job today.**
 

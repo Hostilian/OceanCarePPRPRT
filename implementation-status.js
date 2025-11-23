@@ -150,7 +150,7 @@ function checkTests() {
     });
 
     console.log(`\n${colors.bold}How to Fix:${colors.reset}`);
-    log.info('1. Register 3 free API keys (Storm Glass, OpenUV, Visual Crossing)');
+      log.info('1. Register remaining free API keys (OpenUV, Visual Crossing)');
     log.info('2. Add keys to .env file');
     log.info('3. Run: npm test');
     log.info('4. Expected: 21/21 tests passing ✅');
@@ -210,7 +210,7 @@ function showNextSteps() {
   log.section('YOUR NEXT STEPS');
 
   console.log(`${colors.bold}Immediate Tasks:${colors.reset}\n`);
-  console.log('1. Register remaining API keys (check warnings above).');
+    console.log('1. Register remaining API keys (OpenUV, Visual Crossing).');
   console.log('2. Update `.env` with any new keys and run `node validate-api-keys.js`.');
   console.log('3. Run `npm test` to confirm the suite stays green after changes.');
 
