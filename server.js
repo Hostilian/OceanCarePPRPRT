@@ -77,9 +77,6 @@ function backupDatabase() {
   }
 }
 
-// Perform initial backup on startup
-backupDatabase();
-
 // Schedule daily backups at 2 AM
 const scheduleBackup = () => {
   const now = new Date();
@@ -99,7 +96,11 @@ const scheduleBackup = () => {
   }, timeUntilBackup);
 };
 
-scheduleBackup();
+if (require.main === module) {
+  // Perform initial backup on startup when running the server directly
+  backupDatabase();
+  scheduleBackup();
+}
 
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
@@ -176,19 +177,29 @@ app.get('/api/news', async (req, res) => {
     const r = await fetch(url);
     const data = await r.json();
 
-    // Norm: "Transform the source so it doesn't come back as '[object Object]'.
-    // That happened once. We don't talk about it anymore."
-    if (data.articles && Array.isArray(data.articles)) {
-      data.articles = data.articles.map(article => ({
-        ...article,
-        source: transformSource(article.source)
-      }));
+    if (!r.ok || !data.articles) {
+      throw new Error(`GNews API responded with status ${r.status}`);
     }
 
-    res.json(data);
+    // Norm: "Transform the source so it doesn't come back as '[object Object]'.
+    // That happened once. We don't talk about it anymore."
+    const articles = Array.isArray(data.articles)
+      ? data.articles.map(article => {
+          if (article && Object.prototype.hasOwnProperty.call(article, 'source')) {
+            return {
+              ...article,
+              source: transformSource(article.source)
+            };
+          }
+          return { ...article };
+        })
+      : [];
+
+    res.json({ ...data, articles });
   } catch (e) {
     // Norm: "When the news API falls down, we get back an empty array.
     // Which, let's be honest, is how the news feels most of the time anyway."
+    console.warn('GNews fetch failed, returning fallback data:', e.message);
     res.json({ articles: [] });
   }
 });
@@ -483,7 +494,7 @@ app.post('/api/report-debris', (req, res) => {
   }
 
   // Validate debrisType
-  const validTypes = ['plastic', 'fishing_net', 'glass', 'metal', 'foam', 'rubber', 'wood', 'other'];
+  const validTypes = ['plastic', 'plastic_bags', 'fishing_net', 'glass', 'metal', 'foam', 'rubber', 'wood', 'other'];
   if (!validTypes.includes(debrisType.toLowerCase())) {
     return res.status(400).json({
       success: false,
@@ -599,8 +610,7 @@ app.get('/api/ocean-conditions', async (req, res) => {
   }
 });
 
-// Reverse Geocoding (Nominatim - convert coordinates to location names)
-app.get('/api/geocode-location', async (req, res) => {
+async function handleReverseGeocode(req, res) {
   // Norm: "Reverse geocoding. Taking numbers and turning them into words.
   // Nominatim does this for free. They're OpenStreetMap. They believe in the people."
 
@@ -629,7 +639,11 @@ app.get('/api/geocode-location', async (req, res) => {
     console.error('Geocoding error:', error);
     res.status(500).json({ success: false, message: 'Unable to geocode location', error: error.message });
   }
-});
+}
+
+// Reverse Geocoding (Nominatim - convert coordinates to location names)
+app.get('/api/geocode-location', handleReverseGeocode);
+app.get('/api/reverse-geocode', handleReverseGeocode);
 
 // Cache for ocean conditions (1 hour cache to reduce API calls)
 const conditionsCache = new Map();
@@ -718,7 +732,8 @@ app.get('/api/marine-weather', async (req, res) => {
   // if they were sophisticated enough to use APIs."
 
   const { latitude, longitude } = req.query;
-  const stormGlassKey = process.env.STORM_GLASS_API_KEY;
+  const stormGlassKey = process.env.STORM_GLASS_API_KEY || process.env.STORMGLASS_API_KEY;
+  console.log('Storm Glass Key:', stormGlassKey ? 'Present' : 'Missing');
 
   if (!stormGlassKey) {
     return res.status(400).json({
@@ -1007,13 +1022,16 @@ app.get('/api/climate-trends', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  // Norm: "And then we listen. On port 3000.
-  // We sit here and wait for requests. It's like therapy.
-  // Someone comes along with a problem, we give them a solution.
-  // Sometimes it works. Sometimes it doesn't. But we're listening.
-  // That's what matters."
+if (require.main === module) {
+  app.listen(port, () => {
+    // Norm: "And then we listen. On port 3000.
+    // We sit here and wait for requests. It's like therapy.
+    // Someone comes along with a problem, we give them a solution.
+    // Sometimes it works. Sometimes it doesn't. But we're listening.
+    // That's what matters."
 
-  console.log(`🌊 OceanCare running on :${port}`);
-});
+    console.log(`🌊 OceanCare running on :${port}`);
+  });
+}
+
 module.exports = app;

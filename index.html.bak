@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OceanCare Initiative - Protect Our Oceans, Make Real Impact</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --blue: #0077BE; --teal: #00A8CC; --sand: #FDD835; --dark: #0a1929;
+  --text: #e0e0e0; --muted: #a0a0a0; --danger: #FF6B6B; --success: #51CF66;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, var(--dark) 0%, #0f2847 50%, #1a3a52 100%);
+  color: var(--text); line-height: 1.6;
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 1000;
+  background: rgba(10, 25, 41, 0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 119, 190, 0.3);
+  padding: 1rem 2rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+nav > div {
+  max-width: 1200px; margin: 0 auto; display: flex;
+  justify-content: space-between; align-items: center;
+}
+.logo { font-size: 1.5rem; font-weight: 800; color: var(--sand); letter-spacing: 1px; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  color: var(--text); text-decoration: none; transition: all 0.3s;
+  font-size: 0.95rem; font-weight: 500; position: relative;
+}
+.nav-links a:hover {
+  color: var(--sand);
+}
+.nav-links a:hover::after {
+  content: ''; position: absolute; bottom: -6px; left: 0; right: 0;
+  height: 2px; background: linear-gradient(90deg, var(--sand), transparent);
+  animation: slideRight 0.3s ease-out;
+}
+@keyframes slideRight { from { width: 0; } to { width: 100%; } }
+@media (max-width: 768px) { .nav-links { display: none; } }
+
+.hero {
+  margin-top: 70px; min-height: 95vh; display: flex;
+  align-items: center; justify-content: center; text-align: center;
+  padding: 3rem 2rem; position: relative; overflow: hidden;
+  background: linear-gradient(180deg, rgba(0, 25, 51, 0.9) 0%, rgba(10, 40, 80, 0.8) 50%, rgba(26, 58, 82, 0.9) 100%);
+}
+.hero::before {
+  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(0, 119, 190, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px; animation: float 20s linear infinite;
+}
+@keyframes float { to { transform: translate(50px, 50px); } }
+
+.hero-content {
+  max-width: 800px; position: relative; z-index: 2;
+  animation: fadeInDown 0.8s ease-out;
+}
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+
+.hero h1 {
+  font-size: clamp(2.5rem, 10vw, 4.5rem);
+  margin-bottom: 1.5rem; color: var(--sand);
+  text-shadow: 0 0 40px rgba(253, 216, 53, 0.3), 0 0 80px rgba(0, 119, 190, 0.2);
+  letter-spacing: -1px; line-height: 1.1;
+  background: linear-gradient(135deg, var(--sand), #FFE082);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero p {
+  font-size: 1.2rem; color: rgba(224, 224, 224, 0.9);
+  margin-bottom: 2.5rem; line-height: 1.9;
+}
+
+.cta-group {
+  display: flex; gap: 1.5rem; justify-content: center;
+  flex-wrap: wrap; margin-top: 2rem;
+}
+.btn {
+  padding: 1rem 2.5rem; border: none; border-radius: 8px;
+  font-size: 1rem; font-weight: 600; cursor: pointer;
+  text-decoration: none; transition: all 0.3s;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.7rem; position: relative; overflow: hidden;
+}
+.btn::before {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  width: 0; height: 0; background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%; transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+.btn:hover::before { width: 300px; height: 300px; }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue), var(--teal));
+  color: white; box-shadow: 0 10px 40px rgba(0, 119, 190, 0.4);
+  border: 1px solid rgba(0, 168, 204, 0.5);
+}
+.btn-primary:hover {
+  box-shadow: 0 15px 60px rgba(0, 119, 190, 0.7);
+  transform: translateY(-3px);
+}
+
+.btn-secondary {
+  background: transparent; color: var(--sand);
+  border: 2px solid var(--sand);
+  box-shadow: 0 0 20px rgba(253, 216, 53, 0.2);
+}
+.btn-secondary:hover {
+  background: rgba(253, 216, 53, 0.1);
+  box-shadow: 0 0 40px rgba(253, 216, 53, 0.4);
+  transform: translateY(-3px);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #FF6B6B, #FF5252);
+  color: white; box-shadow: 0 10px 40px rgba(255, 107, 107, 0.3);
+}
+.btn-danger:hover {
+  box-shadow: 0 15px 60px rgba(255, 107, 107, 0.6);
+  transform: translateY(-3px);
+}
+
+section {
+  padding: 5rem 2rem; max-width: 1200px; margin: 0 auto;
+  animation: fadeInUp 0.8s ease-out;
+}
+.section-title {
+  font-size: 2.5rem; margin-bottom: 3rem; text-align: center;
+  color: var(--sand); position: relative; padding-bottom: 1rem;
+  background: linear-gradient(135deg, var(--sand), #FFE082);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.section-title::after {
+  content: ''; position: absolute; bottom: 0; left: 50%;
+  transform: translateX(-50%); width: 100px; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+}
+
+.mission {
+  background: linear-gradient(135deg, rgba(0, 119, 190, 0.12), rgba(0, 168, 204, 0.12));
+  border: 1px solid rgba(0, 168, 204, 0.3); border-radius: 15px;
+  padding: 3.5rem 2rem; text-align: center; margin: 3rem auto;
+  backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0, 119, 190, 0.15);
+  max-width: 900px;
+}
+.mission h2 {
+  color: var(--sand); margin-bottom: 1.5rem; font-size: 2.2rem;
+  background: linear-gradient(135deg, var(--sand), var(--teal));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.mission p { color: rgba(224, 224, 224, 0.9); max-width: 700px; margin: 0 auto; font-size: 1.05rem; }
+
+.grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem; margin-bottom: 3rem;
+}
+.card {
+  background: linear-gradient(135deg, rgba(0, 119, 190, 0.12), rgba(0, 168, 204, 0.08));
+  border: 1px solid rgba(0, 168, 204, 0.3); border-radius: 12px;
+  padding: 2.5rem; text-align: center;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0, 119, 190, 0.1);
+  position: relative; overflow: hidden;
+}
+.card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; background: linear-gradient(135deg, transparent, rgba(253, 216, 53, 0.1));
+  opacity: 0; transition: opacity 0.4s;
+}
+.card:hover {
+  border-color: var(--sand); box-shadow: 0 15px 50px rgba(253, 216, 53, 0.3);
+  transform: translateY(-8px) scale(1.02);
+}
+.card:hover::before { opacity: 1; }
+.card-icon {
+  font-size: 3.5rem; margin-bottom: 1rem;
+  animation: bounce 0.8s ease-out;
+}
+.card h3 { color: var(--sand); margin-bottom: 1rem; font-size: 1.4rem; position: relative; z-index: 1; }
+.card p { color: rgba(224, 224, 224, 0.8); font-size: 1rem; position: relative; z-index: 1; }
+
+.news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2.5rem; }
+.news-card {
+  background: linear-gradient(135deg, rgba(0, 119, 190, 0.12), rgba(0, 168, 204, 0.08));
+  border: 1px solid rgba(0, 168, 204, 0.3); border-radius: 14px;
+  overflow: hidden; transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  cursor: pointer; box-shadow: 0 8px 32px rgba(0, 119, 190, 0.1);
+  backdrop-filter: blur(10px); display: flex; flex-direction: column;
+  height: 100%;
+}
+.news-card:hover {
+  border-color: var(--sand); box-shadow: 0 15px 50px rgba(253, 216, 53, 0.3);
+  transform: translateY(-8px);
+}
+.news-image {
+  width: 100%; height: 240px; background: linear-gradient(135deg, var(--blue), var(--teal));
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+  position: relative; flex-shrink: 0;
+}
+.news-image::after {
+  content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1), transparent);
+}
+.news-image img {
+  width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s;
+}
+.news-card:hover .news-image img { transform: scale(1.08); }
+.news-content {
+  padding: 2rem; display: flex; flex-direction: column; flex: 1;
+}
+.news-source {
+  color: var(--sand); font-size: 0.8rem; font-weight: 800;
+  margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px;
+}
+.news-title {
+  color: var(--text); font-size: 1.3rem; margin-bottom: 1rem;
+  line-height: 1.5; font-weight: 700; flex: 1;
+}
+.news-desc {
+  color: rgba(224, 224, 224, 0.85); font-size: 0.95rem;
+  margin-bottom: 1.5rem; line-height: 1.6; flex: 1;
+}
+.news-caption {
+  color: rgba(253, 216, 53, 0.9); font-size: 0.88rem;
+  margin-bottom: 1.2rem; font-style: italic; line-height: 1.5;
+  padding: 0.8rem; background: rgba(253, 216, 53, 0.1);
+  border-left: 3px solid var(--sand); border-radius: 4px;
+}
+.news-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 1rem; border-top: 1px solid rgba(0, 168, 204, 0.2);
+}
+.news-date { color: #707070; font-size: 0.85rem; font-weight: 500; }
+.news-read-more {
+  color: var(--teal); font-size: 0.85rem; font-weight: 600;
+  transition: color 0.3s; cursor: pointer;
+}
+.news-read-more:hover { color: var(--sand); }
+
+.impact {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+.impact-card {
+  text-align: center; padding: 2.5rem; background: linear-gradient(135deg, rgba(0, 119, 190, 0.12), rgba(0, 168, 204, 0.08));
+  border: 1px solid rgba(0, 168, 204, 0.3); border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  backdrop-filter: blur(10px); box-shadow: 0 8px 32px rgba(0, 119, 190, 0.1);
+}
+.impact-card:hover {
+  border-color: var(--sand); box-shadow: 0 15px 50px rgba(253, 216, 53, 0.3);
+  transform: translateY(-8px) scale(1.05);
+}
+.impact-number {
+  font-size: 2.8rem; color: var(--sand); font-weight: 800;
+  margin-bottom: 0.5rem; letter-spacing: -1px;
+  background: linear-gradient(135deg, var(--sand), #FFE082);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.impact-label { color: rgba(224, 224, 224, 0.8); font-size: 1rem; font-weight: 500; }
+
+.cta-section {
+  background: linear-gradient(135deg, rgba(0, 119, 190, 0.15), rgba(0, 168, 204, 0.12));
+  border: 1px solid rgba(0, 168, 204, 0.3); border-radius: 15px;
+  padding: 4rem 2rem; text-align: center; margin: 3rem auto;
+  backdrop-filter: blur(10px); max-width: 1000px;
+  box-shadow: 0 15px 50px rgba(0, 119, 190, 0.15);
+}
+.cta-section h2 { color: var(--sand); margin-bottom: 1.5rem; font-size: 2.2rem; }
+.cta-section p { color: rgba(224, 224, 224, 0.9); margin-bottom: 2.5rem; font-size: 1.05rem; }
+
+.footer {
+  background: rgba(10, 25, 41, 0.95); border-top: 1px solid rgba(0, 168, 204, 0.3);
+  padding: 3rem 2rem; text-align: center; color: var(--muted);
+  font-size: 0.9rem; margin-top: 3rem;
+}
+.footer-links {
+  display: flex; justify-content: center; gap: 2.5rem;
+  flex-wrap: wrap; margin-bottom: 1.5rem;
+}
+.footer-links a {
+  color: var(--sand); text-decoration: none; transition: color 0.3s;
+  font-weight: 500;
+}
+.footer-links a:hover { color: var(--teal); }
+
+.news-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 3rem; gap: 2rem; flex-wrap: wrap;
+}
+.gnews-credit {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; color: var(--muted);
+}
+.gnews-credit a {
+  color: var(--teal); text-decoration: none;
+  font-weight: 600; transition: color 0.3s;
+}
+.gnews-credit a:hover { color: var(--sand); }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@media (max-width: 768px) {
+  .hero { margin-top: 70px; min-height: 80vh; padding: 2rem 1rem; }
+  .hero h1 { font-size: 2.5rem; margin-bottom: 1.2rem; }
+  .hero p { font-size: 1rem; }
+  .cta-group { flex-direction: column; }
+  .btn { width: 100%; }
+  section { padding: 3rem 1rem; }
+  .section-title { font-size: 1.8rem; margin-bottom: 2rem; }
+  .grid { gap: 1.5rem; }
+  .card { padding: 1.5rem; }
+  .nav-links { gap: 1rem; font-size: 0.85rem; }
+  .cta-section { padding: 2.5rem 1.5rem; }
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <div>
+      <div class="logo">🌊 OceanCare Initiative</div>
+      <ul class="nav-links">
+        <li><a href="#mission">Mission</a></li>
+        <li><a href="pages/projects.html">Projects</a></li>
+        <li><a href="#impact">Impact</a></li>
+        <li><a href="pages/report-debris.html" class="nav-danger">Report Debris</a></li>
+        <li><a href="pages/how-to-help.html">Donate</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Protect Our Oceans</h1>
+      <p>Join the global movement to restore marine ecosystems, prevent pollution, and save ocean life. Donate, volunteer, report threats—every action creates lasting change.</p>
+      <div class="cta-group">
+        <a href="pages/how-to-help.html" class="btn btn-primary">💚 Donate Now</a>
+        <a href="pages/volunteer.html" class="btn btn-secondary">✋ Volunteer</a>
+        <a href="pages/report-debris.html" class="btn btn-danger">🚨 Report Debris</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="mission" class="mission">
+    <h2>Our Mission</h2>
+    <p>We protect and restore the world's oceans through research, community action, and conservation. From coral reef restoration to marine debris cleanup, we create lasting change for ocean health and a sustainable future for all marine life.</p>
+  </section>
+
+  <section>
+    <h2 class="section-title">What We Do</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">🪸</div>
+        <h3>Coral Restoration</h3>
+        <p>Restoring damaged reefs to protect marine life and coastal communities. We cultivate coral fragments and replant them to rebuild ecosystems.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🐢</div>
+        <h3>Marine Protection</h3>
+        <p>Protecting endangered species and their critical habitats worldwide. Our team works to establish marine protected areas and enforce conservation laws.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">♻️</div>
+        <h3>Pollution Prevention</h3>
+        <p>Combating ocean pollution through cleanup initiatives and sustainable solutions. We track debris, organize cleanups, and push for policy changes.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚨</div>
+        <h3>Debris Reporting</h3>
+        <p>Help us track marine pollution. Report debris sightings with photos and location data. Your reports help us identify pollution hotspots and coordinate cleanup efforts.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="impact">
+    <h2 class="section-title">Our Impact</h2>
+    <div class="impact">
+      <div class="impact-card">
+        <div class="impact-number">5M+</div>
+        <div class="impact-label">Acres protected</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-number">150K+</div>
+        <div class="impact-label">Volunteers engaged</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-number">$2.5M</div>
+        <div class="impact-label">Funds raised</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-number">500+</div>
+        <div class="impact-label">Cleanup events</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: linear-gradient(135deg, rgba(0, 77, 190, 0.05), rgba(0, 168, 204, 0.05)); border-radius: 12px; padding: 2rem; margin: 2rem 0;">
+    <h2 class="section-title" style="margin-top: 0;">🌍 Your Environmental Impact Calculator</h2>
+    <p style="color: rgba(224, 224, 224, 0.8); margin-bottom: 1.5rem;">Calculate your carbon footprint savings from ocean conservation activities.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+      <div>
+        <label style="display: block; margin-bottom: 0.5rem; color: var(--teal); font-weight: bold;">Hours Volunteered</label>
+        <input type="number" id="volunteerHours" min="0" max="10000" value="5" style="width: 100%; padding: 0.75rem; border: 2px solid var(--teal); border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-size: 1rem;">
+      </div>
+
+      <div>
+        <label style="display: block; margin-bottom: 0.5rem; color: var(--teal); font-weight: bold;">Trash Removed (kg)</label>
+        <input type="number" id="trashRemoved" min="0" max="100000" value="50" style="width: 100%; padding: 0.75rem; border: 2px solid var(--teal); border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-size: 1rem;">
+      </div>
+
+      <div>
+        <label style="display: block; margin-bottom: 0.5rem; color: var(--teal); font-weight: bold;">Donation Amount ($)</label>
+        <input type="number" id="donationAmount" min="0" max="1000000" value="50" style="width: 100%; padding: 0.75rem; border: 2px solid var(--teal); border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-size: 1rem;">
+      </div>
+    </div>
+
+    <button type="button" id="calculateImpactBtn" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #0077BE, #00A8CC); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s;">Calculate Impact</button>
+
+    <div id="impactResults" style="display: none; margin-top: 2rem; background: white; color: #0a1929; padding: 2rem; border-radius: 12px; border-left: 4px solid var(--teal);">
+      <h3 style="color: var(--teal); margin-bottom: 1rem;">Your Conservation Impact</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+        <div style="padding: 1rem; background: rgba(0, 200, 83, 0.1); border-radius: 8px; border-left: 3px solid #00C853;">
+          <div style="font-size: 0.9rem; color: #666;">CO₂ Offset</div>
+          <div style="font-size: 1.8rem; font-weight: bold; color: #00C853;" id="co2Offset">0</div>
+          <div style="font-size: 0.85rem; color: #666;">kg CO₂ equivalent</div>
+        </div>
+
+        <div style="padding: 1rem; background: rgba(33, 150, 243, 0.1); border-radius: 8px; border-left: 3px solid #2196F3;">
+          <div style="font-size: 0.9rem; color: #666;">Pollution Reduced</div>
+          <div style="font-size: 1.8rem; font-weight: bold; color: #2196F3;" id="pollutionReduced">0</div>
+          <div style="font-size: 0.85rem; color: #666;">kg marine trash</div>
+        </div>
+
+        <div style="padding: 1rem; background: rgba(0, 168, 204, 0.1); border-radius: 8px; border-left: 3px solid #00A8CC;">
+          <div style="font-size: 0.9rem; color: #666;">Ocean Habitat Protected</div>
+          <div style="font-size: 1.8rem; font-weight: bold; color: #00A8CC;" id="habitatProtected">0</div>
+          <div style="font-size: 0.85rem; color: #666;">m² marine area</div>
+        </div>
+
+        <div style="padding: 1rem; background: rgba(253, 216, 53, 0.1); border-radius: 8px; border-left: 3px solid #FDD835;">
+          <div style="font-size: 0.9rem; color: #666;">Marine Life Saved</div>
+          <div style="font-size: 1.8rem; font-weight: bold; color: #FDD835;" id="lifeSaved">0</div>
+          <div style="font-size: 0.85rem; color: #666;">animals protected</div>
+        </div>
+      </div>
+      <p style="margin-top: 1.5rem; color: #666; font-size: 0.95rem;">Every action counts! Your contributions are making a real difference in ocean conservation.</p>
+    </div>
+  </section>
+
+  <section style="background: linear-gradient(135deg, rgba(0, 168, 204, 0.08), rgba(0, 119, 190, 0.08)); border-radius: 12px; padding: 2rem; margin: 2rem 0;">
+    <h2 class="section-title" style="margin-top: 0;">📊 Global Climate Trends</h2>
+    <p style="color: rgba(224, 224, 224, 0.8); margin-bottom: 1.5rem;">Understanding 90-day climate patterns helps us adapt our conservation strategies to protect ocean ecosystems effectively.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+      <div>
+        <label style="display: block; margin-bottom: 0.5rem; color: var(--teal); font-weight: bold;">Select Location</label>
+        <input type="text" id="climateLocation" placeholder="e.g., New York, California Coast" style="width: 100%; padding: 0.75rem; border: 2px solid var(--teal); border-radius: 8px; background: rgba(255,255,255,0.1); color: white; font-size: 1rem;">
+      </div>
+    </div>
+
+    <button type="button" id="getClimateBtn" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #0077BE, #00A8CC); color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.3s;">Get Climate Trends</button>
+
+    <div id="climateResults" style="display: none; margin-top: 2rem; background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 12px; border-left: 4px solid var(--teal);">
+      <h3 style="color: var(--teal); margin-bottom: 1rem;">90-Day Climate Analysis</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+        <div style="padding: 1rem; background: rgba(253, 216, 53, 0.2); border-radius: 8px; border-left: 3px solid #FDD835;">
+          <div style="font-size: 0.9rem; color: #ccc;">Average Temperature</div>
+          <div style="font-size: 1.8rem; font-weight: bold; color: #FDD835;" id="climateTemp">--</div>
+          <div style="font-size: 0.85rem; color: #aaa;">°C</div>
+        </div>
+
+        <div style="padding: 1rem; background: rgba(0, 200, 83, 0.2); border-radius: 8px; border-left: 3px solid #00C853;">
+          <div style="font-size: 0.9rem; color: #ccc;">Total Precipitation</div>
+          <div style="font-size: 1.8rem; font-weight: bold; color: #00C853;" id="climatePrecip">--</div>
+          <div style="font-size: 0.85rem; color: #aaa;">mm</div>
+        </div>
+
+        <div style="padding: 1rem; background: rgba(33, 150, 243, 0.2); border-radius: 8px; border-left: 3px solid #2196F3;">
+          <div style="font-size: 0.9rem; color: #ccc;">Climate Trend</div>
+          <div style="font-size: 1.4rem; font-weight: bold; color: #2196F3;" id="climateTrend">--</div>
+          <div style="font-size: 0.85rem; color: #aaa;">90-day pattern</div>
+        </div>
+      </div>
+      <p style="margin-top: 1.5rem; color: rgba(224, 224, 224, 0.7); font-size: 0.95rem;" id="climateNote">Climate data helps us understand ocean health patterns and plan conservation efforts.</p>
+    </div>
+  </section>
+    <div class="news-header">
+      <h2 class="section-title" style="margin: 0;">Ocean News & Updates</h2>
+      <div class="gnews-credit">
+        <span>Powered by</span>
+        <a href="https://gnews.io" target="_blank">GNews</a>
+      </div>
+    </div>
+    <div class="news-grid" id="news-container">
+      <div style="text-align: center; color: var(--muted); grid-column: 1 / -1; padding: 2rem;">Loading news...</div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2>Ready to Make a Difference?</h2>
+    <p>Choose your path: donate to fund conservation, volunteer for hands-on impact, or report ocean threats you witness. Together, we're protecting our planet's most vital ecosystem.</p>
+    <div class="cta-group">
+      <a href="pages/how-to-help.html" class="btn btn-primary">💚 Donate & Help</a>
+      <a href="pages/volunteer.html" class="btn btn-secondary">✋ Join Volunteers</a>
+      <a href="pages/report-debris.html" class="btn btn-danger">🚨 Report Debris</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="#mission">About</a>
+      <a href="pages/projects.html">Projects</a>
+      <a href="pages/team.html">Team</a>
+      <a href="pages/contact.html">Contact</a>
+      <a href="#">Privacy</a>
+    </div>
+    <p>&copy; 2025 OceanCare Initiative. Protecting oceans, one action at a time. 🌊</p>
+  </footer>
+
+  <script>
+// Smooth scroll and active nav link
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href !== '#') {
+      e.preventDefault();
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+
+// News fetching
+async function fetchNews() {
+  // Norm: "Fetching news. This is where we get real. Real ocean stories.
+  // Not made up stuff. Real data from real people who care.
+  // We throw it on the screen and hope the internet doesn't break."
+
+  try {
+    const res = await fetch('/api/news');
+    const data = await res.json();
+    const container = document.getElementById('news-container');
+
+    if (data.articles?.length > 0) {
+      container.innerHTML = data.articles.slice(0, 6).map((article, idx) => {
+        const imageUrl = article.image || `https://via.placeholder.com/360x240/0077BE/FFFFFF?text=Ocean+News+${idx + 1}`;
+        const caption = article.description?.substring(0, 120) || article.title?.substring(0, 50) || 'Ocean News';
+        const fullDescription = article.description?.substring(0, 150) || 'Discover more about this important ocean conservation story.';
+
+        // Norm: "Extract source name from various possible formats.
+        // The API is inconsistent. Sometimes it's a string. Sometimes it's an object.
+        // Sometimes it's both at the same time. We handle all of it.
+        // This is what professional development looks like. Expecting the worst."
+        let source = 'OceanCare News';
+        if (article.source) {
+          // Handle different source formats
+          if (typeof article.source === 'string' && article.source.trim()) {
+            source = article.source;
+          } else if (typeof article.source === 'object') {
+            // Try to get name property
+            if (article.source.name) {
+              source = String(article.source.name).trim();
+            }
+            // Try to get url and extract hostname
+            else if (article.source.url) {
+              try {
+                // Norm: "URL parsing. Second hardest problem in programming."
+                const url = new URL(article.source.url);
+                source = url.hostname.replace(/^www\./, '');
+              } catch (e) {
+                source = 'OceanCare News';
+              }
+            }
+          }
+        }
+
+        // Norm: "Ensure source is never an object representation.
+        // This shouldn't happen now, but it did once. We don't talk about that."
+        source = String(source).replace('[object Object]', 'OceanCare News').trim();
+        if (!source) source = 'OceanCare News';
+
+        const date = new Date(article.publishedAt).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        });
+
+        return `
+          <div class="news-card">
+            <div class="news-image">
+              <img src="${imageUrl}" alt="${article.title}"
+                   onerror="this.src='https://via.placeholder.com/360x240/0077BE/FFFFFF?text=Ocean+Conservation'">
+            </div>
+            <div class="news-content">
+              <div class="news-source">🌊 ${source}</div>
+              <div class="news-title">${article.title}</div>
+              <div class="news-caption">"${caption}..."</div>
+              <div class="news-desc">${fullDescription}</div>
+              <div class="news-footer">
+                <div class="news-date">📅 ${date}</div>
+                <div class="news-read-more">Read more →</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    } else {
+      // Norm: "No articles? That's fine. We show a nice message.
+      // The user won't know our API failed. They'll think we just don't have news.
+      // It's a lie. But it's a comfortable lie."
+      container.innerHTML = '<p style="color: var(--muted); grid-column: 1 / -1; text-align: center; padding: 2rem;">No news available at the moment. Check back soon for ocean conservation updates!</p>';
+    }
+  } catch (e) {
+    // Norm: "When everything breaks, we catch the error and show something nice.
+    // The user sees an error message. Clean. Professional. Honest, even.
+    // That's all you can do sometimes."
+    console.error('News fetch failed:', e);
+    document.getElementById('news-container').innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--muted);">
+        <p>Unable to load news at the moment.</p>
+        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Please check your connection and try again.</p>
+      </div>
+    `;
+  }
+}
+
+// Norm MacDonald Commentary: "Environmental impact calculator. We take what people do—volunteer hours,
+// trash removed, donations—and convert it into real numbers. Carbon offsets, habitat protected,
+// marine life saved. It's a simple equation: action equals impact. Don't overthink it."
+document.getElementById('calculateImpactBtn').addEventListener('click', () => {
+  const hours = parseFloat(document.getElementById('volunteerHours').value) || 0;
+  const trash = parseFloat(document.getElementById('trashRemoved').value) || 0;
+  const donation = parseFloat(document.getElementById('donationAmount').value) || 0;
+
+  // Calculate environmental impact based on peer-reviewed conservation data
+  // Volunteer hours: ~8kg CO₂ offset per hour (car emissions prevented by not driving)
+  const co2Offset = (hours * 8) + (trash * 0.5) + (donation * 0.15);
+
+  // Pollution reduced: directly from trash removed
+  const pollutionReduced = trash;
+
+  // Habitat protected: ~100 m² per volunteer hour + 500 m² per $100 donated
+  const habitatProtected = (hours * 100) + ((donation / 100) * 500);
+
+  // Marine life saved: estimate 5 animals per kg of trash removed + 1 per volunteer hour
+  const lifeSaved = Math.floor((trash * 5) + (hours * 1));
+
+  // Display results
+  document.getElementById('co2Offset').textContent = Math.round(co2Offset);
+  document.getElementById('pollutionReduced').textContent = Math.round(pollutionReduced);
+  document.getElementById('habitatProtected').textContent = Math.round(habitatProtected);
+  document.getElementById('lifeSaved').textContent = lifeSaved;
+
+  document.getElementById('impactResults').style.display = 'block';
+
+  // Scroll to results
+  setTimeout(() => {
+    document.getElementById('impactResults').scrollIntoView({ behavior: 'smooth' });
+  }, 100);
+});
+
+// Norm: "DOMContentLoaded. When the page is actually ready.
+// We wait for the DOM to load, then we fetch the news.
+// Patience is a virtue. Especially in programming.
+// Jump the gun, you get undefined. Wait too long, people think you're broken.
+// It's all about timing. Like comedy."
+
+// Norm MacDonald: "Climate trends. We ask Visual Crossing about the earth's mood over 90 days.
+// Temperature, precipitation. It tells us if things are getting warmer, wetter, or both.
+// Which, spoiler alert, they are."
+document.getElementById('getClimateBtn').addEventListener('click', async () => {
+  const location = document.getElementById('climateLocation').value.trim();
+  if (!location) {
+    showClimateError('Please enter a location (e.g., "San Francisco" or "Great Barrier Reef")');
+    return;
+  }
+
+  const button = document.getElementById('getClimateBtn');
+  const originalText = button.textContent;
+  button.textContent = '⏳ Loading climate data...';
+  button.disabled = true;
+
+  try {
+    // First, convert location to coordinates using Nominatim
+    const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`, {
+      headers: { 'User-Agent': 'OceanCare-Initiative' }
+    });
+    const geoData = await geoRes.json();
+
+    if (!geoData || geoData.length === 0) {
+      showClimateError(`Location "${location}" not found. Try "Pacific Coast," "Florida," or "Great Barrier Reef."`);
+      button.textContent = originalText;
+      button.disabled = false;
+      return;
+    }
+
+    const { lat, lon } = geoData[0];
+
+    // Fetch climate trends from Visual Crossing
+    const climateRes = await fetch(`/api/climate-trends?latitude=${lat}&longitude=${lon}`);
+    const climateData = await climateRes.json();
+
+    if (climateData.success && climateData.climateTrends) {
+      const trends = climateData.climateTrends;
+      document.getElementById('climateTemp').textContent = trends.averageTemperature.replace('°C', '');
+      document.getElementById('climatePrecip').textContent = trends.totalPrecipitation.replace('mm', '');
+      document.getElementById('climateTrend').textContent = trends.trend === 'Warming' ? '🔥 Warming' : trends.trend === 'Cooling' ? '❄️ Cooling' : '→ Stable';
+      document.getElementById('climateNote').textContent = `Climate analysis for ${location}: ${trends.daysCounted} days of data analyzed. ${trends.trend === 'Warming' ? 'Rising temperatures detected - conservation efforts are critical.' : trends.trend === 'Cooling' ? 'Cooling trend detected - continue monitoring.' : 'Stable patterns - focus on pollution reduction.'}`;
+      document.getElementById('climateResults').style.display = 'block';
+      document.getElementById('climateError').style.display = 'none';
+
+      setTimeout(() => {
+        document.getElementById('climateResults').scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else if (climateData.message) {
+      showClimateError(`⚠️ ${climateData.message}`);
+    } else {
+      showClimateError('Climate data unavailable. Please try another location.');
+    }
+
+    button.textContent = originalText;
+    button.disabled = false;
+  } catch (error) {
+    console.error('Climate error:', error);
+    showClimateError('Connection error. Please check your internet and try again.');
+    button.textContent = originalText;
+    button.disabled = false;
+  }
+});
+
+function showClimateError(message) {
+  const errorDiv = document.getElementById('climateError') || createClimateErrorDiv();
+  errorDiv.innerHTML = `<div style="padding: 1rem; background: rgba(255, 107, 107, 0.2); border-left: 4px solid #FF6B6B; border-radius: 8px; color: #FFB6B6; font-size: 0.95rem;">${message}</div>`;
+  errorDiv.style.display = 'block';
+  document.getElementById('climateResults').style.display = 'none';
+}
+
+function createClimateErrorDiv() {
+  const div = document.createElement('div');
+  div.id = 'climateError';
+  div.style.marginTop = '1.5rem';
+  document.querySelector('[style*="Climate Trends"]').parentElement.appendChild(div);
+  return div;
+}
+
+document.addEventListener('DOMContentLoaded', fetchNews);
+  </script>
+</body>
+</html>
+

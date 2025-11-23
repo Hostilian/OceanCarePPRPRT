@@ -31,10 +31,10 @@ const testTimeout = 10000; // 10 seconds
 async function testStormGlass() {
   log.section('Testing Storm Glass API');
 
-  const apiKey = process.env.STORMGLASS_API_KEY;
+  const apiKey = process.env.STORMGLASS_API_KEY || process.env.STORM_GLASS_API_KEY;
 
   if (!apiKey || apiKey === 'your_stormglass_api_key_here') {
-    log.warn('STORMGLASS_API_KEY not set in .env file');
+    log.warn('STORMGLASS_API_KEY (or STORM_GLASS_API_KEY) not set in .env file');
     return false;
   }
 

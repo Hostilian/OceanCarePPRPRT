@@ -1,35 +1,37 @@
 # 📝 API Key Registration Guide - Step by Step
 
 **Date**: November 23, 2025  
-**Goal**: Register 3 free API keys and add them to `.env`  
-**Estimated Time**: 45-75 minutes  
-**Current Status**: ⏳ IN PROGRESS
+**Goal**: Register remaining OpenUV & Visual Crossing API keys (Storm Glass complete) and add them to `.env`  
+**Estimated Time**: 30-45 minutes  
+**Current Status**: ⏳ IN PROGRESS — Storm Glass ✅, OpenUV ❌, Visual Crossing ❌
 
 ---
 
 ## Why We Need These Keys
 
 Your OceanCare application uses **8 free APIs** to provide real-time environmental data:
-- **5 APIs are already working** (GNews, Google Maps, Open-Meteo, OpenAQ, Nominatim)
-- **3 APIs are waiting for registration** (Storm Glass, OpenUV, Visual Crossing)
+- **6 APIs are already working** (GNews, Google Maps, Storm Glass, Open-Meteo, OpenAQ, Nominatim)
+- **2 APIs are waiting for registration** (OpenUV, Visual Crossing)
 
-Without these 3 keys, users will see helpful warning messages on:
-- **Debris Report page**: Marine weather data will be unavailable
+Without the OpenUV & Visual Crossing keys, users will see helpful warning messages on:
 - **Volunteer page**: UV Index and sun safety recommendations will be unavailable
 - **Climate trends**: 90-day forecasts will show basic data only
+- **Debris Report page**: Marine weather now works (Storm Glass ✅), but multi-day forecasts still show basic data until Visual Crossing is active
 
-**With keys registered**, all features unlock immediately.
+**With the remaining keys registered**, all features unlock immediately.
 
 ---
 
-## API 1: Storm Glass (Marine Weather)
+## API 1: Storm Glass (Marine Weather) ✅ Completed
 
 ### What It Does
 - Provides real-time marine weather data (waves, swell, water temperature)
 - Used on the Debris Report page to inform cleanup decisions
 - Shows users when conditions are safe for ocean activities
 
-### Step-by-Step Registration
+> Storm Glass was registered and validated on Nov 23. Keep these steps for onboarding or re-registration; skip ahead if the key remains active.
+
+### Step-by-Step Registration (Reference)
 
 #### Step 1.1: Navigate to Storm Glass
 1. Open new browser tab
@@ -174,13 +176,13 @@ Without these 3 keys, users will see helpful warning messages on:
 
 ---
 
-## Now You Have 3 Keys! 🎉
+## All Three Keys Accounted For 🎉
 
-You should now have in your notepad:
+By completing the remaining registrations you should have the following safely stored (Storm Glass already verified on Nov 23):
 ```
-Storm Glass API Key: abc123def456...
-OpenUV API Key: 0123456789abcdef...
-Visual Crossing API Key: abc123def456ghi789...
+Storm Glass API Key: abc123def456...   # ✅ already in .env
+OpenUV API Key: 0123456789abcdef...    # newly collected
+Visual Crossing API Key: abc123def456ghi789...   # newly collected
 ```
 
 ### Next Step: Update Your `.env` File
@@ -189,27 +191,20 @@ Visual Crossing API Key: abc123def456ghi789...
 
 1. Open your project folder in VS Code (or your editor)
 2. Find the `.env` file in the project root
-3. **IMPORTANT**: Currently it shows:
-   ```
-   STORMGLASS_API_KEY=your_stormglass_api_key_here
-   OPENUV_API_KEY=your_openuv_api_key_here
-   VISUAL_CROSSING_API_KEY=your_visual_crossing_api_key_here
-   ```
-
-4. **Replace** each line with your actual keys:
+3. **IMPORTANT**: Confirm the Storm Glass entry is already populated. If you see placeholders, update them as follows (either `STORMGLASS_API_KEY` or the alias `STORM_GLASS_API_KEY` works):
    ```
    STORMGLASS_API_KEY=abc123def456...
    OPENUV_API_KEY=0123456789abcdef...
    VISUAL_CROSSING_API_KEY=abc123def456ghi789...
    ```
 
-5. **Verify**:
+4. **Verify**:
    - No `your_` prefix remains
    - No spaces around the `=` sign
    - Each key is complete (paste the entire key)
    - No quotation marks around keys
 
-6. **Save the file** (Ctrl+S)
+5. **Save the file** (Ctrl+S)
 
 ---
 
@@ -277,25 +272,25 @@ If all three show ✅, you're ready for the next phase!
 
 ## Next Steps After Registration
 
-Once you've registered all 3 keys and updated `.env`:
+Once you've registered the remaining keys and updated `.env` (Storm Glass already ✅):
 
 1. **Run setup verification**:
    ```bash
    node launch-setup-helper.js
    ```
-   Should show 6/6 checks passing ✅
+   Should show 6/6 checks passing ✅ (Storm Glass already green)
 
 2. **Validate APIs are live**:
    ```bash
    node validate-api-keys.js
    ```
-   Should show 5 green ✅ checks
+   Should show 5 green ✅ checks (OpenUV & Visual Crossing will flip from ⚠️ to ✅)
 
 3. **Run test suite**:
    ```bash
    npm test
    ```
-   Should show 21/21 tests passing ✅
+   Should show 21/21 tests passing ✅ (last run Nov 23; rerun to confirm with live keys)
 
 4. **Start server and test**:
    ```bash
@@ -307,6 +302,6 @@ Once you've registered all 3 keys and updated `.env`:
 
 **Congratulations!** 🎉 Once you've completed these steps, you've unlocked the critical path for Week 1.
 
-**Estimated total time**: 45-75 minutes for all registrations + `.env` update
+**Estimated total time**: 30-45 minutes for remaining registrations + `.env` update
 
 **Questions?** Check the troubleshooting section above or run the setup helper for diagnostics.

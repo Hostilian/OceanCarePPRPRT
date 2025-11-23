@@ -113,8 +113,8 @@ describe('OceanCare API - Comprehensive Test Suite', () => {
           purpose: 'Coral restoration'
         });
 
-      expect(res.statusCode).toEqual(200);
-      // Server accepts it, validation handled elsewhere
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.success).toBe(false);
     });
   });
 
@@ -249,6 +249,7 @@ describe('OceanCare API - Comprehensive Test Suite', () => {
     });
 
     it('should return error when Storm Glass API key not configured', async () => {
+      delete process.env.STORM_GLASS_API_KEY;
       delete process.env.STORMGLASS_API_KEY;
       const res = await request(app)
         .get('/api/marine-weather?latitude=37.7749&longitude=-122.4194');
