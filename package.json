@@ -6,8 +6,15 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node src/server.js",
-    "lint": "eslint src/server.js tests/server.test.js --max-warnings=0",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:integration": "jest tests/integration.test.js",
+    "test:forms": "jest tests/enhanced-forms.test.js",
+    "test:apis": "jest tests/external-apis.test.js",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
+    "test:ci": "jest --ci --coverage --maxWorkers=2",
+    "lint": "eslint src/server.js tests/*.js --max-warnings=0"
   },
   "keywords": [
     "ocean",

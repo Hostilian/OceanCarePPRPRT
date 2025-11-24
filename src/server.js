@@ -12,6 +12,7 @@ const auth = require('./auth');
 const payment = require('./payment');
 const email = require('./email');
 const security = require('./security');
+const externalApis = require('./external-apis');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -1490,6 +1491,157 @@ app.get('/api/climate-trends', async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Unable to fetch climate trends data. Visual Crossing API may be temporarily unavailable.',
+      error: error.message
+    });
+  }
+});
+
+// ===== ENHANCED EXTERNAL API ENDPOINTS =====
+
+// Weather data endpoint
+app.get('/api/weather', generalLimiter, async (req, res) => {
+  try {
+    const { latitude, longitude } = req.query;
+
+    if (!latitude || !longitude) {
+      return res.status(400).json({
+        success: false,
+        message: 'Latitude and longitude required'
+      });
+    }
+
+    const weatherData = await externalApis.getWeatherData(latitude, longitude);
+
+    res.json({
+      success: true,
+      data: weatherData,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Weather endpoint error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Unable to fetch weather data',
+      error: error.message
+    });
+  }
+});
+
+// UV Index endpoint
+app.get('/api/uv-index', generalLimiter, async (req, res) => {
+  try {
+    const { latitude, longitude } = req.query;
+
+    if (!latitude || !longitude) {
+      return res.status(400).json({
+        success: false,
+        message: 'Latitude and longitude required'
+      });
+    }
+
+    const uvData = await externalApis.getUVIndexData(latitude, longitude);
+
+    res.json({
+      success: true,
+      data: uvData,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('UV Index endpoint error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Unable to fetch UV index data',
+      error: error.message
+    });
+  }
+});
+
+// Air Quality endpoint
+app.get('/api/air-quality', generalLimiter, async (req, res) => {
+  try {
+    const { latitude, longitude } = req.query;
+
+    if (!latitude || !longitude) {
+      return res.status(400).json({
+        success: false,
+        message: 'Latitude and longitude required'
+      });
+    }
+
+    const aqData = await externalApis.getAirQualityData(latitude, longitude);
+
+    res.json({
+      success: true,
+      data: aqData,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Air Quality endpoint error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Unable to fetch air quality data',
+      error: error.message
+    });
+  }
+});
+
+// Debris Heatmap endpoint
+app.get('/api/debris-heatmap', generalLimiter, async (req, res) => {
+  try {
+    const { latitude, longitude, radius } = req.query;
+
+    if (!latitude || !longitude) {
+      return res.status(400).json({
+        success: false,
+        message: 'Latitude and longitude required'
+      });
+    }
+
+    const heatmapData = await externalApis.getDebrisHeatmapData(
+      parseFloat(latitude),
+      parseFloat(longitude),
+      parseInt(radius) || 50
+    );
+
+    res.json({
+      success: true,
+      data: heatmapData,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Debris Heatmap endpoint error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Unable to fetch debris heatmap data',
+      error: error.message
+    });
+  }
+});
+
+// Climate Trends endpoint
+app.get('/api/climate-data', generalLimiter, async (req, res) => {
+  try {
+    const { latitude, longitude } = req.query;
+
+    if (!latitude || !longitude) {
+      return res.status(400).json({
+        success: false,
+        message: 'Latitude and longitude required'
+      });
+    }
+
+    const climateData = await externalApis.getClimateTrends(latitude, longitude);
+
+    res.json({
+      success: true,
+      data: climateData,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Climate Data endpoint error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Unable to fetch climate data',
       error: error.message
     });
   }
