@@ -1,276 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Team - OceanCare Initiative</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - OceanCare Initiative</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <nav class="navbar">
-    <div class="container">
-      <div class="logo">🌊 OceanCare Initiative</div>
-      <ul class="nav-links">
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="../pages/projects.html">Projects</a></li>
-        <li><a href="../pages/how-to-help.html">Donate</a></li>
-        <li><a href="login.html">Login</a></li>
-      </ul>
-    </div>
-  </nav>
+    <!-- Header/Navigation -->
+    <header>
+        <div class="container">
+            <div class="flex-between">
+                <a href="/" class="logo">🌊 OceanCare</a>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/pages/projects.html">Projects</a></li>
+                        <li><a href="/pages/team.html">Team</a></li>
+                        <li><a href="/pages/login.html">Log In</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
 
-  <section class="page-hero">
-    <h1>Meet Our Team</h1>
-    <p>Dedicated scientists, conservationists, and ocean advocates united by a mission</p>
-  </section>
+    <!-- Page Hero -->
+    <section class="hero hero-gradient">
+        <div class="container">
+            <div class="hero-content animate-fade-in">
+                <h1>Meet Our Team</h1>
+                <p class="hero-subtitle">
+                    Dedicated marine scientists, conservation experts, and ocean advocates working to protect our oceans.
+                </p>
+            </div>
+        </div>
+    </section>
 
-  <section class="section">
-    <h2>Leadership</h2>
-    <div class="team-grid">
-      <div class="team-card">
-        <div class="team-avatar">🧬</div>
-        <h3>Dr. Sarah Chen</h3>
-        <p class="role">Executive Director & Marine Biologist</p>
-        <p>PhD in Marine Biology with 20+ years of conservation experience. Specializes in coral reef restoration and species protection.</p>
-      </div>
+    <!-- Team Grid -->
+    <section class="section-spaced">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: var(--space-4);">Leadership</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto var(--space-12) auto;">
+                Our executive team brings decades of ocean conservation experience from universities, NGOs, and government agencies worldwide.
+            </p>
 
-      <div class="team-card">
-        <div class="team-avatar">🔬</div>
-        <h3>Dr. Marcus Johnson</h3>
-        <p class="role">Chief Research Officer</p>
-        <p>Leading our research initiatives on ocean acidification and climate change impacts on marine ecosystems.</p>
-      </div>
+            <div class="grid grid-cols-3 gap-8">
+                <!-- Team Member 1 -->
+                <div class="card text-center">
+                    <div style="font-size: 4rem; margin-bottom: var(--space-4);">👩‍🔬</div>
+                    <h3>Dr. Maria Santos</h3>
+                    <p style="color: var(--color-accent); font-weight: var(--fw-semibold); margin-bottom: var(--space-2);">Executive Director</p>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        Marine biologist with 20+ years studying coral reef ecosystems. PhD from Stanford. Led restoration projects across 8 countries.
+                    </p>
+                </div>
 
-      <div class="team-card">
-        <div class="team-avatar">🤝</div>
-        <h3>Elena Rodriguez</h3>
-        <p class="role">Community Engagement Lead</p>
-        <p>Passionate about connecting communities with ocean conservation. Manages volunteer programs and outreach initiatives.</p>
-      </div>
-    </div>
+                <!-- Team Member 2 -->
+                <div class="card text-center">
+                    <div style="font-size: 4rem; margin-bottom: var(--space-4);">👨‍💼</div>
+                    <h3>James Chen</h3>
+                    <p style="color: var(--color-accent); font-weight: var(--fw-semibold); margin-bottom: var(--space-2);">Operations Director</p>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        Former UN environmental coordinator. Expert in international policy and climate adaptation. 15 years in conservation management.
+                    </p>
+                </div>
 
-    <h2>Our Supporting Staff</h2>
-    <p class="team-description">
-      Our team of 50+ dedicated professionals includes marine biologists, oceanographers, education specialists, policy advocates,
-      and administrative staff working across multiple continents to protect and restore ocean health.
-    </p>
-    <p class="team-description">
-      Combined, our team brings over 500 years of ocean conservation experience and has directly impacted 5 million acres of marine habitat.
-    </p>
-  </section>
+                <!-- Team Member 3 -->
+                <div class="card text-center">
+                    <div style="font-size: 4rem; margin-bottom: var(--space-4);">👩‍💼</div>
+                    <h3>Sarah Mitchell</h3>
+                    <p style="color: var(--color-accent); font-weight: var(--fw-semibold); margin-bottom: var(--space-2);">Science Director</p>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        Ocean researcher focused on microplastics and pollution. Published 40+ peer-reviewed papers. MIT alumni.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <section class="cta-section">
-    <h2>Join Our Team</h2>
-    <p>Are you passionate about ocean conservation? We're always looking for talented individuals to join our mission.</p>
-    <a href="contact.html" class="btn btn-primary">View Open Positions</a>
-  </section>
+    <!-- Staff Section -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: var(--space-4);">Core Team</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto var(--space-12) auto;">
+                Our dedicated staff members manage conservation projects, community partnerships, and global impact initiatives.
+            </p>
 
-  <footer class="footer">
-    <div class="footer-links">
-      <a href="../index.html">Home</a>
-      <a href="../pages/projects.html">Projects</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <p>&copy; 2025 OceanCare Initiative. 🌊</p>
-  </footer>
+            <div class="grid grid-cols-4 gap-6">
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-2);">👩‍🌾</div>
+                    <h4>Volunteer Coordinator</h4>
+                    <p style="color: var(--color-text-lighter); font-size: var(--text-sm);">Manages cleanup events and volunteer programs</p>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-2);">👨‍💻</div>
+                    <h4>Tech Lead</h4>
+                    <p style="color: var(--color-text-lighter); font-size: var(--text-sm);">Builds tools for impact tracking and mapping</p>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-2);">👩‍🏫</div>
+                    <h4>Education Manager</h4>
+                    <p style="color: var(--color-text-lighter); font-size: var(--text-sm);">Develops school programs and workshops</p>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-2);">👨‍💰</div>
+                    <h4>Grants Manager</h4>
+                    <p style="color: var(--color-text-lighter); font-size: var(--text-sm);">Secures funding for conservation work</p>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-2);">👩‍⚖️</div>
+                    <h4>Policy Advocate</h4>
+                    <p style="color: var(--color-text-lighter); font-size: var(--text-sm);">Works on ocean protection legislation</p>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-2);">👨‍🔧</div>
+                    <h4>Field Coordinator</h4>
+                    <p style="color: var(--color-text-lighter); font-size: var(--text-sm);">Oversees on-site conservation projects</p>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-2);">👩‍📊</div>
+                    <h4>Data Analyst</h4>
+                    <p style="color: var(--color-text-lighter); font-size: var(--text-sm);">Tracks conservation metrics and impact</p>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-2);">👨‍💬</div>
+                    <h4>Communications Lead</h4>
+                    <p style="color: var(--color-text-lighter); font-size: var(--text-sm);">Shares stories and research findings</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <!-- Values Section -->
+    <section class="section-spaced">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: var(--space-12);">Our Values</h2>
+            <div class="grid grid-cols-3 gap-8">
+                <div class="card">
+                    <h3 style="color: var(--color-primary); margin-top: 0;">🌊 Ocean-First</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        Every decision prioritizes ocean health. We measure success by real conservation outcomes, not optics.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 style="color: var(--color-primary); margin-top: 0;">🤝 Community</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        We partner with indigenous communities and local organizations who know their oceans best.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 style="color: var(--color-primary); margin-top: 0;">📊 Science-Based</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        Every action grounded in peer-reviewed research and verified by independent third parties.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    body {
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #0a1929 0%, #1a3a52 100%);
-      color: #e0e0e0;
-      line-height: 1.6;
-    }
+    <!-- Join Us CTA -->
+    <section class="section-spaced bg-secondary">
+        <div class="container text-center">
+            <h2 style="margin-bottom: var(--space-4);">Join Our Team</h2>
+            <p style="color: var(--color-text-light); margin-bottom: var(--space-6);">
+                We're always looking for passionate ocean advocates. Check our careers page for current openings.
+            </p>
+            <a href="#" class="btn btn-primary">View Careers</a>
+        </div>
+    </section>
 
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      background: rgba(10, 25, 41, 0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 2px solid #0077BE;
-      padding: 1.5rem 2rem;
-    }
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="grid grid-cols-4 gap-8" style="margin-bottom: var(--space-12);">
+                <div>
+                    <h5>About</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/team.html">Our Team</a></li>
+                        <li><a href="/pages/projects.html">Our Projects</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Get Involved</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/volunteer.html">Volunteer</a></li>
+                        <li><a href="/pages/contact.html">Donate</a></li>
+                        <li><a href="/pages/report-debris.html">Report Debris</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Support</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/contact.html">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Legal</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-top" style="padding-top: var(--space-8); text-align: center; color: rgba(255,255,255,0.7); font-size: var(--text-sm);">
+                <p>&copy; 2025 OceanCare Initiative. All rights reserved. | Protecting oceans, one action at a time.</p>
+                <div style="margin-top: var(--space-4);">
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Facebook</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Twitter</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Instagram</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: #FDD835;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: #e0e0e0;
-      text-decoration: none;
-      transition: all 0.3s;
-    }
-
-    .nav-links a:hover {
-      color: #FDD835;
-    }
-
-    .page-hero {
-      margin-top: 80px;
-      background: linear-gradient(180deg, #0a1929 0%, #1a5276 100%);
-      padding: 5rem 2rem;
-      text-align: center;
-    }
-
-    .page-hero h1 {
-      font-size: 3rem;
-      color: #FDD835;
-      margin-bottom: 1rem;
-    }
-
-    .page-hero p {
-      font-size: 1.1rem;
-      color: #a0a0a0;
-    }
-
-    .section {
-      padding: 5rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section h2 {
-      color: #FDD835;
-      font-size: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-bottom: 5rem;
-    }
-
-    .team-card {
-      background: rgba(0, 119, 190, 0.1);
-      border: 1px solid rgba(0, 168, 204, 0.3);
-      border-radius: 12px;
-      padding: 2rem;
-      text-align: center;
-      transition: all 0.3s;
-    }
-
-    .team-card:hover {
-      border-color: #FDD835;
-      box-shadow: 0 0 30px rgba(253, 216, 53, 0.3);
-      transform: translateY(-5px);
-    }
-
-    .team-avatar {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-    }
-
-    .team-card h3 {
-      color: #FDD835;
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .role {
-      color: #00A8CC;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-
-    .team-card p {
-      color: #a0a0a0;
-      line-height: 1.6;
-    }
-
-    .team-description {
-      color: #a0a0a0;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      line-height: 1.8;
-    }
-
-    .cta-section {
-      background: linear-gradient(135deg, rgba(0, 119, 190, 0.2), rgba(0, 168, 204, 0.2));
-      border: 1px solid rgba(0, 168, 204, 0.3);
-      border-radius: 12px;
-      padding: 3rem;
-      text-align: center;
-      max-width: 1200px;
-      margin: 3rem auto;
-    }
-
-    .cta-section h2 {
-      color: #FDD835;
-      margin-bottom: 1rem;
-    }
-
-    .cta-section p {
-      color: #a0a0a0;
-      margin-bottom: 2rem;
-    }
-
-    .btn {
-      padding: 1rem 2.5rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-weight: 600;
-      text-decoration: none;
-      display: inline-block;
-      background: linear-gradient(135deg, #0077BE, #00A8CC);
-      color: white;
-      box-shadow: 0 0 30px rgba(0, 119, 190, 0.4);
-    }
-
-    .btn:hover {
-      box-shadow: 0 0 50px rgba(0, 119, 190, 0.8);
-      transform: translateY(-2px);
-    }
-
-    .footer {
-      background: rgba(10, 25, 41, 0.95);
-      border-top: 1px solid rgba(0, 168, 204, 0.2);
-      padding: 3rem 2rem;
-      text-align: center;
-      color: #a0a0a0;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-    }
-
-    .footer-links a {
-      color: #FDD835;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-  </style>
+    <style>
+        @media (max-width: 768px) {
+            .grid.grid-cols-3 { grid-template-columns: 1fr; }
+            .grid.grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
 </body>
 </html>

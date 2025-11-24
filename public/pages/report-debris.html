@@ -1,844 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Report Marine Debris - OceanCare Initiative</title>
-  <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --blue: #0077BE; --teal: #00A8CC; --sand: #FDD835; --dark: #0a1929;
-  --text: #e0e0e0; --muted: #a0a0a0; --danger: #FF6B6B; --success: #51CF66;
-}
-html { scroll-behavior: smooth; }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(135deg, var(--dark) 0%, #1a3a52 100%);
-  color: var(--text); line-height: 1.6;
-  min-height: 100vh;
-}
-
-nav {
-  position: fixed; top: 0; width: 100%; z-index: 1000;
-  background: rgba(10, 25, 41, 0.95); backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0, 119, 190, 0.2); padding: 1rem 2rem;
-}
-nav > div {
-  max-width: 1200px; margin: 0 auto; display: flex;
-  justify-content: space-between; align-items: center;
-}
-.logo { font-size: 1.5rem; font-weight: 700; color: var(--sand); }
-.nav-links { display: flex; gap: 2rem; list-style: none; }
-.nav-links a { color: var(--text); text-decoration: none; transition: color 0.3s; font-size: 0.95rem; }
-.nav-links a:hover { color: var(--sand); }
-@media (max-width: 768px) { .nav-links { display: none; } }
-
-.hero {
-  margin-top: 70px; min-height: 50vh; display: flex;
-  align-items: center; justify-content: center; text-align: center;
-  padding: 3rem 2rem;
-  background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(0, 119, 190, 0.15)),
-              linear-gradient(180deg, var(--dark) 0%, #1a5276 100%);
-}
-.hero-content { max-width: 700px; }
-.hero h1 { font-size: clamp(2rem, 8vw, 3.5rem); margin-bottom: 1rem; color: #FF6B6B; text-shadow: 0 0 20px rgba(255, 107, 107, 0.3); }
-.hero p { font-size: 1.1rem; color: var(--muted); line-height: 1.8; }
-
-.container { max-width: 800px; margin: 0 auto; padding: 3rem 2rem; }
-.form-card {
-  background: linear-gradient(135deg, rgba(0, 119, 190, 0.1), rgba(0, 168, 204, 0.08));
-  border: 1px solid rgba(0, 168, 204, 0.3); border-radius: 15px;
-  padding: 2.5rem; box-shadow: 0 8px 32px rgba(0, 119, 190, 0.1);
-  backdrop-filter: blur(10px);
-}
-
-.form-group {
-  margin-bottom: 1.8rem; display: flex; flex-direction: column;
-}
-label {
-  font-weight: 600; margin-bottom: 0.7rem; color: var(--sand);
-  display: flex; align-items: center; gap: 0.5rem;
-}
-.required { color: #FF6B6B; }
-.hint { font-size: 0.85rem; color: var(--muted); font-weight: 400; display: block; margin-top: 0.3rem; }
-
-input, select, textarea {
-  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(0, 168, 204, 0.3);
-  color: var(--text); padding: 0.9rem 1rem; border-radius: 8px;
-  font-size: 1rem; transition: all 0.3s; font-family: inherit;
-}
-input:focus, select:focus, textarea:focus {
-  outline: none; border-color: var(--sand); background: rgba(253, 216, 53, 0.08);
-  box-shadow: 0 0 20px rgba(253, 216, 53, 0.2);
-}
-
-input[type="file"] { padding: 0.6rem; cursor: pointer; }
-input[type="file"]::file-selector-button {
-  background: linear-gradient(135deg, var(--blue), var(--teal));
-  color: white; border: none; padding: 0.6rem 1.2rem;
-  border-radius: 6px; cursor: pointer; font-weight: 600;
-  transition: all 0.3s;
-}
-input[type="file"]::file-selector-button:hover {
-  transform: translateY(-2px); box-shadow: 0 0 20px rgba(0, 119, 190, 0.4);
-}
-
-.file-preview {
-  margin-top: 1rem; max-width: 100%; border-radius: 8px;
-  max-height: 300px; object-fit: cover; border: 2px solid rgba(0, 168, 204, 0.5);
-}
-
-textarea { resize: vertical; min-height: 120px; }
-
-.geolocation-button {
-  background: rgba(0, 168, 204, 0.2); border: 1px solid var(--teal);
-  color: var(--teal); padding: 0.7rem 1.2rem; border-radius: 6px;
-  cursor: pointer; font-weight: 600; transition: all 0.3s;
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  font-size: 0.9rem;
-}
-.geolocation-button:hover {
-  background: rgba(0, 168, 204, 0.3); box-shadow: 0 0 15px rgba(0, 168, 204, 0.3);
-}
-.geolocation-button.active {
-  background: rgba(81, 207, 102, 0.2); border-color: #51CF66;
-  color: #51CF66;
-}
-
-.btn {
-  padding: 1rem 2rem; border: none; border-radius: 8px;
-  font-size: 1rem; font-weight: 600; cursor: pointer;
-  text-decoration: none; transition: all 0.3s;
-  display: inline-flex; align-items: center; justify-content: center;
-  gap: 0.5rem;
-}
-.btn-submit {
-  background: linear-gradient(135deg, #FF6B6B, #FF5252);
-  color: white; width: 100%; box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
-  margin-top: 1.5rem;
-}
-.btn-submit:hover {
-  box-shadow: 0 0 50px rgba(255, 107, 107, 0.6); transform: translateY(-2px);
-}
-.btn-submit:disabled {
-  opacity: 0.5; cursor: not-allowed; transform: none;
-}
-
-.modal {
-  display: none; position: fixed; top: 0; left: 0;
-  width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7);
-  z-index: 2000; justify-content: center; align-items: center;
-  animation: fadeIn 0.3s;
-}
-.modal.active { display: flex; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-.modal-content {
-  background: linear-gradient(135deg, rgba(0, 119, 190, 0.15), rgba(0, 168, 204, 0.15)),
-              rgba(10, 25, 41, 0.98);
-  border: 1px solid rgba(0, 168, 204, 0.3); border-radius: 15px;
-  padding: 2.5rem; max-width: 500px; text-align: center;
-  position: relative; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  animation: slideUp 0.4s ease-out;
-}
-.modal-close {
-  position: absolute; top: 1rem; right: 1rem;
-  background: none; border: none; color: var(--muted);
-  font-size: 2rem; cursor: pointer; transition: color 0.3s;
-}
-.modal-close:hover { color: var(--sand); }
-
-.success-icon {
-  font-size: 4rem; margin-bottom: 1rem;
-  animation: bounce 0.6s ease-out;
-}
-@keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-
-.modal h2 { color: #51CF66; margin-bottom: 1rem; font-size: 1.8rem; }
-.modal p { color: var(--muted); margin-bottom: 1.5rem; line-height: 1.8; }
-.modal .btn {
-  background: linear-gradient(135deg, var(--blue), var(--teal));
-  color: white; width: 100%;
-}
-.modal .btn:hover {
-  box-shadow: 0 0 30px rgba(0, 119, 190, 0.4); transform: translateY(-2px);
-}
-
-.loading {
-  display: inline-block; width: 20px; height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%; border-top-color: white;
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.error-message {
-  background: rgba(255, 107, 107, 0.15); border-left: 4px solid #FF6B6B;
-  color: #FF8787; padding: 1rem; border-radius: 6px;
-  margin-bottom: 1.5rem; display: none;
-}
-.error-message.show { display: block; }
-
-.success-message {
-  background: rgba(81, 207, 102, 0.15); border-left: 4px solid #51CF66;
-  color: #69db7c; padding: 1rem; border-radius: 6px;
-  margin-bottom: 1.5rem; display: none;
-}
-.success-message.show { display: block; }
-
-.info-box {
-  background: rgba(0, 168, 204, 0.1); border: 1px solid rgba(0, 168, 204, 0.3);
-  border-radius: 8px; padding: 1.2rem; margin-bottom: 2rem;
-  color: var(--muted); font-size: 0.9rem;
-}
-.info-box strong { color: var(--teal); }
-
-.footer {
-  background: rgba(10, 25, 41, 0.95); border-top: 1px solid rgba(0, 168, 204, 0.2);
-  padding: 2.5rem; text-align: center; color: var(--muted);
-  font-size: 0.9rem; margin-top: 3rem;
-}
-.footer-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1rem; }
-.footer-links a { color: var(--sand); text-decoration: none; transition: color 0.3s; }
-.footer-links a:hover { color: var(--teal); }
-
-@media (max-width: 768px) {
-  .container { padding: 2rem 1rem; }
-  .form-card { padding: 1.5rem; }
-  .hero { margin-top: 70px; min-height: 35vh; }
-  .hero h1 { font-size: 2rem; margin-bottom: 0.7rem; }
-}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Debris - OceanCare Initiative</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <nav>
-    <div>
-      <div class="logo">🌊 OceanCare</div>
-      <ul class="nav-links">
-        <li><a href="../index.html#mission">Home</a></li>
-        <li><a href="../pages/projects.html">Projects</a></li>
-        <li><a href="report-debris.html">Report Debris</a></li>
-        <li><a href="../pages/how-to-help.html">Donate</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <section class="hero">
-    <div class="hero-content">
-      <h1>🚨 Report Ocean Debris</h1>
-      <p>Help us track marine pollution. Report debris sightings with photos and location. Every report helps us protect our oceans.</p>
-    </div>
-  </section>
-
-  <div class="container">
-    <div class="info-box">
-      <strong>Your Report Helps:</strong> All debris reports are analyzed by our team to identify pollution hotspots and coordinate cleanup efforts. Your data is invaluable to ocean conservation.
-    </div>
-
-    <div id="oceanConditionsCard" class="form-card" style="background: linear-gradient(135deg, rgba(0, 77, 190, 0.1), rgba(0, 168, 204, 0.1)); border-left: 4px solid var(--teal); display: none;">
-      <h3 style="color: var(--teal); margin-top: 0;">🌊 Real-Time Ocean Conditions</h3>
-      <div id="oceanConditionsContent" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem;"></div>
-      <small id="conditionsTimestamp" style="color: #666;"></small>
-    </div>
-
-    <div class="form-card">
-      <div class="error-message" id="errorMsg"></div>
-      <div class="success-message" id="successMsg"></div>
-
-      <form id="debrisForm" class="debris-form">
-        <div class="form-group">
-          <label>Location/City <span class="required">*</span></label>
-          <input type="text" id="location" name="location" required placeholder="e.g., Santa Monica Beach" maxlength="100">
-          <span class="hint">Where did you spot the debris?</span>
+    <!-- Header/Navigation -->
+    <header>
+        <div class="container">
+            <div class="flex-between">
+                <a href="/" class="logo">🌊 OceanCare</a>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/pages/projects.html">Projects</a></li>
+                        <li><a href="/pages/team.html">Team</a></li>
+                        <li><a href="/pages/login.html">Log In</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
+    </header>
 
-        <div class="form-group">
-          <label>Debris Type <span class="required">*</span></label>
-          <select id="debrisType" name="debrisType" required>
-            <option value="">Select a type...</option>
-            <option value="plastic-bags">Plastic Bags</option>
-            <option value="bottles">Bottles & Caps</option>
-            <option value="fishing-nets">Fishing Nets</option>
-            <option value="styrofoam">Styrofoam</option>
-            <option value="metal">Metal/Cans</option>
-            <option value="mixed">Mixed Plastic</option>
-            <option value="other">Other</option>
-          </select>
-          <span class="hint">Select the primary debris type you observed</span>
+    <!-- Page Hero -->
+    <section class="hero hero-gradient">
+        <div class="container">
+            <div class="hero-content animate-fade-in">
+                <h1>Report Marine Debris</h1>
+                <p class="hero-subtitle">
+                    Found ocean plastic or marine debris? Report it with GPS coordinates and photos. We'll coordinate cleanup responses immediately.
+                </p>
+            </div>
         </div>
+    </section>
 
-        <div class="form-group">
-          <label>Estimated Quantity <span class="required">*</span></label>
-          <select id="quantity" name="quantity" required>
-            <option value="">Select quantity...</option>
-            <option value="small">Small (handful)</option>
-            <option value="medium">Medium (bucket-sized)</option>
-            <option value="large">Large (requires cleanup crew)</option>
-            <option value="massive">Massive (extensive pollution)</option>
-          </select>
-          <span class="hint">Estimate how much debris you saw</span>
+    <!-- Info Section -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: var(--space-8);">How Your Report Helps</h2>
+            <div class="grid grid-cols-3 gap-6">
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-4);">📍</div>
+                    <h3>1. Report Location</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        Share GPS coordinates and a photo. We map every report in real-time.
+                    </p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-4);">🔍</div>
+                    <h3>2. We Verify</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        Our team reviews reports and assesses cleanup urgency and feasibility.
+                    </p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-4);">🗑️</div>
+                    <h3>3. Cleanup Happens</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        We coordinate cleanup teams. You can track progress from your dashboard.
+                    </p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="form-group">
-          <label>Description</label>
-          <textarea id="description" name="description" placeholder="Describe the debris, any damage to marine life, or additional details..."></textarea>
-          <span class="hint">Optional: Any observations that might help our team?</span>
+    <!-- Report Form -->
+    <section class="section-spaced">
+        <div class="container">
+            <div class="grid grid-cols-2 gap-12">
+                <!-- Form -->
+                <div>
+                    <h2 style="margin-bottom: var(--space-6);">Submit a Report</h2>
+                    <form id="debrisForm" class="card" style="padding: var(--space-8);">
+                        <div class="form-group">
+                            <label for="reporterName">Your Name *</label>
+                            <input type="text" id="reporterName" name="reporterName" required placeholder="Your full name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reporterEmail">Email Address *</label>
+                            <input type="email" id="reporterEmail" name="reporterEmail" required placeholder="your.email@example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reporterPhone">Phone Number (optional)</label>
+                            <input type="tel" id="reporterPhone" name="reporterPhone" placeholder="(123) 456-7890">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">Location / Beach Name *</label>
+                            <input type="text" id="location" name="location" required placeholder="Beach name, city, or area">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="latitude">Latitude *</label>
+                            <input type="number" id="latitude" name="latitude" required placeholder="e.g., 37.7749" step="0.0001">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="longitude">Longitude *</label>
+                            <input type="number" id="longitude" name="longitude" required placeholder="e.g., -122.4194" step="0.0001">
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="getCurrentLocation()">
+                                    <i class="fas fa-location-arrow"></i> Use My Location
+                                </button>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="debrisType">Type of Debris *</label>
+                            <select id="debrisType" name="debrisType" required>
+                                <option value="">-- Select debris type --</option>
+                                <option value="plastic">Plastic (bags, bottles, etc.)</option>
+                                <option value="fishing">Fishing nets & equipment</option>
+                                <option value="glass">Glass & ceramics</option>
+                                <option value="metal">Metal & aluminum</option>
+                                <option value="foam">Foam & styrofoam</option>
+                                <option value="rubber">Rubber & tires</option>
+                                <option value="wood">Wood & lumber</option>
+                                <option value="microplastics">Microplastics</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantity">Estimated Quantity *</label>
+                            <select id="quantity" name="quantity" required>
+                                <option value="">-- Select quantity --</option>
+                                <option value="small">Small (< 5 items)</option>
+                                <option value="moderate">Moderate (5-50 items)</option>
+                                <option value="large">Large (50-200 items)</option>
+                                <option value="massive">Massive (200+ items)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="accessbility">Accessibility *</label>
+                            <select id="accessibility" name="accessibility" required>
+                                <option value="">-- Select accessibility --</option>
+                                <option value="beach">Easy - On beach</option>
+                                <option value="shallow">Moderate - Shallow water</option>
+                                <option value="deep">Difficult - Deep water/offshore</option>
+                                <option value="inaccessible">Very Difficult - Remote/inaccessible</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="photos">Photo of Debris *</label>
+                            <input type="file" id="photos" name="photos" accept="image/*" required>
+                            <p style="font-size: var(--text-xs); color: var(--color-text-lighter); margin-top: var(--space-2);">
+                                Upload a clear photo showing the debris and surrounding area
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Additional Details</label>
+                            <textarea id="description" name="description" placeholder="Any additional information about the debris, wildlife impact, or urgency..." rows="4"></textarea>
+                        </div>
+
+                        <label style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-4);">
+                            <input type="checkbox" name="agree" required style="width: auto;">
+                            <span style="color: var(--color-text-light); font-size: var(--text-sm);">I confirm this information is accurate and authorize OceanCare to use this data for cleanup coordination</span>
+                        </label>
+
+                        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Submit Report</button>
+                    </form>
+                </div>
+
+                <!-- Why Report Info -->
+                <div>
+                    <h2 style="margin-bottom: var(--space-6);">Why Report?</h2>
+
+                    <div class="card" style="margin-bottom: var(--space-4);">
+                        <h3 style="color: var(--color-primary); margin-top: 0; margin-bottom: var(--space-2);">Real Cleanup Action</h3>
+                        <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                            Your report directly triggers cleanup planning. We don't just collect data—we take action.
+                        </p>
+                    </div>
+
+                    <div class="card" style="margin-bottom: var(--space-4);">
+                        <h3 style="color: var(--color-primary); margin-top: 0; margin-bottom: var(--space-2);">Protect Marine Life</h3>
+                        <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                            Marine animals are harmed by debris every day. Your report helps us protect endangered species and ecosystems.
+                        </p>
+                    </div>
+
+                    <div class="card" style="margin-bottom: var(--space-4);">
+                        <h3 style="color: var(--color-primary); margin-top: 0; margin-bottom: var(--space-2);">Track Progress</h3>
+                        <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                            Create an account to get updates on cleanup efforts at your reported location. See the impact of your report.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="color: var(--color-primary); margin-top: 0; margin-bottom: var(--space-2);">Improve Science</h3>
+                        <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                            Your reports feed into our ocean health database. The more data we have, the better we can protect the ocean.
+                        </p>
+                    </div>
+
+                    <div style="margin-top: var(--space-8); padding: var(--space-6); background: rgba(40, 167, 69, 0.1); border-left: 4px solid #28a745; border-radius: var(--radius-base);">
+                        <h4 style="color: #28a745; margin-top: 0;">✅ Safe & Confidential</h4>
+                        <p style="color: var(--color-text-light); font-size: var(--text-sm); margin-bottom: 0;">
+                            Your personal information is secure. We only share location data with cleanup team coordinators.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="form-group">
-          <label>Photo (Optional)</label>
-          <input type="file" id="photo" name="photo" accept="image/*" capture="environment">
-          <img id="photoPreview" class="file-preview" style="display: none;">
-          <span class="hint">Upload a photo of the debris. Use your device camera for best results.</span>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="grid grid-cols-4 gap-8" style="margin-bottom: var(--space-12);">
+                <div>
+                    <h5>About</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/team.html">Our Team</a></li>
+                        <li><a href="/pages/projects.html">Our Projects</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Get Involved</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/volunteer.html">Volunteer</a></li>
+                        <li><a href="/pages/contact.html">Donate</a></li>
+                        <li><a href="/pages/report-debris.html">Report Debris</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Support</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/contact.html">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Legal</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-top" style="padding-top: var(--space-8); text-align: center; color: rgba(255,255,255,0.7); font-size: var(--text-sm);">
+                <p>&copy; 2025 OceanCare Initiative. All rights reserved. | Protecting oceans, one action at a time.</p>
+                <div style="margin-top: var(--space-4);">
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Facebook</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Twitter</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Instagram</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">LinkedIn</a>
+                </div>
+            </div>
         </div>
+    </footer>
 
-        <div class="form-group" style="margin-bottom: 0;">
-          <button type="button" class="geolocation-button" id="geoButton">
-            📍 Get My Location
-          </button>
-          <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-            <input type="text" id="latitude" name="latitude" placeholder="Latitude (optional)" style="flex: 1;" readonly>
-            <input type="text" id="longitude" name="longitude" placeholder="Longitude (optional)" style="flex: 1;" readonly>
-          </div>
-          <span class="hint">Or enter coordinates manually</span>
-        </div>
-
-        <button type="submit" class="btn btn-submit">
-          <span id="submitText">🚨 Submit Debris Report</span>
-          <span class="loading" id="submitLoader" style="display: none;"></span>
-        </button>
-      </form>
-    </div>
-
-    <div class="form-card" style="margin-top: 2rem; padding: 0; overflow: hidden;">
-      <div style="padding: 2.5rem 2.5rem 1rem 2.5rem;">
-        <h3 style="color: var(--teal); margin: 0 0 0.5rem 0;">🗺️ Debris Reports Map</h3>
-        <p style="color: var(--muted); font-size: 0.95rem; margin: 0;">See all reported debris locations and help us track ocean pollution hotspots.</p>
-      </div>
-      <div id="debrisMap" style="width: 100%; height: 500px; border-top: 1px solid rgba(0, 168, 204, 0.3);"></div>
-      <div id="mapStats" style="padding: 1.5rem 2.5rem; background: rgba(0, 168, 204, 0.05); border-top: 1px solid rgba(0, 168, 204, 0.2);">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
-          <div>
-            <div style="font-size: 0.85rem; color: var(--muted);">Total Reports</div>
-            <div style="font-size: 1.8rem; font-weight: bold; color: var(--sand);" id="totalReports">0</div>
-          </div>
-          <div>
-            <div style="font-size: 0.85rem; color: var(--muted);">Most Common Type</div>
-            <div style="font-size: 1.2rem; font-weight: bold; color: var(--teal);" id="commonType">--</div>
-          </div>
-          <div>
-            <div style="font-size: 0.85rem; color: var(--muted);">Total Debris (kg)</div>
-            <div style="font-size: 1.8rem; font-weight: bold; color: #FF6B6B;" id="totalDebris">0</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="successModal">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeModal()">×</button>
-      <div class="success-icon">✅</div>
-      <h2>Report Submitted!</h2>
-      <p>Thank you for helping protect our oceans. Your debris report has been recorded and will be reviewed by our conservation team. Together, we're making a difference.</p>
-      <button onclick="backHome()" class="btn">Return to Home</button>
-    </div>
-  </div>
-
-  <footer class="footer">
-    <div class="footer-links">
-      <a href="../index.html">Home</a>
-      <a href="../pages/projects.html">Projects</a>
-      <a href="../pages/contact.html">Contact</a>
-      <a href="#">Privacy</a>
-    </div>
-    <p>&copy; 2025 OceanCare. Protecting oceans, one action at a time. 🌊</p>
-  </footer>
-
-  <script>
-const form = document.getElementById('debrisForm');
-const geoButton = document.getElementById('geoButton');
-const photoInput = document.getElementById('photo');
-const photoPreview = document.getElementById('photoPreview');
-const errorMsg = document.getElementById('errorMsg');
-const successMsg = document.getElementById('successMsg');
-
-// Norm MacDonald: "Google Maps. Where all the ocean's dirty laundry is displayed.
-// We've got blue pins for plastic, red pins for frustration, and a view that puts
-// the whole problem in perspective. Literally."
-
-let debrisMap;
-const debrisMarkers = [];
-const debrisReportTypes = {};
-let totalDebrisKg = 0;
-
-// Load Google Maps script dynamically with API key from secure endpoint
-async function loadGoogleMapsScript() {
-  try {
-    const res = await fetch('/api/get-maps-key');
-    const data = await res.json();
-
-    if (data.success && data.apiKey) {
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${data.apiKey}&libraries=maps,marker,places`;
-      script.async = true;
-      script.defer = true;
-      script.onload = initializeDebrisMap;
-      script.onerror = () => console.error('Failed to load Google Maps API');
-      document.head.appendChild(script);
-    } else {
-      console.error('Could not retrieve Google Maps API key');
-    }
-  } catch (error) {
-    console.error('Error loading Google Maps:', error);
-  }
-}
-
-async function initializeDebrisMap() {
-  const mapElement = document.getElementById('debrisMap');
-
-  // Default center: Pacific Ocean (environmental hotspot)
-  const defaultCenter = { lat: 34.0195, lng: -118.4912 }; // Santa Monica Beach
-
-  debrisMap = new google.maps.Map(mapElement, {
-    zoom: 4,
-    center: defaultCenter,
-    mapTypeId: 'terrain',
-    styles: [
-      { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
-      { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
-      { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
-      { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#17263c' }] }
-    ]
-  });
-
-  // Norm: "Load all the debris reports and put 'em on the map.
-  // Red for danger, because that's what pollution is."
-  await loadDebrisReports();
-}
-
-async function loadDebrisReports() {
-  try {
-    const res = await fetch('/api/debris-reports');
-    const data = await res.json();
-
-    if (data.success && data.data && data.data.length > 0) {
-      clearMarkers();
-      debrisReportTypes = {};
-      totalDebrisKg = 0;
-
-      data.data.forEach(report => {
-        if (report.latitude && report.longitude) {
-          addDebrisMarker(report);
-
-          // Track debris types for statistics
-          debrisReportTypes[report.debrisType] = (debrisReportTypes[report.debrisType] || 0) + 1;
-
-          // Estimate weight: small=0.5kg, medium=2kg, large=10kg, massive=50kg
-          const weightMap = { small: 0.5, medium: 2, large: 10, massive: 50 };
-          totalDebrisKg += weightMap[report.quantity] || 0;
+    <script>
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    document.getElementById('latitude').value = position.coords.latitude.toFixed(4);
+                    document.getElementById('longitude').value = position.coords.longitude.toFixed(4);
+                    alert('✅ Location captured! Coordinates: ' + position.coords.latitude.toFixed(4) + ', ' + position.coords.longitude.toFixed(4));
+                }, (error) => {
+                    alert('Unable to get your location. Please enter coordinates manually.');
+                });
+            } else {
+                alert('Geolocation not supported by your browser.');
+            }
         }
-      });
 
-      updateMapStats(data.data.length);
-    } else {
-      updateMapStats(0);
-    }
-  } catch (error) {
-    console.log('Could not load debris reports for map');
-  }
-}
+        document.getElementById('debrisForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-function addDebrisMarker(report) {
-  // Norm: "Each marker is a story of human carelessness.
-  // We mark it, we remember it, we do something about it."
+            const formData = {
+                name: document.getElementById('reporterName').value,
+                email: document.getElementById('reporterEmail').value,
+                phone: document.getElementById('reporterPhone').value,
+                location: document.getElementById('location').value,
+                latitude: parseFloat(document.getElementById('latitude').value),
+                longitude: parseFloat(document.getElementById('longitude').value),
+                debrisType: document.getElementById('debrisType').value,
+                quantity: document.getElementById('quantity').value,
+                accessibility: document.getElementById('accessibility').value,
+                description: document.getElementById('description').value
+            };
 
-  const marker = new google.maps.Marker({
-    position: { lat: parseFloat(report.latitude), lng: parseFloat(report.longitude) },
-    map: debrisMap,
-    title: `${report.debrisType.toUpperCase()} - ${report.quantity}`,
-    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-  });
+            try {
+                const response = await fetch('/api/report-debris', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
 
-  const infoWindow = new google.maps.InfoWindow({
-    content: `
-      <div style="padding: 12px; color: #333; max-width: 250px;">
-        <h3 style="margin: 0 0 8px 0; color: #FF6B6B;">🚨 Debris Report</h3>
-        <p style="margin: 4px 0;"><strong>Type:</strong> ${report.debrisType.replace('-', ' ').toUpperCase()}</p>
-        <p style="margin: 4px 0;"><strong>Quantity:</strong> ${report.quantity}</p>
-        <p style="margin: 4px 0;"><strong>Location:</strong> ${report.location}</p>
-        <p style="margin: 4px 0; font-size: 0.85em; color: #666;">Reported: ${new Date(report.createdAt).toLocaleDateString()}</p>
-        ${report.description ? `<p style="margin: 8px 0 0 0; font-size: 0.9em; font-style: italic;">"${report.description.substring(0, 100)}..."</p>` : ''}
-      </div>
-    `
-  });
+                if (response.ok) {
+                    alert(`✅ Thank you, ${formData.name}! Your debris report has been received. Our cleanup team will review the location and coordinates (${formData.latitude}, ${formData.longitude}) within 24 hours. You'll receive updates at ${formData.email}.`);
+                    document.getElementById('debrisForm').reset();
+                }
+            } catch (error) {
+                alert('Error submitting report: ' + error.message);
+            }
+        });
+    </script>
 
-  marker.addListener('click', () => {
-    // Close all other info windows first
-    debrisMarkers.forEach(m => {
-      if (m.infoWindow) m.infoWindow.close();
-    });
-    infoWindow.open(debrisMap, marker);
-  });
-
-  marker.infoWindow = infoWindow;
-  debrisMarkers.push(marker);
-}
-
-function clearMarkers() {
-  debrisMarkers.forEach(marker => {
-    marker.setMap(null);
-    if (marker.infoWindow) marker.infoWindow.close();
-  });
-  debrisMarkers.length = 0;
-}
-
-function updateMapStats(totalReports) {
-  document.getElementById('totalReports').textContent = totalReports;
-
-  // Find most common debris type
-  let mostCommon = '--';
-  let maxCount = 0;
-  for (const [type, count] of Object.entries(debrisReportTypes)) {
-    if (count > maxCount) {
-      maxCount = count;
-      mostCommon = type.replace('-', ' ').toUpperCase().substring(0, 15);
-    }
-  }
-  document.getElementById('commonType').textContent = mostCommon;
-  document.getElementById('totalDebris').textContent = Math.round(totalDebrisKg);
-}
-
-// Initialize map when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', loadGoogleMapsScript);
-} else {
-  loadGoogleMapsScript();
-}
-
-// Norm MacDonald Commentary: "You know, the ocean has opinions about your location.
-// That's why we fetch real-time conditions—so you can tell it exactly what you're seeing."
-async function fetchOceanConditions(lat, lon) {
-  try {
-    // Fetch both open-meteo and storm glass data
-    const [weatherRes, marineRes] = await Promise.all([
-      fetch(`/api/ocean-conditions-cached?latitude=${lat}&longitude=${lon}`),
-      fetch(`/api/marine-weather?latitude=${lat}&longitude=${lon}`)
-    ]);
-
-    const weatherData = await weatherRes.json();
-    const marineData = await marineRes.json();
-
-    if (weatherData.success && weatherData.data) {
-      displayOceanConditions(weatherData.data, marineData);
-    }
-  } catch (error) {
-    console.log('Ocean conditions unavailable (no internet or API down)');
-  }
-}
-
-function displayOceanConditions(conditions, marineData) {
-  const card = document.getElementById('oceanConditionsCard');
-  const content = document.getElementById('oceanConditionsContent');
-  const timestamp = document.getElementById('conditionsTimestamp');
-
-  // Norm MacDonald: "Marine weather from Storm Glass. More specific than regular weather.
-  // Like asking a fish what the water's like versus asking a person on shore."
-  let marineMarkup = '';
-  let marineStatus = '';
-
-  if (marineData && marineData.success && marineData.marineWeather?.hours?.length > 0) {
-    const currentHour = marineData.marineWeather.hours[0];
-    const waveHeight = (currentHour.waveHeight?.[0]?.value || currentHour.waveHeight?.value || 0).toFixed(2);
-    const swellDirection = (currentHour.swellDirection?.[0]?.value || currentHour.swellDirection?.value || 0).toFixed(0);
-    const waterTemp = (currentHour.waterTemperature?.[0]?.value || currentHour.waterTemperature?.value || 0).toFixed(1);
-
-    marineStatus = '✅ Live marine data from Storm Glass';
-
-    marineMarkup = `
-      <div style="padding: 1rem; background: linear-gradient(135deg, rgba(0, 119, 190, 0.3), rgba(0, 168, 204, 0.2)); border-radius: 8px; border-left: 3px solid var(--blue);">
-        <div style="font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem; font-weight: bold;">⛵ Marine Weather Data (Storm Glass)</div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
-          <div style="padding: 0.8rem; background: rgba(0, 119, 190, 0.2); border-radius: 6px;">
-            <div style="font-size: 0.7rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Wave Height</div>
-            <div style="font-size: 1.3rem; font-weight: bold; color: var(--blue); margin-top: 0.3rem;">${waveHeight}m</div>
-          </div>
-          <div style="padding: 0.8rem; background: rgba(0, 168, 204, 0.2); border-radius: 6px;">
-            <div style="font-size: 0.7rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Swell Direction</div>
-            <div style="font-size: 1.3rem; font-weight: bold; color: var(--teal); margin-top: 0.3rem;">${swellDirection}°</div>
-          </div>
-          <div style="padding: 0.8rem; background: rgba(0, 168, 204, 0.15); border-radius: 6px;">
-            <div style="font-size: 0.7rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Water Temp</div>
-            <div style="font-size: 1.3rem; font-weight: bold; color: var(--teal); margin-top: 0.3rem;">${waterTemp}°C</div>
-          </div>
-        </div>
-        <div style="margin-top: 0.8rem; padding: 0.6rem; background: rgba(0, 200, 83, 0.15); border-left: 2px solid #00C853; border-radius: 4px;">
-          <div style="font-size: 0.8rem; color: #00FF88;">💡 Marine data helps us understand debris movement patterns</div>
-        </div>
-      </div>
-    `;
-  } else if (marineData && !marineData.success) {
-    marineStatus = '⚠️ Marine data unavailable (check API key setup)';
-    marineMarkup = `
-      <div style="padding: 1rem; background: rgba(255, 193, 7, 0.15); border-radius: 8px; border-left: 3px solid #FDD835;">
-        <div style="font-size: 0.85rem; color: #FFD54F;">⚠️ Marine weather data unavailable. This feature requires Storm Glass API key registration at <a href="https://stormglass.io/" style="color: #FDD835; text-decoration: underline;" target="_blank">stormglass.io</a></div>
-      </div>
-    `;
-  }
-
-  content.innerHTML = `
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.8rem; margin-bottom: 1rem;">
-      <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center; border-left: 3px solid var(--teal);">
-        <div style="font-size: 0.8rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px;">Temperature</div>
-        <div style="font-size: 1.5rem; font-weight: bold; color: var(--teal); margin-top: 0.4rem;">${conditions.temperature}°C</div>
-      </div>
-      <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center; border-left: 3px solid var(--blue);">
-        <div style="font-size: 0.8rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px;">Wind Speed</div>
-        <div style="font-size: 1.5rem; font-weight: bold; color: var(--blue); margin-top: 0.4rem;">${conditions.windSpeed} km/h</div>
-      </div>
-      <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center; border-left: 3px solid var(--teal);">
-        <div style="font-size: 0.8rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px;">Wave Height</div>
-        <div style="font-size: 1.5rem; font-weight: bold; color: var(--teal); margin-top: 0.4rem;">${conditions.waveHeight}m</div>
-      </div>
-      <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center; border-left: 3px solid var(--blue);">
-        <div style="font-size: 0.8rem; color: #666; text-transform: uppercase; letter-spacing: 0.5px;">Humidity</div>
-        <div style="font-size: 1.5rem; font-weight: bold; color: var(--blue); margin-top: 0.4rem;">${conditions.humidity}%</div>
-      </div>
-    </div>
-    ${conditions.airQuality ? `
-    <div style="padding: 1rem; background: rgba(255,255,255,0.5); border-radius: 8px; text-align: center;">
-      <div style="font-size: 0.8rem; color: #666;">Air Quality</div>
-      <div style="font-size: 1.5rem; font-weight: bold; color: ${conditions.airQuality.includes('Good') ? '#00C853' : conditions.airQuality.includes('Moderate') ? '#FDD835' : '#FF6B6B'}; margin-top: 0.4rem;">${conditions.airQuality.split('(')[0].trim()}</div>
-    </div>
-    ` : ''}
-    ${marineMarkup}
-  `;
-
-  timestamp.innerHTML = `<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding: 0.8rem; background: rgba(253, 216, 53, 0.1); border-radius: 6px;">
-    <span style="font-size: 0.9rem; color: #FFD54F;">Updated: ${new Date().toLocaleTimeString()}</span>
-    <span style="font-size: 0.85rem; color: #FDD835;">${marineStatus}</span>
-  </div>`;
-  card.style.display = 'block';
-}
-
-// Norm MacDonald Commentary: "Reverse geocoding: basically asking the earth 'Hey, what's your address?'
-// We use Nominatim because it doesn't charge you money, which is more than we can say for most things."
-async function reverseGeocode(lat, lon) {
-  try {
-    const res = await fetch(`/api/geocode-location?latitude=${lat}&longitude=${lon}`);
-    const data = await res.json();
-
-    if (data.success && data.data) {
-      const locationInput = document.getElementById('location');
-      const displayName = data.data.split(',')[0]; // Get first part (most specific)
-      locationInput.value = displayName || `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
-    }
-  } catch (error) {
-    console.log('Geocoding unavailable, coordinates saved');
-  }
-}
-
-// Photo preview
-photoInput.addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      photoPreview.src = event.target.result;
-      photoPreview.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  }
-});
-
-// Geolocation
-geoButton.addEventListener('click', () => {
-  if (!navigator.geolocation) {
-    showError('Geolocation not supported by your browser');
-    return;
-  }
-
-  geoButton.disabled = true;
-  geoButton.textContent = '📍 Getting location...';
-
-  navigator.geolocation.getCurrentPosition(
-    async (position) => {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-
-      document.getElementById('latitude').value = lat.toFixed(6);
-      document.getElementById('longitude').value = lon.toFixed(6);
-
-      // Norm MacDonald: "We do two things now: get pretty names for coordinates,
-      // and check the ocean's current mood. The ocean's always got something to say."
-      await reverseGeocode(lat, lon);
-      await fetchOceanConditions(lat, lon);
-
-      geoButton.classList.add('active');
-      geoButton.textContent = '✅ Location Captured';
-      geoButton.disabled = false;
-    },
-    (error) => {
-      showError('Could not get location: ' + error.message);
-      geoButton.disabled = false;
-      geoButton.textContent = '📍 Get My Location';
-    }
-  );
-});
-
-// Form submission
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  clearMessages();
-
-  // ✅ Validation before submission
-  const location = document.getElementById('location').value.trim();
-  const debrisType = document.getElementById('debrisType').value;
-  const quantity = document.getElementById('quantity').value;
-  const description = document.getElementById('description').value.trim();
-  const latitude = document.getElementById('latitude').value.trim();
-  const longitude = document.getElementById('longitude').value.trim();
-
-  // Comprehensive validation
-  if (!location) {
-    showError('📍 Please enter or capture your location');
-    return;
-  }
-
-  if (!debrisType) {
-    showError('🗑️ Please select the type of debris');
-    return;
-  }
-
-  if (!quantity) {
-    showError('📦 Please specify the quantity of debris');
-    return;
-  }
-
-  if (!description || description.length < 10) {
-    showError('📝 Please describe the debris in at least 10 characters');
-    return;
-  }
-
-  if (!latitude || !longitude) {
-    showError('📍 Please capture your location using the geolocation button');
-    return;
-  }
-
-  // Validate coordinates are in valid ranges
-  const lat = parseFloat(latitude);
-  const lon = parseFloat(longitude);
-
-  if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
-    showError('⚠️ Invalid coordinates. Please use the location button to capture coordinates.');
-    return;
-  }
-
-  // Form is valid - proceed with submission
-  const submitBtn = form.querySelector('.btn-submit');
-  const submitLoader = document.getElementById('submitLoader');
-  const submitText = document.getElementById('submitText');
-
-  submitBtn.disabled = true;
-  submitLoader.style.display = 'inline-block';
-  submitText.textContent = 'Submitting...';
-
-  try {
-    const formData = new FormData();
-    formData.append('location', location);
-    formData.append('debrisType', debrisType);
-    formData.append('quantity', quantity);
-    formData.append('description', description);
-    formData.append('latitude', latitude);
-    formData.append('longitude', longitude);
-
-    if (photoInput.files[0]) {
-      // Validate photo file
-      const file = photoInput.files[0];
-      const maxSize = 5 * 1024 * 1024; // 5MB
-
-      if (file.size > maxSize) {
-        showError('📷 Photo is too large. Maximum size is 5MB.');
-        submitBtn.disabled = false;
-        submitLoader.style.display = 'none';
-        submitText.textContent = '🚨 Submit Debris Report';
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        formData.append('photoBase64', event.target.result);
-        await submitReport(formData, submitBtn, submitLoader, submitText);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      await submitReport(formData, submitBtn, submitLoader, submitText);
-    }
-  } catch (error) {
-    showError('Error processing form: ' + error.message);
-    submitBtn.disabled = false;
-    submitLoader.style.display = 'none';
-    submitText.textContent = '🚨 Submit Debris Report';
-  }
-});
-
-async function submitReport(formData, submitBtn, submitLoader, submitText) {
-  try {
-    const res = await fetch('/api/report-debris', {
-      method: 'POST',
-      body: formData
-    });
-
-    const data = await res.json();
-
-    if (res.ok && data.success) {
-      showSuccessModal();
-      form.reset();
-      photoPreview.style.display = 'none';
-      // Reset location button UI
-      geoButton.classList.remove('active');
-      geoButton.textContent = '📍 Get My Location';
-    } else {
-      showError(data.message || 'Failed to submit report. Please try again.');
-      submitBtn.disabled = false;
-      submitLoader.style.display = 'none';
-      submitText.textContent = '🚨 Submit Debris Report';
-    }
-  } catch (error) {
-    showError('❌ Network error: ' + error.message + '. Please check your connection and try again.');
-    submitBtn.disabled = false;
-    submitLoader.style.display = 'none';
-    submitText.textContent = '🚨 Submit Debris Report';
-  }
-}
-
-function showError(msg) {
-  errorMsg.textContent = msg;
-  errorMsg.classList.add('show');
-  setTimeout(() => errorMsg.classList.remove('show'), 5000);
-}
-
-function showSuccessModal() {
-  document.getElementById('successModal').classList.add('active');
-  // Reload debris reports on map after successful submission
-  setTimeout(() => loadDebrisReports(), 500);
-}
-
-function closeModal() {
-  document.getElementById('successModal').classList.remove('active');
-}
-
-function backHome() {
-  // Norm: "And so the user returns home, their report filed, their conscience clear.
-  // The ocean thanks them. Probably. If oceans could thank people."
-  window.location.href = '../index.html';
-}
-
-function clearMessages() {
-  errorMsg.classList.remove('show');
-  successMsg.classList.remove('show');
-}
-  </script>
+    <style>
+        @media (max-width: 768px) {
+            .grid.grid-cols-2 { grid-template-columns: 1fr; }
+            .grid.grid-cols-3 { grid-template-columns: 1fr; }
+        }
+    </style>
 </body>
 </html>
