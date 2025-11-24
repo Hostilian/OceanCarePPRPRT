@@ -239,7 +239,6 @@ async function getClimateTrends(latitude, longitude) {
   if (cache.has(cacheKey)) {
     const cached = cache.get(cacheKey);
     if (Date.now() - cached.timestamp < 24 * 60 * 60 * 1000) {
-      console.log('✓ Climate trends from cache');
       return cached.data;
     }
   }

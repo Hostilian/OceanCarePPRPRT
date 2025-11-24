@@ -1707,65 +1707,7 @@ app.use((err, req, res, next) => {
 
 if (require.main === module) {
   app.listen(port, () => {
-    console.log(`
-╔════════════════════════════════════════════════════════════════╗
-║           🌊 OceanCare Initiative Platform 🌊                  ║
-║                                                                ║
-║                    Production-Ready Edition                   ║
-╚════════════════════════════════════════════════════════════════╝
-
-✅ Server Status
-   • Server running on port ${port}
-   • Environment: ${process.env.NODE_ENV || 'development'}
-   • Database: SQLite (oceancare.db)
-   
-✅ Security Features
-   • CORS enabled
-   • Helmet security headers active
-   • Rate limiting: ${parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || 100)}/window
-   • Input sanitization active
-   • CSRF protection enabled
-   
-✅ Core Services
-   • Email service: ${emailStatus ? '✓ Configured' : '⚠️  Not configured (optional)'}
-   • Payment processing: ${process.env.STRIPE_SECRET_KEY ? '✓ Stripe configured' : '⚠️  Not configured (required for donations)'}
-   • Authentication: ✓ JWT-based
-   
-✅ API Endpoints
-   • Donations: /api/donate, /api/donate/create-payment-intent, /api/donate/confirm
-   • Volunteers: /api/volunteer
-   • Debris Reporting: /api/report-debris
-   • Contact: /api/contact
-   • News: /api/news
-   • Weather: /api/ocean-conditions
-   • Debris Data: /api/debris
-   
-✅ Database
-   • Tables initialized: 7 (users, donations, recurring_donations, volunteers, debris_reports, contact_messages, impact_metrics)
-   • Backups enabled: ✓ Daily at 2 AM UTC
-   • Retention: 30 days
-   
-📋 Documentation
-   • API docs available at: http://localhost:${port}/api/docs (coming soon)
-   • GitHub: https://github.com/Hostilian/OceanCarePPRPRT
-   
-🔐 Configuration
-   • Review .env.example for required environment variables
-   • Set up API keys for external services
-   • Configure email service for transactional emails
-   
-🚀 Next Steps
-   1. Configure Stripe API keys for payment processing
-   2. Set up email service (SendGrid recommended)
-   3. Configure external API keys (optional, has fallbacks)
-   4. Deploy to production (Vercel/Heroku ready)
-   
-✨ Ready to protect our oceans!
-────────────────────────────────────────────────────────────────
-`);
-
-    // Log startup details to file/monitoring
-    console.log(`[${new Date().toISOString()}] OceanCare Platform initialized successfully`);
+    // Server started successfully - for production use logging service
   });
 }
 
