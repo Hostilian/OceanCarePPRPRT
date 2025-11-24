@@ -159,7 +159,7 @@ async function sendDonationConfirmation(email, name, amount, purpose, receiptUrl
  * @param {string} area - Area of interest
  * @returns {Promise<Object>} - Send result
  */
-async function sendVolunteerConfirmation(email, name, interests = []) {
+async function sendVolunteerConfirmation(email, name, location, area) {
   if (!transporter) {
     return { success: true, skipped: true, reason: 'Email service not configured' };
   }
@@ -248,7 +248,7 @@ async function sendVolunteerConfirmation(email, name, interests = []) {
  * @param {number} reportId - Debris report ID
  * @returns {Promise<Object>} - Send result
  */
-async function sendDebrisReportConfirmation(email, name, debrisType, location) {
+async function sendDebrisReportConfirmation(email, name, location, reportId) {
   if (!transporter) {
     return { success: true, skipped: true, reason: 'Email service not configured' };
   }

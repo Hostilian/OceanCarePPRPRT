@@ -58,73 +58,10 @@ const strictLimiter = rateLimit({
 
 // Apply general rate limiter to all requests
 app.use(generalLimiter);
-
-// Apply strict rate limiter to sensitive POST endpoints
-app.post('/api/donate', strictLimiter);
-app.post('/api/volunteer', strictLimiter);
-app.post('/api/report-debris', strictLimiter);
-app.post('/api/contact', strictLimiter);
 // Persistent SQLite database - stores data even after server restart
 // Database file is created in the project root directory
 const dbPath = path.join(__dirname, '../oceancare.db');
-const backupDir = path.join(__dirname, '../.backups');
 const fs = require('fs');
-
-// Ensure backup directory exists
-if (!fs.existsSync(backupDir)) {
-  fs.mkdirSync(backupDir, { recursive: true });
-}
-
-// Database backup function
-function backupDatabase() {
-  const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
-  const backupPath = path.join(backupDir, `oceancare-${timestamp}.db`);
-
-  try {
-    if (fs.existsSync(dbPath)) {
-      fs.copyFileSync(dbPath, backupPath);
-
-      // Clean up old backups (keep last 30 days)
-      const now = Date.now();
-      const thirtyDaysAgo = now - (30 * 24 * 60 * 60 * 1000);
-
-      fs.readdirSync(backupDir).forEach(file => {
-        const filePath = path.join(backupDir, file);
-        const stats = fs.statSync(filePath);
-        if (stats.mtimeMs < thirtyDaysAgo) {
-          fs.unlinkSync(filePath);
-        }
-      });
-    }
-  } catch (error) {
-    console.error('Database backup error:', error);
-  }
-}
-
-// Schedule daily backups at 2 AM
-const scheduleBackup = () => {
-  const now = new Date();
-  const target = new Date();
-  target.setHours(2, 0, 0, 0);
-
-  if (now > target) {
-    target.setDate(target.getDate() + 1);
-  }
-
-  const timeUntilBackup = target - now;
-
-  setTimeout(() => {
-    backupDatabase();
-    // Repeat daily
-    setInterval(backupDatabase, 24 * 60 * 60 * 1000);
-  }, timeUntilBackup);
-};
-
-if (require.main === module) {
-  // Perform initial backup on startup when running the server directly
-  backupDatabase();
-  scheduleBackup();
-}
 
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
@@ -142,12 +79,6 @@ function initDB() {
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
-    password_hash TEXT,
-    role TEXT DEFAULT 'user',
-    profile_picture TEXT,
-    bio TEXT,
-    verified BOOLEAN DEFAULT 0,
-    verified_at DATETIME,
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
   )`);
@@ -291,24 +222,21 @@ app.get('/api/news', async (req, res) => {
           description: 'Community-led coral nurseries restore 50,000 coral fragments across three oceans.',
           source: 'OceanCare Newsroom',
           publishedAt: new Date(now - 2 * 60 * 60 * 1000).toISOString(),
-          image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
-          url: 'https://oceancare.example.org/news/coral-restoration-milestone'
+          image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80'
         },
         {
           title: 'Coastal Communities Rally for Seagrass Protection',
           description: 'Over 15,000 volunteers join monthly cleanups safeguarding vital blue carbon habitats.',
           source: 'Marine Conservation Daily',
           publishedAt: new Date(now - 24 * 60 * 60 * 1000).toISOString(),
-          image: 'https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=1200&q=80',
-          url: 'https://oceancare.example.org/news/seagrass-protection'
+          image: 'https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=1200&q=80'
         },
         {
           title: 'Innovative Fishing Gear Reduces Bycatch by 40%',
           description: 'OceanCare partners with fisheries to deploy AI-powered detection buoys protecting marine life.',
           source: 'Sustainable Seas Report',
           publishedAt: new Date(now - 48 * 60 * 60 * 1000).toISOString(),
-          image: 'https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=1200&q=80',
-          url: 'https://oceancare.example.org/news/bycatch-reduction'
+          image: 'https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=1200&q=80'
         }
       ]
     });
@@ -675,57 +603,7 @@ app.post('/api/volunteer', strictLimiter, async (req, res) => {
   }
 });
 
-// Login
-app.post('/api/login', (req, res) => {
-  // Norm: "Email as password. That's... actually kind of genius.
-  // No password to remember. No 'Password123!'. Just your email.
-  // It's so simple it's dumb. But it works. Like me."
-
-  const { email } = req.body;
-  db.get('SELECT * FROM users WHERE email = ?', [email], (err, user) => {
-    if (user) return res.json({ success: true, user });
-    res.json({ success: false });
-  });
-});
-
-app.post('/api/donor-login', (req, res) => {
-  const { email } = req.body || {};
-
-  if (!email || typeof email !== 'string' || !email.trim()) {
-    return res.status(400).json({
-      success: false,
-      message: 'Email is required to sign in.'
-    });
-  }
-
-  const lookupEmail = email.trim();
-
-  db.get('SELECT name, email FROM users WHERE LOWER(email) = LOWER(?)', [lookupEmail], (err, user) => {
-    if (err) {
-      return res.status(500).json({
-        success: false,
-        message: 'Database error while verifying donor account.'
-      });
-    }
-
-    if (!user) {
-      return res.json({
-        success: false,
-        message: 'We could not find a donor account for that email. Make a donation to create one.'
-      });
-    }
-
-    res.json({
-      success: true,
-      donor: {
-        name: user.name,
-        email: user.email
-      }
-    });
-  });
-});
-
-// Dashboard
+// Dashboard - Look up donor info by email
 app.get('/api/donor/:email', (req, res) => {
   // Norm: "Dashboard. Show people guilt... but with math.
   // How much have you given? Let's count. Let's keep score.
@@ -994,7 +872,7 @@ app.post('/api/report-debris', strictLimiter, async (req, res) => {
 
         // Send confirmation email if email provided
         if (reporterEmail && auth.isValidEmail(reporterEmail)) {
-          const emailResult = await email.sendDebrisReportConfirmation(
+          await email.sendDebrisReportConfirmation(
             reporterEmail,
             reporterName || 'Ocean Guardian',
             { latitude, longitude },

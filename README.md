@@ -1,63 +1,57 @@
 # 🌊 OceanCare Initiative
 
-**A production-ready ocean conservation platform with real-time environmental data, volunteer tracking, and impact measurement.**
+**Production-ready ocean conservation platform with real-time environmental data, volunteer tracking, and impact measurement.**
 
-**Status**: 🟢 **PRODUCTION READY** | **Version**: 1.0.0 | **Cost**: $0/month
+[![Tests](https://img.shields.io/badge/tests-21%20passing-brightgreen)]() [![License](https://img.shields.io/badge/license-MIT-blue)]()
 
 ---
 
-## ⚡ Quick Start (2 minutes)
+## ⚡ Quick Start (5 minutes)
 
 ```bash
 # 1. Install dependencies
 npm install
 
-# 2. Create .env from template
-cp .env.example .env
-# (All API keys already configured!)
+# 2. Configure environment variables (optional - has fallbacks)
+cp config/.env.example config/.env
+# Edit config/.env with your API keys
 
 # 3. Run tests
 npm test
-# Expected: "21 passed"
 
-# 4. Start the server
+# 4. Start server
 npm start
 # Visit http://localhost:3000
 ```
 
 ---
 
-## 📖 Complete Documentation
+## 🎯 Core Features
 
-**👉 [READ docs/OCEANCARE_MEGA_GUIDE.md](./docs/OCEANCARE_MEGA_GUIDE.md)**
-
-This single comprehensive guide contains EVERYTHING in one mega file:
-- Quick start (5-10 minutes)
-- Installation & setup
-- Testing procedures
-- Deployment guide (Vercel/Heroku)
-- Complete launch announcements
-- 24-hour monitoring checklist
-- First week operations manual
-- Complete API reference
-- Database schema
-- Environment variables
-- Commands & troubleshooting
-- FAQ & support
-
----
-
-## 🎯 Features at a Glance
-
-✅ **9 Responsive Pages**
-- Homepage with news & climate trends
-- Volunteer dashboard with weather
-- Debris reporting with interactive map
-- Donation page with impact calculator
+**9 Pages**
+- Homepage with live ocean news & climate data
+- Volunteer signup with weather forecasts
+- Debris reporting with interactive maps
+- Donation processing with Stripe integration
 - Team & contact pages
 - Donor dashboard
 
-✅ **8 Integrated APIs** (All free tier)
+**15 API Endpoints**
+- `/api/news` - Ocean conservation news (GNews API)
+- `/api/donate/*` - Stripe payment processing
+- `/api/volunteer` - Volunteer registration
+- `/api/report-debris` - Debris reporting
+- `/api/contact` - Contact form submissions
+- `/api/donor/:email` - Donor dashboard data
+- `/api/ocean-conditions` - Weather + air quality
+- `/api/weather` - Open-Meteo weather data
+- `/api/uv-index` - UV index with safety recommendations
+- `/api/air-quality` - OpenAQ air quality data
+- `/api/debris-heatmap` - Debris location clustering
+- `/api/climate-data` - Historical climate trends
+- `/api/get-maps-key` - Google Maps API proxy
+
+**8 External APIs** (all free tier)
 - GNews (ocean news)
 - Open-Meteo (weather)
 - OpenAQ (air quality)
@@ -67,37 +61,220 @@ This single comprehensive guide contains EVERYTHING in one mega file:
 - OpenUV (UV index)
 - Visual Crossing (climate trends)
 
-✅ **Complete Infrastructure**
-- Express.js backend (15 endpoints)
-- SQLite database with auto-persistence
-- 21 automated tests (100% passing)
-- Form validation & security
-- Rate limiting & error handling
-- Mobile responsive design
+**Infrastructure**
+- Express.js backend
+- SQLite database with persistence
+- 21 automated tests (Jest + Supertest)
+- Form validation & XSS protection
+- Rate limiting & CORS
+- Mobile-responsive UI
 - WCAG AA accessibility
 
 ---
 
-## 🚀 Deploy in 30-60 Minutes
+## 📚 Documentation
 
-### Quick Deployment Steps
-
-1. **Read**: docs/OCEANCARE_MEGA_GUIDE.md → Deployment Guide section
-2. **Choose**: Vercel (30 min, recommended) or Heroku (60 min)
-3. **Follow**: Step-by-step instructions for your platform
-4. **Deploy**: Get your live URL
-5. **Test**: Verify everything works
-
-**Full details**: See docs/OCEANCARE_MEGA_GUIDE.md → Deployment Guide section
+- **[API_DOCUMENTATION.md](API_DOCUMENTATION.md)** - Complete API reference
+- **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** - Deployment to Heroku/VPS
+- **[TECHNICAL_DOCUMENTATION.md](TECHNICAL_DOCUMENTATION.md)** - Architecture & modules
+- **[SECURITY.md](SECURITY.md)** - Security best practices
 
 ---
 
-## 📊 Project Statistics
+## 🔧 Configuration
+
+### Required Environment Variables
+
+```bash
+# Stripe (for donations)
+STRIPE_SECRET_KEY=sk_test_your_key
+STRIPE_PUBLIC_KEY=pk_test_your_key
+
+# Email Service (SendGrid or SMTP)
+EMAIL_SERVICE=sendgrid
+SENDGRID_API_KEY=your_key
+SENDGRID_FROM_EMAIL=noreply@yourdomain.com
+```
+
+### Optional API Keys
+
+```bash
+# News Feed
+GNEWS_API_KEY=your_key
+
+# Marine Weather
+STORM_GLASS_API_KEY=your_key
+
+# UV Index
+OPENUV_API_KEY=your_key
+
+# Climate Trends
+VISUAL_CROSSING_API_KEY=your_key
+
+# Maps
+GOOGLE_MAPS_API_KEY=your_key
+```
+
+**Note:** All APIs have graceful fallbacks - platform works without keys.
+
+---
+
+## 🚀 Deployment
+
+### Heroku (Recommended for SQLite)
+
+```bash
+# 1. Create Heroku app
+heroku create your-app-name
+
+# 2. Set environment variables
+heroku config:set STRIPE_SECRET_KEY=sk_...
+heroku config:set SENDGRID_API_KEY=SG...
+
+# 3. Deploy
+git push heroku main
+
+# 4. Test
+heroku open
+```
+
+See **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** for detailed instructions.
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+npm test
+
+# Run specific test suites
+npm run test:integration
+npm run test:forms
+npm run test:apis
+
+# Run with coverage
+npm run test:coverage
+```
+
+**Test Coverage:** 21 tests across integration, forms, and external APIs.
+
+---
+
+## 🏗️ Project Structure
 
 ```
-✅ 9 responsive pages
-✅ 8 integrated APIs
-✅ 15 API endpoints
+OceanCarePPRPRT/
+├── config/
+│   ├── .env.example          # Environment template
+│   └── Procfile              # Heroku deployment
+├── public/
+│   ├── index.html            # Homepage
+│   ├── pages/                # All page templates
+│   ├── css/                  # Stylesheets
+│   └── js/                   # Client-side scripts
+├── src/
+│   ├── server.js             # Express API server
+│   ├── auth.js               # Authentication utilities
+│   ├── payment.js            # Stripe integration
+│   ├── email.js              # Email notifications
+│   ├── security.js           # Security middleware
+│   └── external-apis.js      # External API integrations
+├── tests/
+│   ├── server.test.js        # API endpoint tests
+│   ├── integration.test.js   # Integration tests
+│   ├── enhanced-forms.test.js # Form validation tests
+│   └── external-apis.test.js # External API tests
+├── scripts/
+│   └── verify-launch.js      # Pre-launch verification
+└── package.json              # Dependencies & scripts
+```
+
+---
+
+## 🔒 Security
+
+- Input sanitization (XSS prevention)
+- SQL injection protection
+- Rate limiting on all endpoints
+- CORS configuration
+- Helmet.js security headers
+- HTTPS enforcement
+- Environment variable validation
+
+See **[SECURITY.md](SECURITY.md)** for complete security documentation.
+
+---
+
+## 📊 API Usage Examples
+
+### Get Ocean News
+```bash
+curl http://localhost:3000/api/news
+```
+
+### Submit Donation
+```bash
+curl -X POST http://localhost:3000/api/donate/create-payment-intent \
+  -H "Content-Type: application/json" \
+  -d '{"name":"John Doe","email":"john@example.com","amount":50}'
+```
+
+### Register Volunteer
+```bash
+curl -X POST http://localhost:3000/api/volunteer \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Jane Doe","email":"jane@example.com","location":"California"}'
+```
+
+### Report Debris
+```bash
+curl -X POST http://localhost:3000/api/report-debris \
+  -H "Content-Type: application/json" \
+  -d '{"location":"Santa Monica Beach","debrisType":"plastic","quantity":50}'
+```
+
+See **[API_DOCUMENTATION.md](API_DOCUMENTATION.md)** for all endpoints.
+
+---
+
+## 🛠️ Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Run linting
+npm run lint
+
+# Verify pre-launch checklist
+npm run verify:launch
+```
+
+---
+
+## 📝 License
+
+MIT License - See [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Credits
+
+Built with:
+- [Express.js](https://expressjs.com/) - Web framework
+- [SQLite](https://www.sqlite.org/) - Database
+- [Stripe](https://stripe.com/) - Payment processing
+- [Nodemailer](https://nodemailer.com/) - Email service
+- [Open-Meteo](https://open-meteo.com/) - Weather data
+- [GNews](https://gnews.io/) - News API
+
+---
+
+**Made with 🌊 for ocean conservation**
 ✅ 21 automated tests (100% passing)
 ✅ 4 database tables
 ✅ 551 lines of backend code
