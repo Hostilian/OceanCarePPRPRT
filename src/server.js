@@ -1136,6 +1136,72 @@ app.get('/api/climate-trends', async (req, res) => {
   }
 });
 
+// ===== GLOBAL ERROR HANDLING MIDDLEWARE =====
+
+// 404 Not Found Handler
+app.use((req, res) => {
+  res.status(404);
+  
+  // Return HTML for browser requests, JSON for API requests
+  if (req.accepts('html')) {
+    res.sendFile(path.join(__dirname, '../public/404.html'));
+  } else {
+    res.json({
+      success: false,
+      error: 'Not Found',
+      message: `The requested resource ${req.originalUrl} does not exist`,
+      status: 404
+    });
+  }
+});
+
+// Global Error Handler (must be last)
+app.use((err, req, res, next) => {
+  console.error('🚨 Server Error:', {
+    message: err.message,
+    status: err.status || 500,
+    url: req.originalUrl,
+    method: req.method,
+    timestamp: new Date().toISOString()
+  });
+
+  const status = err.status || 500;
+  const message = err.message || 'Internal Server Error';
+
+  // Return HTML for browser requests
+  if (req.accepts('html')) {
+    res.status(status);
+    if (status === 500) {
+      res.sendFile(path.join(__dirname, '../public/500.html'));
+    } else {
+      res.send(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Error ${status}</title>
+          <link rel="stylesheet" href="/css/styles.css">
+        </head>
+        <body>
+          <div style="text-align: center; padding: 100px 20px; color: var(--color-text-light);">
+            <h1>${status}</h1>
+            <p>${message}</p>
+            <a href="/">← Back to Home</a>
+          </div>
+        </body>
+        </html>
+      `);
+    }
+  } else {
+    // Return JSON for API requests
+    res.status(status).json({
+      success: false,
+      error: message,
+      status: status,
+      ...(process.env.NODE_ENV === 'development' && { details: err.stack })
+    });
+  }
+});
+
 if (require.main === module) {
   app.listen(port, () => {
     // Norm: "And then we listen. On port 3000.

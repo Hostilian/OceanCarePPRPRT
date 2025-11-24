@@ -6,6 +6,8 @@
     <title>Report Debris - OceanCare Initiative</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="/js/toast.js" defer></script>
+    <script src="/js/form-validator.js" defer></script>
 </head>
 <body>
     <!-- Header/Navigation -->
@@ -286,8 +288,21 @@
             }
         }
 
+        // Form validation and submission
+        let debrisValidator;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            debrisValidator = new FormValidator(document.getElementById('debrisForm'));
+        });
+
         document.getElementById('debrisForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            // Validate form
+            if (!debrisValidator.validateForm()) {
+                toast.error('Please fix all errors before submitting');
+                return;
+            }
 
             const formData = {
                 name: document.getElementById('reporterName').value,
@@ -302,6 +317,15 @@
                 description: document.getElementById('description').value
             };
 
+            // Validate coordinates
+            if (!formData.latitude || !formData.longitude || isNaN(formData.latitude) || isNaN(formData.longitude)) {
+                toast.error('Please enter valid GPS coordinates or use "Use My Location"', 5000);
+                return;
+            }
+
+            // Set loading state
+            setFormLoading(document.getElementById('debrisForm'), true);
+
             try {
                 const response = await fetch('/api/report-debris', {
                     method: 'POST',
@@ -310,11 +334,16 @@
                 });
 
                 if (response.ok) {
-                    alert(`✅ Thank you, ${formData.name}! Your debris report has been received. Our cleanup team will review the location and coordinates (${formData.latitude}, ${formData.longitude}) within 24 hours. You'll receive updates at ${formData.email}.`);
-                    document.getElementById('debrisForm').reset();
+                    toast.success(`✅ Thank you! Your debris report at ${formData.latitude}, ${formData.longitude} has been received. Our cleanup team will review it within 24 hours.`, 5000);
+                    debrisValidator.reset();
+                } else {
+                    const error = await response.json();
+                    toast.error(error.message || 'Failed to submit report. Please try again.', 5000);
                 }
             } catch (error) {
-                alert('Error submitting report: ' + error.message);
+                toast.error('Network error: ' + error.message + '. Please check your connection and try again.', 5000);
+            } finally {
+                setFormLoading(document.getElementById('debrisForm'), false);
             }
         });
     </script>

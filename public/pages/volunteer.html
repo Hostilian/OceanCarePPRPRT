@@ -6,6 +6,8 @@
     <title>Volunteer - OceanCare Initiative</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="/js/toast.js" defer></script>
+    <script src="/js/form-validator.js" defer></script>
 </head>
 <body>
     <!-- Header/Navigation -->
@@ -256,9 +258,21 @@
     </footer>
 
     <script>
-        // Form submission
+        // Form validation and submission
+        let volunteerValidator;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            volunteerValidator = new FormValidator(document.getElementById('volunteerForm'));
+        });
+
         document.getElementById('volunteerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            // Validate form
+            if (!volunteerValidator.validateForm()) {
+                toast.error('Please fix all errors before submitting');
+                return;
+            }
 
             const formData = {
                 name: document.getElementById('volunteerName').value,
@@ -271,6 +285,9 @@
                 motivation: document.getElementById('motivation').value
             };
 
+            // Set loading state
+            setFormLoading(document.getElementById('volunteerForm'), true);
+
             try {
                 const response = await fetch('/api/volunteer', {
                     method: 'POST',
@@ -279,11 +296,16 @@
                 });
 
                 if (response.ok) {
-                    alert(`✅ Thank you, ${formData.name}! Your volunteer application has been received. We'll contact you at ${formData.email} within 5 business days.`);
-                    document.getElementById('volunteerForm').reset();
+                    toast.success(`✅ Thank you, ${formData.name}! We'll contact you at ${formData.email} within 5 business days.`, 5000);
+                    volunteerValidator.reset();
+                } else {
+                    const error = await response.json();
+                    toast.error(error.message || 'Failed to submit application. Please try again.', 5000);
                 }
             } catch (error) {
-                alert('Error submitting application: ' + error.message);
+                toast.error('Network error: ' + error.message + '. Please check your connection and try again.', 5000);
+            } finally {
+                setFormLoading(document.getElementById('volunteerForm'), false);
             }
         });
 

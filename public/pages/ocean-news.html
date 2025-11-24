@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean News Feed - OceanCare Initiative</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="/js/toast.js" defer></script>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header>
+        <div class="container">
+            <div class="flex-between">
+                <a href="/" class="logo">🌊 OceanCare</a>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/pages/projects.html">Projects</a></li>
+                        <li><a href="/pages/team.html">Team</a></li>
+                        <li><a href="/pages/login.html">Log In</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="hero hero-gradient">
+        <div class="container">
+            <div class="hero-content animate-fade-in">
+                <h1>📰 Latest Ocean News</h1>
+                <p class="hero-subtitle">
+                    Stay updated on marine conservation, ocean science discoveries, and environmental policy changes from around the world.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Filter -->
+    <section class="section-spaced">
+        <div class="container">
+            <div style="display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-8);">
+                <button class="btn btn-primary category-filter" data-category="all">All News</button>
+                <button class="btn btn-secondary category-filter" data-category="coral">🪸 Coral Restoration</button>
+                <button class="btn btn-secondary category-filter" data-category="plastic">🗑️ Plastic Pollution</button>
+                <button class="btn btn-secondary category-filter" data-category="marine-life">🐢 Marine Life</button>
+                <button class="btn btn-secondary category-filter" data-category="policy">⚖️ Policy & Legislation</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Grid -->
+    <section class="section-spaced">
+        <div class="container">
+            <div id="newsContainer" class="grid grid-cols-3 gap-6">
+                <div style="grid-column: 1/-1; text-align: center; padding: var(--space-12);">
+                    <div style="font-size: 2rem; margin-bottom: var(--space-3);">📡 Loading latest news...</div>
+                    <p style="color: var(--color-text-light);">Connecting to global news sources</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About News Feed -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <h2 style="text-align: center; color: white; margin-bottom: var(--space-8);">About This News Feed</h2>
+            <div class="grid grid-cols-3 gap-6">
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary);">🌐 Global Coverage</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        Curated from thousands of international news sources covering marine science, conservation, and ocean policy worldwide.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary);">⚡ Real-Time Updates</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        News articles are refreshed hourly. Stay informed about the latest developments in ocean conservation as they happen.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary);">🔍 Curated Topics</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        Filter by topics that matter most to you: coral restoration, plastic pollution, marine wildlife, and environmental policy.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscribe CTA -->
+    <section class="section-spaced">
+        <div class="container text-center">
+            <h2 style="margin-bottom: var(--space-4);">Stay Connected</h2>
+            <p style="color: var(--color-text-light); margin-bottom: var(--space-6);">
+                Subscribe to our newsletter for weekly ocean news summaries, conservation updates, and volunteer opportunities.
+            </p>
+            <div style="max-width: 500px; margin: 0 auto; display: flex; gap: var(--space-3);">
+                <input type="email" id="newsletterEmail" placeholder="Enter your email" style="flex: 1;">
+                <button class="btn btn-primary" onclick="subscribeNewsletter()">Subscribe</button>
+            </div>
+            <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin-top: var(--space-3);">
+                Unsubscribe anytime. We respect your privacy.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="grid grid-cols-4 gap-8" style="margin-bottom: var(--space-12);">
+                <div>
+                    <h5>About</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/team.html">Our Team</a></li>
+                        <li><a href="/pages/projects.html">Our Projects</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Get Involved</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/volunteer.html">Volunteer</a></li>
+                        <li><a href="/pages/contact.html">Donate</a></li>
+                        <li><a href="/pages/report-debris.html">Report Debris</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Support</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/contact.html">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Legal</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-top" style="padding-top: var(--space-8); text-align: center; color: rgba(255,255,255,0.7); font-size: var(--text-sm);">
+                <p>&copy; 2025 OceanCare Initiative. All rights reserved. | Protecting oceans, one action at a time.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let allNews = [];
+        let currentFilter = 'all';
+
+        async function loadNews() {
+            try {
+                toast.info('Loading ocean news...', 2000);
+                const response = await fetch('/api/news');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load news');
+                }
+
+                const data = await response.json();
+                allNews = data.articles || [];
+                
+                if (allNews.length === 0) {
+                    toast.warning('No news articles found. Check back soon!', 4000);
+                    document.getElementById('newsContainer').innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: var(--space-12);"><p style="color: var(--color-text-light);">No articles available at this time</p></div>';
+                } else {
+                    toast.success(`Loaded ${allNews.length} news articles!`, 3000);
+                    displayNews(allNews);
+                }
+            } catch (error) {
+                toast.error('Error loading news: ' + error.message, 5000);
+                document.getElementById('newsContainer').innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: var(--space-12);"><p style="color: var(--color-text-light);">Error loading news. Please try again.</p></div>';
+            }
+        }
+
+        function categorizeArticle(title, description) {
+            const text = (title + ' ' + description).toLowerCase();
+            
+            if (text.includes('coral') || text.includes('reef')) return 'coral';
+            if (text.includes('plastic') || text.includes('pollution') || text.includes('trash') || text.includes('debris')) return 'plastic';
+            if (text.includes('marine') || text.includes('fish') || text.includes('whale') || text.includes('dolphin') || text.includes('turtle')) return 'marine-life';
+            if (text.includes('policy') || text.includes('legislation') || text.includes('regulation') || text.includes('law')) return 'policy';
+            
+            return 'other';
+        }
+
+        function displayNews(articles) {
+            const newsHTML = articles.slice(0, 9).map(article => `
+                <div class="card" style="display: flex; flex-direction: column; height: 100%;">
+                    ${article.image ? `<img src="${article.image}" alt="${article.title}" style="width: 100%; height: 200px; object-fit: cover; border-radius: var(--radius-md); margin-bottom: var(--space-4);">` : `<div style="width: 100%; height: 200px; background: linear-gradient(135deg, rgba(0, 119, 190, 0.1), rgba(0, 119, 190, 0.05)); border-radius: var(--radius-md); margin-bottom: var(--space-4); display: flex; align-items: center; justify-content: center; color: var(--color-text-lighter);">📰</div>`}
+                    
+                    <h3 style="margin-top: 0; color: var(--color-primary); font-size: 1.1rem; line-height: 1.4;">
+                        ${article.title}
+                    </h3>
+                    
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm); flex: 1; margin-bottom: var(--space-3);">
+                        ${article.description ? article.description.substring(0, 150) + '...' : 'Click to read more'}
+                    </p>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: var(--text-xs); color: var(--color-text-lighter); border-top: 1px solid var(--color-neutral-light); padding-top: var(--space-3);">
+                        <span>${new Date(article.published_at || article.publishedAt || Date.now()).toLocaleDateString()}</span>
+                        <a href="${article.url || '#'}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">Read More</a>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('newsContainer').innerHTML = newsHTML || '<div style="grid-column: 1/-1; text-align: center; padding: var(--space-12);"><p>No articles to display</p></div>';
+        }
+
+        function filterNews(category) {
+            currentFilter = category;
+            
+            // Update button states
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-secondary');
+            });
+            event.target.classList.remove('btn-secondary');
+            event.target.classList.add('btn-primary');
+
+            if (category === 'all') {
+                displayNews(allNews);
+            } else {
+                const filtered = allNews.filter(article => {
+                    const cat = categorizeArticle(article.title, article.description || '');
+                    return cat === category;
+                });
+                displayNews(filtered);
+            }
+        }
+
+        function subscribeNewsletter() {
+            const email = document.getElementById('newsletterEmail').value.trim();
+            if (!email) {
+                toast.error('Please enter your email address', 3000);
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                toast.error('Please enter a valid email address', 3000);
+                return;
+            }
+
+            // Send subscription request
+            fetch('/api/newsletter-subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            }).then(res => {
+                if (res.ok) {
+                    toast.success('✅ Welcome! Check your email to confirm.', 4000);
+                    document.getElementById('newsletterEmail').value = '';
+                } else {
+                    toast.error('Already subscribed or error occurred', 4000);
+                }
+            }).catch(err => {
+                toast.error('Subscription error: ' + err.message, 4000);
+            });
+        }
+
+        // Set up category filter event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.addEventListener('click', filterNews);
+            });
+            loadNews();
+        });
+    </script>
+
+    <style>
+        @media (max-width: 768px) {
+            .grid.grid-cols-3 { grid-template-columns: 1fr; }
+            .grid.grid-cols-4 { grid-template-columns: 1fr; }
+        }
+
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</body>
+</html>

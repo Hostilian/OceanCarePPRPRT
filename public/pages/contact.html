@@ -6,6 +6,8 @@
     <title>Donate - OceanCare Initiative</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="/js/toast.js" defer></script>
+    <script src="/js/form-validator.js" defer></script>
 </head>
 <body>
     <!-- Header/Navigation -->
@@ -315,12 +317,23 @@
                 });
 
                 if (response.ok) {
-                    alert(`✅ Thank you for your ${formData.recurring ? 'monthly' : ''} donation of $${formData.amount.toFixed(2)}, ${formData.name}! A receipt has been sent to ${formData.email}.`);
+                    const result = await response.json();
+                    toast.success(`✅ Thank you for your ${formData.recurring ? 'monthly ' : ''}donation of $${formData.amount.toFixed(2)}!`, 5000);
                     document.getElementById('donationForm').reset();
+                    document.getElementById('impactDisplay').innerHTML = '<p style="color: var(--color-text-lighter); margin-bottom: var(--space-2);">Select an amount to see your impact</p>';
+                    document.querySelectorAll('.impact-amount').forEach(b => b.classList.remove('btn-primary'));
+                } else {
+                    const error = await response.json();
+                    toast.error(error.message || 'Failed to process donation. Please try again.', 5000);
                 }
             } catch (error) {
-                alert('Error processing donation: ' + error.message);
+                toast.error('Network error: ' + error.message + '. Please check your connection and try again.', 5000);
             }
+        });
+
+        // Initialize form validator when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const donationValidator = new FormValidator(document.getElementById('donationForm'));
         });
     </script>
 
