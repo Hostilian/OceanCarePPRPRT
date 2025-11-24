@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OceanCare Initiative - Protect Our Oceans, Make Real Impact</title>
+    <title>OceanCare Initiative - Protect Our Oceans</title>
 
     <!-- Custom Style System -->
     <link rel="stylesheet" href="/css/styles.css">
@@ -20,29 +20,100 @@
         "url": "https://oceancare.org",
         "logo": "https://oceancare.org/logo.png",
         "description": "Protect our oceans through donations, volunteering, and debris reporting",
-        "sameAs": [
-            "https://www.facebook.com/oceancare",
-            "https://www.twitter.com/oceancare",
-            "https://www.instagram.com/oceancare"
-        ],
         "contactPoint": {
             "@type": "ContactPoint",
             "contactType": "Customer Support",
-            "telephone": "+1-800-OCEAN-00",
             "email": "support@oceancare.org"
         }
     }
     </script>
 
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="OceanCare Initiative - Protect Our Oceans, Make Real Impact">
-    <meta property="og:description" content="Join 1M+ ocean protectors. Donate, volunteer, and track your environmental impact.">
+    <meta property="og:title" content="OceanCare Initiative - Protect Our Oceans">
+    <meta property="og:description" content="Join ocean protectors. Donate, volunteer, and track your environmental impact.">
     <meta property="og:image" content="/og-image.jpg">
     <meta property="og:url" content="https://oceancare.org">
     <meta property="og:type" content="website">
 
     <style>
-        /* Additional animations for fade-in effects */
+        /* API Widgets Section Styling */
+        .api-widget {
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            padding: var(--space-6);
+            transition: all 0.3s ease;
+        }
+
+        .api-widget:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+            border-color: var(--color-primary-lighter);
+        }
+
+        .api-widget-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-4);
+        }
+
+        .api-widget-title {
+            font-size: var(--text-lg);
+            font-weight: var(--fw-bold);
+            color: var(--color-primary);
+            margin: 0;
+        }
+
+        .api-widget-icon {
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+
+        .api-status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: var(--text-xs);
+            font-weight: var(--fw-semibold);
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .api-data-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-3);
+            margin-top: var(--space-4);
+        }
+
+        .api-data-item {
+            background: var(--color-bg-secondary);
+            padding: var(--space-3);
+            border-radius: var(--radius-sm);
+            text-align: center;
+        }
+
+        .api-data-value {
+            font-size: var(--text-xl);
+            font-weight: var(--fw-bold);
+            color: var(--color-primary);
+        }
+
+        .api-data-label {
+            font-size: var(--text-sm);
+            color: var(--color-text-light);
+            margin-top: var(--space-1);
+        }
+
+        .api-widgets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-8);
+        }
+
+        /* Animations */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -58,146 +129,15 @@
             animation: fadeIn 0.8s ease-out;
         }
 
-        /* Subtle gradient for hero background */
-        .hero-gradient {
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-        }
-
         /* Section spacing */
         .section-spaced {
-            padding-top: var(--space-20);
-            padding-bottom: var(--space-20);
+            padding: var(--space-20) 0;
         }
 
         @media (max-width: 768px) {
             .section-spaced {
-                padding-top: var(--space-12);
-                padding-bottom: var(--space-12);
+                padding: var(--space-12) 0;
             }
-        }
-
-        /* Stat cards */
-        .stat-card {
-            text-align: center;
-            padding: var(--space-6);
-            background-color: var(--color-neutral-white);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-base);
-            transition: all var(--transition-base);
-        }
-
-        .stat-card:hover {
-            box-shadow: var(--shadow-md);
-            transform: translateY(-4px);
-        }
-
-        /* Feature cards with icon areas */
-        .feature-card {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius-lg);
-            margin-bottom: var(--space-4);
-            font-size: 2rem;
-            transition: all var(--transition-base);
-        }
-
-        .feature-card:hover .feature-icon {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        /* CTA button group */
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: var(--space-4);
-            margin-top: var(--space-6);
-        }
-
-        @media (max-width: 640px) {
-            .btn-group {
-                flex-direction: column;
-            }
-        }
-
-        /* Hero content */
-        .hero-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .hero-subtitle {
-            font-size: var(--text-lg);
-            line-height: var(--lh-relaxed);
-            margin-bottom: var(--space-8);
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        /* Stats grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--space-6);
-            margin-top: var(--space-8);
-        }
-
-        /* News items */
-        .news-item {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .news-image {
-            height: 200px;
-            background: linear-gradient(135deg, var(--color-primary-lighter) 0%, var(--color-secondary) 100%);
-            border-radius: var(--radius-base) var(--radius-base) 0 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-        }
-
-        .news-content {
-            padding: var(--space-6);
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .news-title {
-            margin: var(--space-2) 0 var(--space-4) 0;
-            font-size: var(--text-lg);
-            font-weight: var(--fw-bold);
-            color: var(--color-primary);
-        }
-
-        .news-description {
-            flex-grow: 1;
-            margin-bottom: var(--space-4);
-            color: var(--color-text-light);
-            font-size: var(--text-sm);
-        }
-
-        .news-meta {
-            font-size: var(--text-xs);
-            color: var(--color-text-lighter);
-            margin-bottom: var(--space-3);
-        }
-
-        /* Responsive images */
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
         }
     </style>
 </head>
