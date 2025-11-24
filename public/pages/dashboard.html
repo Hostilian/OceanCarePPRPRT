@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Dashboard - OceanCare Initiative</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="/js/toast.js" defer></script>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header>
+        <div class="container">
+            <div class="flex-between">
+                <a href="/" class="logo">🌊 OceanCare</a>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/pages/projects.html">Projects</a></li>
+                        <li><a href="/pages/team.html">Team</a></li>
+                        <li><a href="/pages/login.html">Log Out</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero hero-gradient" style="padding: var(--space-8);">
+        <div class="container">
+            <div class="hero-content animate-fade-in">
+                <h1>💰 Your Donor Dashboard</h1>
+                <p class="hero-subtitle" style="margin-bottom: 0;">
+                    Track your impact, view donation history, and see the real-world results of your generosity.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="section-spaced">
+        <div class="container">
+            <div class="grid grid-cols-4 gap-6">
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-primary); margin-bottom: var(--space-2);">
+                        $<span id="totalDonated">2,500</span>
+                    </div>
+                    <p style="color: var(--color-text-light); margin: 0; font-size: var(--text-sm);">Total Donated</p>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-primary); margin-bottom: var(--space-2);">
+                        <span id="donationCount">8</span>
+                    </div>
+                    <p style="color: var(--color-text-light); margin: 0; font-size: var(--text-sm);">Donations</p>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-primary); margin-bottom: var(--space-2);">
+                        <span id="coralCount">500</span>+
+                    </div>
+                    <p style="color: var(--color-text-light); margin: 0; font-size: var(--text-sm);">Corals Planted</p>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-primary); margin-bottom: var(--space-2);">
+                        <span id="animalsCount">150</span>+
+                    </div>
+                    <p style="color: var(--color-text-light); margin: 0; font-size: var(--text-sm);">Animals Protected</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <section class="section-spaced">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-8);">
+                <!-- Donation History -->
+                <div>
+                    <h2 style="margin-bottom: var(--space-6);">📋 Donation History</h2>
+                    <div class="card" style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--color-neutral-light);">
+                                    <th style="text-align: left; padding: var(--space-3); color: var(--color-primary);">Date</th>
+                                    <th style="text-align: left; padding: var(--space-3); color: var(--color-primary);">Amount</th>
+                                    <th style="text-align: left; padding: var(--space-3); color: var(--color-primary);">Focus Area</th>
+                                    <th style="text-align: left; padding: var(--space-3); color: var(--color-primary);">Status</th>
+                                    <th style="text-align: left; padding: var(--space-3); color: var(--color-primary);">Receipt</th>
+                                </tr>
+                            </thead>
+                            <tbody id="donationTable">
+                                <tr><td colspan="5" style="padding: var(--space-8); text-align: center;">Loading donations...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+                    <!-- Profile Card -->
+                    <div class="card">
+                        <h3 style="margin-top: 0; color: var(--color-primary); margin-bottom: var(--space-4);">👤 Profile</h3>
+                        <div style="margin-bottom: var(--space-3);">
+                            <p style="margin: 0; color: var(--color-text-lighter); font-size: var(--text-sm);">Name</p>
+                            <p style="margin: 0; font-weight: 500;" id="donorName">John Doe</p>
+                        </div>
+                        <div style="margin-bottom: var(--space-3);">
+                            <p style="margin: 0; color: var(--color-text-lighter); font-size: var(--text-sm);">Email</p>
+                            <p style="margin: 0; font-weight: 500; word-break: break-all;" id="donorEmail">john@example.com</p>
+                        </div>
+                        <div style="margin-bottom: var(--space-3);">
+                            <p style="margin: 0; color: var(--color-text-lighter); font-size: var(--text-sm);">Member Since</p>
+                            <p style="margin: 0; font-weight: 500;" id="memberSince">January 2025</p>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" onclick="editProfile()" style="width: 100%; margin-top: var(--space-4);">Edit Profile</button>
+                    </div>
+
+                    <!-- Impact Goals -->
+                    <div class="card">
+                        <h3 style="margin-top: 0; color: var(--color-primary); margin-bottom: var(--space-4);">🎯 Impact Goal</h3>
+                        <div style="margin-bottom: var(--space-3);">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-2);">
+                                <span style="font-size: var(--text-sm); color: var(--color-text-light);">$5,000 Goal</span>
+                                <span style="font-size: var(--text-sm); color: var(--color-primary); font-weight: 500;">50%</span>
+                            </div>
+                            <div style="background: var(--color-neutral-light); border-radius: var(--radius-full); height: 8px; overflow: hidden;">
+                                <div style="background: var(--color-primary); height: 100%; width: 50%; border-radius: var(--radius-full);"></div>
+                            </div>
+                        </div>
+                        <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin: var(--space-3) 0 0 0;">
+                            You've completed 50% of your annual goal. Great progress! 🎉
+                        </p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="card">
+                        <h3 style="margin-top: 0; color: var(--color-primary); margin-bottom: var(--space-4);">⚡ Quick Actions</h3>
+                        <button class="btn btn-primary btn-sm" onclick="window.location.href='/pages/contact.html'" style="width: 100%; margin-bottom: var(--space-2);">Donate Again</button>
+                        <button class="btn btn-secondary btn-sm" onclick="downloadReceipts()" style="width: 100%; margin-bottom: var(--space-2);">Download Receipts</button>
+                        <button class="btn btn-outline btn-sm" onclick="window.location.href='/pages/volunteer.html'" style="width: 100%;">Volunteer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Breakdown -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <h2 style="text-align: center; color: white; margin-bottom: var(--space-8);">Your Impact Breakdown</h2>
+            <div class="grid grid-cols-3 gap-6">
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary); margin-bottom: var(--space-4);">Coral Restoration</h3>
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--color-primary); margin-bottom: var(--space-2);">
+                        <span id="coralPercent">35</span>%
+                    </div>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm); margin: 0;">
+                        Your donations funded 500+ coral fragments in Southeast Asia.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary); margin-bottom: var(--space-4);">Coastal Cleanup</h3>
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--color-primary); margin-bottom: var(--space-2);">
+                        <span id="cleanupPercent">40</span>%
+                    </div>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm); margin: 0;">
+                        Removal of 800+ kg of plastic from beaches and oceans.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary); margin-bottom: var(--space-4);">Education</h3>
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--color-primary); margin-bottom: var(--space-2);">
+                        <span id="educationPercent">25</span>%
+                    </div>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm); margin: 0;">
+                        Reached 300+ students with ocean conservation education.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Activity -->
+    <section class="section-spaced">
+        <div class="container">
+            <h2 style="margin-bottom: var(--space-6);">📢 Recent Updates</h2>
+            <div class="grid grid-cols-2 gap-6">
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary);">🪸 Coral Recovery</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm); margin-bottom: var(--space-3);">
+                        Your $250 donation helped plant 70 coral fragments in the Maldives. Success rate: 85%
+                    </p>
+                    <p style="font-size: var(--text-xs); color: var(--color-text-lighter); margin: 0;">November 22, 2025</p>
+                </div>
+
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary);">🗑️ Beach Cleanup</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm); margin-bottom: var(--space-3);">
+                        Cleanup event in California removed 120kg of plastic. See <a href="#" style="color: var(--color-primary);">photos</a>.
+                    </p>
+                    <p style="font-size: var(--text-xs); color: var(--color-text-lighter); margin: 0;">November 18, 2025</p>
+                </div>
+
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary);">📚 Education Program</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm); margin-bottom: var(--space-3);">
+                        Your support taught 50 students about ocean conservation. <a href="#" style="color: var(--color-primary);">Learn more</a>.
+                    </p>
+                    <p style="font-size: var(--text-xs); color: var(--color-text-lighter); margin: 0;">November 15, 2025</p>
+                </div>
+
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary);">💚 Thank You!</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm); margin-bottom: var(--space-3);">
+                        Your generosity is making a real difference. Thank you for being part of our mission!
+                    </p>
+                    <p style="font-size: var(--text-xs); color: var(--color-text-lighter); margin: 0;">November 10, 2025</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="grid grid-cols-4 gap-8" style="margin-bottom: var(--space-12);">
+                <div>
+                    <h5>About</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/team.html">Our Team</a></li>
+                        <li><a href="/pages/projects.html">Our Projects</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Get Involved</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/volunteer.html">Volunteer</a></li>
+                        <li><a href="/pages/contact.html">Donate</a></li>
+                        <li><a href="/pages/report-debris.html">Report Debris</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Support</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/contact.html">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Legal</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-top" style="padding-top: var(--space-8); text-align: center; color: rgba(255,255,255,0.7); font-size: var(--text-sm);">
+                <p>&copy; 2025 OceanCare Initiative. All rights reserved. | Protecting oceans, one action at a time.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample donation data
+        const donationHistory = [
+            { date: 'Nov 20, 2025', amount: '$250', area: 'Coral Restoration', status: 'Completed', receipt: '#REC-2025-1105' },
+            { date: 'Oct 15, 2025', amount: '$500', area: 'Coastal Cleanup', status: 'Completed', receipt: '#REC-2025-1004' },
+            { date: 'Sep 10, 2025', amount: '$100', area: 'Education', status: 'Completed', receipt: '#REC-2025-0910' },
+            { date: 'Aug 5, 2025', amount: '$250', area: 'General', status: 'Completed', receipt: '#REC-2025-0805' },
+            { date: 'Jul 12, 2025', amount: '$400', area: 'Research', status: 'Completed', receipt: '#REC-2025-0712' },
+            { date: 'Jun 1, 2025', amount: '$150', area: 'Coral Restoration', status: 'Completed', receipt: '#REC-2025-0601' },
+            { date: 'May 18, 2025', amount: '$300', area: 'Education', status: 'Completed', receipt: '#REC-2025-0518' },
+            { date: 'Apr 3, 2025', amount: '$200', area: 'Coastal Cleanup', status: 'Completed', receipt: '#REC-2025-0403' },
+        ];
+
+        function loadDashboard() {
+            // Populate donation table
+            const tbody = document.getElementById('donationTable');
+            tbody.innerHTML = donationHistory.map(d => `
+                <tr style="border-bottom: 1px solid var(--color-neutral-light);">
+                    <td style="padding: var(--space-3); font-size: var(--text-sm);">${d.date}</td>
+                    <td style="padding: var(--space-3); font-weight: 500;">${d.amount}</td>
+                    <td style="padding: var(--space-3); font-size: var(--text-sm);">${d.area}</td>
+                    <td style="padding: var(--space-3);">
+                        <span style="background: #d4edda; color: #155724; padding: 2px 8px; border-radius: 12px; font-size: var(--text-xs);">
+                            ${d.status}
+                        </span>
+                    </td>
+                    <td style="padding: var(--space-3);">
+                        <a href="#" style="color: var(--color-primary); font-size: var(--text-sm);">${d.receipt}</a>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Update stats
+            const totalDonated = donationHistory.reduce((sum, d) => sum + parseInt(d.amount.replace('$', '')), 0);
+            document.getElementById('totalDonated').textContent = totalDonated.toLocaleString();
+            document.getElementById('donationCount').textContent = donationHistory.length;
+            document.getElementById('coralCount').textContent = Math.round(totalDonated * 0.2);
+            document.getElementById('animalsCount').textContent = Math.round(totalDonated * 0.06);
+        }
+
+        function editProfile() {
+            toast.info('Profile editing coming soon!', 3000);
+        }
+
+        function downloadReceipts() {
+            toast.success('Preparing receipts for download...', 3000);
+            // In real app, would generate PDF or zip file
+            setTimeout(() => {
+                toast.info('Download started!', 2000);
+            }, 1500);
+        }
+
+        document.addEventListener('DOMContentLoaded', loadDashboard);
+    </script>
+
+    <style>
+        .text-center { text-align: center; }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            [style*="grid-template-columns: 2fr 1fr"] {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</body>
+</html>

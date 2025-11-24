@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Successful - OceanCare Initiative</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="/js/toast.js" defer></script>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header>
+        <div class="container">
+            <div class="flex-between">
+                <a href="/" class="logo">🌊 OceanCare</a>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/pages/projects.html">Projects</a></li>
+                        <li><a href="/pages/team.html">Team</a></li>
+                        <li><a href="/pages/contact.html">Donate</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Success Hero Section -->
+    <section class="hero hero-gradient" style="padding: var(--space-8); background: linear-gradient(135deg, #2d5a6b 0%, #1a3a4a 100%);">
+        <div class="container" style="text-align: center;">
+            <div style="margin-bottom: var(--space-8);">
+                <div style="font-size: 4rem; margin-bottom: var(--space-4); animation: bounce 0.6s ease-out;">✅</div>
+                <h1 style="color: white; margin-bottom: var(--space-2);">Thank You for Your Donation!</h1>
+                <p class="hero-subtitle" style="color: rgba(255,255,255,0.9);">
+                    Your generosity is making a real difference for our oceans.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="section-spaced">
+        <div class="container">
+            <div style="max-width: 700px; margin: 0 auto;">
+                <!-- Donation Receipt Card -->
+                <div class="card" style="margin-bottom: var(--space-6); border-left: 4px solid var(--color-primary);">
+                    <h2 style="color: var(--color-primary); margin-top: 0; margin-bottom: var(--space-6);">📄 Donation Receipt</h2>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-6); padding-bottom: var(--space-6); border-bottom: 1px solid var(--color-neutral-light);">
+                        <div>
+                            <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin: 0;">Receipt Number</p>
+                            <p style="font-size: var(--text-lg); font-weight: 600; color: var(--color-primary); margin: var(--space-1) 0 0 0;" id="receiptNum">#REC-2025-1120</p>
+                        </div>
+                        <div>
+                            <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin: 0;">Date</p>
+                            <p style="font-size: var(--text-lg); font-weight: 600; color: var(--color-primary); margin: var(--space-1) 0 0 0;" id="donationDate">Nov 20, 2025</p>
+                        </div>
+                        <div>
+                            <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin: 0;">Donation Amount</p>
+                            <p style="font-size: var(--text-xl); font-weight: bold; color: #28a745; margin: var(--space-1) 0 0 0;" id="donationAmount">$250.00</p>
+                        </div>
+                        <div>
+                            <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin: 0;">Tax Deductible</p>
+                            <p style="font-size: var(--text-lg); font-weight: 600; color: #28a745; margin: var(--space-1) 0 0 0;">✓ Yes</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: var(--space-4);">
+                        <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin: 0 0 var(--space-2) 0;">Donor Name</p>
+                        <p style="font-weight: 500; margin: 0;" id="donorName">John Doe</p>
+                    </div>
+
+                    <div>
+                        <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin: 0 0 var(--space-2) 0;">Email</p>
+                        <p style="font-weight: 500; margin: 0; word-break: break-all;" id="donorEmail">john@example.com</p>
+                    </div>
+                </div>
+
+                <!-- Impact Summary -->
+                <div class="card" style="margin-bottom: var(--space-6);">
+                    <h2 style="color: var(--color-primary); margin-top: 0; margin-bottom: var(--space-6);">🌍 Your Impact</h2>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6);">
+                        <div style="text-align: center; padding: var(--space-4); background: #f0f9ff; border-radius: var(--radius-lg);">
+                            <div style="font-size: 2.5rem; margin-bottom: var(--space-2);">🪸</div>
+                            <p style="color: var(--color-text-lighter); margin: 0 0 var(--space-2) 0; font-size: var(--text-sm);">Coral Fragments</p>
+                            <p style="font-size: 2rem; font-weight: bold; color: var(--color-primary); margin: 0;" id="coralCount">70</p>
+                            <p style="color: var(--color-text-lighter); margin: var(--space-2) 0 0 0; font-size: var(--text-xs);">will be planted</p>
+                        </div>
+
+                        <div style="text-align: center; padding: var(--space-4); background: #f0f9ff; border-radius: var(--radius-lg);">
+                            <div style="font-size: 2.5rem; margin-bottom: var(--space-2);">🐠</div>
+                            <p style="color: var(--color-text-lighter); margin: 0 0 var(--space-2) 0; font-size: var(--text-sm);">Marine Species</p>
+                            <p style="font-size: 2rem; font-weight: bold; color: var(--color-primary); margin: 0;" id="speciesCount">15</p>
+                            <p style="color: var(--color-text-lighter); margin: var(--space-2) 0 0 0; font-size: var(--text-xs);">protected directly</p>
+                        </div>
+
+                        <div style="text-align: center; padding: var(--space-4); background: #f0f9ff; border-radius: var(--radius-lg);">
+                            <div style="font-size: 2.5rem; margin-bottom: var(--space-2);">🗑️</div>
+                            <p style="color: var(--color-text-lighter); margin: 0 0 var(--space-2) 0; font-size: var(--text-sm);">Plastic Removed</p>
+                            <p style="font-size: 2rem; font-weight: bold; color: var(--color-primary); margin: 0;" id="plasticCount">50</p>
+                            <p style="color: var(--color-text-lighter); margin: var(--space-2) 0 0 0; font-size: var(--text-xs);">kg from oceans</p>
+                        </div>
+
+                        <div style="text-align: center; padding: var(--space-4); background: #f0f9ff; border-radius: var(--radius-lg);">
+                            <div style="font-size: 2.5rem; margin-bottom: var(--space-2);">📚</div>
+                            <p style="color: var(--color-text-lighter); margin: 0 0 var(--space-2) 0; font-size: var(--text-sm);">Students Educated</p>
+                            <p style="font-size: 2rem; font-weight: bold; color: var(--color-primary); margin: 0;" id="studentCount">10</p>
+                            <p style="color: var(--color-text-lighter); margin: var(--space-2) 0 0 0; font-size: var(--text-xs);">on conservation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Next Steps -->
+                <div class="card" style="margin-bottom: var(--space-6);">
+                    <h2 style="color: var(--color-primary); margin-top: 0; margin-bottom: var(--space-6);">📋 What Happens Next</h2>
+                    
+                    <div style="display: flex; align-items: flex-start; margin-bottom: var(--space-6); gap: var(--space-4);">
+                        <div style="background: var(--color-primary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">1</div>
+                        <div>
+                            <h4 style="margin: 0 0 var(--space-1) 0; color: var(--color-primary);">Email Confirmation</h4>
+                            <p style="color: var(--color-text-light); margin: 0; font-size: var(--text-sm);">
+                                A detailed receipt and thank you email is being sent to your inbox right now.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-start; margin-bottom: var(--space-6); gap: var(--space-4);">
+                        <div style="background: var(--color-primary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">2</div>
+                        <div>
+                            <h4 style="margin: 0 0 var(--space-1) 0; color: var(--color-primary);">Fund Allocation</h4>
+                            <p style="color: var(--color-text-light); margin: 0; font-size: var(--text-sm);">
+                                Your donation will be allocated to priority projects within 2 business days.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-start; margin-bottom: var(--space-6); gap: var(--space-4);">
+                        <div style="background: var(--color-primary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">3</div>
+                        <div>
+                            <h4 style="margin: 0 0 var(--space-1) 0; color: var(--color-primary);">Impact Updates</h4>
+                            <p style="color: var(--color-text-light); margin: 0; font-size: var(--text-sm);">
+                                You'll receive monthly updates on your donations' real-world impact and progress.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-start; gap: var(--space-4);">
+                        <div style="background: var(--color-primary); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">4</div>
+                        <div>
+                            <h4 style="margin: 0 0 var(--space-1) 0; color: var(--color-primary);">Tax Documents</h4>
+                            <p style="color: var(--color-text-light); margin: 0; font-size: var(--text-sm);">
+                                Tax-deductible receipt available on your donor dashboard for records.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-6);">
+                    <button class="btn btn-secondary" onclick="downloadReceipt()">
+                        <span style="margin-right: var(--space-1);">⬇️</span> Download Receipt
+                    </button>
+                    <button class="btn btn-outline" onclick="shareDonation()">
+                        <span style="margin-right: var(--space-1);">📢</span> Share Impact
+                    </button>
+                </div>
+
+                <!-- Donor Dashboard Link -->
+                <div class="card" style="background: #e3f2fd; border: 1px solid var(--color-primary); text-align: center;">
+                    <h3 style="color: var(--color-primary); margin: 0 0 var(--space-2) 0);">💰 Track Your Giving</h3>
+                    <p style="color: var(--color-text); margin: 0 0 var(--space-4) 0; font-size: var(--text-sm);">
+                        Create a donor account to track all your donations and their impact in one place.
+                    </p>
+                    <button class="btn btn-primary" onclick="window.location.href='/pages/dashboard.html'">
+                        View Donor Dashboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <h2 style="color: white; text-align: center; margin-bottom: var(--space-8);">Frequently Asked Questions</h2>
+            <div style="max-width: 700px; margin: 0 auto;">
+                <div class="card" style="margin-bottom: var(--space-4);">
+                    <h4 style="margin-top: 0; color: var(--color-primary); cursor: pointer;" onclick="toggleFAQ(this)">
+                        📄 Is my donation tax-deductible?
+                        <span style="float: right;">▼</span>
+                    </h4>
+                    <p style="color: var(--color-text-light); margin: var(--space-3) 0 0 0; display: none;">
+                        Yes! OceanCare Initiative is a registered 501(c)(3) nonprofit. Your donation is tax-deductible to the full extent allowed by law. Consult a tax professional for details.
+                    </p>
+                </div>
+
+                <div class="card" style="margin-bottom: var(--space-4);">
+                    <h4 style="margin-top: 0; color: var(--color-primary); cursor: pointer;" onclick="toggleFAQ(this)">
+                        💬 Can I see where my money goes?
+                        <span style="float: right;">▼</span>
+                    </h4>
+                    <p style="color: var(--color-text-light); margin: var(--space-3) 0 0 0; display: none;">
+                        Absolutely! Your donor dashboard shows real-time updates on your impact. You'll receive monthly impact reports on your contributions.
+                    </p>
+                </div>
+
+                <div class="card" style="margin-bottom: var(--space-4);">
+                    <h4 style="margin-top: 0; color: var(--color-primary); cursor: pointer;" onclick="toggleFAQ(this)">
+                        🔄 Can I set up recurring donations?
+                        <span style="float: right;">▼</span>
+                    </h4>
+                    <p style="color: var(--color-text-light); margin: var(--space-3) 0 0 0; display: none;">
+                        Yes! Visit your donor dashboard to set up monthly or yearly recurring donations. Monthly givers receive a special impact report and exclusive updates.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h4 style="margin-top: 0; color: var(--color-primary); cursor: pointer;" onclick="toggleFAQ(this)">
+                        ❓ Need more help?
+                        <span style="float: right;">▼</span>
+                    </h4>
+                    <p style="color: var(--color-text-light); margin: var(--space-3) 0 0 0; display: none;">
+                        Contact us at <a href="mailto:support@oceancare.org" style="color: var(--color-primary);">support@oceancare.org</a> or call <a href="tel:1-800-OCEAN-CARE" style="color: var(--color-primary);">1-800-OCEAN-CARE</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="grid grid-cols-4 gap-8" style="margin-bottom: var(--space-12);">
+                <div>
+                    <h5>About</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/team.html">Our Team</a></li>
+                        <li><a href="/pages/projects.html">Our Projects</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Get Involved</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/volunteer.html">Volunteer</a></li>
+                        <li><a href="/pages/contact.html">Donate</a></li>
+                        <li><a href="/pages/report-debris.html">Report Debris</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Support</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/contact.html">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Legal</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-top" style="padding-top: var(--space-8); text-align: center; color: rgba(255,255,255,0.7); font-size: var(--text-sm);">
+                <p>&copy; 2025 OceanCare Initiative. All rights reserved. | Protecting oceans, one action at a time.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleFAQ(element) {
+            const p = element.nextElementSibling;
+            p.style.display = p.style.display === 'none' ? 'block' : 'none';
+            const arrow = element.querySelector('span');
+            arrow.style.transform = p.style.display === 'none' ? 'rotate(0deg)' : 'rotate(180deg)';
+            arrow.style.transition = 'transform 0.3s ease';
+        }
+
+        function downloadReceipt() {
+            toast.success('Receipt downloading...', 2000);
+            setTimeout(() => {
+                toast.info('Check your downloads folder!', 2000);
+            }, 1500);
+        }
+
+        function shareDonation() {
+            const text = 'I just donated to OceanCare Initiative to protect our oceans! 🌊 Join me: oceancare.org';
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Support Ocean Conservation',
+                    text: text,
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                toast.info('Share link copied to clipboard!', 2000);
+            }
+        }
+
+        // Get donation info from URL params (would come from payment processor)
+        const params = new URLSearchParams(window.location.search);
+        const amount = params.get('amount') || '250.00';
+        document.getElementById('donationAmount').textContent = '$' + parseFloat(amount).toFixed(2);
+        
+        // Calculate impact metrics
+        const donationNum = parseInt(amount);
+        document.getElementById('coralCount').textContent = Math.round(donationNum * 0.28);
+        document.getElementById('speciesCount').textContent = Math.round(donationNum * 0.06);
+        document.getElementById('plasticCount').textContent = Math.round(donationNum * 0.2);
+        document.getElementById('studentCount').textContent = Math.round(donationNum * 0.04);
+
+        // Prefill from localStorage if available
+        const donorData = JSON.parse(localStorage.getItem('donorData') || '{}');
+        if (donorData.name) document.getElementById('donorName').textContent = donorData.name;
+        if (donorData.email) document.getElementById('donorEmail').textContent = donorData.email;
+    </script>
+
+    <style>
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            [style*="grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</body>
+</html>
