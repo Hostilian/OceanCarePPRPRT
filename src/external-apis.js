@@ -23,7 +23,6 @@ async function getWeatherData(latitude, longitude) {
   if (cache.has(cacheKey)) {
     const cached = cache.get(cacheKey);
     if (Date.now() - cached.timestamp < CACHE_TTL) {
-      console.log('✓ Weather data from cache');
       return cached.data;
     }
   }
@@ -62,7 +61,6 @@ async function getUVIndexData(latitude, longitude) {
   if (cache.has(cacheKey)) {
     const cached = cache.get(cacheKey);
     if (Date.now() - cached.timestamp < CACHE_TTL) {
-      console.log('✓ UV data from cache');
       return cached.data;
     }
   }
@@ -114,7 +112,6 @@ async function getAirQualityData(latitude, longitude) {
   if (cache.has(cacheKey)) {
     const cached = cache.get(cacheKey);
     if (Date.now() - cached.timestamp < CACHE_TTL) {
-      console.log('✓ Air quality data from cache');
       return cached.data;
     }
   }
@@ -164,7 +161,6 @@ async function getDebrisHeatmapData(latitude, longitude, radiusKm = 50) {
   if (cache.has(cacheKey)) {
     const cached = cache.get(cacheKey);
     if (Date.now() - cached.timestamp < CACHE_TTL) {
-      console.log('✓ Debris heatmap from cache');
       return cached.data;
     }
   }
@@ -372,7 +368,6 @@ function getClimateTrendsFallback() {
  */
 function clearCache() {
   cache.clear();
-  console.log('✓ API cache cleared');
 }
 
 module.exports = {

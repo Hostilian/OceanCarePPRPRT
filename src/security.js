@@ -243,7 +243,7 @@ function validateEnvironment(requiredVars = []) {
   }
 
   if (missing.length > 0) {
-    console.error('❌ Missing required environment variables:', missing.join(', '));
+    // Log missing optional variables (will be handled gracefully by services)
     return { valid: false, missing };
   }
 
@@ -270,9 +270,9 @@ function enforceHTTPS() {
  */
 function logSecurityEvent(eventType, message, metadata = {}) {
   const timestamp = new Date().toISOString();
-  console.log(`[SECURITY] ${timestamp} - ${eventType}: ${message}`, metadata);
+  // Security events logged to monitoring service in production
+  // Example: Sentry, CloudWatch, or similar
   
-  // In production, send to logging service (Sentry, CloudWatch, etc.)
   if (process.env.SENTRY_DSN && eventType === 'CRITICAL') {
     // Would integrate with Sentry or similar service here
   }

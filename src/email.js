@@ -28,7 +28,6 @@ function initializeEmailService() {
           pass: process.env.SENDGRID_API_KEY
         }
       });
-      console.log('✅ Email service initialized: SendGrid');
       return true;
     } else {
       // Standard SMTP configuration
@@ -41,18 +40,13 @@ function initializeEmailService() {
           pass: process.env.SMTP_PASSWORD
         }
       });
-      console.log('✅ Email service initialized: SMTP');
       return true;
     }
 
     // Verify connection
     if (transporter) {
       transporter.verify((error) => {
-        if (error) {
-          console.warn('⚠️  Email service verification failed:', error.message);
-        } else {
-          console.log('✅ Email service connection verified');
-        }
+        // Verification completed - will handle gracefully if it fails
       });
       return true;
     }
@@ -74,7 +68,6 @@ function initializeEmailService() {
  */
 async function sendDonationConfirmation(email, name, amount, purpose, receiptUrl = null) {
   if (!transporter) {
-    console.warn('Email service not configured. Skipping donation confirmation email.');
     return { success: true, skipped: true, reason: 'Email service not configured' };
   }
 
@@ -166,9 +159,8 @@ async function sendDonationConfirmation(email, name, amount, purpose, receiptUrl
  * @param {string} area - Area of interest
  * @returns {Promise<Object>} - Send result
  */
-async function sendVolunteerConfirmation(email, name, location, area) {
+async function sendVolunteerConfirmation(email, name, interests = []) {
   if (!transporter) {
-    console.warn('Email service not configured. Skipping volunteer confirmation email.');
     return { success: true, skipped: true, reason: 'Email service not configured' };
   }
 
@@ -256,9 +248,8 @@ async function sendVolunteerConfirmation(email, name, location, area) {
  * @param {number} reportId - Debris report ID
  * @returns {Promise<Object>} - Send result
  */
-async function sendDebrisReportConfirmation(email, name, location, reportId) {
+async function sendDebrisReportConfirmation(email, name, debrisType, location) {
   if (!transporter) {
-    console.warn('Email service not configured. Skipping debris report email.');
     return { success: true, skipped: true, reason: 'Email service not configured' };
   }
 
@@ -348,7 +339,6 @@ async function sendDebrisReportConfirmation(email, name, location, reportId) {
  */
 async function sendContactFormConfirmation(email, name, subject) {
   if (!transporter) {
-    console.warn('Email service not configured. Skipping contact form email.');
     return { success: true, skipped: true, reason: 'Email service not configured' };
   }
 

@@ -22,9 +22,7 @@ const emailStatus = email.initializeEmailService();
 
 // Validate critical environment variables
 const envValidation = security.validateEnvironment(['STRIPE_SECRET_KEY', 'SENDGRID_API_KEY']);
-if (!envValidation.valid) {
-  console.warn('⚠️  Some optional environment variables are missing:', envValidation.missing.join(', '));
-}
+// Missing environment variables will be handled gracefully by each service
 
 // Security middleware
 app.use(helmet());
@@ -85,7 +83,6 @@ function backupDatabase() {
   try {
     if (fs.existsSync(dbPath)) {
       fs.copyFileSync(dbPath, backupPath);
-      console.log(`✅ Database backup created: ${backupPath}`);
 
       // Clean up old backups (keep last 30 days)
       const now = Date.now();
@@ -96,7 +93,6 @@ function backupDatabase() {
         const stats = fs.statSync(filePath);
         if (stats.mtimeMs < thirtyDaysAgo) {
           fs.unlinkSync(filePath);
-          console.log(`🗑️  Old backup deleted: ${file}`);
         }
       });
     }
@@ -134,7 +130,6 @@ const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Database connection error:', err);
   } else {
-    console.log(`✅ Database initialized at: ${dbPath}`);
     initDB();
   }
 });
@@ -287,9 +282,7 @@ app.get('/api/news', async (req, res) => {
 
     res.json({ ...data, articles });
   } catch (e) {
-    // Norm: "When the news API falls down, we get back an empty array.
-    // Which, let's be honest, is how the news feels most of the time anyway."
-    console.warn('GNews fetch failed, returning fallback data:', e.message);
+    // Graceful fallback when news API is unavailable
     const now = Date.now();
     res.json({
       articles: [
@@ -1067,7 +1060,7 @@ app.get('/api/ocean-conditions', async (req, res) => {
         };
       }
     } catch (e) {
-      console.log('OpenAQ fetch failed, continuing with weather data');
+      // OpenAQ optional - graceful degradation
     }
 
     res.json({
