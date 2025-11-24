@@ -1198,7 +1198,6 @@ app.get('/api/marine-weather', async (req, res) => {
 
   const { latitude, longitude } = req.query;
   const stormGlassKey = process.env.STORM_GLASS_API_KEY || process.env.STORMGLASS_API_KEY;
-  console.log('Storm Glass Key:', stormGlassKey ? 'Present' : 'Missing');
 
   if (!stormGlassKey) {
     return res.status(400).json({
