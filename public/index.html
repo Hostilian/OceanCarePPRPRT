@@ -210,11 +210,13 @@
                     <ul>
                         <li><a href="#mission">Our Mission</a></li>
                         <li><a href="#how-it-works">How It Works</a></li>
-                        <li><a href="#impact">Impact</a></li>
+                        <li><a href="#calculator">Impact Tools</a></li>
                         <li><a href="#tools">Live Data</a></li>
+                        <li><a href="#news">News</a></li>
                         <li><a href="pages/projects.html">Projects</a></li>
                         <li><a href="pages/dashboard.html">Dashboard</a></li>
-                        <li><a href="pages/contact.html">Contact</a></li>
+                        <li><a href="pages/login.html">Log In</a></li>
+                        <li><a href="pages/contact.html">Donate</a></li>
                     </ul>
                 </nav>
             </div>
@@ -225,6 +227,9 @@
     <section class="hero hero-gradient">
         <div class="container">
             <div class="hero-content">
+                <p style="text-transform: uppercase; letter-spacing: 2px; font-size: var(--text-sm); color: rgba(255,255,255,0.85); margin-bottom: var(--space-4);">
+                    Non-Profit Organization Website • Client: OceanCare Initiative
+                </p>
                 <h1>Protect Our Oceans.<br>Make Real Impact.</h1>
                 <p class="hero-subtitle">
                     Join thousands of ocean protectors worldwide. Together we're cleaning beaches, tracking debris, and restoring marine ecosystems through verified, transparent action.
@@ -259,6 +264,37 @@
                 <div class="text-center">
                     <div class="stat-value">24/7</div>
                     <div class="stat-label">Customer Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Overview Section -->
+    <section class="section-spaced" id="overview">
+        <div class="container">
+            <div class="card" style="padding: var(--space-10);">
+                <div class="grid grid-cols-2" style="gap: var(--space-8);">
+                    <div>
+                        <p style="text-transform: uppercase; letter-spacing: 2px; font-size: var(--text-xs); color: var(--color-text-light); margin-bottom: var(--space-2);">Project Brief</p>
+                        <h3 style="margin-top: 0;">Website Goal & Mission</h3>
+                        <p style="color: var(--color-text-light);">
+                            OceanCare Initiative is a non-profit platform focused on awareness, transparent reporting, and reliable donation funnels. The homepage must immediately share what we do, why it matters, and how every visitor can help today.
+                        </p>
+                        <p style="margin: 0; color: var(--color-text-light);">
+                            Goal: Create a website to raise awareness and gather donations for ocean protection while keeping volunteer opportunities and debris reporting one click away.
+                        </p>
+                    </div>
+                    <div>
+                        <p style="text-transform: uppercase; letter-spacing: 2px; font-size: var(--text-xs); color: var(--color-text-light); margin-bottom: var(--space-2);">Homepage Requirements</p>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="margin-bottom: var(--space-2);"><i class="fas fa-bullseye text-accent"></i> Mission overview and recent news</li>
+                            <li style="margin-bottom: var(--space-2);"><i class="fas fa-hand-holding-heart text-accent"></i> Interactive donation calculator with transparent impact</li>
+                            <li style="margin-bottom: var(--space-2);"><i class="fas fa-people-carry text-accent"></i> Volunteer pathways and CTAs</li>
+                            <li style="margin-bottom: var(--space-2);"><i class="fas fa-gauge text-accent"></i> Live ocean data & climate trends</li>
+                            <li style="margin-bottom: var(--space-2);"><i class="fas fa-chart-line text-accent"></i> Donor dashboard teaser for logged-in supporters</li>
+                            <li><i class="fas fa-map-marker-alt text-accent"></i> Report debris workflow + project/project pages</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -343,6 +379,27 @@
         </div>
     </section>
 
+    <!-- News Section -->
+    <section id="news" class="section-spaced">
+        <div class="container">
+            <div class="section-header" style="text-align: center; margin-bottom: var(--space-8);">
+                <h2 style="margin-bottom: var(--space-3);">📰 Latest Ocean News</h2>
+                <p style="max-width: 780px; margin: 0 auto; color: var(--color-text-light);">
+                    Real-time conservation coverage sourced from the `/api/news` endpoint (GNews). Stories refresh automatically so donors and volunteers can see what needs help right now.
+                </p>
+            </div>
+
+            <div id="news-grid" class="grid grid-cols-3" style="gap: var(--space-6);">
+                <div class="card" style="padding: var(--space-6);">
+                    <p style="margin: 0; color: var(--color-text-light);">Loading ocean headlines…</p>
+                </div>
+            </div>
+            <div class="text-center" style="margin-top: var(--space-6);">
+                <a href="pages/ocean-news.html" class="btn btn-secondary">View All News →</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Mission Section -->
     <section id="mission" class="section-spaced">
         <div class="container">
@@ -368,6 +425,128 @@
                     </ul>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Impact Calculator Section -->
+    <section id="calculator" class="section-spaced bg-secondary">
+        <div class="container">
+            <div class="section-header" style="text-align: center; margin-bottom: var(--space-8);">
+                <p style="text-transform: uppercase; letter-spacing: 2px; font-size: var(--text-xs); color: var(--color-text-light); margin-bottom: var(--space-2);">Transparency First</p>
+                <h2 style="margin: 0 0 var(--space-3) 0;">Donation & Volunteer Impact Calculator</h2>
+                <p style="max-width: 760px; margin: 0 auto; color: var(--color-text-light);">
+                    Choose a donation amount, volunteer hours, and debris reports. We'll estimate CO₂ offset, plastic removed, habitat restored, and marine life protected—exactly what donors asked to see before contributing.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2" style="gap: var(--space-8);">
+                <div class="card" style="padding: var(--space-8);">
+                    <div style="margin-bottom: var(--space-6);">
+                        <p style="font-weight: var(--fw-semibold); margin-bottom: var(--space-3);">Quick amounts</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: var(--space-3);">
+                            <button type="button" class="btn btn-outline impact-quick" data-amount="25">$25</button>
+                            <button type="button" class="btn btn-outline impact-quick" data-amount="50">$50</button>
+                            <button type="button" class="btn btn-outline impact-quick" data-amount="100">$100</button>
+                            <button type="button" class="btn btn-outline impact-quick" data-amount="250">$250</button>
+                            <button type="button" class="btn btn-outline impact-quick" data-amount="500">$500</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: var(--space-6);">
+                        <label for="impact-donation-input">Donation amount (USD)</label>
+                        <input type="number" id="impact-donation-input" min="0" step="25" placeholder="Enter amount" style="width: 100%;">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: var(--space-6);">
+                        <label for="impact-volunteer-input">Volunteer hours this month: <strong><span id="impact-volunteer-value">0</span> hrs</strong></label>
+                        <input type="range" id="impact-volunteer-input" min="0" max="40" step="1" value="0" style="width: 100%;">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: var(--space-6);">
+                        <label for="impact-debris-input">Debris reports submitted: <strong><span id="impact-debris-value">0</span></strong></label>
+                        <input type="range" id="impact-debris-input" min="0" max="15" step="1" value="0" style="width: 100%;">
+                    </div>
+
+                    <p style="font-size: var(--text-sm); color: var(--color-text-light);">
+                        Numbers are based on OceanCare field data (updated quarterly) and inform donors before they log in to their personal dashboard.
+                    </p>
+                </div>
+
+                <div class="card" style="padding: var(--space-8);">
+                    <h3 style="margin-top: 0;">Projected Impact</h3>
+                    <div class="grid grid-cols-2" style="gap: var(--space-4);" id="impact-results">
+                        <div class="card" style="background: var(--color-bg-secondary);">
+                            <p style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-light);">CO₂ Offset</p>
+                            <p class="impact-value" data-impact-output="co2" style="font-size: 2rem; margin: 0;">0 lbs</p>
+                        </div>
+                        <div class="card" style="background: var(--color-bg-secondary);">
+                            <p style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-light);">Plastic Removed</p>
+                            <p class="impact-value" data-impact-output="plastic" style="font-size: 2rem; margin: 0;">0 kg</p>
+                        </div>
+                        <div class="card" style="background: var(--color-bg-secondary);">
+                            <p style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-light);">Habitat Restored</p>
+                            <p class="impact-value" data-impact-output="habitat" style="font-size: 2rem; margin: 0;">0 sq ft</p>
+                        </div>
+                        <div class="card" style="background: var(--color-bg-secondary);">
+                            <p style="font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-light);">Marine Life Protected</p>
+                            <p class="impact-value" data-impact-output="marine" style="font-size: 2rem; margin: 0;">0 species</p>
+                        </div>
+                    </div>
+                    <p id="impact-summary-text" style="margin-top: var(--space-6); color: var(--color-text-light);">
+                        Use the sliders to preview your combined donation + volunteer impact.
+                    </p>
+                    <div class="btn-group" style="justify-content: flex-start;">
+                        <a href="pages/dashboard.html" class="btn btn-secondary btn-sm">
+                            View Donor Dashboard
+                        </a>
+                        <a href="pages/contact.html" class="btn btn-primary btn-sm">
+                            Complete Donation
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Climate Trends Section -->
+    <section id="climate-trends" class="section-spaced">
+        <div class="container">
+            <div class="section-header" style="text-align: center; margin-bottom: var(--space-8);">
+                <h2 style="margin-bottom: var(--space-3);">🌡️ Live Climate Trends</h2>
+                <p style="max-width: 760px; margin: 0 auto; color: var(--color-text-light);">
+                    Give donors climate context before they contribute. Enter a location or use your coordinates to retrieve 90-day averages from the `/api/climate-trends` endpoint.
+                </p>
+            </div>
+
+            <form id="climate-form" class="card" style="padding: var(--space-6); display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6);">
+                <div>
+                    <label for="climate-location" style="font-weight: var(--fw-semibold);">Location</label>
+                    <input type="text" id="climate-location" placeholder="e.g. Malibu, California" style="width: 100%;">
+                </div>
+                <div class="btn-group" style="justify-content: flex-start; align-items: flex-end;">
+                    <button type="submit" class="btn btn-primary">Get Climate Trends</button>
+                    <button type="button" class="btn btn-secondary" id="climate-use-location">Use My Location</button>
+                </div>
+            </form>
+
+            <div class="grid grid-cols-3" style="gap: var(--space-6);" id="climate-results">
+                <div class="card" style="padding: var(--space-6);">
+                    <p style="text-transform: uppercase; font-size: var(--text-xs); letter-spacing: 1px; color: var(--color-text-light);">Avg Temp (90 days)</p>
+                    <p id="climate-temp" style="font-size: 2.5rem; margin: 0;">-- °F</p>
+                </div>
+                <div class="card" style="padding: var(--space-6);">
+                    <p style="text-transform: uppercase; font-size: var(--text-xs); letter-spacing: 1px; color: var(--color-text-light);">Trend Direction</p>
+                    <p id="climate-trend" style="font-size: 2.5rem; margin: 0;">--</p>
+                    <p id="climate-trend-change" style="color: var(--color-text-light); margin: var(--space-2) 0 0 0;">Awaiting data</p>
+                </div>
+                <div class="card" style="padding: var(--space-6);">
+                    <p style="text-transform: uppercase; font-size: var(--text-xs); letter-spacing: 1px; color: var(--color-text-light);">Rain / Storm Days</p>
+                    <p id="climate-precip" style="font-size: 2.5rem; margin: 0;">-- days</p>
+                </div>
+            </div>
+            <p id="climate-status" style="margin-top: var(--space-4); color: var(--color-text-light);">
+                Waiting for a location. Results appear instantly and can also inform the volunteer planner and donation messaging.
+            </p>
         </div>
     </section>
 
@@ -450,6 +629,68 @@
         </div>
     </section>
 
+    <!-- Donor Experience Section -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <h2 style="text-align: center;">For Donors</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto var(--space-12) auto;">
+                Transparency matters. Every donor gets a personalized dashboard showing exactly where their contributions go and what they achieve.
+            </p>
+
+            <div class="grid grid-cols-3" style="gap: var(--space-6);">
+                <div class="card">
+                    <h3>🎯 Targeted Giving</h3>
+                    <p>Choose which projects to support: coral restoration, marine cleanup, research, or education. See your impact in real-time.</p>
+                </div>
+
+                <div class="card">
+                    <h3>📊 Impact Calculator</h3>
+                    <p>Instant visual feedback: $25 restores 7 coral fragments, protects 2 marine animals, removes 1.5kg waste, educates 2 students.</p>
+                </div>
+
+                <div class="card">
+                    <h3>💾 Donation History</h3>
+                    <p>Complete personal dashboard showing all donations, tax receipts, and cumulative impact over time.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-8);">
+                <a href="pages/dashboard.html" class="btn btn-primary btn-lg">Access Dashboard</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Volunteer Experience Section -->
+    <section class="section-spaced">
+        <div class="container">
+            <h2 style="text-align: center;">For Volunteers</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto var(--space-12) auto;">
+                Get involved in real conservation work. We coordinate activities from beach cleanups to research expeditions, matching your skills and availability.
+            </p>
+
+            <div class="grid grid-cols-3" style="gap: var(--space-6);">
+                <div class="card">
+                    <h3>📅 Flexible Schedule</h3>
+                    <p>Join weekly cleanups, monthly expeditions, or one-time events. Choose what fits your life. Ocean work on your terms.</p>
+                </div>
+
+                <div class="card">
+                    <h3>🌊 Real Impact Tracking</h3>
+                    <p>See your contribution: hours volunteered, plastic removed, marine life protected. Your effort creates measurable change.</p>
+                </div>
+
+                <div class="card">
+                    <h3>👥 Community & Training</h3>
+                    <p>Learn from marine experts, connect with passionate volunteers, and grow your conservation skills through guided programs.</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: var(--space-8);">
+                <a href="pages/volunteer.html" class="btn btn-secondary btn-lg">Become a Volunteer</a>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
     <section class="section-spaced hero-gradient">
         <div class="container text-center">
@@ -517,86 +758,7 @@
     </footer>
 
     <!-- JavaScript -->
-    <script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        // Load API data for widgets
-        async function loadAPIData() {
-            try {
-                // Get user's location (fallback to default coordinates)
-                let lat = 37.7749; // San Francisco
-                let lon = -122.4194;
-                
-                try {
-                    const position = await new Promise((resolve, reject) => {
-                        navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000 });
-                    });
-                    lat = position.coords.latitude;
-                    lon = position.coords.longitude;
-                } catch (geoError) {
-                    console.log('Using default location');
-                }
-
-                // Fetch weather data
-                const weatherResponse = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
-                const weatherData = await weatherResponse.json();
-                
-                if (weatherData.temperature_2m) {
-                    document.getElementById('temp-value').textContent = Math.round(weatherData.temperature_2m) + '°F';
-                }
-                if (weatherData.wind_speed_10m) {
-                    document.getElementById('wind-value').textContent = Math.round(weatherData.wind_speed_10m) + ' mph';
-                }
-
-                // Fetch UV data
-                const uvResponse = await fetch(`/api/uv?lat=${lat}&lon=${lon}`);
-                const uvData = await uvResponse.json();
-                
-                if (uvData.uv_index !== undefined) {
-                    document.getElementById('uv-value').textContent = uvData.uv_index;
-                    document.getElementById('uv-level').textContent = uvData.warning_level || 'Moderate';
-                }
-
-                // Fetch air quality data
-                const aqiResponse = await fetch(`/api/air-quality?lat=${lat}&lon=${lon}`);
-                const aqiData = await aqiResponse.json();
-                
-                if (aqiData.aqi) {
-                    document.getElementById('aqi-value').textContent = aqiData.aqi;
-                }
-
-                // Fetch news preview
-                const newsResponse = await fetch('/api/news');
-                const newsData = await newsResponse.json();
-                
-                if (newsData.articles && newsData.articles.length > 0) {
-                    const article = newsData.articles[0];
-                    document.getElementById('news-preview').innerHTML = `
-                        <p style="font-weight: var(--fw-semibold); margin-bottom: var(--space-2); color: var(--color-text);">
-                            ${article.title}
-                        </p>
-                        <p style="font-size: var(--text-xs); color: var(--color-text-lighter);">
-                            ${new Date(article.publishedAt).toLocaleDateString()}
-                        </p>
-                    `;
-                }
-            } catch (error) {
-                console.error('Error loading API data:', error);
-            }
-        }
-
-        // Load API data after page loads
-        setTimeout(loadAPIData, 1500);
-    </script>
+    <script src="js/homepage.js" defer></script>
 
 </body>
 </html>
