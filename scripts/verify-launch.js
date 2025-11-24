@@ -108,7 +108,7 @@ const securityChecks = [
   checkContent('package.json', /"helmet"/, 'Helmet.js included for security headers'),
   checkContent('package.json', /"bcryptjs"/, 'Password hashing configured'),
   checkContent('package.json', /"jsonwebtoken"/, 'JWT authentication configured'),
-  checkContent('src/security.js', /rateLimiter|rateLimit/, 'Rate limiting configured'),
+  checkContent('src/security.js', /createRateLimiter/, 'Rate limiting configured'),
 ];
 
 CHECKS.security = securityChecks;
