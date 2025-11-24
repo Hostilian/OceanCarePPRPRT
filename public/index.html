@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OceanCare Initiative - Protect Our Oceans, Make Real Impact</title>
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Style System -->
+    <link rel="stylesheet" href="/css/styles.css">
 
     <!-- FontAwesome Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -34,30 +34,16 @@
     }
     </script>
 
-    <!-- Open Graph Meta Tags for Social Sharing -->
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="OceanCare Initiative - Protect Our Oceans, Make Real Impact">
     <meta property="og:description" content="Join 1M+ ocean protectors. Donate, volunteer, and track your environmental impact.">
     <meta property="og:image" content="/og-image.jpg">
     <meta property="og:url" content="https://oceancare.org">
     <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="OceanCare Initiative">
-    <meta name="twitter:description" content="Protect our oceans with donations and volunteering">
 
     <style>
-        /* Custom animations and utilities */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
+        /* Additional animations for fade-in effects */
+        @keyframes fadeIn {
             from {
                 opacity: 0;
                 transform: translateY(20px);
@@ -68,269 +54,637 @@
             }
         }
 
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out;
         }
 
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        /* Subtle gradient for hero background */
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
         }
 
-        @keyframes pulse-glow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(255, 106, 0, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(255, 106, 0, 0.5);
-            }
+        /* Section spacing */
+        .section-spaced {
+            padding-top: var(--space-20);
+            padding-bottom: var(--space-20);
         }
 
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        @keyframes shimmer {
-            0% {
-                background-position: -1000px 0;
-            }
-            100% {
-                background-position: 1000px 0;
-            }
-        }
-
-        @keyframes gradient-shift {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        .animate-fadeInDown {
-            animation: fadeInDown 0.8s ease-out;
-        }
-
-        .animate-fadeInUp {
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .animate-slideInRight {
-            animation: slideInRight 0.8s ease-out;
-        }
-
-        .animate-slideInLeft {
-            animation: slideInLeft 0.8s ease-out;
-        }
-
-        .animate-pulse-glow {
-            animation: pulse-glow 2s ease-in-out infinite;
-        }
-
-        .animate-bounce {
-            animation: bounce 1s ease-in-out infinite;
-        }
-
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Custom gradient backgrounds */
-        .gradient-hero {
-            background: linear-gradient(135deg, #0a1929 0%, #1a3a52 100%);
-        }
-
-        .gradient-feature {
-            background: linear-gradient(135deg, rgba(255, 106, 0, 0.1) 0%, rgba(0, 119, 190, 0.1) 100%);
-        }
-
-        /* Glassmorphism effect */
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Orange button hover effect */
-        .btn-orange-glow:hover {
-            box-shadow: 0 0 20px rgba(255, 106, 0, 0.6);
-            transform: translateY(-2px);
-        }
-
-        /* Card lift effect */
-        .card-lift {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .card-lift:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Text gradient */
-        .text-gradient {
-            background: linear-gradient(135deg, #FF6A00 0%, #FF8C42 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Loading skeleton */
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 1000px 100%;
-            animation: shimmer 2s infinite;
-        }
-
-        /* Text gradient */
-        .text-gradient {
-            background: linear-gradient(135deg, #FF6A00 0%, #FFA500 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Card hover lift */
-        .card-lift {
-            transition: all 0.3s ease;
-        }
-
-        .card-lift:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Responsive font sizes */
         @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-            .hero-subtitle {
-                font-size: 1rem;
+            .section-spaced {
+                padding-top: var(--space-12);
+                padding-bottom: var(--space-12);
             }
         }
 
-        @media (min-width: 769px) {
-            .hero-title {
-                font-size: 3.5rem;
-            }
-            .hero-subtitle {
-                font-size: 1.25rem;
-            }
+        /* Stat cards */
+        .stat-card {
+            text-align: center;
+            padding: var(--space-6);
+            background-color: var(--color-neutral-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            transition: all var(--transition-base);
         }
 
-        /* Enhanced animations */
-        .animate-bounce {
-            animation: bounce 1s infinite;
+        .stat-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
         }
 
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+        /* Feature cards with icon areas */
+        .feature-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
-        /* Glow effect for featured elements */
-        .glow-on-hover {
-            transition: all 0.3s ease;
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-4);
+            font-size: 2rem;
+            transition: all var(--transition-base);
         }
 
-        .glow-on-hover:hover {
-            text-shadow: 0 0 20px rgba(255, 106, 0, 0.5);
-            color: #FF6A00;
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
         }
 
-        /* Smooth transitions for all interactive elements */
-        button, a {
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+        /* CTA button group */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+            margin-top: var(--space-6);
         }
 
-        /* Enhanced focus states for accessibility */
-        button:focus, a:focus {
-            outline: 2px solid #FF6A00;
-            outline-offset: 2px;
-        }
-
-        /* Scroll snap for smooth scrolling experience */
-        html {
-            scroll-snap-type: y proximity;
-        }
-
-        section {
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-        }
-
-        /* Gradient text animation */
-        @keyframes gradient-shift {
-            0%, 100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-        }
-
-        .text-gradient {
-            background-size: 200% 200%;
-            animation: gradient-shift 3s ease infinite;
-        }
-
-        /* Enhanced mobile responsiveness */
         @media (max-width: 640px) {
-            section {
-                padding: 2rem 1rem !important;
+            .btn-group {
+                flex-direction: column;
             }
+        }
 
-            .grid {
-                gap: 1rem !important;
-            }
+        /* Hero content */
+        .hero-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hero-subtitle {
+            font-size: var(--text-lg);
+            line-height: var(--lh-relaxed);
+            margin-bottom: var(--space-8);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-8);
+        }
+
+        /* News items */
+        .news-item {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .news-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--color-primary-lighter) 0%, var(--color-secondary) 100%);
+            border-radius: var(--radius-base) var(--radius-base) 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .news-content {
+            padding: var(--space-6);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-title {
+            margin: var(--space-2) 0 var(--space-4) 0;
+            font-size: var(--text-lg);
+            font-weight: var(--fw-bold);
+            color: var(--color-primary);
+        }
+
+        .news-description {
+            flex-grow: 1;
+            margin-bottom: var(--space-4);
+            color: var(--color-text-light);
+            font-size: var(--text-sm);
+        }
+
+        .news-meta {
+            font-size: var(--text-xs);
+            color: var(--color-text-lighter);
+            margin-bottom: var(--space-3);
+        }
+
+        /* Responsive images */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
         }
     </style>
 </head>
-<body class="bg-white text-gray-800">
+<body>
 
-    <!-- Navigation Bar -->
-    <nav class="fixed w-full top-0 z-50 bg-white shadow-lg">
+    <!-- Header/Navigation -->
+    <header>
+        <div class="container">
+            <div class="flex-between">
+                <a href="/" class="logo">🌊 OceanCare</a>
+                <nav>
+                    <ul>
+                        <li><a href="#mission">Our Mission</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#impact">Impact</a></li>
+                        <li><a href="#news">News & Updates</a></li>
+                        <li><a href="/pages/login.html">Log In</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero hero-gradient">
+        <div class="container">
+            <div class="hero-content animate-fade-in">
+                <h1>Protect Our Oceans.<br>Make Real Impact.</h1>
+                <p class="hero-subtitle">
+                    Join thousands of conservation champions protecting marine ecosystems. Donate, volunteer, report debris, and track your environmental impact with transparency.
+                </p>
+                <div class="btn-group">
+                    <a href="/pages/volunteer.html" class="btn btn-primary btn-lg">
+                        <i class="fas fa-hands-helping"></i> Volunteer Now
+                    </a>
+                    <a href="/pages/contact.html" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-heart"></i> Make a Donation
+                    </a>
+                    <a href="/pages/report-debris.html" class="btn btn-outline btn-lg">
+                        <i class="fas fa-map-marker-alt"></i> Report Debris
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Stats Section -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">1M+</div>
+                    <div class="stat-label">Ocean Protectors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5M+</div>
+                    <div class="stat-label">Tons of Plastic Removed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">180+</div>
+                    <div class="stat-label">Countries Active</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Customer Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section id="mission" class="section-spaced">
+        <div class="container">
+            <h2>Our Mission</h2>
+            <div class="grid grid-cols-2">
+                <div>
+                    <p>
+                        OceanCare Initiative is a non-profit organization dedicated to protecting marine ecosystems through conservation, education, and community action. We believe that ocean protection requires coordinated effort, transparent impact measurement, and accessible participation for everyone.
+                    </p>
+                    <p>
+                        With real-time environmental data, volunteer coordination tools, and verified impact tracking, we're building the most transparent ocean conservation platform in the world.
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        <strong>Our Core Values:</strong>
+                    </p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: var(--space-3);"><i class="fas fa-check text-accent"></i> <strong>Transparency</strong> - 100% verified impact reporting</li>
+                        <li style="margin-bottom: var(--space-3);"><i class="fas fa-check text-accent"></i> <strong>Accessibility</strong> - Free tools for global participation</li>
+                        <li style="margin-bottom: var(--space-3);"><i class="fas fa-check text-accent"></i> <strong>Science-Driven</strong> - Real-time ocean data and research</li>
+                        <li style="margin-bottom: var(--space-3);"><i class="fas fa-check text-accent"></i> <strong>Community First</strong> - Powered by volunteers and donors</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="section-spaced bg-secondary">
+        <div class="container">
+            <h2 style="text-align: center;">How You Can Help</h2>
+            <div class="grid grid-cols-3 mt-12">
+                <!-- Donate -->
+                <div class="card feature-card">
+                    <div class="feature-icon" style="background-color: #fff3cd; color: var(--color-accent);">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>Donate</h3>
+                    <p>Every dollar supports ocean conservation projects. Our impact calculator shows exactly what your donation achieves.</p>
+                    <a href="/pages/contact.html" class="btn btn-secondary btn-sm mt-auto">Learn More →</a>
+                </div>
+
+                <!-- Volunteer -->
+                <div class="card feature-card">
+                    <div class="feature-icon" style="background-color: #d1ecf1; color: var(--color-primary-lighter);">
+                        <i class="fas fa-people-carry"></i>
+                    </div>
+                    <h3>Volunteer</h3>
+                    <p>Join community cleanups, research expeditions, or education programs. Real activities with measurable impact.</p>
+                    <a href="/pages/volunteer.html" class="btn btn-secondary btn-sm mt-auto">Sign Up →</a>
+                </div>
+
+                <!-- Report -->
+                <div class="card feature-card">
+                    <div class="feature-icon" style="background-color: #d4edda; color: #28a745;">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Report Debris</h3>
+                    <p>Found ocean plastic? Report it with GPS coordinates and photos. We coordinate cleanup responses immediately.</p>
+                    <a href="/pages/report-debris.html" class="btn btn-secondary btn-sm mt-auto">Report Now →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact" class="section-spaced">
+        <div class="container">
+            <h2 style="text-align: center;">Verified Impact</h2>
+            <p style="text-align: center; max-width: 600px; margin: 0 auto var(--space-12) auto;">
+                Every action creates measurable change. Our transparent impact dashboard shows real-time results verified by conservation partners.
+            </p>
+
+            <div class="grid grid-cols-4 gap-6">
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: var(--color-accent);">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                    <div class="stat-number">847K+</div>
+                    <div class="stat-label">kg Plastic Removed</div>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: var(--color-primary-lighter);">
+                        <i class="fas fa-fish"></i>
+                    </div>
+                    <div class="stat-number">5.2M</div>
+                    <div class="stat-label">Marine Species Protected</div>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: #28a745;">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="stat-number">234K</div>
+                    <div class="stat-label">Acres of Ocean Restored</div>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: #17a2b8;">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="stat-number">182K</div>
+                    <div class="stat-label">People Educated</div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <p class="text-text-lighter">
+                    <i class="fas fa-info-circle"></i> 
+                    Impact data updated daily. <a href="#" style="color: var(--color-primary-lighter);">View detailed verification reports →</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donor Experience Section -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <h2 style="text-align: center;">For Donors</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto var(--space-12) auto;">
+                Transparency matters. Every donor gets a personalized dashboard showing exactly where their contributions go and what they achieve.
+            </p>
+
+            <div class="grid grid-cols-3 gap-6">
+                <div class="card">
+                    <h3>🎯 Targeted Giving</h3>
+                    <p>Choose which projects to support: coral restoration, marine cleanup, research, or education. See your impact in real-time.</p>
+                </div>
+
+                <div class="card">
+                    <h3>📊 Impact Calculator</h3>
+                    <p>Instant visual feedback: $25 restores 7 coral fragments, protects 2 marine animals, removes 1.5kg waste, educates 2 students.</p>
+                </div>
+
+                <div class="card">
+                    <h3>💾 Donation History</h3>
+                    <p>Complete personal dashboard showing all donations, tax receipts, and cumulative impact over time.</p>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <a href="/pages/contact.html" class="btn btn-primary btn-lg">Start Supporting Ocean Conservation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Volunteer Experience Section -->
+    <section class="section-spaced">
+        <div class="container">
+            <h2 style="text-align: center;">For Volunteers</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto var(--space-12) auto;">
+                Get involved in real conservation work. We coordinate activities from beach cleanups to research expeditions, matching your skills and availability.
+            </p>
+
+            <div class="grid grid-cols-3 gap-6">
+                <div class="card">
+                    <h3>📅 Flexible Schedule</h3>
+                    <p>Join weekly cleanups, monthly expeditions, or one-time events. Choose what fits your life. Ocean work on your terms.</p>
+                </div>
+
+                <div class="card">
+                    <h3>🌊 Real Impact Tracking</h3>
+                    <p>See your contribution: hours volunteered, plastic removed, marine life protected. Your effort creates measurable change.</p>
+                </div>
+
+                <div class="card">
+                    <h3>👥 Community & Training</h3>
+                    <p>Learn from marine experts, connect with passionate volunteers, and grow your conservation skills through guided programs.</p>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <a href="/pages/volunteer.html" class="btn btn-primary btn-lg">Become a Volunteer</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <h2 style="text-align: center;">Stories from Our Community</h2>
+            
+            <div class="grid grid-cols-3 gap-6 mt-12">
+                <div class="card">
+                    <div style="margin-bottom: var(--space-4); color: var(--color-accent);">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="margin-bottom: var(--space-4); font-style: italic;">
+                        "I've volunteered 12 times. The impact tracker shows I've removed 847kg of plastic and protected thousands of marine animals. It's motivating to see the difference!"
+                    </p>
+                    <div style="padding-top: var(--space-4); border-top: 1px solid var(--color-border);">
+                        <p style="font-weight: var(--fw-semibold); margin: 0; color: var(--color-primary);">Sarah Chen</p>
+                        <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin: 0;">Marine Volunteer, California</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="margin-bottom: var(--space-4); color: var(--color-accent);">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="margin-bottom: var(--space-4); font-style: italic;">
+                        "Donating monthly is effortless. I can see exactly where my money goes and the coral restoration dashboard shows real progress over time."
+                    </p>
+                    <div style="padding-top: var(--space-4); border-top: 1px solid var(--color-border);">
+                        <p style="font-weight: var(--fw-semibold); margin: 0; color: var(--color-primary);">Marcus Rodriguez</p>
+                        <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin: 0;">Monthly Donor, Florida</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="margin-bottom: var(--space-4); color: var(--color-accent);">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="margin-bottom: var(--space-4); font-style: italic;">
+                        "Reporting debris was simple. Within 2 weeks, a cleanup team coordinated a response at my GPS location. Real action, real impact!"
+                    </p>
+                    <div style="padding-top: var(--space-4); border-top: 1px solid var(--color-border);">
+                        <p style="font-weight: var(--fw-semibold); margin: 0; color: var(--color-primary);">Elena Vasquez</p>
+                        <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin: 0;">Environmental Activist, Mexico</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news" class="section-spaced">
+        <div class="container">
+            <h2 style="text-align: center;">Latest Ocean News</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto var(--space-12) auto;">
+                Stay informed with real-time conservation updates from our global partners.
+            </p>
+
+            <div id="news-grid" class="grid grid-cols-3 gap-6">
+                <!-- Loading placeholder - will be replaced by JavaScript -->
+                <div class="card news-item">
+                    <div class="news-image" style="background: linear-gradient(135deg, #ddd 0%, #eee 100%);"></div>
+                    <div class="news-content">
+                        <div style="height: 1rem; background: #ddd; border-radius: var(--radius-base); margin-bottom: var(--space-3);"></div>
+                    </div>
+                </div>
+                <div class="card news-item">
+                    <div class="news-image" style="background: linear-gradient(135deg, #ddd 0%, #eee 100%);"></div>
+                    <div class="news-content">
+                        <div style="height: 1rem; background: #ddd; border-radius: var(--radius-base); margin-bottom: var(--space-3);"></div>
+                    </div>
+                </div>
+                <div class="card news-item">
+                    <div class="news-image" style="background: linear-gradient(135deg, #ddd 0%, #eee 100%);"></div>
+                    <div class="news-content">
+                        <div style="height: 1rem; background: #ddd; border-radius: var(--radius-base); margin-bottom: var(--space-3);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section-spaced hero-gradient">
+        <div class="container text-center">
+            <h2 style="color: white; margin-bottom: var(--space-6);">Ready to Make a Difference?</h2>
+            <p style="color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto var(--space-8) auto; font-size: var(--text-lg);">
+                Join thousands protecting our oceans. Start with one action today.
+            </p>
+            <div class="btn-group" style="justify-content: center;">
+                <a href="/pages/volunteer.html" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-hands-helping"></i> Volunteer
+                </a>
+                <a href="/pages/contact.html" class="btn" style="background-color: white; color: var(--color-primary); border: 2px solid white; font-weight: var(--fw-semibold);">
+                    <i class="fas fa-heart"></i> Donate
+                </a>
+                <a href="/pages/report-debris.html" class="btn" style="background-color: transparent; color: white; border: 2px solid white; font-weight: var(--fw-semibold);">
+                    <i class="fas fa-map-marker-alt"></i> Report Debris
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="grid grid-cols-4 gap-8" style="margin-bottom: var(--space-12);">
+                <div>
+                    <h5>About</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/team.html">Our Team</a></li>
+                        <li><a href="/pages/projects.html">Our Projects</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5>Get Involved</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/volunteer.html">Volunteer</a></li>
+                        <li><a href="/pages/contact.html">Donate</a></li>
+                        <li><a href="/pages/report-debris.html">Report Debris</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5>Support</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/contact.html">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5>Legal</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-top" style="padding-top: var(--space-8); text-align: center; color: rgba(255,255,255,0.7); font-size: var(--text-sm);">
+                <p>&copy; 2025 OceanCare Initiative. All rights reserved. | Protecting oceans, one action at a time.</p>
+                <div style="margin-top: var(--space-4);">
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Facebook</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Twitter</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Instagram</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Navigation active state
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Load news from API
+        async function loadNews() {
+            try {
+                const response = await fetch('/api/news');
+                const data = await response.json();
+                const articles = data.articles || [];
+
+                const newsGrid = document.getElementById('news-grid');
+                if (articles.length === 0) {
+                    newsGrid.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; padding: var(--space-12) 0;">
+                            <p>Loading latest ocean news...</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                newsGrid.innerHTML = articles.slice(0, 3).map((article, i) => {
+                    const pubDate = new Date(article.publishedAt);
+                    const daysAgo = Math.floor((Date.now() - pubDate) / (1000 * 60 * 60 * 24));
+                    const dateStr = daysAgo === 0 ? 'Today' : `${daysAgo}d ago`;
+
+                    return `
+                        <div class="card news-item">
+                            <div class="news-image" style="background: linear-gradient(135deg, var(--color-primary-lighter) 0%, var(--color-secondary) 100%); font-size: 3rem;">🌊</div>
+                            <div class="news-content">
+                                <div class="news-meta"><i class="fas fa-newspaper"></i> ${dateStr} • ${article.source}</div>
+                                <h3 class="news-title">${article.title}</h3>
+                                <p class="news-description">${article.description || 'Ocean conservation news'}</p>
+                                <a href="${article.url}" target="_blank" rel="noopener" style="color: var(--color-primary-lighter); font-weight: var(--fw-semibold);">
+                                    Read More →
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error loading news:', error);
+            }
+        }
+
+        // Load news on page load
+        setTimeout(loadNews, 1000);
+    </script>
+
+</body>
+</html>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
