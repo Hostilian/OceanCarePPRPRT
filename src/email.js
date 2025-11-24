@@ -12,6 +12,7 @@ let transporter = null;
 /**
  * Initialize email transporter based on configuration
  * Supports: SendGrid (via SMTP), Mailgun, or standard SMTP
+ * @returns {boolean} - True if transporter was initialized
  */
 function initializeEmailService() {
   const emailService = process.env.EMAIL_SERVICE || 'smtp';
@@ -28,6 +29,7 @@ function initializeEmailService() {
         }
       });
       console.log('✅ Email service initialized: SendGrid');
+      return true;
     } else {
       // Standard SMTP configuration
       transporter = nodemailer.createTransport({
@@ -40,6 +42,7 @@ function initializeEmailService() {
         }
       });
       console.log('✅ Email service initialized: SMTP');
+      return true;
     }
 
     // Verify connection
@@ -51,9 +54,12 @@ function initializeEmailService() {
           console.log('✅ Email service connection verified');
         }
       });
+      return true;
     }
+    return false;
   } catch (error) {
     console.error('Email service initialization error:', error);
+    return false;
   }
 }
 

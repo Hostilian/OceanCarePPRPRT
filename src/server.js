@@ -17,7 +17,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Initialize email service
-email.initializeEmailService();
+const emailStatus = email.initializeEmailService();
 
 // Validate critical environment variables
 const envValidation = security.validateEnvironment(['STRIPE_SECRET_KEY', 'SENDGRID_API_KEY']);
@@ -1583,7 +1583,7 @@ if (require.main === module) {
    • CSRF protection enabled
    
 ✅ Core Services
-   • Email service: ${transporter ? '✓ Configured' : '⚠️  Not configured (optional)'}
+   • Email service: ${emailStatus ? '✓ Configured' : '⚠️  Not configured (optional)'}
    • Payment processing: ${process.env.STRIPE_SECRET_KEY ? '✓ Stripe configured' : '⚠️  Not configured (required for donations)'}
    • Authentication: ✓ JWT-based
    
