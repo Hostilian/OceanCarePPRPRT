@@ -173,6 +173,24 @@ function initDB() {
   )`);
 }
 
+function extractCoordinates(query = {}) {
+  const rawLat = query.latitude ?? query.lat;
+  const rawLon = query.longitude ?? query.lon ?? query.lng ?? query.long;
+
+  const latitude = rawLat !== undefined ? parseFloat(rawLat) : null;
+  const longitude = rawLon !== undefined ? parseFloat(rawLon) : null;
+
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+    return { error: 'Latitude and longitude required' };
+  }
+
+  if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+    return { error: 'Invalid coordinates. Latitude must be -90 to 90, Longitude -180 to 180.' };
+  }
+
+  return { latitude, longitude };
+}
+
 // News API
 app.get('/api/news', async (req, res) => {
   // Norm: "You know what's funny about news APIs? They charge you money
@@ -1157,234 +1175,75 @@ app.get('/api/marine-weather', async (req, res) => {
   }
 });
 
-// UV Index data from OpenUV for volunteer safety
-app.get('/api/uv-index', async (req, res) => {
-  // Norm MacDonald: "UV Index. Because our volunteers are about to spend hours
-  // in the sun cleaning up garbage. We owe it to them to tell them when the
-  // sun is angriest."
-
-  const { latitude, longitude } = req.query;
-  const openuvKey = process.env.OPENUV_API_KEY;
-
-  // Check if key is missing
-  if (!openuvKey || openuvKey.includes('your_')) {
-    return res.status(400).json({
-      success: false,
-      message: 'OpenUV API key not configured. Register at openuv.io to enable UV index feature.'
-    });
-  }
-
-  // Validate coordinates
-  const lat = parseFloat(latitude);
-  const lon = parseFloat(longitude);
-  if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
-    return res.status(400).json({
-      success: false,
-      message: 'Invalid coordinates. Latitude must be -90 to 90, Longitude -180 to 180.'
-    });
-  }
-
-  try {
-    const url = `https://api.openuv.io/api/v1/uv?lat=${latitude}&lng=${longitude}`;
-
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
-
-    const uvRes = await fetch(url, {
-      headers: { 'x-access-token': openuvKey },
-      signal: controller.signal
-    });
-
-    clearTimeout(timeout);
-
-    // Handle different error status codes
-    if (uvRes.status === 402) {
-      return res.status(402).json({
-        success: false,
-        message: 'OpenUV API quota exceeded. Free tier allows 50 requests/day. Try again tomorrow.',
-        statusCode: 402
-      });
-    }
-
-    if (uvRes.status === 401 || uvRes.status === 403) {
-      return res.status(401).json({
-        success: false,
-        message: 'OpenUV API key invalid. Check openuv.io account.',
-        statusCode: uvRes.status
-      });
-    }
-
-    if (!uvRes.ok) {
-      throw new Error(`OpenUV API error: ${uvRes.status}`);
-    }
-
-    const uvData = await uvRes.json();
-
-    // Extract key info for volunteers
-    const safeExposure = uvData.result?.safe_exposure_time || {};
-    const uvIndex = uvData.result?.uv || 0;
-
-    res.json({
-      success: true,
-      uv: {
-        index: uvIndex,
-        safeExposure: safeExposure,
-        safeTime: uvData.result?.safe_exposure_time?.st1 || 'Check at openuv.io',
-        recommendation: uvIndex > 8 ? 'HIGH - Use SPF 50+ sunscreen, limit outdoor time'
-                       : uvIndex > 5 ? 'MODERATE - Use SPF 30+ sunscreen'
-                       : 'LOW - Standard sun protection sufficient'
-      },
-      timestamp: new Date().toISOString(),
-      source: 'OpenUV API'
-    });
-  } catch (error) {
-    console.error('UV Index error:', error);
-
-    if (error.name === 'AbortError') {
-      return res.status(504).json({
-        success: false,
-        message: 'OpenUV API request timed out. Try again in a moment.',
-        statusCode: 504
-      });
-    }
-
-    res.status(500).json({
-      success: false,
-      message: 'Unable to fetch UV Index data. OpenUV API may be temporarily unavailable.',
-      error: error.message
-    });
-  }
-});
-
-// Climate trends from Visual Crossing
-app.get('/api/climate-trends', async (req, res) => {
-  // Norm MacDonald: "Climate trends. Long-term data so our donors can see
-  // the bigger picture. 30, 60, 90 days of temperature and precipitation.
-  // It's like a crystal ball, but with statistics."
-
-  const { latitude, longitude } = req.query;
-  const visualCrossingKey = process.env.VISUAL_CROSSING_API_KEY;
-
-  // Check if key is missing
-  if (!visualCrossingKey || visualCrossingKey.includes('your_')) {
-    return res.status(400).json({
-      success: false,
-      message: 'Visual Crossing API key not configured. Register at visualcrossing.com to enable climate trends feature.'
-    });
-  }
-
-  // Validate coordinates
-  const lat = parseFloat(latitude);
-  const lon = parseFloat(longitude);
-  if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
-    return res.status(400).json({
-      success: false,
-      message: 'Invalid coordinates. Latitude must be -90 to 90, Longitude -180 to 180.'
-    });
-  }
-
-  try {
-    // Get 90-day climate history
-    const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${latitude},${longitude}/last90days?unitGroup=metric&include=days&key=${visualCrossingKey}&contentType=json`;
-
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 5000);
-
-    const climateRes = await fetch(url, { signal: controller.signal });
-
-    clearTimeout(timeout);
-
-    // Handle different error status codes
-    if (climateRes.status === 402) {
-      return res.status(402).json({
-        success: false,
-        message: 'Visual Crossing API quota exceeded. Free tier allows 1000 requests/day. Try again tomorrow.',
-        statusCode: 402
-      });
-    }
-
-    if (climateRes.status === 401 || climateRes.status === 403) {
-      return res.status(401).json({
-        success: false,
-        message: 'Visual Crossing API key invalid. Check visualcrossing.com account.',
-        statusCode: climateRes.status
-      });
-    }
-
-    if (!climateRes.ok) {
-      throw new Error(`Visual Crossing API error: ${climateRes.status}`);
-    }
-
-    const climateData = await climateRes.json();
-
-    // Check if we got valid data
-    if (!climateData.days || climateData.days.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: 'No climate data found for this location. Try a major city or landmark.'
-      });
-    }
-
-    // Calculate trends from historical data
-    const days = climateData.days || [];
-    const tempAvg = days.length > 0
-      ? (days.reduce((sum, d) => sum + (d.temp || 0), 0) / days.length).toFixed(1)
-      : 0;
-    const precipTotal = days.length > 0
-      ? (days.reduce((sum, d) => sum + (d.precip || 0), 0)).toFixed(1)
-      : 0;
-
-    res.json({
-      success: true,
-      climateTrends: {
-        period: '90-day historical',
-        averageTemperature: `${tempAvg}°C`,
-        totalPrecipitation: `${precipTotal}mm`,
-        daysCounted: days.length,
-        trend: tempAvg > 20 ? 'Warming' : tempAvg < 10 ? 'Cooling' : 'Stable'
-      },
-      rawData: climateData,
-      timestamp: new Date().toISOString(),
-      source: 'Visual Crossing API'
-    });
-  } catch (error) {
-    console.error('Climate trends error:', error);
-
-    if (error.name === 'AbortError') {
-      return res.status(504).json({
-        success: false,
-        message: 'Visual Crossing API request timed out. Try again in a moment.',
-        statusCode: 504
-      });
-    }
-
-    res.status(500).json({
-      success: false,
-      message: 'Unable to fetch climate trends data. Visual Crossing API may be temporarily unavailable.',
-      error: error.message
-    });
-  }
-});
-
 // ===== ENHANCED EXTERNAL API ENDPOINTS =====
+
+async function handleUVIndexRequest(req, res) {
+  try {
+    const coords = extractCoordinates(req.query);
+
+    if (coords.error) {
+      return res.status(400).json({ success: false, message: coords.error });
+    }
+
+    const uvData = await externalApis.getUVIndexData(coords.latitude, coords.longitude);
+
+    res.json({
+      success: true,
+      data: uvData,
+      coordinates: coords,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('UV Index endpoint error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Unable to fetch UV index data',
+      error: error.message
+    });
+  }
+}
+
+async function handleClimateRequest(req, res) {
+  try {
+    const coords = extractCoordinates(req.query);
+
+    if (coords.error) {
+      return res.status(400).json({ success: false, message: coords.error });
+    }
+
+    const climateData = await externalApis.getClimateTrends(coords.latitude, coords.longitude);
+
+    res.json({
+      success: true,
+      data: climateData,
+      coordinates: coords,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Climate Data endpoint error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Unable to fetch climate data',
+      error: error.message
+    });
+  }
+}
 
 // Weather data endpoint
 app.get('/api/weather', generalLimiter, async (req, res) => {
   try {
-    const { latitude, longitude } = req.query;
+    const coords = extractCoordinates(req.query);
 
-    if (!latitude || !longitude) {
-      return res.status(400).json({
-        success: false,
-        message: 'Latitude and longitude required'
-      });
+    if (coords.error) {
+      return res.status(400).json({ success: false, message: coords.error });
     }
 
-    const weatherData = await externalApis.getWeatherData(latitude, longitude);
+    const weatherData = await externalApis.getWeatherData(coords.latitude, coords.longitude);
 
     res.json({
       success: true,
       data: weatherData,
+      coordinates: coords,
       timestamp: new Date().toISOString()
     });
   } catch (error) {
@@ -1397,52 +1256,25 @@ app.get('/api/weather', generalLimiter, async (req, res) => {
   }
 });
 
-// UV Index endpoint
-app.get('/api/uv-index', generalLimiter, async (req, res) => {
-  try {
-    const { latitude, longitude } = req.query;
-
-    if (!latitude || !longitude) {
-      return res.status(400).json({
-        success: false,
-        message: 'Latitude and longitude required'
-      });
-    }
-
-    const uvData = await externalApis.getUVIndexData(latitude, longitude);
-
-    res.json({
-      success: true,
-      data: uvData,
-      timestamp: new Date().toISOString()
-    });
-  } catch (error) {
-    console.error('UV Index endpoint error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Unable to fetch UV index data',
-      error: error.message
-    });
-  }
-});
+// UV Index endpoints (primary + alias for legacy frontend path)
+app.get('/api/uv-index', generalLimiter, handleUVIndexRequest);
+app.get('/api/uv', generalLimiter, handleUVIndexRequest);
 
 // Air Quality endpoint
 app.get('/api/air-quality', generalLimiter, async (req, res) => {
   try {
-    const { latitude, longitude } = req.query;
+    const coords = extractCoordinates(req.query);
 
-    if (!latitude || !longitude) {
-      return res.status(400).json({
-        success: false,
-        message: 'Latitude and longitude required'
-      });
+    if (coords.error) {
+      return res.status(400).json({ success: false, message: coords.error });
     }
 
-    const aqData = await externalApis.getAirQualityData(latitude, longitude);
+    const aqData = await externalApis.getAirQualityData(coords.latitude, coords.longitude);
 
     res.json({
       success: true,
       data: aqData,
+      coordinates: coords,
       timestamp: new Date().toISOString()
     });
   } catch (error) {
@@ -1488,34 +1320,9 @@ app.get('/api/debris-heatmap', generalLimiter, async (req, res) => {
   }
 });
 
-// Climate Trends endpoint
-app.get('/api/climate-data', generalLimiter, async (req, res) => {
-  try {
-    const { latitude, longitude } = req.query;
-
-    if (!latitude || !longitude) {
-      return res.status(400).json({
-        success: false,
-        message: 'Latitude and longitude required'
-      });
-    }
-
-    const climateData = await externalApis.getClimateTrends(latitude, longitude);
-
-    res.json({
-      success: true,
-      data: climateData,
-      timestamp: new Date().toISOString()
-    });
-  } catch (error) {
-    console.error('Climate Data endpoint error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Unable to fetch climate data',
-      error: error.message
-    });
-  }
-});
+// Climate Trends endpoints (support both legacy and new paths)
+app.get('/api/climate-data', generalLimiter, handleClimateRequest);
+app.get('/api/climate-trends', generalLimiter, handleClimateRequest);
 
 // ===== GLOBAL ERROR HANDLING MIDDLEWARE =====
 
