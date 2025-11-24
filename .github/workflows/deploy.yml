@@ -24,13 +24,18 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      # Copy all static files from public/ directory to _site/ for GitHub Pages deployment
+      # This ensures pages/, css/, js/, and assets/ are all included correctly
       - name: Create _site directory with static files
         run: |
           mkdir -p _site
-          cp index.html _site/
-          cp -r pages _site/
-          cp -r styles _site/ 2>/dev/null || true
-          cp -r assets _site/ 2>/dev/null || true
+          cp public/index.html _site/
+          cp -r public/pages _site/
+          cp -r public/css _site/
+          cp -r public/js _site/
+          cp -r public/assets _site/ 2>/dev/null || true
+          cp public/404.html _site/ 2>/dev/null || true
+          cp public/500.html _site/ 2>/dev/null || true
           echo '<meta http-equiv="refresh" content="0;url=index.html">' > _site/README.md
 
       - name: Upload artifact
