@@ -138,12 +138,63 @@
             padding: var(--space-20) 0;
         }
 
+        /* Stats bar styling */
+        .stats-bar {
+            background: linear-gradient(to right, #005580, #0077a8);
+            padding: var(--space-8) 0;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .stats-bar .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: var(--space-2);
+            font-family: var(--font-serif);
+        }
+
+        .stats-bar .stat-label {
+            font-size: 0.95rem;
+            opacity: 0.95;
+            letter-spacing: 0.3px;
+        }
+
+        /* Enhanced card styling */
+        .card {
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Better mobile responsiveness */
         @media (max-width: 768px) {
             .section-spaced {
                 padding: var(--space-12) 0;
             }
             .btn-group {
                 flex-direction: column;
+                width: 100%;
+            }
+            .btn-group .btn {
+                width: 100%;
+            }
+            .stats-bar .stat-value {
+                font-size: 2rem;
+            }
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid-cols-3, .grid-cols-4 {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -176,7 +227,7 @@
             <div class="hero-content">
                 <h1>Protect Our Oceans.<br>Make Real Impact.</h1>
                 <p class="hero-subtitle">
-                    Join thousands of conservation champions protecting marine ecosystems. Donate, volunteer, report debris, and track your environmental impact.
+                    Join thousands of ocean protectors worldwide. Together we're cleaning beaches, tracking debris, and restoring marine ecosystems through verified, transparent action.
                 </p>
                 <div class="btn-group">
                     <a href="/pages/volunteer.html" class="btn btn-primary btn-lg">
@@ -185,9 +236,29 @@
                     <a href="/pages/contact.html" class="btn btn-secondary btn-lg">
                         <i class="fas fa-heart"></i> Make a Donation
                     </a>
-                    <a href="/pages/report-debris.html" class="btn btn-outline btn-lg">
+                    <a href="/pages/report-debris.html" class="btn btn-lg" style="background-color: white; color: var(--color-primary); border: 2px solid white; font-weight: 600;">
                         <i class="fas fa-map-marker-alt"></i> Report Debris
                     </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+        <div class="container">
+            <div class="grid grid-cols-3" style="gap: var(--space-6);">
+                <div class="text-center">
+                    <div class="stat-value">1M+</div>
+                    <div class="stat-label">Ocean Protectors</div>
+                </div>
+                <div class="text-center">
+                    <div class="stat-value">180+</div>
+                    <div class="stat-label">Countries Active</div>
+                </div>
+                <div class="text-center">
+                    <div class="stat-value">24/7</div>
+                    <div class="stat-label">Customer Support</div>
                 </div>
             </div>
         </div>
@@ -196,8 +267,8 @@
     <!-- Live Ocean Data Section -->
     <section id="tools" class="section-spaced bg-secondary">
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: var(--space-4);">🌊 Live Ocean Data</h2>
-            <p style="text-align: center; max-width: 700px; margin: 0 auto var(--space-8) auto; color: var(--color-text-light);">
+            <h2 class="text-center" style="margin-bottom: var(--space-4);">🌊 Live Ocean Data</h2>
+            <p class="text-center" style="max-width: 700px; margin: 0 auto var(--space-8) auto; color: var(--color-text-light);">
                 Real-time environmental data from our integrated ocean monitoring systems
             </p>
             
@@ -275,8 +346,8 @@
     <!-- Mission Section -->
     <section id="mission" class="section-spaced">
         <div class="container">
-            <h2 style="text-align: center;">Our Mission</h2>
-            <div class="grid grid-cols-2">
+            <h2 class="text-center" style="margin-bottom: var(--space-8);">Our Mission</h2>
+            <div class="grid grid-cols-2" style="gap: var(--space-8);">
                 <div>
                     <p>
                         OceanCare Initiative is a non-profit organization dedicated to protecting marine ecosystems through conservation, education, and community action.
@@ -303,8 +374,8 @@
     <!-- How It Works Section -->
     <section id="how-it-works" class="section-spaced bg-secondary">
         <div class="container">
-            <h2 style="text-align: center;">How You Can Help</h2>
-            <div class="grid grid-cols-3 mt-12">
+            <h2 class="text-center" style="margin-bottom: var(--space-8);">How You Can Help</h2>
+            <div class="grid grid-cols-3" style="gap: var(--space-6); margin-top: var(--space-12);">
                 <div class="card feature-card">
                     <div class="feature-icon" style="background-color: #fff3cd; color: var(--color-accent);">
                         <i class="fas fa-hand-holding-heart"></i>
@@ -324,7 +395,7 @@
                 </div>
 
                 <div class="card feature-card">
-                    <div class="feature-icon" style="background-color: #d4edda; color: #28a745;">
+                    <div class="feature-icon" style="background-color: #c3e6cb; color: #1e7e34;">
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <h3>Report Debris</h3>
@@ -338,21 +409,21 @@
     <!-- Impact Section -->
     <section id="impact" class="section-spaced">
         <div class="container">
-            <h2 style="text-align: center;">Verified Impact</h2>
-            <p style="text-align: center; max-width: 600px; margin: 0 auto var(--space-12) auto;">
+            <h2 class="text-center" style="margin-bottom: var(--space-4);">Verified Impact</h2>
+            <p class="text-center" style="max-width: 600px; margin: 0 auto var(--space-12) auto; color: var(--color-text-light);">
                 Every action creates measurable change. Our transparent dashboard shows real-time results.
             </p>
 
-            <div class="grid grid-cols-4 gap-6">
-                <div class="card text-center">
+            <div class="grid grid-cols-4" style="gap: var(--space-6);">
+                <div class="card text-center" style="padding: var(--space-8);">
                     <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: var(--color-accent);">
                         <i class="fas fa-trash"></i>
                     </div>
                     <div class="stat-number">847K+</div>
-                    <div class="stat-label">kg Plastic Removed</div>
+                    <div class="stat-label">Tons Plastic Removed</div>
                 </div>
 
-                <div class="card text-center">
+                <div class="card text-center" style="padding: var(--space-8);">
                     <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: var(--color-primary-lighter);">
                         <i class="fas fa-fish"></i>
                     </div>
@@ -360,7 +431,7 @@
                     <div class="stat-label">Marine Species Protected</div>
                 </div>
 
-                <div class="card text-center">
+                <div class="card text-center" style="padding: var(--space-8);">
                     <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: #28a745;">
                         <i class="fas fa-leaf"></i>
                     </div>
@@ -368,7 +439,7 @@
                     <div class="stat-label">Acres of Ocean Restored</div>
                 </div>
 
-                <div class="card text-center">
+                <div class="card text-center" style="padding: var(--space-8);">
                     <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: #17a2b8;">
                         <i class="fas fa-graduation-cap"></i>
                     </div>
@@ -382,9 +453,9 @@
     <!-- CTA Section -->
     <section class="section-spaced hero-gradient">
         <div class="container text-center">
-            <h2 style="color: white; margin-bottom: var(--space-6);">Ready to Make a Difference?</h2>
-            <p style="color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto var(--space-8) auto; font-size: var(--text-lg);">
-                Join thousands protecting our oceans. Start with one action today.
+            <h2 style="color: white; margin-bottom: var(--space-6); font-size: 2.5rem;">Ready to Make a Difference?</h2>
+            <p style="color: rgba(255,255,255,0.95); max-width: 600px; margin: 0 auto var(--space-8) auto; font-size: var(--text-lg); line-height: 1.6;">
+                Join 1M+ ocean protectors worldwide. Start with one action today.
             </p>
             <div class="btn-group">
                 <a href="/pages/volunteer.html" class="btn btn-secondary btn-lg">
