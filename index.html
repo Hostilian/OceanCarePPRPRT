@@ -323,7 +323,7 @@
 
                 <!-- Report -->
                 <div class="card feature-card">
-                    <div class="feature-icon" style="background-color: #d4edda; color: #28a745;">
+                    <div class="feature-icon" style="background-color: #c3e6cb; color: #155724;">
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <h3>Report Debris</h3>
@@ -620,15 +620,17 @@
     <!-- JavaScript -->
     <script>
         // Navigation active state
-        document.querySelectorAll('nav a').forEach(link => {
+        for (const link of document.querySelectorAll('nav a')) {
             link.addEventListener('click', function() {
-                document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+                for (const l of document.querySelectorAll('nav a')) {
+                    l.classList.remove('active');
+                }
                 this.classList.add('active');
             });
-        });
+        }
 
         // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        for (const anchor of document.querySelectorAll('a[href^="#"]')) {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
@@ -636,7 +638,7 @@
                     target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
-        });
+        }
 
         // Load news from API
         async function loadNews() {
@@ -892,7 +894,7 @@
     </section>
 
     <!-- Trust & Impact Metrics Section -->
-    <section id="impact" class="gradient-hero text-white py-20 px-4 sm:px-6 lg:px-8">
+    <section id="trust-metrics" class="gradient-hero text-white py-20 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 animate-fadeInDown">
                 <h2 class="text-4xl font-bold mb-4">Fast, Safe & Transparent</h2>
@@ -1103,7 +1105,7 @@
     </section>
 
     <!-- News & Updates Section -->
-    <section id="news" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50 to-cyan-50">
+    <section id="latest-news" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50 to-cyan-50">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 animate-fadeInUp">
                 <h2 class="text-4xl font-bold text-blue-900 mb-4">
@@ -1115,7 +1117,7 @@
             </div>
 
             <!-- News Grid - Will be populated by JavaScript -->
-            <div id="news-grid" class="grid md:grid-cols-3 gap-8">
+            <div id="latest-news-grid" class="grid md:grid-cols-3 gap-8">
                 <!-- Loading skeleton -->
                 <div class="glass-effect rounded-2xl overflow-hidden bg-white shadow-lg border border-blue-200 animate-pulse">
                     <div class="h-40 bg-blue-200"></div>
@@ -1743,11 +1745,11 @@
 
                 // Close mobile menu when a link is clicked
                 const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-                mobileMenuLinks.forEach(link => {
+                for (const link of mobileMenuLinks) {
                     link.addEventListener('click', () => {
                         mobileMenu.classList.add('hidden');
                     });
-                });
+                }
             }
         }
 
@@ -1755,7 +1757,7 @@
         // SMOOTH SCROLL FUNCTIONALITY
         // =====================================================
         function initSmoothScroll() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            for (const anchor of document.querySelectorAll('a[href^="#"]')) {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
                     const target = document.querySelector(this.getAttribute('href'));
@@ -1767,7 +1769,6 @@
                         });
                     }
                 });
-            });
         }
 
         // =====================================================
@@ -1818,18 +1819,18 @@
             };
 
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
+                for (const entry of entries) {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('animate-fadeInUp');
                         observer.unobserve(entry.target);
                     }
-                });
+                }
             }, observerOptions);
 
             // Observe all cards and sections for animation
-            document.querySelectorAll('.card-lift, .glass-effect, section').forEach(el => {
+            for (const el of document.querySelectorAll('.card-lift, .glass-effect, section')) {
                 observer.observe(el);
-            });
+            }
         }
 
         // =====================================================
@@ -1845,21 +1846,21 @@
             };
 
             const impactObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
+                for (const entry of entries) {
                     if (entry.isIntersecting && !appState.countersAnimated) {
                         appState.countersAnimated = true;
                         const numbers = entry.target.querySelectorAll('.text-5xl');
-                        numbers.forEach(num => {
+                        for (const num of numbers) {
                             const text = num.textContent;
                             const match = text.match(/\d+/);
                             if (match) {
-                                const target = parseInt(match[0]);
+                                const target = Number.parseInt(match[0], 10);
                                 animateCounter(num, target, config.animationDuration);
                             }
-                        });
+                        }
                         impactObserver.unobserve(entry.target);
                     }
-                });
+                }
             }, observerOptions);
 
             impactObserver.observe(impactSection);
@@ -1895,19 +1896,19 @@
             // Update every 5 seconds with realistic increments
             setInterval(() => {
                 const increment = Math.floor(Math.random() * 100) + 50;
-                const currentValue = parseInt(plasticCounter.textContent.replace(/,/g, ''));
+                const currentValue = Number.parseInt(plasticCounter.textContent.replaceAll(/,/g, ''), 10);
                 animateCounter(plasticCounter, currentValue + increment, 1000);
 
                 const treeIncrement = Math.floor(Math.random() * 10) + 5;
-                const treesValue = parseInt(treesCounter.textContent.replace(/,/g, ''));
+                const treesValue = Number.parseInt(treesCounter.textContent.replaceAll(/,/g, ''), 10);
                 animateCounter(treesCounter, treesValue + treeIncrement, 1000);
 
                 const livesIncrement = Math.floor(Math.random() * 2) + 1;
-                const livesValue = parseInt(livesCounter.textContent.replace(/,/g, ''));
+                const livesValue = Number.parseInt(livesCounter.textContent.replaceAll(/,/g, ''), 10);
                 animateCounter(livesCounter, livesValue + livesIncrement, 1000);
 
                 const volIncrement = Math.floor(Math.random() * 20) + 10;
-                const volValue = parseInt(volunteersCounter.textContent.replace(/,/g, ''));
+                const volValue = Number.parseInt(volunteersCounter.textContent.replaceAll(/,/g, ''), 10);
                 animateCounter(volunteersCounter, volValue + volIncrement, 1000);
 
                 updateTimestamp();
@@ -1988,11 +1989,11 @@
         // HOVER EFFECTS FOR CARDS
         // =====================================================
         function initCardHovers() {
-            document.querySelectorAll('.card-lift').forEach(card => {
+            for (const card of document.querySelectorAll('.card-lift')) {
                 card.addEventListener('mouseenter', () => {
                     card.style.cursor = 'pointer';
                 });
-            });
+            }
         }
 
         // =====================================================
@@ -2012,25 +2013,27 @@
             // Track section views
             const sections = document.querySelectorAll('section[id]');
             const sectionObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
+                for (const entry of entries) {
                     if (entry.isIntersecting) {
                         trackEvent('section_view', {
                             section: entry.target.id
                         });
                     }
-                });
+                }
             }, { threshold: 0.5 });
 
-            sections.forEach(section => sectionObserver.observe(section));
+            for (const section of sections) {
+                sectionObserver.observe(section);
+            }
 
             // Track button clicks
-            document.querySelectorAll('a[href^="/pages/"], button').forEach(element => {
+            for (const element of document.querySelectorAll('a[href^="/pages/"], button')) {
                 element.addEventListener('click', () => {
                     trackEvent('button_click', {
                         target: element.textContent.trim() || element.href
                     });
                 });
-            });
+            }
 
             log('Analytics tracking initialized');
         }
@@ -2196,7 +2199,7 @@
             ];
 
             let html = '';
-            skinTypes.forEach(skinType => {
+            for (const skinType of skinTypes) {
                 const minutes = safeExposure[skinType.type];
                 const hours = (minutes / 60).toFixed(1);
 
@@ -2209,7 +2212,7 @@
                         </div>
                     </div>
                 `;
-            });
+            }
 
             const exposureGrid = document.getElementById('exposure-grid');
             if (exposureGrid) {
