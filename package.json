@@ -14,7 +14,10 @@
     "test:apis": "jest tests/external-apis.test.js",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "test:ci": "jest --ci --coverage --maxWorkers=2",
-    "lint": "eslint src/server.js tests/*.js --max-warnings=0"
+    "lint": "eslint src/server.js tests/*.js --max-warnings=0",
+    "verify:launch": "node scripts/verify-launch.js",
+    "db:setup": "node scripts/setup-postgres.js",
+    "db:migrate": "node scripts/migrate-database.js"
   },
   "keywords": [
     "ocean",
