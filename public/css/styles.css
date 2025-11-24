@@ -352,11 +352,14 @@ footer li {
 }
 
 footer a {
-    color: var(--color-neutral-white);
+    color: rgba(255, 255, 255, 0.85);
+    transition: all var(--transition-base);
+    display: inline-block;
 }
 
 footer a:hover {
     color: var(--color-accent);
+    padding-left: 4px;
 }
 
 .footer-bottom {
@@ -831,12 +834,164 @@ input[type="radio"] {
 }
 
 /* ============================================================================
-   17. RESPONSIVE UTILITIES
+   17. PAGE-SPECIFIC ENHANCEMENTS
+   ============================================================================ */
+
+/* Hero sections */
+.hero-gradient {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-gradient::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: var(--space-16) var(--space-4);
+}
+
+.hero-content h1 {
+    color: white;
+    font-size: 3.5rem;
+    margin-bottom: var(--space-6);
+    font-weight: var(--fw-bold);
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: var(--text-xl);
+    line-height: 1.6;
+    margin-bottom: var(--space-8);
+}
+
+/* Button groups */
+.btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Stats bar */
+.stats-bar {
+    background: linear-gradient(to right, #005580, #0077a8);
+    padding: var(--space-10) 0;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.stats-bar .stat-value {
+    font-size: 2.8rem;
+    font-weight: bold;
+    margin-bottom: var(--space-2);
+    font-family: var(--font-serif);
+}
+
+.stats-bar .stat-label {
+    font-size: 1rem;
+    opacity: 0.95;
+    letter-spacing: 0.3px;
+}
+
+/* Feature cards */
+.feature-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.feature-icon {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-4);
+    font-size: 2rem;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.15) rotate(5deg);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Section styling improvements */
+.section-spaced {
+    padding: var(--space-20) 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+}
+
+.section-header h2 {
+    margin-bottom: var(--space-4);
+}
+
+.section-header p {
+    max-width: 700px;
+    margin: 0 auto;
+    color: var(--color-text-light);
+    font-size: var(--text-lg);
+}
+
+/* ============================================================================
+   18. RESPONSIVE UTILITIES
    ============================================================================ */
 
 @media (max-width: 768px) {
     section {
         padding: var(--space-12) var(--space-4);
+    }
+    
+    .section-spaced {
+        padding: var(--space-12) 0;
+    }
+    
+    .hero-content {
+        padding: var(--space-12) var(--space-4);
+    }
+    
+    .hero-content h1 {
+        font-size: 2.25rem;
+    }
+    
+    .hero-subtitle {
+        font-size: var(--text-base);
     }
     
     h1 {
@@ -849,6 +1004,32 @@ input[type="radio"] {
     
     h3 {
         font-size: var(--text-xl);
+    }
+    
+    .btn-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn-group .btn {
+        width: 100%;
+    }
+    
+    .stats-bar .stat-value {
+        font-size: 2rem;
+    }
+    
+    .grid-cols-2,
+    .grid-cols-3,
+    .grid-cols-4 {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 1.75rem;
     }
 }
 
