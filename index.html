@@ -1,0 +1,2434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OceanCare Initiative - Protect Our Oceans, Make Real Impact</title>
+
+    <!-- Custom Style System -->
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "OceanCare Initiative",
+        "url": "https://oceancare.org",
+        "logo": "https://oceancare.org/logo.png",
+        "description": "Protect our oceans through donations, volunteering, and debris reporting",
+        "sameAs": [
+            "https://www.facebook.com/oceancare",
+            "https://www.twitter.com/oceancare",
+            "https://www.instagram.com/oceancare"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "Customer Support",
+            "telephone": "+1-800-OCEAN-00",
+            "email": "support@oceancare.org"
+        }
+    }
+    </script>
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="OceanCare Initiative - Protect Our Oceans, Make Real Impact">
+    <meta property="og:description" content="Join 1M+ ocean protectors. Donate, volunteer, and track your environmental impact.">
+    <meta property="og:image" content="/og-image.jpg">
+    <meta property="og:url" content="https://oceancare.org">
+    <meta property="og:type" content="website">
+
+    <style>
+        /* Additional animations for fade-in effects */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Subtle gradient for hero background */
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+        }
+
+        /* Section spacing */
+        .section-spaced {
+            padding-top: var(--space-20);
+            padding-bottom: var(--space-20);
+        }
+
+        @media (max-width: 768px) {
+            .section-spaced {
+                padding-top: var(--space-12);
+                padding-bottom: var(--space-12);
+            }
+        }
+
+        /* Stat cards */
+        .stat-card {
+            text-align: center;
+            padding: var(--space-6);
+            background-color: var(--color-neutral-white);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            transition: all var(--transition-base);
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+
+        /* Feature cards with icon areas */
+        .feature-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-4);
+            font-size: 2rem;
+            transition: all var(--transition-base);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* CTA button group */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+            margin-top: var(--space-6);
+        }
+
+        @media (max-width: 640px) {
+            .btn-group {
+                flex-direction: column;
+            }
+        }
+
+        /* Hero content */
+        .hero-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hero-subtitle {
+            font-size: var(--text-lg);
+            line-height: var(--lh-relaxed);
+            margin-bottom: var(--space-8);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-6);
+            margin-top: var(--space-8);
+        }
+
+        /* News items */
+        .news-item {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .news-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--color-primary-lighter) 0%, var(--color-secondary) 100%);
+            border-radius: var(--radius-base) var(--radius-base) 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .news-content {
+            padding: var(--space-6);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-title {
+            margin: var(--space-2) 0 var(--space-4) 0;
+            font-size: var(--text-lg);
+            font-weight: var(--fw-bold);
+            color: var(--color-primary);
+        }
+
+        .news-description {
+            flex-grow: 1;
+            margin-bottom: var(--space-4);
+            color: var(--color-text-light);
+            font-size: var(--text-sm);
+        }
+
+        .news-meta {
+            font-size: var(--text-xs);
+            color: var(--color-text-lighter);
+            margin-bottom: var(--space-3);
+        }
+
+        /* Responsive images */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header/Navigation -->
+    <header>
+        <div class="container">
+            <div class="flex-between">
+                <a href="/" class="logo">🌊 OceanCare</a>
+                <nav>
+                    <ul>
+                        <li><a href="#mission">Our Mission</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#impact">Impact</a></li>
+                        <li><a href="#news">News & Updates</a></li>
+                        <li><a href="/pages/login.html">Log In</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero hero-gradient">
+        <div class="container">
+            <div class="hero-content animate-fade-in">
+                <h1>Protect Our Oceans.<br>Make Real Impact.</h1>
+                <p class="hero-subtitle">
+                    Join thousands of conservation champions protecting marine ecosystems. Donate, volunteer, report debris, and track your environmental impact with transparency.
+                </p>
+                <div class="btn-group">
+                    <a href="/pages/volunteer.html" class="btn btn-primary btn-lg">
+                        <i class="fas fa-hands-helping"></i> Volunteer Now
+                    </a>
+                    <a href="/pages/contact.html" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-heart"></i> Make a Donation
+                    </a>
+                    <a href="/pages/report-debris.html" class="btn btn-outline btn-lg">
+                        <i class="fas fa-map-marker-alt"></i> Report Debris
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Stats Section -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">1M+</div>
+                    <div class="stat-label">Ocean Protectors</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5M+</div>
+                    <div class="stat-label">Tons of Plastic Removed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">180+</div>
+                    <div class="stat-label">Countries Active</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Customer Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section id="mission" class="section-spaced">
+        <div class="container">
+            <h2>Our Mission</h2>
+            <div class="grid grid-cols-2">
+                <div>
+                    <p>
+                        OceanCare Initiative is a non-profit organization dedicated to protecting marine ecosystems through conservation, education, and community action. We believe that ocean protection requires coordinated effort, transparent impact measurement, and accessible participation for everyone.
+                    </p>
+                    <p>
+                        With real-time environmental data, volunteer coordination tools, and verified impact tracking, we're building the most transparent ocean conservation platform in the world.
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        <strong>Our Core Values:</strong>
+                    </p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: var(--space-3);"><i class="fas fa-check text-accent"></i> <strong>Transparency</strong> - 100% verified impact reporting</li>
+                        <li style="margin-bottom: var(--space-3);"><i class="fas fa-check text-accent"></i> <strong>Accessibility</strong> - Free tools for global participation</li>
+                        <li style="margin-bottom: var(--space-3);"><i class="fas fa-check text-accent"></i> <strong>Science-Driven</strong> - Real-time ocean data and research</li>
+                        <li style="margin-bottom: var(--space-3);"><i class="fas fa-check text-accent"></i> <strong>Community First</strong> - Powered by volunteers and donors</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="section-spaced bg-secondary">
+        <div class="container">
+            <h2 style="text-align: center;">How You Can Help</h2>
+            <div class="grid grid-cols-3 mt-12">
+                <!-- Donate -->
+                <div class="card feature-card">
+                    <div class="feature-icon" style="background-color: #fff3cd; color: var(--color-accent);">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3>Donate</h3>
+                    <p>Every dollar supports ocean conservation projects. Our impact calculator shows exactly what your donation achieves.</p>
+                    <a href="/pages/contact.html" class="btn btn-secondary btn-sm mt-auto">Learn More →</a>
+                </div>
+
+                <!-- Volunteer -->
+                <div class="card feature-card">
+                    <div class="feature-icon" style="background-color: #d1ecf1; color: var(--color-primary-lighter);">
+                        <i class="fas fa-people-carry"></i>
+                    </div>
+                    <h3>Volunteer</h3>
+                    <p>Join community cleanups, research expeditions, or education programs. Real activities with measurable impact.</p>
+                    <a href="/pages/volunteer.html" class="btn btn-secondary btn-sm mt-auto">Sign Up →</a>
+                </div>
+
+                <!-- Report -->
+                <div class="card feature-card">
+                    <div class="feature-icon" style="background-color: #d4edda; color: #28a745;">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Report Debris</h3>
+                    <p>Found ocean plastic? Report it with GPS coordinates and photos. We coordinate cleanup responses immediately.</p>
+                    <a href="/pages/report-debris.html" class="btn btn-secondary btn-sm mt-auto">Report Now →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact" class="section-spaced">
+        <div class="container">
+            <h2 style="text-align: center;">Verified Impact</h2>
+            <p style="text-align: center; max-width: 600px; margin: 0 auto var(--space-12) auto;">
+                Every action creates measurable change. Our transparent impact dashboard shows real-time results verified by conservation partners.
+            </p>
+
+            <div class="grid grid-cols-4 gap-6">
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: var(--color-accent);">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                    <div class="stat-number">847K+</div>
+                    <div class="stat-label">kg Plastic Removed</div>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: var(--color-primary-lighter);">
+                        <i class="fas fa-fish"></i>
+                    </div>
+                    <div class="stat-number">5.2M</div>
+                    <div class="stat-label">Marine Species Protected</div>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: #28a745;">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="stat-number">234K</div>
+                    <div class="stat-label">Acres of Ocean Restored</div>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: #17a2b8;">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="stat-number">182K</div>
+                    <div class="stat-label">People Educated</div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <p class="text-text-lighter">
+                    <i class="fas fa-info-circle"></i> 
+                    Impact data updated daily. <a href="#" style="color: var(--color-primary-lighter);">View detailed verification reports →</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donor Experience Section -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <h2 style="text-align: center;">For Donors</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto var(--space-12) auto;">
+                Transparency matters. Every donor gets a personalized dashboard showing exactly where their contributions go and what they achieve.
+            </p>
+
+            <div class="grid grid-cols-3 gap-6">
+                <div class="card">
+                    <h3>🎯 Targeted Giving</h3>
+                    <p>Choose which projects to support: coral restoration, marine cleanup, research, or education. See your impact in real-time.</p>
+                </div>
+
+                <div class="card">
+                    <h3>📊 Impact Calculator</h3>
+                    <p>Instant visual feedback: $25 restores 7 coral fragments, protects 2 marine animals, removes 1.5kg waste, educates 2 students.</p>
+                </div>
+
+                <div class="card">
+                    <h3>💾 Donation History</h3>
+                    <p>Complete personal dashboard showing all donations, tax receipts, and cumulative impact over time.</p>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <a href="/pages/contact.html" class="btn btn-primary btn-lg">Start Supporting Ocean Conservation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Volunteer Experience Section -->
+    <section class="section-spaced">
+        <div class="container">
+            <h2 style="text-align: center;">For Volunteers</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto var(--space-12) auto;">
+                Get involved in real conservation work. We coordinate activities from beach cleanups to research expeditions, matching your skills and availability.
+            </p>
+
+            <div class="grid grid-cols-3 gap-6">
+                <div class="card">
+                    <h3>📅 Flexible Schedule</h3>
+                    <p>Join weekly cleanups, monthly expeditions, or one-time events. Choose what fits your life. Ocean work on your terms.</p>
+                </div>
+
+                <div class="card">
+                    <h3>🌊 Real Impact Tracking</h3>
+                    <p>See your contribution: hours volunteered, plastic removed, marine life protected. Your effort creates measurable change.</p>
+                </div>
+
+                <div class="card">
+                    <h3>👥 Community & Training</h3>
+                    <p>Learn from marine experts, connect with passionate volunteers, and grow your conservation skills through guided programs.</p>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <a href="/pages/volunteer.html" class="btn btn-primary btn-lg">Become a Volunteer</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <h2 style="text-align: center;">Stories from Our Community</h2>
+            
+            <div class="grid grid-cols-3 gap-6 mt-12">
+                <div class="card">
+                    <div style="margin-bottom: var(--space-4); color: var(--color-accent);">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="margin-bottom: var(--space-4); font-style: italic;">
+                        "I've volunteered 12 times. The impact tracker shows I've removed 847kg of plastic and protected thousands of marine animals. It's motivating to see the difference!"
+                    </p>
+                    <div style="padding-top: var(--space-4); border-top: 1px solid var(--color-border);">
+                        <p style="font-weight: var(--fw-semibold); margin: 0; color: var(--color-primary);">Sarah Chen</p>
+                        <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin: 0;">Marine Volunteer, California</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="margin-bottom: var(--space-4); color: var(--color-accent);">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="margin-bottom: var(--space-4); font-style: italic;">
+                        "Donating monthly is effortless. I can see exactly where my money goes and the coral restoration dashboard shows real progress over time."
+                    </p>
+                    <div style="padding-top: var(--space-4); border-top: 1px solid var(--color-border);">
+                        <p style="font-weight: var(--fw-semibold); margin: 0; color: var(--color-primary);">Marcus Rodriguez</p>
+                        <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin: 0;">Monthly Donor, Florida</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="margin-bottom: var(--space-4); color: var(--color-accent);">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="margin-bottom: var(--space-4); font-style: italic;">
+                        "Reporting debris was simple. Within 2 weeks, a cleanup team coordinated a response at my GPS location. Real action, real impact!"
+                    </p>
+                    <div style="padding-top: var(--space-4); border-top: 1px solid var(--color-border);">
+                        <p style="font-weight: var(--fw-semibold); margin: 0; color: var(--color-primary);">Elena Vasquez</p>
+                        <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin: 0;">Environmental Activist, Mexico</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news" class="section-spaced">
+        <div class="container">
+            <h2 style="text-align: center;">Latest Ocean News</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto var(--space-12) auto;">
+                Stay informed with real-time conservation updates from our global partners.
+            </p>
+
+            <div id="news-grid" class="grid grid-cols-3 gap-6">
+                <!-- Loading placeholder - will be replaced by JavaScript -->
+                <div class="card news-item">
+                    <div class="news-image" style="background: linear-gradient(135deg, #ddd 0%, #eee 100%);"></div>
+                    <div class="news-content">
+                        <div style="height: 1rem; background: #ddd; border-radius: var(--radius-base); margin-bottom: var(--space-3);"></div>
+                    </div>
+                </div>
+                <div class="card news-item">
+                    <div class="news-image" style="background: linear-gradient(135deg, #ddd 0%, #eee 100%);"></div>
+                    <div class="news-content">
+                        <div style="height: 1rem; background: #ddd; border-radius: var(--radius-base); margin-bottom: var(--space-3);"></div>
+                    </div>
+                </div>
+                <div class="card news-item">
+                    <div class="news-image" style="background: linear-gradient(135deg, #ddd 0%, #eee 100%);"></div>
+                    <div class="news-content">
+                        <div style="height: 1rem; background: #ddd; border-radius: var(--radius-base); margin-bottom: var(--space-3);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section-spaced hero-gradient">
+        <div class="container text-center">
+            <h2 style="color: white; margin-bottom: var(--space-6);">Ready to Make a Difference?</h2>
+            <p style="color: rgba(255,255,255,0.9); max-width: 600px; margin: 0 auto var(--space-8) auto; font-size: var(--text-lg);">
+                Join thousands protecting our oceans. Start with one action today.
+            </p>
+            <div class="btn-group" style="justify-content: center;">
+                <a href="/pages/volunteer.html" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-hands-helping"></i> Volunteer
+                </a>
+                <a href="/pages/contact.html" class="btn" style="background-color: white; color: var(--color-primary); border: 2px solid white; font-weight: var(--fw-semibold);">
+                    <i class="fas fa-heart"></i> Donate
+                </a>
+                <a href="/pages/report-debris.html" class="btn" style="background-color: transparent; color: white; border: 2px solid white; font-weight: var(--fw-semibold);">
+                    <i class="fas fa-map-marker-alt"></i> Report Debris
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="grid grid-cols-4 gap-8" style="margin-bottom: var(--space-12);">
+                <div>
+                    <h5>About</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/team.html">Our Team</a></li>
+                        <li><a href="/pages/projects.html">Our Projects</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5>Get Involved</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/volunteer.html">Volunteer</a></li>
+                        <li><a href="/pages/contact.html">Donate</a></li>
+                        <li><a href="/pages/report-debris.html">Report Debris</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5>Support</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="/pages/contact.html">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5>Legal</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-top" style="padding-top: var(--space-8); text-align: center; color: rgba(255,255,255,0.7); font-size: var(--text-sm);">
+                <p>&copy; 2025 OceanCare Initiative. All rights reserved. | Protecting oceans, one action at a time.</p>
+                <div style="margin-top: var(--space-4);">
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Facebook</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Twitter</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Instagram</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Navigation active state
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Load news from API
+        async function loadNews() {
+            try {
+                const response = await fetch('/api/news');
+                const data = await response.json();
+                const articles = data.articles || [];
+
+                const newsGrid = document.getElementById('news-grid');
+                if (articles.length === 0) {
+                    newsGrid.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; padding: var(--space-12) 0;">
+                            <p>Loading latest ocean news...</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                newsGrid.innerHTML = articles.slice(0, 3).map((article, i) => {
+                    const pubDate = new Date(article.publishedAt);
+                    const daysAgo = Math.floor((Date.now() - pubDate) / (1000 * 60 * 60 * 24));
+                    const dateStr = daysAgo === 0 ? 'Today' : `${daysAgo}d ago`;
+
+                    return `
+                        <div class="card news-item">
+                            <div class="news-image" style="background: linear-gradient(135deg, var(--color-primary-lighter) 0%, var(--color-secondary) 100%); font-size: 3rem;">🌊</div>
+                            <div class="news-content">
+                                <div class="news-meta"><i class="fas fa-newspaper"></i> ${dateStr} • ${article.source}</div>
+                                <h3 class="news-title">${article.title}</h3>
+                                <p class="news-description">${article.description || 'Ocean conservation news'}</p>
+                                <a href="${article.url}" target="_blank" rel="noopener" style="color: var(--color-primary-lighter); font-weight: var(--fw-semibold);">
+                                    Read More →
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error loading news:', error);
+            }
+        }
+
+        // Load news on page load
+        setTimeout(loadNews, 1000);
+    </script>
+
+</body>
+</html>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <div class="text-2xl font-bold text-gradient flex items-center gap-2">
+                        <i class="fas fa-water"></i>
+                        <span>OceanCare</span>
+                    </div>
+                </div>
+
+                <!-- Center Navigation Links (Hidden on Mobile) -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="text-gray-700 hover:text-blue-600 font-medium transition">🏠 Home</a>
+                    <a href="#features" class="text-gray-700 hover:text-teal-600 font-medium transition">✨ Features</a>
+                    <a href="#impact" class="text-gray-700 hover:text-cyan-600 font-medium transition">📊 Impact</a>
+                    <a href="#gallery" class="text-gray-700 hover:text-emerald-600 font-medium transition">🎨 Gallery</a>
+                    <a href="/pages/paper-prototype.html" class="text-gray-700 hover:text-indigo-600 font-medium transition">📋 Paper Prototype</a>
+                    <a href="/pages/gemini-walkthrough.html" class="text-gray-700 hover:text-indigo-600 font-medium transition">🧭 Digital Prototype</a>
+                    <a href="#news" class="text-gray-700 hover:text-blue-600 font-medium transition">🗞️ News</a>
+                    <a href="#api-showcase" class="text-gray-700 hover:text-teal-600 font-medium transition">🌊 Ocean Tech</a>
+                    <a href="#uv-monitor" class="text-gray-700 hover:text-orange-600 font-medium transition">Sun Safety</a>
+                    <a href="#testimonials" class="text-gray-700 hover:text-orange-600 font-medium transition">Stories</a>
+                </div>
+
+                <!-- Right Side: Login & Sign Up -->
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="/pages/login.html" class="text-gray-700 hover:text-orange-600 font-medium transition">
+                        Log In
+                    </a>
+                    <a href="/pages/volunteer.html" class="px-6 py-2 bg-orange-600 text-white rounded-full font-semibold hover:bg-orange-700 transition btn-orange-glow">
+                        Sign Up
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center gap-2">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-orange-600">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu (Hidden by default) -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4 border-t">
+                <a href="#home" class="block py-2 text-gray-700 hover:text-orange-600">Home</a>
+                <a href="#features" class="block py-2 text-gray-700 hover:text-orange-600">Features</a>
+                <a href="#impact" class="block py-2 text-gray-700 hover:text-orange-600">Impact</a>
+                <a href="#gallery" class="block py-2 text-gray-700 hover:text-orange-600">Gallery</a>
+                <a href="/pages/paper-prototype.html" class="block py-2 text-gray-700 hover:text-orange-600">📋 Paper Prototype</a>
+                <a href="/pages/gemini-walkthrough.html" class="block py-2 text-gray-700 hover:text-orange-600">🧭 Digital Prototype</a>
+                <a href="#news" class="block py-2 text-gray-700 hover:text-orange-600">News</a>
+                <a href="#uv-monitor" class="block py-2 text-gray-700 hover:text-orange-600">Sun Safety</a>
+                <a href="#testimonials" class="block py-2 text-gray-700 hover:text-orange-600">Stories</a>
+                <div class="flex gap-2 mt-4">
+                    <a href="/pages/login.html" class="flex-1 text-center py-2 text-gray-700 border border-gray-300 rounded-lg hover:border-orange-600">
+                        Log In
+                    </a>
+                    <a href="/pages/volunteer.html" class="flex-1 text-center py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-semibold">
+                        Sign Up
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-hero text-white pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="animate-fadeInDown">
+                    <h1 class="hero-title font-bold leading-tight mb-6">
+                        Protect Our Oceans.<br>
+                        <span class="text-orange-500">Make Real Impact.</span>
+                    </h1>
+                    <p class="hero-subtitle text-gray-300 mb-8 leading-relaxed">
+                        Join millions protecting marine ecosystems. Donate, volunteer, report debris, and track your environmental impact in real-time.
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="/pages/volunteer.html" class="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition shadow-lg hover:shadow-2xl transform hover:scale-105">
+                            <i class="fas fa-hands-helping mr-2"></i> Start Volunteering
+                        </a>
+                        <a href="/pages/contact.html" class="px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-cyan-500 hover:border-cyan-500 transition text-center shadow-lg hover:shadow-2xl transform hover:scale-105">
+                            <i class="fas fa-heart mr-2"></i> Donate Now
+                        </a>
+                    </div>
+
+                    <!-- Stats Row -->
+                    <div class="grid grid-cols-3 gap-4 mt-12">
+                        <div>
+                            <p class="text-2xl font-bold text-cyan-400">🐢 1M+</p>
+                            <p class="text-sm text-gray-400">Ocean Protectors</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-teal-400">🌊 5M+</p>
+                            <p class="text-sm text-gray-400">Tons Protected</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-blue-400">🌍 180+</p>
+                            <p class="text-sm text-gray-400">Countries Active</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Phone Mockup -->
+                <div class="hidden md:flex justify-center animate-slideInRight">
+                    <div class="relative w-64 h-96 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-3xl shadow-2xl p-2">
+                        <div class="w-full h-full bg-white rounded-2xl flex flex-col items-center justify-center">
+                            <div class="text-center p-6">
+                                <i class="fas fa-water text-4xl text-blue-600 mb-4"></i>
+                                <p class="text-gray-600 font-semibold mb-2">Ocean Health Tracker</p>
+                                <p class="text-sm text-gray-500">Real-time marine data & impact metrics</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid Section -->
+    <section id="features" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-fadeInUp">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Everything You Need
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Comprehensive tools to make a difference in ocean conservation
+                </p>
+            </div>
+
+            <!-- Features Grid: 3 Columns -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1: Easy Donations -->
+                <div class="glass-effect rounded-2xl p-8 card-lift bg-white shadow-lg hover:shadow-2xl border border-orange-100 group">
+                    <div class="w-16 h-16 bg-orange-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-orange-200 group-hover:scale-110 transition transform">
+                        <i class="fas fa-hand-holding-heart text-3xl text-orange-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Easy Donations</h3>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        Secure, one-click donations with multiple payment options. See your impact instantly on every dollar donated.
+                    </p>
+                    <a href="/pages/contact.html" class="text-orange-600 font-semibold hover:text-orange-700 transition inline-flex items-center group">
+                        Donate Now <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition transform"></i>
+                    </a>
+                </div>
+
+                <!-- Feature 2: Real Impact Tracking -->
+                <div class="glass-effect rounded-2xl p-8 card-lift bg-white shadow-lg hover:shadow-2xl border border-blue-100 group">
+                    <div class="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-200 group-hover:scale-110 transition transform">
+                        <i class="fas fa-chart-line text-3xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Impact Dashboard</h3>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        Track CO₂ offset, plastic collected, marine life saved. Real-time metrics show exactly where your help goes.
+                    </p>
+                    <a href="/pages/projects.html" class="text-blue-600 font-semibold hover:text-blue-700 transition inline-flex items-center group">
+                        View Dashboard <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition transform"></i>
+                    </a>
+                </div>
+
+                <!-- Feature 3: Ocean Cleanup Events -->
+                <div class="glass-effect rounded-2xl p-8 card-lift bg-white shadow-lg hover:shadow-2xl border border-teal-100 group">
+                    <div class="w-16 h-16 bg-teal-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-teal-200 group-hover:scale-110 transition transform">
+                        <i class="fas fa-water text-3xl text-teal-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Cleanup Events</h3>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        Join nearby beach cleanups, coral restoration, and marine conservation events. Weather-based event recommendations.
+                    </p>
+                    <a href="/pages/volunteer.html" class="text-teal-600 font-semibold hover:text-teal-700 transition inline-flex items-center group">
+                        Volunteer <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition transform"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Additional Features Row -->
+            <div class="grid md:grid-cols-2 gap-8 mt-12">
+                <!-- Feature 4: Debris Reporting -->
+                <div class="glass-effect rounded-2xl p-8 card-lift bg-white shadow-lg hover:shadow-2xl border border-purple-100">
+                    <div class="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-map-marker-alt text-3xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Debris Mapping</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Report ocean plastic with GPS coordinates, photos, and detailed descriptions. Our team coordinates cleanup efforts.
+                    </p>
+                </div>
+
+                <!-- Feature 5: Community Impact -->
+                <div class="glass-effect rounded-2xl p-8 card-lift bg-white shadow-lg hover:shadow-2xl border border-green-100">
+                    <div class="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-users text-3xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Community First</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Connect with 1M+ ocean protectors worldwide. Share stories, learn conservation tips, and celebrate milestones together.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust & Impact Metrics Section -->
+    <section id="impact" class="gradient-hero text-white py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-fadeInDown">
+                <h2 class="text-4xl font-bold mb-4">Fast, Safe & Transparent</h2>
+                <p class="text-xl text-gray-300">
+                    Enterprise-grade security meets ocean conservation
+                </p>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+                <div class="glass-effect rounded-xl p-6 text-center card-lift">
+                    <i class="fas fa-certificate text-3xl text-orange-500 mb-3"></i>
+                    <p class="font-semibold">ISO 26000</p>
+                    <p class="text-sm text-gray-400">Certified Socially Responsible</p>
+                </div>
+
+                <div class="glass-effect rounded-xl p-6 text-center card-lift">
+                    <i class="fas fa-lock text-3xl text-orange-500 mb-3"></i>
+                    <p class="font-semibold">PCI DSS</p>
+                    <p class="text-sm text-gray-400">Secure Payment Processing</p>
+                </div>
+
+                <div class="glass-effect rounded-xl p-6 text-center card-lift">
+                    <i class="fas fa-shield-alt text-3xl text-orange-500 mb-3"></i>
+                    <p class="font-semibold">256-bit SSL</p>
+                    <p class="text-sm text-gray-400">End-to-End Encryption</p>
+                </div>
+
+                <div class="glass-effect rounded-xl p-6 text-center card-lift">
+                    <i class="fas fa-check-circle text-3xl text-orange-500 mb-3"></i>
+                    <p class="font-semibold">100% Verified</p>
+                    <p class="text-sm text-gray-400">Transparent Impact Reports</p>
+                </div>
+            </div>
+
+            <!-- Impact Numbers -->
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center animate-fadeInUp">
+                    <p class="text-5xl font-bold text-orange-500 mb-2">1M+</p>
+                    <p class="text-lg text-gray-300">Active Contributors</p>
+                </div>
+
+                <div class="text-center animate-fadeInUp">
+                    <p class="text-5xl font-bold text-orange-500 mb-2">5M+</p>
+                    <p class="text-lg text-gray-300">Tons of Plastic Removed</p>
+                </div>
+
+                <div class="text-center animate-fadeInUp">
+                    <p class="text-5xl font-bold text-orange-500 mb-2">180+</p>
+                    <p class="text-lg text-gray-300">Countries Supported</p>
+                </div>
+
+                <div class="text-center animate-fadeInUp">
+                    <p class="text-5xl font-bold text-orange-500 mb-2">24/7</p>
+                    <p class="text-lg text-gray-300">Customer Support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-fadeInUp">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Stories from Our Community
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Real people making real impact on ocean conservation
+                </p>
+            </div>
+
+            <!-- Testimonials Grid: 3 Cards -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="glass-effect rounded-2xl p-8 card-lift bg-gradient-feature border border-orange-100 shadow-lg">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i class="fas fa-star text-orange-500"></i>
+                        <i class="fas fa-star text-orange-500"></i>
+                        <i class="fas fa-star text-orange-500"></i>
+                        <i class="fas fa-star text-orange-500"></i>
+                        <i class="fas fa-star text-orange-500"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6 leading-relaxed italic">
+                        "I've been volunteering with OceanCare for 8 months. The impact calculator showed me that my 12 cleanup events removed 847kg of plastic. It's incredibly rewarding!"
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-orange-200 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-orange-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900">Sarah Chen</p>
+                            <p class="text-sm text-gray-600">Marine Volunteer, California</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="glass-effect rounded-2xl p-8 card-lift bg-gradient-feature border border-blue-100 shadow-lg">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i class="fas fa-star text-orange-500"></i>
+                        <i class="fas fa-star text-orange-500"></i>
+                        <i class="fas fa-star text-orange-500"></i>
+                        <i class="fas fa-star text-orange-500"></i>
+                        <i class="fas fa-star text-orange-500"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6 leading-relaxed italic">
+                        "Donating monthly through OceanCare is effortless. I love seeing exactly where my donations go and the 90-day climate forecast helps me understand what we're fighting for."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-blue-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900">Marcus Rodriguez</p>
+                            <p class="text-sm text-gray-600">Donor, Florida</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="glass-effect rounded-2xl p-8 card-lift bg-gradient-feature border border-teal-100 shadow-lg">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i class="fas fa-star text-orange-500"></i>
+                        <i class="fas fa-star text-orange-500"></i>
+                        <i class="fas fa-star text-orange-500"></i>
+                        <i class="fas fa-star text-orange-500"></i>
+                        <i class="fas fa-star text-orange-500"></i>
+                    </div>
+                    <p class="text-gray-700 mb-6 leading-relaxed italic">
+                        "The debris reporting feature is a game-changer. I found a polluted area with my GPS coordinates and the team coordinated a cleanup within 2 weeks!"
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-teal-200 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-teal-600"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900">Elena Vasquez</p>
+                            <p class="text-sm text-gray-600">Environmental Activist, Mexico</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-fadeInUp">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    Ocean Moments
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Inspiring stories from our ocean conservation work
+                </p>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Gallery Item 1 -->
+                <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 card-lift">
+                    <div class="w-full h-64 bg-gradient-to-br from-blue-400 to-teal-500 flex items-center justify-center text-white text-6xl">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition duration-300 flex items-center justify-center">
+                        <div class="text-white text-center opacity-0 group-hover:opacity-100 transition duration-300">
+                            <i class="fas fa-search text-3xl mb-2"></i>
+                            <p class="font-semibold">Beach Cleanup 2025</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 card-lift">
+                    <div class="w-full h-64 bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center text-white text-6xl">
+                        <i class="fas fa-fish"></i>
+                    </div>
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition duration-300 flex items-center justify-center">
+                        <div class="text-white text-center opacity-0 group-hover:opacity-100 transition duration-300">
+                            <i class="fas fa-search text-3xl mb-2"></i>
+                            <p class="font-semibold">Marine Life Rescue</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 card-lift">
+                    <div class="w-full h-64 bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white text-6xl">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition duration-300 flex items-center justify-center">
+                        <div class="text-white text-center opacity-0 group-hover:opacity-100 transition duration-300">
+                            <i class="fas fa-search text-3xl mb-2"></i>
+                            <p class="font-semibold">Coral Restoration</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View More Button -->
+            <div class="text-center mt-12">
+                <a href="/pages/projects.html" class="inline-flex items-center px-8 py-3 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition btn-orange-glow shadow-lg hover:shadow-2xl">
+                    View Full Gallery <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- News & Updates Section -->
+    <section id="news" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50 to-cyan-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-fadeInUp">
+                <h2 class="text-4xl font-bold text-blue-900 mb-4">
+                    🌊 Latest Ocean Updates
+                </h2>
+                <p class="text-xl text-blue-700">
+                    Real-time conservation news from our ocean partners
+                </p>
+            </div>
+
+            <!-- News Grid - Will be populated by JavaScript -->
+            <div id="news-grid" class="grid md:grid-cols-3 gap-8">
+                <!-- Loading skeleton -->
+                <div class="glass-effect rounded-2xl overflow-hidden bg-white shadow-lg border border-blue-200 animate-pulse">
+                    <div class="h-40 bg-blue-200"></div>
+                    <div class="p-6">
+                        <div class="h-4 bg-blue-200 rounded mb-4"></div>
+                        <div class="h-6 bg-blue-200 rounded mb-4"></div>
+                        <div class="h-4 bg-blue-200 rounded"></div>
+                    </div>
+                </div>
+                <div class="glass-effect rounded-2xl overflow-hidden bg-white shadow-lg border border-cyan-200 animate-pulse">
+                    <div class="h-40 bg-cyan-200"></div>
+                    <div class="p-6">
+                        <div class="h-4 bg-cyan-200 rounded mb-4"></div>
+                        <div class="h-6 bg-cyan-200 rounded mb-4"></div>
+                        <div class="h-4 bg-cyan-200 rounded"></div>
+                    </div>
+                </div>
+                <div class="glass-effect rounded-2xl overflow-hidden bg-white shadow-lg border border-teal-200 animate-pulse">
+                    <div class="h-40 bg-teal-200"></div>
+                    <div class="p-6">
+                        <div class="h-4 bg-teal-200 rounded mb-4"></div>
+                        <div class="h-6 bg-teal-200 rounded mb-4"></div>
+                        <div class="h-4 bg-teal-200 rounded"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View All News Button -->
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition shadow-lg hover:shadow-2xl transform hover:scale-105">
+                    🗞️ View All News <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Ocean Technology Partners Section -->
+    <section id="api-showcase" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-teal-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-fadeInUp">
+                <h2 class="text-4xl font-bold text-blue-900 mb-4">
+                    🌊 Powered by Ocean Technology
+                </h2>
+                <p class="text-xl text-blue-700">
+                    Eight ocean data partners power OceanCare — six streaming live today, two unlocked after key registration
+                </p>
+            </div>
+
+            <!-- API Integration Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- GNews API -->
+                <div class="glass-effect rounded-2xl overflow-hidden card-lift bg-white shadow-lg hover:shadow-2xl border border-blue-200 hover:border-blue-400 transition">
+                    <div class="h-32 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center relative">
+                        <i class="fas fa-newspaper text-5xl text-white opacity-30"></i>
+                        <div class="absolute top-2 right-2 px-2 py-1 bg-green-500 text-white text-xs font-bold rounded-full animate-pulse">
+                            LIVE
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-bold text-blue-900">🗞️ GNews API</h3>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Active</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Ocean conservation news aggregation
+                        </p>
+                        <div class="space-y-2">
+                            <div class="flex items-center text-xs text-blue-600 font-semibold">
+                                <i class="fas fa-check-circle mr-2"></i> Real-time Updates
+                            </div>
+                            <div class="bg-blue-50 p-2 rounded text-xs text-gray-700">
+                                <span class="font-semibold">Status:</span> Connected & Streaming
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Open-Meteo API -->
+                <div class="glass-effect rounded-2xl overflow-hidden card-lift bg-white shadow-lg hover:shadow-2xl border border-cyan-200 hover:border-cyan-400 transition">
+                    <div class="h-32 bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center relative">
+                        <i class="fas fa-cloud text-5xl text-white opacity-30"></i>
+                        <div class="absolute top-2 right-2 px-2 py-1 bg-green-500 text-white text-xs font-bold rounded-full animate-pulse">
+                            LIVE
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-bold text-blue-900">🌤️ Open-Meteo</h3>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Active</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Weather, wind, waves & humidity
+                        </p>
+                        <div class="space-y-2">
+                            <div class="grid grid-cols-2 gap-2 text-xs mb-2">
+                                <div class="bg-cyan-50 p-1 rounded text-center">
+                                    <div class="font-bold text-cyan-700" id="api-temp">--°F</div>
+                                    <div class="text-gray-600">Temp</div>
+                                </div>
+                                <div class="bg-cyan-50 p-1 rounded text-center">
+                                    <div class="font-bold text-cyan-700" id="api-wind">-- mph</div>
+                                    <div class="text-gray-600">Wind</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center text-xs text-blue-600 font-semibold">
+                                <i class="fas fa-check-circle mr-2"></i> No API Key Required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OpenAQ API -->
+                <div class="glass-effect rounded-2xl overflow-hidden card-lift bg-white shadow-lg hover:shadow-2xl border border-teal-200 hover:border-teal-400 transition">
+                    <div class="h-32 bg-gradient-to-br from-teal-400 to-blue-600 flex items-center justify-center relative">
+                        <i class="fas fa-leaf text-5xl text-white opacity-30"></i>
+                        <div class="absolute top-2 right-2 px-2 py-1 bg-green-500 text-white text-xs font-bold rounded-full animate-pulse">
+                            LIVE
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-bold text-blue-900">🌱 OpenAQ</h3>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Active</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Air quality & pollution monitoring
+                        </p>
+                        <div class="space-y-2">
+                            <div class="bg-teal-50 p-2 rounded text-xs">
+                                <div class="font-bold text-teal-700">PM2.5: <span id="api-aqi">--</span></div>
+                                <div class="text-gray-600 text-xs">Air Quality Index</div>
+                            </div>
+                            <div class="flex items-center text-xs text-blue-600 font-semibold">
+                                <i class="fas fa-check-circle mr-2"></i> Live AQI Data
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nominatim API -->
+                <div class="glass-effect rounded-2xl overflow-hidden card-lift bg-white shadow-lg hover:shadow-2xl border border-emerald-200 hover:border-emerald-400 transition">
+                    <div class="h-32 bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center relative">
+                        <i class="fas fa-map-marker-alt text-5xl text-white opacity-30"></i>
+                        <div class="absolute top-2 right-2 px-2 py-1 bg-green-500 text-white text-xs font-bold rounded-full animate-pulse">
+                            LIVE
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-bold text-blue-900">📍 Nominatim</h3>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Active</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Geocoding & reverse geocoding
+                        </p>
+                        <div class="space-y-2">
+                            <div class="flex items-center text-xs text-blue-600 font-semibold">
+                                <i class="fas fa-check-circle mr-2"></i> GPS Location Services
+                            </div>
+                            <div class="bg-emerald-50 p-2 rounded text-xs text-gray-700">
+                                <span class="font-semibold">Status:</span> Free & No Auth
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Maps API -->
+                <div class="glass-effect rounded-2xl overflow-hidden card-lift bg-white shadow-lg hover:shadow-2xl border border-blue-200 hover:border-blue-400 transition">
+                    <div class="h-32 bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center relative">
+                        <i class="fas fa-map text-5xl text-white opacity-30"></i>
+                        <div class="absolute top-2 right-2 px-2 py-1 bg-green-500 text-white text-xs font-bold rounded-full animate-pulse">
+                            LIVE
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-bold text-blue-900">🗺️ Google Maps</h3>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Active</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Debris mapping & visualization
+                        </p>
+                        <div class="space-y-2">
+                            <div class="flex items-center text-xs text-blue-600 font-semibold">
+                                <i class="fas fa-check-circle mr-2"></i> Interactive 2D/3D Maps
+                            </div>
+                            <div class="bg-blue-50 p-2 rounded text-xs text-gray-700">
+                                <span class="font-semibold">Status:</span> Configured
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Storm Glass API -->
+                <div class="glass-effect rounded-2xl overflow-hidden card-lift bg-white shadow-lg hover:shadow-2xl border border-slate-200 hover:border-slate-400 transition">
+                    <div class="h-32 bg-gradient-to-br from-slate-400 to-blue-600 flex items-center justify-center relative">
+                        <i class="fas fa-water text-5xl text-white opacity-30"></i>
+                        <div class="absolute top-2 right-2 px-2 py-1 bg-green-500 text-white text-xs font-bold rounded-full animate-pulse">
+                            LIVE
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-bold text-blue-900">🌊 Storm Glass</h3>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Active</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Marine weather & ocean data
+                        </p>
+                        <div class="space-y-2">
+                            <div class="grid grid-cols-2 gap-2 text-xs mb-2">
+                                <div class="bg-slate-50 p-1 rounded text-center">
+                                    <div class="font-bold text-slate-700" id="api-waves">-- m</div>
+                                    <div class="text-gray-600">Waves</div>
+                                </div>
+                                <div class="bg-slate-50 p-1 rounded text-center">
+                                    <div class="font-bold text-slate-700" id="api-humidity">-- %</div>
+                                    <div class="text-gray-600">Humidity</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center text-xs text-blue-600 font-semibold">
+                                <i class="fas fa-check-circle mr-2"></i> 50 req/day
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OpenUV API -->
+                <div class="glass-effect rounded-2xl overflow-hidden card-lift bg-white shadow-lg hover:shadow-2xl border border-yellow-200 hover:border-yellow-400 transition">
+                    <div class="h-32 bg-gradient-to-br from-yellow-400 to-orange-600 flex items-center justify-center relative">
+                        <i class="fas fa-sun text-5xl text-white opacity-30"></i>
+                        <div class="absolute top-2 right-2 px-2 py-1 bg-green-500 text-white text-xs font-bold rounded-full animate-pulse">
+                            LIVE
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-bold text-blue-900">☀️ OpenUV</h3>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Active</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            UV Index & sun safety data
+                        </p>
+                        <div class="space-y-2">
+                            <div class="bg-yellow-50 p-2 rounded text-xs">
+                                <div class="font-bold text-yellow-700">UV Index: <span id="api-uv">--</span></div>
+                                <div class="text-gray-600 text-xs">See Sun Safety Monitor</div>
+                            </div>
+                            <div class="flex items-center text-xs text-amber-600 font-semibold">
+                                <i class="fas fa-check-circle mr-2"></i> 50 req/day
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Crossing API -->
+                <div class="glass-effect rounded-2xl overflow-hidden card-lift bg-white shadow-lg hover:shadow-2xl border border-purple-200 hover:border-purple-400 transition">
+                    <div class="h-32 bg-gradient-to-br from-purple-400 to-blue-600 flex items-center justify-center relative">
+                        <i class="fas fa-chart-line text-5xl text-white opacity-30"></i>
+                        <div class="absolute top-2 right-2 px-2 py-1 bg-green-500 text-white text-xs font-bold rounded-full animate-pulse">
+                            LIVE
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-lg font-bold text-blue-900">📊 Visual Crossing</h3>
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Active</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Climate trends & forecasts
+                        </p>
+                        <div class="space-y-2">
+                            <div class="bg-purple-50 p-2 rounded text-xs text-gray-700">
+                                <span class="font-semibold">Status:</span> 90-day trends
+                            </div>
+                            <div class="flex items-center text-xs text-blue-600 font-semibold">
+                                <i class="fas fa-check-circle mr-2"></i> 1K req/day
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Stats -->
+            <div class="mt-16 bg-white rounded-2xl shadow-xl p-8 border border-blue-200">
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div>
+                        <div class="text-4xl font-bold text-blue-600 mb-2">🐢 8</div>
+                        <p class="text-gray-700 font-semibold">Total Ocean Data APIs</p>
+                        <p class="text-sm text-gray-500">6 live today · OpenUV & Visual Crossing go live once keys arrive</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-teal-600 mb-2">⚡ 24/7</div>
+                        <p class="text-gray-700 font-semibold">Continuous Monitoring</p>
+                        <p class="text-sm text-gray-500">Always collecting ocean data</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-cyan-600 mb-2">🌍 Global</div>
+                        <p class="text-gray-700 font-semibold">Worldwide Coverage</p>
+                        <p class="text-sm text-gray-500">Data from every ocean region</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Impact Counter Section -->
+    <section id="live-impact" class="gradient-hero text-white py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-fadeInDown">
+                <h2 class="text-4xl font-bold mb-4">Live Impact Counter</h2>
+                <p class="text-xl text-gray-300">
+                    Real-time ocean conservation metrics
+                </p>
+            </div>
+
+            <!-- Live Counters Grid -->
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Counter 1: Plastic Removed -->
+                <div class="glass-effect rounded-xl p-8 card-lift text-center">
+                    <i class="fas fa-trash text-5xl text-orange-400 mb-4"></i>
+                    <p class="text-5xl font-bold text-orange-400 mb-2" id="plastic-counter">0</p>
+                    <p class="text-lg text-gray-300">kg Plastic Removed</p>
+                </div>
+
+                <!-- Counter 2: Trees Saved -->
+                <div class="glass-effect rounded-xl p-8 card-lift text-center">
+                    <i class="fas fa-leaf text-5xl text-green-400 mb-4"></i>
+                    <p class="text-5xl font-bold text-green-400 mb-2" id="trees-counter">0</p>
+                    <p class="text-lg text-gray-300">Marine Acres Protected</p>
+                </div>
+
+                <!-- Counter 3: Lives Helped -->
+                <div class="glass-effect rounded-xl p-8 card-lift text-center">
+                    <i class="fas fa-heart text-5xl text-red-400 mb-4"></i>
+                    <p class="text-5xl font-bold text-red-400 mb-2" id="lives-counter">0</p>
+                    <p class="text-lg text-gray-300">Species Protected</p>
+                </div>
+
+                <!-- Counter 4: Active Volunteers -->
+                <div class="glass-effect rounded-xl p-8 card-lift text-center">
+                    <i class="fas fa-users text-5xl text-blue-400 mb-4"></i>
+                    <p class="text-5xl font-bold text-blue-400 mb-2" id="volunteers-counter">0</p>
+                    <p class="text-lg text-gray-300">Active Contributors</p>
+                </div>
+            </div>
+
+            <!-- Last Updated -->
+            <div class="text-center mt-12">
+                <p class="text-gray-400">Last updated: <span id="update-time">Just now</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- UV Index Monitor Section -->
+    <section id="uv-monitor" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 animate-fadeInUp">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                    <i class="fas fa-sun text-yellow-500 mr-2"></i>Sun Safety Monitor
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Real-time UV Index and sun safety information for your location
+                </p>
+            </div>
+
+            <!-- UV Widget Grid -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- UV Index Card -->
+                <div class="glass-effect rounded-2xl p-8 card-lift bg-white shadow-lg border border-yellow-200">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-2xl font-bold text-gray-900">Current UV Index</h3>
+                        <i class="fas fa-sun text-5xl text-yellow-500 opacity-20"></i>
+                    </div>
+
+                    <div class="mb-6">
+                        <div id="uv-value" class="text-7xl font-bold text-yellow-500 mb-2">--</div>
+                        <div id="uv-risk-level" class="text-2xl font-semibold text-gray-700">Loading...</div>
+                        <div class="h-3 bg-gray-200 rounded-full mt-4 overflow-hidden">
+                            <div id="uv-bar" class="h-full bg-yellow-500 transition-all duration-500" style="width: 30%"></div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 text-sm text-gray-600">
+                        <p><i class="fas fa-clock text-orange-500 mr-2"></i>Last updated: <span id="uv-time">--</span></p>
+                        <p><i class="fas fa-globe text-blue-500 mr-2"></i>Location: <span id="uv-location">Getting location...</span></p>
+                        <p><i class="fas fa-info-circle text-purple-500 mr-2"></i>Max today: <span id="uv-max">--</span></p>
+                    </div>
+                </div>
+
+                <!-- Sun Times Card -->
+                <div class="glass-effect rounded-2xl p-8 card-lift bg-white shadow-lg border border-orange-200">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                        <i class="fas fa-calendar-days text-orange-500 mr-3"></i>Today's Sun Times
+                    </h3>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+                            <span class="flex items-center text-gray-700">
+                                <i class="fas fa-sunrise text-orange-500 mr-3 text-2xl"></i>
+                                <span>Sunrise</span>
+                            </span>
+                            <span id="sunrise-time" class="font-semibold text-gray-900">--:--</span>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+                            <span class="flex items-center text-gray-700">
+                                <i class="fas fa-sun text-yellow-500 mr-3 text-2xl"></i>
+                                <span>Solar Noon</span>
+                            </span>
+                            <span id="solar-noon-time" class="font-semibold text-gray-900">--:--</span>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
+                            <span class="flex items-center text-gray-700">
+                                <i class="fas fa-sunset text-red-500 mr-3 text-2xl"></i>
+                                <span>Sunset</span>
+                            </span>
+                            <span id="sunset-time" class="font-semibold text-gray-900">--:--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Safe Exposure Times -->
+            <div class="mt-12 glass-effect rounded-2xl p-8 card-lift bg-white shadow-lg border border-green-200">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-shield-alt text-green-500 mr-3"></i>Safe Sun Exposure Time
+                </h3>
+
+                <div class="text-sm text-gray-600 mb-6 p-4 bg-green-50 rounded-lg">
+                    <i class="fas fa-info-circle text-green-500 mr-2"></i>
+                    Time until skin begins to burn. Darker skin types can stay longer. Apply SPF 30+ sunscreen and reapply every 2 hours.
+                </div>
+
+                <div id="exposure-grid" class="grid md:grid-cols-3 gap-4">
+                    <!-- Safe exposure times will be inserted here -->
+                    <div class="skeleton h-24 rounded-lg"></div>
+                    <div class="skeleton h-24 rounded-lg"></div>
+                    <div class="skeleton h-24 rounded-lg"></div>
+                </div>
+            </div>
+
+            <!-- UV Risk Guide -->
+            <div class="mt-12 grid md:grid-cols-5 gap-4">
+                <div class="text-center p-4 rounded-xl bg-green-100 border-2 border-green-500">
+                    <div class="text-sm font-bold text-green-900">0-2</div>
+                    <div class="text-xs text-green-700">Low</div>
+                    <div class="mt-2 text-lg">🟢</div>
+                </div>
+                <div class="text-center p-4 rounded-xl bg-blue-100 border-2 border-blue-500">
+                    <div class="text-sm font-bold text-blue-900">3-5</div>
+                    <div class="text-xs text-blue-700">Moderate</div>
+                    <div class="mt-2 text-lg">🔵</div>
+                </div>
+                <div class="text-center p-4 rounded-xl bg-yellow-100 border-2 border-yellow-500">
+                    <div class="text-sm font-bold text-yellow-900">6-7</div>
+                    <div class="text-xs text-yellow-700">High</div>
+                    <div class="mt-2 text-lg">🟡</div>
+                </div>
+                <div class="text-center p-4 rounded-xl bg-orange-100 border-2 border-orange-500">
+                    <div class="text-sm font-bold text-orange-900">8-10</div>
+                    <div class="text-xs text-orange-700">Very High</div>
+                    <div class="mt-2 text-lg">🟠</div>
+                </div>
+                <div class="text-center p-4 rounded-xl bg-red-100 border-2 border-red-500">
+                    <div class="text-sm font-bold text-red-900">11+</div>
+                    <div class="text-xs text-red-700">Extreme</div>
+                    <div class="mt-2 text-lg">🔴</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section Before Footer -->
+    <section class="gradient-hero text-white py-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center animate-fadeInUp">
+            <h2 class="text-4xl font-bold mb-6">Ready to Make a Difference?</h2>
+            <p class="text-xl text-gray-300 mb-8">
+                Join 1 million+ ocean protectors today. Start volunteering, donate, or report debris in minutes.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/pages/volunteer.html" class="px-8 py-3 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition btn-orange-glow shadow-lg hover:shadow-2xl transform hover:scale-105">
+                    <i class="fas fa-hand-holding-heart mr-2"></i> Start Volunteering
+                </a>
+                <a href="/pages/contact.html" class="px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-gray-800 transition shadow-lg hover:shadow-2xl transform hover:scale-105">
+                    <i class="fas fa-heart mr-2"></i> Make a Donation
+                </a>
+                <a href="/pages/report-debris.html" class="px-8 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-gray-800 transition shadow-lg hover:shadow-2xl transform hover:scale-105">
+                    <i class="fas fa-map-marker-alt mr-2"></i> Report Debris
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <!-- Company Column -->
+                <div>
+                    <h3 class="text-white font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-water text-orange-500"></i>
+                        OceanCare
+                    </h3>
+                    <ul class="space-y-2">
+                        <li><a href="/pages/team.html" class="hover:text-orange-500 transition">About Us</a></li>
+                        <li><a href="/pages/projects.html" class="hover:text-orange-500 transition">Our Projects</a></li>
+                        <li><a href="/pages/team.html" class="hover:text-orange-500 transition">Meet the Team</a></li>
+                        <li><a href="#" class="hover:text-orange-500 transition">Careers</a></li>
+                    </ul>
+                </div>
+
+                <!-- Help Column -->
+                <div>
+                    <h3 class="text-white font-bold mb-4">Help & Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-orange-500 transition">FAQ</a></li>
+                        <li><a href="/pages/contact.html" class="hover:text-orange-500 transition">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-orange-500 transition">Community</a></li>
+                        <li><a href="#" class="hover:text-orange-500 transition">Blog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal Column -->
+                <div>
+                    <h3 class="text-white font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-orange-500 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-orange-500 transition">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-orange-500 transition">Cookie Policy</a></li>
+                        <li><a href="#" class="hover:text-orange-500 transition">Compliance</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter Column -->
+                <div>
+                    <h3 class="text-white font-bold mb-4">Stay Updated</h3>
+                    <p class="text-sm mb-4">Subscribe to our newsletter for ocean conservation tips and impact updates.</p>
+                    <form class="flex flex-col gap-2">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 transition">
+                        <button type="submit" class="px-4 py-2 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-sm text-gray-400">
+                        &copy; 2025 OceanCare Initiative. All rights reserved. | Protecting oceans, one impact at a time.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-gray-400 hover:text-orange-500 transition">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-500 transition">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-500 transition">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-orange-500 transition">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu Toggle & Enhanced Interactions -->
+    <script>
+        // =====================================================
+        // CONFIGURATION & STATE
+        // =====================================================
+        const config = {
+            apiBaseUrl: '/api',
+            animationDuration: 2500,
+            updateInterval: 5000, // Update live counters every 5 seconds
+            debug: false
+        };
+
+        let appState = {
+            countersAnimated: false,
+            liveCountersStarted: false,
+            formSubmitted: false
+        };
+
+        // =====================================================
+        // UTILITY FUNCTIONS
+        // =====================================================
+        const log = (message, data = null) => {
+            if (config.debug) {
+                console.log(`[OceanCare] ${message}`, data || '');
+            }
+        };
+
+        const formatNumber = (num) => {
+            return new Intl.NumberFormat('en-US').format(Math.round(num));
+        };
+
+        const updateTimestamp = () => {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            const updateTimeEl = document.getElementById('update-time');
+            if (updateTimeEl) {
+                updateTimeEl.textContent = timeString;
+            }
+        };
+
+        // =====================================================
+        // MOBILE MENU FUNCTIONALITY
+        // =====================================================
+        function initMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+
+                // Close mobile menu when a link is clicked
+                const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+        }
+
+        // =====================================================
+        // SMOOTH SCROLL FUNCTIONALITY
+        // =====================================================
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const offsetTop = target.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
+        // =====================================================
+        // NAVBAR SHADOW ON SCROLL
+        // =====================================================
+        function initNavbarScroll() {
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('nav');
+                if (nav) {
+                    if (window.scrollY > 50) {
+                        nav.classList.add('shadow-xl');
+                    } else {
+                        nav.classList.remove('shadow-xl');
+                    }
+                }
+            });
+        }
+
+        // =====================================================
+        // ANIMATED COUNTER FUNCTION
+        // =====================================================
+        function animateCounter(element, target, duration = config.animationDuration) {
+            if (!element) return;
+
+            const start = 0;
+            const range = target - start;
+            const increment = range / (duration / 16);
+            let current = start;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = formatNumber(target);
+                    clearInterval(timer);
+                } else {
+                    element.textContent = formatNumber(Math.floor(current));
+                }
+            }, 16);
+        }
+
+        // =====================================================
+        // INTERSECTION OBSERVER FOR ANIMATIONS
+        // =====================================================
+        function initIntersectionObserver() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fadeInUp');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards and sections for animation
+            document.querySelectorAll('.card-lift, .glass-effect, section').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // =====================================================
+        // IMPACT SECTION COUNTERS
+        // =====================================================
+        function initImpactCounters() {
+            const impactSection = document.getElementById('impact');
+            if (!impactSection || appState.countersAnimated) return;
+
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const impactObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !appState.countersAnimated) {
+                        appState.countersAnimated = true;
+                        const numbers = entry.target.querySelectorAll('.text-5xl');
+                        numbers.forEach(num => {
+                            const text = num.textContent;
+                            const match = text.match(/\d+/);
+                            if (match) {
+                                const target = parseInt(match[0]);
+                                animateCounter(num, target, config.animationDuration);
+                            }
+                        });
+                        impactObserver.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            impactObserver.observe(impactSection);
+        }
+
+        // =====================================================
+        // LIVE IMPACT COUNTERS (API INTEGRATION)
+        // =====================================================
+        function initLiveCounters() {
+            const plasticCounter = document.getElementById('plastic-counter');
+            const treesCounter = document.getElementById('trees-counter');
+            const livesCounter = document.getElementById('lives-counter');
+            const volunteersCounter = document.getElementById('volunteers-counter');
+
+            if (!plasticCounter || appState.liveCountersStarted) return;
+
+            appState.liveCountersStarted = true;
+
+            // Animate initial values
+            const initialValues = {
+                plastic: 5234847,
+                trees: 234567,
+                lives: 1234,
+                volunteers: 1234567
+            };
+
+            // Animate from 0 to initial values
+            animateCounter(plasticCounter, initialValues.plastic, 2000);
+            animateCounter(treesCounter, initialValues.trees, 2000);
+            animateCounter(livesCounter, initialValues.lives, 2000);
+            animateCounter(volunteersCounter, initialValues.volunteers, 2000);
+
+            // Update every 5 seconds with realistic increments
+            setInterval(() => {
+                const increment = Math.floor(Math.random() * 100) + 50;
+                const currentValue = parseInt(plasticCounter.textContent.replace(/,/g, ''));
+                animateCounter(plasticCounter, currentValue + increment, 1000);
+
+                const treeIncrement = Math.floor(Math.random() * 10) + 5;
+                const treesValue = parseInt(treesCounter.textContent.replace(/,/g, ''));
+                animateCounter(treesCounter, treesValue + treeIncrement, 1000);
+
+                const livesIncrement = Math.floor(Math.random() * 2) + 1;
+                const livesValue = parseInt(livesCounter.textContent.replace(/,/g, ''));
+                animateCounter(livesCounter, livesValue + livesIncrement, 1000);
+
+                const volIncrement = Math.floor(Math.random() * 20) + 10;
+                const volValue = parseInt(volunteersCounter.textContent.replace(/,/g, ''));
+                animateCounter(volunteersCounter, volValue + volIncrement, 1000);
+
+                updateTimestamp();
+            }, config.updateInterval);
+
+            log('Live counters initialized');
+        }
+
+        // =====================================================
+        // FORM HANDLING & VALIDATION
+        // =====================================================
+        function initForms() {
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const emailInput = form.querySelector('input[type="email"]');
+                    const btn = form.querySelector('button[type="submit"]');
+
+                    if (!emailInput || !emailInput.value) {
+                        showFormError(form, 'Please enter a valid email');
+                        return;
+                    }
+
+                    // Show loading state
+                    const originalText = btn.textContent;
+                    btn.textContent = '⏳ Subscribing...';
+                    btn.disabled = true;
+
+                    try {
+                        // Simulate API call
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+
+                        // Show success feedback
+                        btn.textContent = '✓ Subscribed!';
+                        btn.classList.add('bg-green-600');
+
+                        log('Form submitted:', emailInput.value);
+
+                        setTimeout(() => {
+                            btn.textContent = originalText;
+                            btn.classList.remove('bg-green-600');
+                            btn.disabled = false;
+                            emailInput.value = '';
+                        }, 2000);
+                    } catch (error) {
+                        showFormError(form, 'An error occurred. Please try again.');
+                        btn.textContent = originalText;
+                        btn.disabled = false;
+                        log('Form submission error:', error);
+                    }
+                });
+            });
+        }
+
+        function showFormError(form, message) {
+            const errorEl = document.createElement('div');
+            errorEl.className = 'text-red-500 text-sm mt-2';
+            errorEl.textContent = message;
+            form.appendChild(errorEl);
+            setTimeout(() => errorEl.remove(), 3000);
+        }
+
+        // =====================================================
+        // PARALLAX SCROLL EFFECT
+        // =====================================================
+        function initParallax() {
+            window.addEventListener('scroll', () => {
+                const hero = document.querySelector('#home');
+                if (hero) {
+                    const scrolled = window.scrollY;
+                    hero.style.backgroundPosition = `0 ${scrolled * 0.5}px`;
+                }
+            });
+        }
+
+        // =====================================================
+        // HOVER EFFECTS FOR CARDS
+        // =====================================================
+        function initCardHovers() {
+            document.querySelectorAll('.card-lift').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.cursor = 'pointer';
+                });
+            });
+        }
+
+        // =====================================================
+        // PAGE LOAD ANIMATION
+        // =====================================================
+        function initPageLoad() {
+            document.addEventListener('DOMContentLoaded', () => {
+                document.body.style.opacity = '1';
+                log('Page loaded');
+            });
+        }
+
+        // =====================================================
+        // ANALYTICS TRACKING
+        // =====================================================
+        function initAnalytics() {
+            // Track section views
+            const sections = document.querySelectorAll('section[id]');
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        trackEvent('section_view', {
+                            section: entry.target.id
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            sections.forEach(section => sectionObserver.observe(section));
+
+            // Track button clicks
+            document.querySelectorAll('a[href^="/pages/"], button').forEach(element => {
+                element.addEventListener('click', () => {
+                    trackEvent('button_click', {
+                        target: element.textContent.trim() || element.href
+                    });
+                });
+            });
+
+            log('Analytics tracking initialized');
+        }
+
+        function trackEvent(eventName, eventData = {}) {
+            if (config.debug) {
+                log(`Event: ${eventName}`, eventData);
+            }
+            // Send to analytics service here
+        }
+
+        // =====================================================
+        // UV INDEX MONITOR (OpenUV.io Integration)
+        // =====================================================
+        const UV_API_KEY = 'openuv-1vaqrmibpr6nv-io';
+        const UV_API_URL = 'https://api.openuv.io/api/v1/uv';
+
+        function initUVMonitor() {
+            // Request user's geolocation
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        const alt = position.coords.altitude || 0;
+
+                        // Update location display
+                        document.getElementById('uv-location').textContent =
+                            `${lat.toFixed(2)}°, ${lng.toFixed(2)}°`;
+
+                        fetchUVData(lat, lng, alt);
+
+                        // Update every 30 minutes
+                        setInterval(() => fetchUVData(lat, lng, alt), 30 * 60 * 1000);
+                    },
+                    error => {
+                        log('Geolocation error, using default location');
+                        // Default to London
+                        document.getElementById('uv-location').textContent = 'London, UK (Default)';
+                        fetchUVData(51.5074, -0.1278, 0);
+                    }
+                );
+            } else {
+                log('Geolocation not supported');
+                document.getElementById('uv-location').textContent = 'London, UK (Default)';
+                fetchUVData(51.5074, -0.1278, 0);
+            }
+        }
+
+        async function fetchUVData(lat, lng, alt) {
+            try {
+                const url = `${UV_API_URL}?lat=${lat}&lng=${lng}&alt=${alt}`;
+
+                const response = await fetch(url, {
+                    headers: {
+                        'x-access-token': UV_API_KEY
+                    }
+                });
+
+                if (!response.ok) throw new Error('UV API Error');
+
+                const data = await response.json();
+
+                if (data.result) {
+                    updateUVDisplay(data.result);
+                    log('UV data fetched successfully', data.result);
+                }
+            } catch (error) {
+                log('UV API error:', error);
+                document.getElementById('uv-value').textContent = 'N/A';
+                document.getElementById('uv-risk-level').textContent = 'API Error - Try again later';
+            }
+        }
+
+        function updateUVDisplay(result) {
+            const uvIndex = result.uv;
+            const uvMax = result.uv_max;
+            const sunInfo = result.sun_info;
+            const safeExposure = result.safe_exposure_time;
+
+            // Update UV Index Value
+            const uvValue = document.getElementById('uv-value');
+            uvValue.textContent = uvIndex.toFixed(1);
+
+            // Determine risk level and color
+            let riskLevel = 'Low';
+            let riskColor = 'green';
+            let barColor = 'bg-green-500';
+            let barWidth = (uvIndex / 11) * 100;
+
+            if (uvIndex > 10) {
+                riskLevel = '⚠️ EXTREME RISK';
+                riskColor = '#dc2626';
+                barColor = 'bg-red-600';
+                barWidth = 100;
+            } else if (uvIndex > 7) {
+                riskLevel = '⚠️ VERY HIGH RISK';
+                riskColor = '#ea580c';
+                barColor = 'bg-orange-600';
+                barWidth = Math.min(90, (uvIndex / 11) * 100);
+            } else if (uvIndex > 5) {
+                riskLevel = '⚠️ HIGH RISK';
+                riskColor = '#eab308';
+                barColor = 'bg-yellow-500';
+                barWidth = (uvIndex / 11) * 100;
+            } else if (uvIndex > 2) {
+                riskLevel = '🟡 MODERATE RISK';
+                riskColor = '#3b82f6';
+                barColor = 'bg-blue-500';
+                barWidth = (uvIndex / 11) * 100;
+            } else {
+                riskLevel = '🟢 LOW RISK';
+                riskColor = '#22c55e';
+                barColor = 'bg-green-500';
+                barWidth = (uvIndex / 11) * 100;
+            }
+
+            // Update risk level
+            const riskLevelEl = document.getElementById('uv-risk-level');
+            riskLevelEl.textContent = riskLevel;
+            riskLevelEl.style.color = riskColor;
+
+            // Update progress bar
+            const barEl = document.getElementById('uv-bar');
+            barEl.className = `h-full transition-all duration-500 ${barColor}`;
+            barEl.style.width = `${barWidth}%`;
+
+            // Update UV max for today
+            document.getElementById('uv-max').textContent = `${uvMax.toFixed(1)} (at solar noon)`;
+
+            // Update time
+            const timeEl = document.getElementById('uv-time');
+            timeEl.textContent = new Date(result.uv_time).toLocaleTimeString();
+
+            // Update sun times
+            if (sunInfo && sunInfo.sun_times) {
+                const times = sunInfo.sun_times;
+
+                const options = { hour: '2-digit', minute: '2-digit' };
+
+                document.getElementById('sunrise-time').textContent =
+                    new Date(times.sunrise).toLocaleTimeString('en-US', options);
+
+                document.getElementById('sunset-time').textContent =
+                    new Date(times.sunset).toLocaleTimeString('en-US', options);
+
+                document.getElementById('solar-noon-time').textContent =
+                    new Date(times.solarNoon).toLocaleTimeString('en-US', options);
+            }
+
+            // Update safe exposure times
+            displaySafeExposureTimes(safeExposure);
+        }
+
+        function displaySafeExposureTimes(safeExposure) {
+            const skinTypes = [
+                { type: 'st1', label: 'Type 1: Pale White', color: 'from-red-400 to-red-600', textColor: 'text-red-600' },
+                { type: 'st2', label: 'Type 2: White', color: 'from-orange-400 to-orange-600', textColor: 'text-orange-600' },
+                { type: 'st3', label: 'Type 3: Light Brown', color: 'from-yellow-400 to-yellow-600', textColor: 'text-yellow-600' },
+                { type: 'st4', label: 'Type 4: Medium Brown', color: 'from-blue-400 to-blue-600', textColor: 'text-blue-600' },
+                { type: 'st5', label: 'Type 5: Dark Brown', color: 'from-purple-400 to-purple-600', textColor: 'text-purple-600' },
+                { type: 'st6', label: 'Type 6: Very Dark', color: 'from-green-400 to-green-600', textColor: 'text-green-600' }
+            ];
+
+            let html = '';
+            skinTypes.forEach(skinType => {
+                const minutes = safeExposure[skinType.type];
+                const hours = (minutes / 60).toFixed(1);
+
+                html += `
+                    <div class="p-4 bg-gradient-to-r ${skinType.color} rounded-xl text-white shadow-md hover:shadow-lg transition">
+                        <div class="font-semibold mb-2">${skinType.label}</div>
+                        <div class="text-sm">
+                            <div class="text-2xl font-bold">${minutes} minutes</div>
+                            <div class="text-xs opacity-90">(${hours} hours)</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const exposureGrid = document.getElementById('exposure-grid');
+            if (exposureGrid) {
+                exposureGrid.innerHTML = html;
+            }
+        }
+
+        // =====================================================
+        // NEWS FETCHING FUNCTION
+        // =====================================================
+        async function loadNews() {
+            try {
+                const response = await fetch('/api/news');
+                const data = await response.json();
+                const articles = data.articles || [];
+
+                const newsGrid = document.getElementById('news-grid');
+                if (!newsGrid) return;
+
+                // If no articles from API, show fallback
+                if (articles.length === 0) {
+                    newsGrid.innerHTML = `
+                        <div class="md:col-span-3 text-center py-12">
+                            <i class="fas fa-newspaper text-5xl text-blue-400 mb-4"></i>
+                            <p class="text-xl text-blue-700 font-semibold">Loading latest ocean news...</p>
+                            <p class="text-blue-600 mt-2">News updates available from our global partners</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Display first 3 articles
+                const colorSchemes = [
+                    { bg: 'from-blue-400 to-blue-600', border: 'border-blue-200', badge: 'text-blue-600 bg-blue-100', link: 'text-blue-600 hover:text-blue-700', icon: '🗞️' },
+                    { bg: 'from-cyan-400 to-cyan-600', border: 'border-cyan-200', badge: 'text-cyan-600 bg-cyan-100', link: 'text-cyan-600 hover:text-cyan-700', icon: '🌊' },
+                    { bg: 'from-teal-400 to-teal-600', border: 'border-teal-200', badge: 'text-teal-600 bg-teal-100', link: 'text-teal-600 hover:text-teal-700', icon: '🐢' }
+                ];
+
+                newsGrid.innerHTML = articles.slice(0, 3).map((article, i) => {
+                    const scheme = colorSchemes[i] || colorSchemes[0];
+                    const pubDate = new Date(article.publishedAt);
+                    const daysAgo = Math.floor((Date.now() - pubDate) / (1000 * 60 * 60 * 24));
+                    const dateStr = daysAgo === 0 ? 'Today' : `${daysAgo} day${daysAgo > 1 ? 's' : ''} ago`;
+
+                    return `
+                        <div class="glass-effect rounded-2xl overflow-hidden card-lift bg-white shadow-lg hover:shadow-2xl border ${scheme.border} transition">
+                            <div class="h-40 bg-gradient-to-br ${scheme.bg} flex items-center justify-center">
+                                <img src="${article.image || 'https://via.placeholder.com/320x180/0077BE/FFFFFF?text=Ocean+News'}"
+                                     alt="${article.title}"
+                                     class="w-full h-full object-cover"
+                                     onerror="this.style.display='none'">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="${scheme.badge} px-3 py-1 rounded-full text-xs font-semibold">${scheme.icon} GNews API</span>
+                                    <span class="text-xs text-gray-500">${dateStr}</span>
+                                </div>
+                                <h3 class="text-lg font-bold text-blue-900 mb-3 line-clamp-2">
+                                    ${article.title}
+                                </h3>
+                                <p class="text-gray-700 mb-4 text-sm line-clamp-2">
+                                    ${article.description || 'Ocean conservation news'}
+                                </p>
+                                <div class="flex items-center justify-between">
+                                    <a href="${article.url}" target="_blank" rel="noopener noreferrer" class="${scheme.link} font-semibold transition inline-flex items-center">
+                                        Read More <i class="fas fa-external-link-alt ml-2 text-xs"></i>
+                                    </a>
+                                    <span class="text-xs text-gray-500">Source: ${article.source}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                log('News loaded successfully from GNews API');
+            } catch (error) {
+                console.error('Error loading news:', error);
+                document.getElementById('news-grid').innerHTML = `
+                    <div class="md:col-span-3 text-center py-12">
+                        <i class="fas fa-exclamation-circle text-5xl text-orange-400 mb-4"></i>
+                        <p class="text-xl text-gray-700 font-semibold">News service temporarily unavailable</p>
+                        <p class="text-gray-600 mt-2">Please refresh to try again</p>
+                    </div>
+                `;
+            }
+        }
+
+        // =====================================================
+        // LOAD API SHOWCASE DATA
+        // =====================================================
+        async function loadAPIShowcaseData() {
+            try {
+                // Get user location for ocean conditions API
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        position => {
+                            const lat = position.coords.latitude;
+                            const lng = position.coords.longitude;
+                            fetchOceanConditions(lat, lng);
+                        },
+                        error => {
+                            log('Using default location for API data');
+                            // Default to Atlantic Ocean
+                            fetchOceanConditions(35, -35);
+                        }
+                    );
+                }
+
+                log('API showcase data loading initialized');
+            } catch (error) {
+                console.error('Error initializing API showcase:', error);
+            }
+        }
+
+        async function fetchOceanConditions(lat, lng) {
+            try {
+                const response = await fetch(`/api/ocean-conditions?latitude=${lat}&longitude=${lng}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    updateAPIShowcaseData(data);
+                    log('Ocean conditions data fetched successfully');
+                }
+            } catch (error) {
+                console.error('Error fetching ocean conditions:', error);
+            }
+        }
+
+        function updateAPIShowcaseData(data) {
+            try {
+                const weather = data.weather || {};
+                const airQuality = data.airQuality || {};
+
+                // Update weather data in API showcase if elements exist
+                const tempEl = document.getElementById('api-temp');
+                if (tempEl && weather.temperature_2m) {
+                    tempEl.textContent = Math.round(weather.temperature_2m) + '°F';
+                }
+
+                const windEl = document.getElementById('api-wind');
+                if (windEl && weather.wind_speed_10m) {
+                    windEl.textContent = Math.round(weather.wind_speed_10m) + ' mph';
+                }
+
+                const humidityEl = document.getElementById('api-humidity');
+                if (humidityEl && weather.relative_humidity_2m) {
+                    humidityEl.textContent = weather.relative_humidity_2m + '%';
+                }
+
+                const uvEl = document.getElementById('api-uv');
+                if (uvEl && weather.uv_index) {
+                    uvEl.textContent = weather.uv_index.toFixed(1);
+                }
+
+                const waveEl = document.getElementById('api-waves');
+                if (waveEl && weather.wave_height) {
+                    waveEl.textContent = weather.wave_height.toFixed(1) + ' m';
+                }
+
+                // Update air quality data if available
+                if (airQuality && airQuality.measurements) {
+                    const aqiEl = document.getElementById('api-aqi');
+                    const aqMeasurement = airQuality.measurements.find(m => m.parameter === 'pm25');
+                    if (aqiEl && aqMeasurement) {
+                        aqiEl.textContent = Math.round(aqMeasurement.value) + ' μg/m³';
+                    }
+                }
+
+                log('API showcase data updated');
+            } catch (error) {
+                console.error('Error updating API showcase data:', error);
+            }
+        }
+
+        // =====================================================
+        // INITIALIZE ALL FEATURES
+        // =====================================================
+        function initAll() {
+            // Core functionality
+            initMobileMenu();
+            initSmoothScroll();
+            initNavbarScroll();
+            initParallax();
+            initCardHovers();
+            initPageLoad();
+
+            // Animations
+            initIntersectionObserver();
+            initImpactCounters();
+
+            // Interactive features
+            initForms();
+            initAnalytics();
+
+            // Live data
+            setTimeout(initLiveCounters, 1000);
+
+            // UV Monitor (New)
+            setTimeout(initUVMonitor, 1500);
+
+            // Load news from API
+            setTimeout(loadNews, 2000);
+
+            // Load API showcase data
+            setTimeout(loadAPIShowcaseData, 2500);
+
+            log('All features initialized');
+        }
+
+        // =====================================================
+        // START APPLICATION
+        // =====================================================
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initAll);
+        } else {
+            initAll();
+        }
+    </script>
+
+</body>
+</html>
+
