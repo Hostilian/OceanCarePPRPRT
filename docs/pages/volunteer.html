@@ -1,0 +1,409 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer - OceanCare Initiative</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../js/toast.js" defer></script>
+    <script src="../js/form-validator.js" defer></script>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header>
+        <div class="container">
+            <div class="flex-between">
+                <a href="../index.html" class="logo">🌊 OceanCare</a>
+                <nav>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../pages/projects.html">Projects</a></li>
+                        <li><a href="../pages/team.html">Team</a></li>
+                        <li><a href="../pages/login.html">Log In</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="hero hero-gradient">
+        <div class="container">
+            <div class="hero-content animate-fade-in">
+                <h1>Join Our Volunteer Community</h1>
+                <p class="hero-subtitle">
+                    Help us protect and restore our oceans worldwide. Choose flexible opportunities that match your skills, schedule, and passion for marine conservation.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ocean Forecast Section -->
+    <section class="section-spaced">
+        <div class="container">
+            <div class="section-header">
+                <h2>🌊 Optimal Cleanup Schedule</h2>
+                <p>
+                Enter your location to see the best times to volunteer based on ocean conditions and weather forecasts.
+            </p>
+
+            <div class="card" style="max-width: 600px; margin: 0 auto;">
+                <form id="forecastForm" style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-3); align-items: end;">
+                    <input type="text" id="forecastLocation" placeholder="Enter your city or beach location..." required style="margin: 0;">
+                    <button type="submit" class="btn btn-primary" style="margin: 0;">Get Forecast</button>
+                </form>
+            </div>
+
+            <div id="forecastContent" style="display: none; margin-top: var(--space-8);">
+                <div id="forecastGrid" class="grid grid-cols-3 gap-6"></div>
+                <div id="warningBox" style="display: none; margin-top: var(--space-6);"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Opportunities & Signup Section -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <div class="grid grid-cols-2 gap-12">
+                <!-- Signup Form -->
+                <div>
+                    <h2 style="margin-bottom: var(--space-6);">Sign Up to Volunteer</h2>
+                    <form id="volunteerForm" class="card" style="padding: var(--space-8);">
+                        <div class="form-group">
+                            <label for="volunteerName">Full Name *</label>
+                            <input type="text" id="volunteerName" name="volunteerName" required placeholder="Your full name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="volunteerEmail">Email Address *</label>
+                            <input type="email" id="volunteerEmail" name="volunteerEmail" required placeholder="your.email@example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="volunteerPhone">Phone Number</label>
+                            <input type="tel" id="volunteerPhone" name="volunteerPhone" placeholder="(123) 456-7890">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="volunteerLocation">Location / City *</label>
+                            <input type="text" id="volunteerLocation" name="volunteerLocation" required placeholder="Where are you located?">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interestArea">Area of Interest *</label>
+                            <select id="interestArea" name="interestArea" required>
+                                <option value="">-- Select an area --</option>
+                                <option value="cleanup">Cleanup Events</option>
+                                <option value="coral">Coral Reef Restoration</option>
+                                <option value="research">Research & Monitoring</option>
+                                <option value="education">Education & Outreach</option>
+                                <option value="advocacy">Advocacy & Policy</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="experience">Experience Level *</label>
+                            <select id="experience" name="experience" required>
+                                <option value="">-- Select experience level --</option>
+                                <option value="beginner">Beginner - First time volunteering</option>
+                                <option value="intermediate">Intermediate - Some experience</option>
+                                <option value="experienced">Experienced - Regular volunteer</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="availability">How often can you volunteer? *</label>
+                            <select id="availability" name="availability" required>
+                                <option value="">-- Select frequency --</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="biweekly">Bi-weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="occasional">Occasional / As-needed</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="motivation">Why do you want to volunteer? *</label>
+                            <textarea id="motivation" name="motivation" required placeholder="Tell us about your passion for ocean conservation..." rows="4"></textarea>
+                        </div>
+
+                        <label style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-4);">
+                            <input type="checkbox" name="terms" required style="width: auto;">
+                            <span style="color: var(--color-text-light);">I agree to the volunteer agreement and privacy policy</span>
+                        </label>
+
+                        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Submit Application</button>
+                    </form>
+                </div>
+
+                <!-- Current Opportunities -->
+                <div>
+                    <h2 style="margin-bottom: var(--space-6);">Current Opportunities</h2>
+                    <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+                        <div class="card">
+                            <h3 style="color: var(--color-primary); margin-bottom: var(--space-2);">🌊 Coastal Cleanup Events</h3>
+                            <p style="color: var(--color-text-light); margin-bottom: var(--space-3); font-size: var(--text-sm);">
+                                Join organized beach cleanups to remove plastic and marine debris. Monthly events along the coast.
+                            </p>
+                            <div style="font-size: var(--text-xs); color: var(--color-text-lighter);">
+                                <div>⏰ Weekends, 4-6 hours</div>
+                                <div>📍 Multiple locations</div>
+                                <span style="background: rgba(213, 123, 52, 0.1); color: var(--color-accent); padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); display: inline-block; margin-top: var(--space-2);">Beginner-friendly</span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3 style="color: var(--color-primary); margin-bottom: var(--space-2);">🪸 Coral Restoration</h3>
+                            <p style="color: var(--color-text-light); margin-bottom: var(--space-3); font-size: var(--text-sm);">
+                                Help restore damaged coral reefs by propagating fragments and monitoring recovery. Dive certification preferred.
+                            </p>
+                            <div style="font-size: var(--text-xs); color: var(--color-text-lighter);">
+                                <div>⏰ Weekdays & weekends</div>
+                                <div>📍 Reef sites</div>
+                                <span style="background: rgba(0, 117, 168, 0.1); color: var(--color-primary-lighter); padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); display: inline-block; margin-top: var(--space-2);">Intermediate</span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3 style="color: var(--color-primary); margin-bottom: var(--space-2);">📚 Education & Outreach</h3>
+                            <p style="color: var(--color-text-light); margin-bottom: var(--space-3); font-size: var(--text-sm);">
+                                Teach students and communities about ocean conservation through workshops and school programs.
+                            </p>
+                            <div style="font-size: var(--text-xs); color: var(--color-text-lighter);">
+                                <div>⏰ Flexible hours</div>
+                                <div>📍 Schools & communities</div>
+                                <span style="background: rgba(213, 123, 52, 0.1); color: var(--color-accent); padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); display: inline-block; margin-top: var(--space-2);">Beginner-friendly</span>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3 style="color: var(--color-primary); margin-bottom: var(--space-2);">🔬 Research Support</h3>
+                            <p style="color: var(--color-text-light); margin-bottom: var(--space-3); font-size: var(--text-sm);">
+                                Assist with data collection, analysis, and field surveys of marine ecosystems.
+                            </p>
+                            <div style="font-size: var(--text-xs); color: var(--color-text-lighter);">
+                                <div>⏰ Flexible schedule</div>
+                                <div>📍 Research stations</div>
+                                <span style="background: rgba(0, 61, 92, 0.2); color: var(--color-primary); padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm); display: inline-block; margin-top: var(--space-2);">Advanced</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Questions CTA -->
+    <section class="section-spaced">
+        <div class="container text-center">
+            <h2 style="margin-bottom: var(--space-4);">Questions Before You Apply?</h2>
+            <p style="color: var(--color-text-light); margin-bottom: var(--space-6);">
+                Contact our volunteer coordinator at <strong>volunteers@oceancare.org</strong> or call <strong>(555) 123-4567</strong>
+            </p>
+            <a href="../pages/contact.html" class="btn btn-secondary">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="grid grid-cols-4 gap-8" style="margin-bottom: var(--space-12);">
+                <div>
+                    <h5>About</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="../pages/team.html">Our Team</a></li>
+                        <li><a href="../pages/projects.html">Our Projects</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Get Involved</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="../pages/volunteer.html">Volunteer</a></li>
+                        <li><a href="../pages/contact.html">Donate</a></li>
+                        <li><a href="../pages/report-debris.html">Report Debris</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Support</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="../pages/contact.html">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Legal</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-top" style="padding-top: var(--space-8); text-align: center; color: rgba(255,255,255,0.7); font-size: var(--text-sm);">
+                <p>&copy; 2025 OceanCare Initiative. All rights reserved. | Protecting oceans, one action at a time.</p>
+                <div style="margin-top: var(--space-4);">
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Facebook</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Twitter</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Instagram</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Form validation and submission
+        let volunteerValidator;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            volunteerValidator = new FormValidator(document.getElementById('volunteerForm'));
+        });
+
+        document.getElementById('volunteerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Validate form
+            if (!volunteerValidator.validateForm()) {
+                toast.error('Please fix all errors before submitting');
+                return;
+            }
+
+            const formData = {
+                name: document.getElementById('volunteerName').value,
+                email: document.getElementById('volunteerEmail').value,
+                phone: document.getElementById('volunteerPhone').value,
+                location: document.getElementById('volunteerLocation').value,
+                area: document.getElementById('interestArea').value,
+                experience: document.getElementById('experience').value,
+                availability: document.getElementById('availability').value,
+                motivation: document.getElementById('motivation').value
+            };
+
+            // Set loading state
+            setFormLoading(document.getElementById('volunteerForm'), true);
+
+            try {
+                const response = await fetch('/api/volunteer', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    toast.success(`✅ Thank you, ${formData.name}! We'll contact you at ${formData.email} within 5 business days.`, 5000);
+                    volunteerValidator.reset();
+                } else {
+                    const error = await response.json();
+                    toast.error(error.message || 'Failed to submit application. Please try again.', 5000);
+                }
+            } catch (error) {
+                toast.error('Network error: ' + error.message + '. Please check your connection and try again.', 5000);
+            } finally {
+                setFormLoading(document.getElementById('volunteerForm'), false);
+            }
+        });
+
+        // Forecast
+        document.getElementById('forecastForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const location = document.getElementById('forecastLocation').value;
+            const button = e.target.querySelector('button');
+            const originalText = button.textContent;
+            button.textContent = '⏳ Loading...';
+            button.disabled = true;
+
+            try {
+                const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`, {
+                    headers: { 'User-Agent': 'OceanCare' }
+                });
+                const geoData = await geoRes.json();
+
+                if (!geoData || geoData.length === 0) {
+                    alert(`Location "${location}" not found. Try a city name like "San Francisco" or "Miami".`);
+                    button.textContent = originalText;
+                    button.disabled = false;
+                    return;
+                }
+
+                const { lat, lon } = geoData[0];
+                const condRes = await fetch(`/api/ocean-conditions?latitude=${lat}&longitude=${lon}`);
+                const condData = await condRes.json();
+
+                if (condData.success) {
+                    displayForecast(condData.data, location);
+                } else {
+                    alert('Unable to fetch forecast. Please try another location.');
+                }
+
+                button.textContent = originalText;
+                button.disabled = false;
+            } catch (error) {
+                alert('Connection error: ' + error.message);
+                button.textContent = originalText;
+                button.disabled = false;
+            }
+        });
+
+        function displayForecast(conditions, location) {
+            const temp = parseFloat(conditions.temperature);
+            const wind = parseFloat(conditions.windSpeed);
+            const waves = parseFloat(conditions.waveHeight);
+            const humidity = parseFloat(conditions.humidity);
+
+            let recommendation = '';
+            if (waves < 0.5 && wind < 10) {
+                recommendation = '✅ TODAY is PERFECT!';
+            } else if (waves < 1 && wind < 15) {
+                recommendation = '✅ Tomorrow looks great';
+            } else if (waves < 2 && wind < 20) {
+                recommendation = '⚠️ Good in 2-3 days';
+            } else {
+                recommendation = '⚠️ Check again in a few days';
+            }
+
+            const html = `
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="card" style="background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.05)); border-left: 4px solid #28a745;">
+                        <h3 style="color: #28a745; margin-top: 0;">✅ Recommendation</h3>
+                        <p style="font-size: var(--text-lg); font-weight: bold; color: var(--color-primary);">${recommendation}</p>
+                        <p style="font-size: var(--text-sm); color: var(--color-text-light);">Ideal conditions for group cleanups</p>
+                    </div>
+
+                    <div class="card" style="background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.05)); border-left: 4px solid #ffc107;">
+                        <h3 style="color: #d97b34; margin-top: 0;">🌡️ Current Conditions</h3>
+                        <div style="font-size: var(--text-lg); font-weight: bold; color: var(--color-primary); margin-bottom: var(--space-2);">${temp.toFixed(1)}°C</div>
+                        <p style="font-size: var(--text-sm); color: var(--color-text-light);">Wind: ${wind.toFixed(1)} km/h | Waves: ${waves.toFixed(1)}m | Humidity: ${humidity.toFixed(0)}%</p>
+                    </div>
+
+                    <div class="card" style="background: linear-gradient(135deg, rgba(0, 119, 190, 0.1), rgba(0, 119, 190, 0.05)); border-left: 4px solid #0077BE;">
+                        <h3 style="color: var(--color-primary-lighter); margin-top: 0;">📍 Location</h3>
+                        <p style="font-size: var(--text-lg); font-weight: bold; color: var(--color-primary);">${location}</p>
+                        <p style="font-size: var(--text-sm); color: var(--color-text-light);">Ocean conditions suitable for activities</p>
+                    </div>
+                </div>
+                ${waves > 2.5 || wind > 25 ? `<div style="background: rgba(220, 53, 69, 0.1); border-left: 4px solid #dc3545; padding: var(--space-4); border-radius: var(--radius-base); margin-top: var(--space-4);"><strong style="color: #dc3545;">⚠️ Caution:</strong> <span style="color: var(--color-text-light);">Challenging conditions this week. Consider indoor activities like education outreach.</span></div>` : ''}
+            `;
+
+            document.getElementById('forecastGrid').innerHTML = html;
+            document.getElementById('forecastContent').style.display = 'block';
+        }
+    </script>
+
+    <style>
+        @media (max-width: 768px) {
+            .grid.grid-cols-2 { grid-template-columns: 1fr; }
+            .grid.grid-cols-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</body>
+</html>
+
+

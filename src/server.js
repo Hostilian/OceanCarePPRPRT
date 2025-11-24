@@ -193,71 +193,30 @@ function extractCoordinates(query = {}) {
 
 // News API
 app.get('/api/news', async (req, res) => {
-  // Norm: "You know what's funny about news APIs? They charge you money
-  // to tell you what's already on the internet. That's entrepreneurship right there.
-  // But when they don't work, we got fallback data. See, that's good programming."
+  const limit = resolveNewsLimit(req.query.limit);
+  const token = process.env.GNEWS_API_KEY;
 
-  const key = process.env.GNEWS_API_KEY;
-  if (!key) {
-    return res.json({ articles: [
-      { title: 'Coral Restoration Success', description: '50K corals restored globally', source: 'Ocean News', publishedAt: new Date().toISOString(), image: 'https://via.placeholder.com/320x180/0077BE/FFFFFF?text=Coral' },
-      { title: 'Sea Turtle Population Growing', description: 'Protected nesting sites helping recovery', source: 'Marine Life', publishedAt: new Date(Date.now() - 86400000).toISOString(), image: 'https://via.placeholder.com/320x180/0077BE/FFFFFF?text=Turtle' },
-      { title: 'Ocean Cleanup Record', description: '1M pieces of plastic removed', source: 'Conservation News', publishedAt: new Date(Date.now() - 172800000).toISOString(), image: 'https://via.placeholder.com/320x180/0077BE/FFFFFF?text=Cleanup' }
-    ]});
+  if (!token) {
+    const fallbackArticles = getFallbackArticles(limit);
+    return res.json(buildNewsResponse(fallbackArticles, { source: 'fallback-static', fallback: true, limit }));
   }
 
   try {
-    const url = `https://gnews.io/api/v4/search?q=ocean%20conservation&lang=en&max=6&token=${key}`;
-    const r = await fetch(url);
-    const data = await r.json();
+    const url = `https://gnews.io/api/v4/search?q=ocean%20conservation&lang=en&max=${limit}&token=${token}`;
+    const response = await fetch(url);
+    const payload = await response.json();
 
-    if (!r.ok || !data.articles) {
-      throw new Error(`GNews API responded with status ${r.status}`);
+    if (!response.ok || !Array.isArray(payload.articles)) {
+      throw new Error(`GNews API responded with status ${response.status}`);
     }
 
-    // Norm: "Transform the source so it doesn't come back as '[object Object]'.
-    // That happened once. We don't talk about it anymore."
-    const articles = Array.isArray(data.articles)
-      ? data.articles.map(article => {
-          if (article && Object.prototype.hasOwnProperty.call(article, 'source')) {
-            return {
-              ...article,
-              source: transformSource(article.source)
-            };
-          }
-          return { ...article };
-        })
-      : [];
+    const articles = payload.articles.map((article, index) => normalizeArticle(article, index));
 
-    res.json({ ...data, articles });
-  } catch (e) {
-    // Graceful fallback when news API is unavailable
-    const now = Date.now();
-    res.json({
-      articles: [
-        {
-          title: 'Global Coral Restoration Hits New Milestone',
-          description: 'Community-led coral nurseries restore 50,000 coral fragments across three oceans.',
-          source: 'OceanCare Newsroom',
-          publishedAt: new Date(now - 2 * 60 * 60 * 1000).toISOString(),
-          image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80'
-        },
-        {
-          title: 'Coastal Communities Rally for Seagrass Protection',
-          description: 'Over 15,000 volunteers join monthly cleanups safeguarding vital blue carbon habitats.',
-          source: 'Marine Conservation Daily',
-          publishedAt: new Date(now - 24 * 60 * 60 * 1000).toISOString(),
-          image: 'https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=1200&q=80'
-        },
-        {
-          title: 'Innovative Fishing Gear Reduces Bycatch by 40%',
-          description: 'OceanCare partners with fisheries to deploy AI-powered detection buoys protecting marine life.',
-          source: 'Sustainable Seas Report',
-          publishedAt: new Date(now - 48 * 60 * 60 * 1000).toISOString(),
-          image: 'https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=1200&q=80'
-        }
-      ]
-    });
+    res.json(buildNewsResponse(articles, { source: 'gnews', limit }));
+  } catch (error) {
+    console.warn('News API error:', error.message || error);
+    const fallbackArticles = getFallbackArticles(limit);
+    res.json(buildNewsResponse(fallbackArticles, { source: 'fallback-static', fallback: true, limit }));
   }
 });
 
@@ -285,6 +244,113 @@ function transformSource(source) {
   }
 
   return 'OceanCare News';
+}
+
+function resolveNewsLimit(rawLimit) {
+  const parsed = parseInt(rawLimit, 10);
+  if (Number.isFinite(parsed) && parsed > 0) {
+    return Math.min(parsed, 12);
+  }
+  return 6;
+}
+
+const NEWS_IMAGE_FALLBACKS = [
+  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1483683804023-6ccdb62f86ef?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1470770903676-69b98201ea1c?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1507525428034-019bbcef3a1f?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80'
+];
+
+const NEWS_FALLBACK_ARTICLES = [
+  {
+    title: 'Global Coral Restoration Hits New Milestone',
+    description: 'Community-led coral nurseries restore 50,000 coral fragments across three oceans.',
+    source: 'OceanCare Newswire',
+    url: 'https://www.oceancare.org/news/global-coral-restoration-milestone'
+  },
+  {
+    title: 'Coastal Communities Rally for Seagrass Protection',
+    description: 'Over 15,000 volunteers join monthly cleanups safeguarding vital blue carbon habitats.',
+    source: 'Marine Conservation Daily',
+    url: 'https://www.oceancare.org/news/coastal-community-seagrass-protection'
+  },
+  {
+    title: 'Innovative Fishing Gear Reduces Bycatch by 40%',
+    description: 'OceanCare partners with fisheries to deploy AI-powered detection buoys protecting marine life.',
+    source: 'Sustainable Seas Report',
+    url: 'https://www.oceancare.org/news/ai-buoys-reduce-bycatch'
+  },
+  {
+    title: 'New Debris Tracking Network Expands to 25 Countries',
+    description: 'Volunteers deploy smart sensors on coastlines to alert nearby cleanup crews.',
+    source: 'OceanCare Newswire',
+    url: 'https://www.oceancare.org/news/debris-tracking-network-expands'
+  },
+  {
+    title: 'Seagrass Sanctuaries Secure Fresh Funding',
+    description: 'Public-private partnership unlocks $12M to restore critical blue carbon ecosystems.',
+    source: 'Blue Carbon Journal',
+    url: 'https://www.oceancare.org/news/seagrass-funding-2025'
+  },
+  {
+    title: 'Indigenous Guardians Lead Reef Monitoring',
+    description: 'Community scientists map coral health in partnership with OceanCare labs.',
+    source: 'Indigenous Oceans Collective',
+    url: 'https://www.oceancare.org/news/indigenous-reef-monitoring'
+  }
+];
+
+function getFallbackArticles(limit = 6) {
+  const cappedLimit = Math.min(limit || 6, 12);
+  const now = Date.now();
+  return Array.from({ length: cappedLimit }, (_, index) => {
+    const base = NEWS_FALLBACK_ARTICLES[index % NEWS_FALLBACK_ARTICLES.length];
+    return normalizeArticle({
+      ...base,
+      publishedAt: new Date(now - index * 6 * 60 * 60 * 1000).toISOString(),
+      image: base.image || NEWS_IMAGE_FALLBACKS[index % NEWS_IMAGE_FALLBACKS.length]
+    }, index);
+  });
+}
+
+function normalizeArticle(article = {}, index = 0) {
+  const title = typeof article.title === 'string' && article.title.trim()
+    ? article.title.trim()
+    : 'Ocean conservation update';
+  const description = typeof article.description === 'string' && article.description.trim()
+    ? article.description.trim()
+    : (typeof article.content === 'string' && article.content.trim())
+      ? article.content.trim()
+      : 'Full story available on our news page.';
+  const publishedAt = article.publishedAt || article.published_at || article.date || new Date().toISOString();
+  const url = article.url || article.link || '#';
+  const image = article.image || article.image_url || article.imageUrl || NEWS_IMAGE_FALLBACKS[index % NEWS_IMAGE_FALLBACKS.length];
+
+  return {
+    id: article.id || url || `oceancare-news-${index}`,
+    title,
+    description,
+    url,
+    image,
+    publishedAt,
+    source: transformSource(article.source),
+    author: article.author || null,
+    content: article.content || null
+  };
+}
+
+function buildNewsResponse(articles, meta = {}) {
+  return {
+    success: true,
+    articles,
+    count: articles.length,
+    limit: meta.limit || articles.length,
+    fallback: Boolean(meta.fallback),
+    source: meta.source || 'gnews',
+    timestamp: new Date().toISOString()
+  };
 }
 
 // Donations - Create payment intent for one-time donation

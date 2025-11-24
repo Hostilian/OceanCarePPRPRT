@@ -100,7 +100,7 @@ SENDGRID_FROM_EMAIL=noreply@yourdomain.com
 
 ```bash
 # News Feed
-GNEWS_API_KEY=your_key
+GNEWS_API_KEY=your_key   # e.g. d1ebf8a38da2b60015304b61977cd57c
 
 # Marine Weather
 STORM_GLASS_API_KEY=your_key
@@ -115,7 +115,7 @@ VISUAL_CROSSING_API_KEY=your_key
 GOOGLE_MAPS_API_KEY=your_key
 ```
 
-**Note:** All APIs have graceful fallbacks - platform works without keys.
+**Note:** All APIs have graceful fallbacks - platform works without keys, but setting `GNEWS_API_KEY` unlocks real headlines instead of placeholders.
 
 ---
 
@@ -142,13 +142,14 @@ See **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** for detailed instructions.
 
 ### GitHub Pages (Static Preview)
 
-GitHub Pages serves the repository root, so the production-ready marketing site lives in `public/` and the root `index.html` simply redirects there. When you update any HTML, CSS, or JS under `public/`, commit the changes directly—there is no build step.
+GitHub Pages can only serve from the repository root or a `/docs` folder. To keep Express pointed at `public/` while Pages serves the exact same files, we mirror `public/` into `docs/` whenever we deploy.
 
 1. Make edits under `public/` (e.g., `public/index.html`, `public/pages/*`, `public/css/styles.css`).
-2. Verify locally via `npm start` (Express still serves `/public` as the static root).
-3. Push to `main`. GitHub Pages automatically serves `https://<username>.github.io/OceanCarePPRPRT/` and immediately redirects to `public/index.html`, so all relative asset URLs resolve correctly.
+2. Run `npm run pages:sync` to copy the entire `public/` tree into `docs/`.
+3. Commit both `public/` and `docs/` changes.
+4. Push to `main` and set the repository’s Pages config to **Branch:** `main`, **Folder:** `/docs`.
 
-If you add new top-level assets (images, scripts, pages), place them under `public/` so both the Express server **and** GitHub Pages can reach the same files without extra configuration.
+Tip: rerun `npm run pages:sync` after every content or asset change so GitHub Pages never serves stale files.
 
 ---
 

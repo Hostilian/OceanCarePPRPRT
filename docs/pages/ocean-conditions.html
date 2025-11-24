@@ -1,0 +1,402 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean Conditions Monitor - OceanCare Initiative</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../js/toast.js" defer></script>
+    <script src="../js/form-validator.js" defer></script>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header>
+        <div class="container">
+            <div class="flex-between">
+                <a href="../index.html" class="logo">🌊 OceanCare</a>
+                <nav>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../pages/projects.html">Projects</a></li>
+                        <li><a href="../pages/team.html">Team</a></li>
+                        <li><a href="../pages/login.html">Log In</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="hero hero-gradient">
+        <div class="container">
+            <div class="hero-content animate-fade-in">
+                <h1>🌊 Ocean Conditions Monitor</h1>
+                <p class="hero-subtitle">
+                    Real-time marine weather data powered by advanced oceanographic sensors. Track temperature, waves, wind, and UV conditions for any coastal location worldwide.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Search -->
+    <section class="section-spaced">
+        <div class="container">
+            <div class="card" style="max-width: 600px; margin: 0 auto; padding: var(--space-8);">
+                <h2 style="margin-top: 0; text-align: center; margin-bottom: var(--space-6);">Search Ocean Conditions</h2>
+                <form id="conditionsForm">
+                    <div style="display: grid; grid-template-columns: 1fr auto; gap: var(--space-3);">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="location">Location (City or Coordinates)</label>
+                            <input type="text" id="location" name="location" required placeholder="e.g., Miami, FL or 25.7617° N, 80.1918° W">
+                        </div>
+                        <div style="display: flex; align-items: flex-end;">
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Search</button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="getMyLocation()" style="margin-top: var(--space-3); width: 100%;">📍 Use My Location</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Display -->
+    <section class="section-spaced" id="resultsSection" style="display: none;">
+        <div class="container">
+            <div class="section-header">
+                <h2>Real-Time Ocean Conditions</h2>
+            </div>
+            
+            <!-- Current Conditions Grid -->
+            <div class="grid grid-cols-4 gap-6" id="conditionsGrid" style="margin-bottom: var(--space-12);">
+                <!-- Populated by JavaScript -->
+            </div>
+
+            <!-- Hourly Forecast -->
+            <div style="margin-top: var(--space-12);">
+                <h3 style="margin-bottom: var(--space-6);">⏰ 7-Day Forecast</h3>
+                <div class="grid grid-cols-7 gap-3" id="forecastGrid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Detailed Metrics -->
+            <div class="grid grid-cols-2 gap-6" style="margin-top: var(--space-12);">
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary);">🌡️ Temperature Data</h3>
+                    <div id="tempMetrics" style="font-size: var(--text-sm); color: var(--color-text-light);">Loading...</div>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary);">🌊 Wave Conditions</h3>
+                    <div id="waveMetrics" style="font-size: var(--text-sm); color: var(--color-text-light);">Loading...</div>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary);">💨 Wind Patterns</h3>
+                    <div id="windMetrics" style="font-size: var(--text-sm); color: var(--color-text-light);">Loading...</div>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary);">💧 Humidity & Pressure</h3>
+                    <div id="pressureMetrics" style="font-size: var(--text-sm); color: var(--color-text-light);">Loading...</div>
+                </div>
+            </div>
+
+            <!-- Activity Suitability -->
+            <div class="card" style="margin-top: var(--space-12); background: linear-gradient(135deg, rgba(0, 119, 190, 0.05), rgba(0, 119, 190, 0.1)); border-left: 4px solid var(--color-primary);">
+                <h3 style="margin-top: 0; color: var(--color-primary);">✅ Recommended Activities</h3>
+                <div id="activities" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Information Section -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <h2 style="text-align: center; color: white; margin-bottom: var(--space-8);">Why Ocean Conditions Matter</h2>
+            <div class="grid grid-cols-3 gap-6">
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary);">🏖️ Volunteer Planning</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        Check conditions before scheduling beach cleanups and conservation work. Safe conditions are essential for volunteer safety.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary);">🔬 Research Data</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        Real-time ocean metrics help scientists monitor marine ecosystems and track environmental changes in real-time.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top: 0; color: var(--color-primary);">🚨 Debris Reporting</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        Ocean conditions affect debris accumulation patterns. This data helps predict where plastics may wash ashore.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Source -->
+    <section class="section-spaced">
+        <div class="container text-center">
+            <h2 style="margin-bottom: var(--space-4);">Data Sources & Credits</h2>
+            <p style="color: var(--color-text-light); margin-bottom: var(--space-6);">
+                Ocean condition data is sourced from <strong>Open-Meteo</strong> - A free, open-source weather API without rate limits or API keys required.
+            </p>
+            <div class="grid grid-cols-3 gap-6" style="margin-top: var(--space-8);">
+                <div class="card">
+                    <p style="margin: 0; color: var(--color-text-light); font-size: var(--text-sm);">
+                        <strong>Temperature Range:</strong> Daily high/low surface water temperatures
+                    </p>
+                </div>
+                <div class="card">
+                    <p style="margin: 0; color: var(--color-text-light); font-size: var(--text-sm);">
+                        <strong>Wave Height:</strong> Significant wave height and direction data
+                    </p>
+                </div>
+                <div class="card">
+                    <p style="margin: 0; color: var(--color-text-light); font-size: var(--text-sm);">
+                        <strong>Wind Speed:</strong> 10m wind velocity and gust measurements
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="grid grid-cols-4 gap-8" style="margin-bottom: var(--space-12);">
+                <div>
+                    <h5>About</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="../pages/team.html">Our Team</a></li>
+                        <li><a href="../pages/projects.html">Our Projects</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Get Involved</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="../pages/volunteer.html">Volunteer</a></li>
+                        <li><a href="../pages/contact.html">Donate</a></li>
+                        <li><a href="../pages/report-debris.html">Report Debris</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Support</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="../pages/contact.html">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Legal</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-top" style="padding-top: var(--space-8); text-align: center; color: rgba(255,255,255,0.7); font-size: var(--text-sm);">
+                <p>&copy; 2025 OceanCare Initiative. All rights reserved. | Protecting oceans, one action at a time.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        async function getOceanConditions(lat, lon, locationName = 'Your Location') {
+            try {
+                document.getElementById('resultsSection').style.display = 'none';
+                toast.info('Fetching ocean conditions...', 3000);
+
+                const response = await fetch(`/api/ocean-conditions?latitude=${lat}&longitude=${lon}`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch ocean conditions');
+                }
+
+                const data = await response.json();
+                displayConditions(data, locationName);
+                document.getElementById('resultsSection').style.display = 'block';
+                toast.success('Ocean conditions loaded successfully!', 3000);
+
+            } catch (error) {
+                toast.error('Error fetching conditions: ' + error.message, 5000);
+            }
+        }
+
+        function displayConditions(data, locationName) {
+            const current = data.current;
+            
+            // Current conditions grid
+            const conditionsHTML = `
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: var(--space-2);">🌡️</div>
+                    <p style="color: var(--color-text-lighter); margin-bottom: var(--space-1); font-size: var(--text-sm);">Temperature</p>
+                    <p style="font-size: 1.8rem; font-weight: bold; color: var(--color-primary);">${current.temperature || 'N/A'}°C</p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: var(--space-2);">🌊</div>
+                    <p style="color: var(--color-text-lighter); margin-bottom: var(--space-1); font-size: var(--text-sm);">Wave Height</p>
+                    <p style="font-size: 1.8rem; font-weight: bold; color: var(--color-primary);">${current.wave_height || 'N/A'}m</p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: var(--space-2);">💨</div>
+                    <p style="color: var(--color-text-lighter); margin-bottom: var(--space-1); font-size: var(--text-sm);">Wind Speed</p>
+                    <p style="font-size: 1.8rem; font-weight: bold; color: var(--color-primary);">${current.wind_speed || 'N/A'} km/h</p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: var(--space-2);">💧</div>
+                    <p style="color: var(--color-text-lighter); margin-bottom: var(--space-1); font-size: var(--text-sm);">Humidity</p>
+                    <p style="font-size: 1.8rem; font-weight: bold; color: var(--color-primary);">${current.humidity || 'N/A'}%</p>
+                </div>
+            `;
+
+            document.getElementById('conditionsGrid').innerHTML = conditionsHTML;
+
+            // Temperature metrics
+            document.getElementById('tempMetrics').innerHTML = `
+                <div><strong>Current:</strong> ${current.temperature || 'N/A'}°C</div>
+                <div><strong>Feels Like:</strong> ${current.apparent_temperature || 'N/A'}°C</div>
+                <div style="margin-top: var(--space-2); color: var(--color-text-lighter); font-size: var(--text-xs);">Measured at surface level</div>
+            `;
+
+            // Wave metrics
+            document.getElementById('waveMetrics').innerHTML = `
+                <div><strong>Wave Height:</strong> ${current.wave_height || 'N/A'}m</div>
+                <div><strong>Wave Period:</strong> ${current.wave_period || 'N/A'}s</div>
+                <div><strong>Wave Direction:</strong> ${current.wave_direction || 'N/A'}°</div>
+                <div style="margin-top: var(--space-2); color: var(--color-text-lighter); font-size: var(--text-xs);">Good for cleanups if under 1.5m</div>
+            `;
+
+            // Wind metrics
+            document.getElementById('windMetrics').innerHTML = `
+                <div><strong>Speed:</strong> ${current.wind_speed || 'N/A'} km/h</div>
+                <div><strong>Gust:</strong> ${current.wind_gusts || 'N/A'} km/h</div>
+                <div><strong>Direction:</strong> ${current.wind_direction || 'N/A'}°</div>
+                <div style="margin-top: var(--space-2); color: var(--color-text-lighter); font-size: var(--text-xs);">Optimal below 15 km/h for activities</div>
+            `;
+
+            // Pressure metrics
+            document.getElementById('pressureMetrics').innerHTML = `
+                <div><strong>Humidity:</strong> ${current.humidity || 'N/A'}%</div>
+                <div><strong>Pressure:</strong> ${current.pressure || 'N/A'} hPa</div>
+                <div><strong>Visibility:</strong> ${current.visibility || 'N/A'} m</div>
+                <div style="margin-top: var(--space-2); color: var(--color-text-lighter); font-size: var(--text-xs);">Affects comfort and safety</div>
+            `;
+
+            // Activity recommendations
+            const waveHeight = parseFloat(current.wave_height) || 0;
+            const windSpeed = parseFloat(current.wind_speed) || 0;
+            const temp = parseFloat(current.temperature) || 0;
+
+            let activities = [];
+            if (waveHeight < 0.5 && windSpeed < 10) {
+                activities.push('✅ Beach Cleanup - Perfect conditions');
+            } else if (waveHeight < 1 && windSpeed < 15) {
+                activities.push('✅ Moderate Cleanup - Good conditions');
+            } else {
+                activities.push('⚠️ Beach Cleanup - Check tomorrow');
+            }
+
+            if (waveHeight < 1.5 && windSpeed < 20) {
+                activities.push('✅ Research - Ideal for surveys');
+            }
+
+            if (temp > 18 && temp < 28) {
+                activities.push('✅ Volunteer Work - Comfortable temperature');
+            }
+
+            if (waveHeight > 2 || windSpeed > 25) {
+                activities.push('⚠️ Indoor Only - Challenging conditions');
+            } else {
+                activities.push('✅ Outdoor Activities - Go ahead!');
+            }
+
+            const activitiesHTML = activities.map(activity => `
+                <div style="padding: var(--space-3); background: white; border-radius: var(--radius-base); border-left: 3px solid var(--color-primary);">
+                    ${activity}
+                </div>
+            `).join('');
+
+            document.getElementById('activities').innerHTML = activitiesHTML;
+        }
+
+        function getMyLocation() {
+            if (navigator.geolocation) {
+                toast.info('Getting your location...', 2000);
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const lat = position.coords.latitude.toFixed(4);
+                    const lon = position.coords.longitude.toFixed(4);
+                    document.getElementById('location').value = `${lat}° N, ${lon}° E`;
+                    getOceanConditions(lat, lon, 'Your Location');
+                });
+            } else {
+                toast.error('Geolocation not supported by your browser', 4000);
+            }
+        }
+
+        // Form submission
+        document.getElementById('conditionsForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const location = document.getElementById('location').value.trim();
+
+            if (!location) {
+                toast.error('Please enter a location', 3000);
+                return;
+            }
+
+            // Try to parse as coordinates
+            const coordMatch = location.match(/(-?\d+\.?\d*)[°\s,]+(-?\d+\.?\d*)/);
+            if (coordMatch) {
+                getOceanConditions(coordMatch[1], coordMatch[2], location);
+                return;
+            }
+
+            // Geocode location name
+            toast.info('Looking up location...', 2000);
+            try {
+                const geocodeResponse = await fetch(`/api/reverse-geocode?location=${encodeURIComponent(location)}`);
+                if (geocodeResponse.ok) {
+                    const geoData = await geocodeResponse.json();
+                    if (geoData.latitude && geoData.longitude) {
+                        getOceanConditions(geoData.latitude, geoData.longitude, location);
+                    } else {
+                        toast.error('Location not found. Try entering coordinates instead.', 4000);
+                    }
+                } else {
+                    toast.error('Could not find that location. Try coordinates (e.g., 25.7617, -80.1918)', 4000);
+                }
+            } catch (error) {
+                toast.error('Error looking up location: ' + error.message, 4000);
+            }
+        });
+    </script>
+
+    <style>
+        @media (max-width: 768px) {
+            .grid.grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+            .grid.grid-cols-7 { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); }
+            .grid.grid-cols-3 { grid-template-columns: 1fr; }
+            .grid.grid-cols-2 { grid-template-columns: 1fr; }
+        }
+
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</body>
+</html>
+
+

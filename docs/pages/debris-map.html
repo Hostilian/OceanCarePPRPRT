@@ -1,0 +1,389 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debris Report Map - OceanCare Initiative</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="../js/toast.js" defer></script>
+    <script src="../js/form-validator.js" defer></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header>
+        <div class="container">
+            <div class="flex-between">
+                <a href="../index.html" class="logo">🌊 OceanCare</a>
+                <nav>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../pages/projects.html">Projects</a></li>
+                        <li><a href="../pages/team.html">Team</a></li>
+                        <li><a href="../pages/login.html">Log In</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="hero hero-gradient">
+        <div class="container">
+            <div class="hero-content animate-fade-in">
+                <h1>🗺️ Global Debris Report Map</h1>
+                <p class="hero-subtitle">
+                    Real-time visualization of marine debris reports from our community in 180+ countries. Track cleanup efforts and report new findings instantly.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map and Controls -->
+    <section class="section-spaced">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 300px; gap: var(--space-6);">
+                <!-- Map -->
+                <div class="card" style="padding: 0; overflow: hidden;">
+                    <div id="map" style="height: 600px; width: 100%; border-radius: var(--radius-md);"></div>
+                </div>
+
+                <!-- Sidebar Controls -->
+                <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+                    <!-- Stats -->
+                    <div class="card">
+                        <h3 style="margin-top: 0; font-size: 1rem; color: var(--color-primary);">📊 Statistics</h3>
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--color-primary); margin-bottom: var(--space-2);">
+                            <span id="totalReports">0</span>
+                        </div>
+                        <p style="font-size: var(--text-sm); color: var(--color-text-lighter); margin: 0;">Active reports</p>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="card">
+                        <h3 style="margin-top: 0; font-size: 1rem; color: var(--color-primary);">🔍 Filter</h3>
+                        <select id="debrisTypeFilter" style="width: 100%; margin-bottom: var(--space-3);">
+                            <option value="">All Debris Types</option>
+                            <option value="plastic">🔴 Plastic</option>
+                            <option value="fishing">🟡 Fishing Nets</option>
+                            <option value="glass">🟢 Glass/Metal</option>
+                            <option value="foam">🔵 Foam</option>
+                            <option value="other">⚪ Other</option>
+                        </select>
+                        <select id="sizeFilter" style="width: 100%;">
+                            <option value="">All Sizes</option>
+                            <option value="small">Small (&lt;5kg)</option>
+                            <option value="medium">Medium (5-50kg)</option>
+                            <option value="large">Large (50+kg)</option>
+                        </select>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="card">
+                        <h3 style="margin-top: 0; font-size: 1rem; color: var(--color-primary);">ℹ️ Legend</h3>
+                        <div style="font-size: var(--text-sm); color: var(--color-text-light); line-height: 1.8;">
+                            <div>🔴 Plastic</div>
+                            <div>🟡 Fishing Nets</div>
+                            <div>🟢 Glass/Metal</div>
+                            <div>🔵 Foam</div>
+                            <div>⚪ Other</div>
+                        </div>
+                    </div>
+
+                    <!-- CTA -->
+                    <a href="../pages/report-debris.html" class="btn btn-primary" style="width: 100%; text-align: center;">
+                        📍 Report Debris
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Reports Table -->
+    <section class="section-spaced">
+        <div class="container">
+            <h2 style="margin-bottom: var(--space-6);">📋 Recent Reports</h2>
+            <div class="card" style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--color-neutral-light);">
+                            <th style="text-align: left; padding: var(--space-3); color: var(--color-primary);">Type</th>
+                            <th style="text-align: left; padding: var(--space-3); color: var(--color-primary);">Location</th>
+                            <th style="text-align: left; padding: var(--space-3); color: var(--color-primary);">Size</th>
+                            <th style="text-align: left; padding: var(--space-3); color: var(--color-primary);">Reported</th>
+                            <th style="text-align: left; padding: var(--space-3); color: var(--color-primary);">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reportsTable">
+                        <tr style="text-align: center; padding: var(--space-8);">
+                            <td colspan="5" style="padding: var(--space-8); color: var(--color-text-lighter);">Loading reports...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <h2 style="text-align: center; color: white; margin-bottom: var(--space-8);">Global Impact</h2>
+            <div class="grid grid-cols-4 gap-6">
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-primary); margin-bottom: var(--space-2);">
+                        <span id="totalWeight">0</span>kg
+                    </div>
+                    <p style="color: var(--color-text-light); margin: 0;">Debris Tracked</p>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-primary); margin-bottom: var(--space-2);">
+                        <span id="countriesCount">0</span>
+                    </div>
+                    <p style="color: var(--color-text-light); margin: 0;">Countries Involved</p>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-primary); margin-bottom: var(--space-2);">
+                        <span id="cleanupCount">0</span>
+                    </div>
+                    <p style="color: var(--color-text-light); margin: 0;">Cleanups Scheduled</p>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-primary); margin-bottom: var(--space-2);">
+                        <span id="volunteerCount">0</span>
+                    </div>
+                    <p style="color: var(--color-text-light); margin: 0;">Volunteers Active</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="grid grid-cols-4 gap-8" style="margin-bottom: var(--space-12);">
+                <div>
+                    <h5>About</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="../pages/team.html">Our Team</a></li>
+                        <li><a href="../pages/projects.html">Our Projects</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Get Involved</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="../pages/volunteer.html">Volunteer</a></li>
+                        <li><a href="../pages/contact.html">Donate</a></li>
+                        <li><a href="../pages/report-debris.html">Report Debris</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Support</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="../pages/contact.html">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Legal</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-top" style="padding-top: var(--space-8); text-align: center; color: rgba(255,255,255,0.7); font-size: var(--text-sm);">
+                <p>&copy; 2025 OceanCare Initiative. All rights reserved. | Protecting oceans, one action at a time.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let map;
+        let markers = [];
+        let reportData = [];
+
+        // Initialize map
+        function initMap() {
+            map = L.map('map').setView([20, 0], 2);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            loadReports();
+        }
+
+        // Load debris reports
+        async function loadReports() {
+            try {
+                const response = await fetch('/api/debris-reports');
+                if (!response.ok) throw new Error('Failed to load reports');
+                
+                const data = await response.json();
+                reportData = data.reports || [];
+                
+                displayReports();
+                updateStats();
+                toast.success(`Loaded ${reportData.length} debris reports!`, 3000);
+            } catch (error) {
+                toast.error('Error loading reports: ' + error.message, 5000);
+                // Show sample data for demo
+                loadSampleData();
+            }
+        }
+
+        // Sample data for demo
+        function loadSampleData() {
+            reportData = [
+                { id: 1, latitude: 34.0522, longitude: -118.2437, type: 'plastic', quantity: 'moderate', location: 'Santa Monica Beach, CA', date: new Date().toLocaleDateString() },
+                { id: 2, latitude: 40.7128, longitude: -74.0060, type: 'fishing', quantity: 'large', location: 'NYC Harbor, NY', date: new Date().toLocaleDateString() },
+                { id: 3, latitude: 51.5074, longitude: -0.1278, type: 'glass', quantity: 'small', location: 'Thames River, London', date: new Date().toLocaleDateString() },
+                { id: 4, latitude: 35.6762, longitude: 139.6503, type: 'foam', quantity: 'moderate', location: 'Tokyo Bay, Japan', date: new Date().toLocaleDateString() },
+                { id: 5, latitude: -33.8688, longitude: 151.2093, type: 'plastic', quantity: 'large', location: 'Sydney Harbor, Australia', date: new Date().toLocaleDateString() },
+            ];
+            displayReports();
+            updateStats();
+        }
+
+        // Display reports on map
+        function displayReports() {
+            // Clear existing markers
+            markers.forEach(marker => map.removeLayer(marker));
+            markers = [];
+
+            const debrisTypeFilter = document.getElementById('debrisTypeFilter').value;
+            const sizeFilter = document.getElementById('sizeFilter').value;
+
+            const icons = {
+                plastic: '🔴',
+                fishing: '🟡',
+                glass: '🟢',
+                foam: '🔵',
+                other: '⚪'
+            };
+
+            reportData.forEach(report => {
+                // Apply filters
+                if (debrisTypeFilter && report.type !== debrisTypeFilter) return;
+                if (sizeFilter && report.quantity !== sizeFilter) return;
+
+                const iconEmoji = icons[report.type] || '⚪';
+                const marker = L.marker([report.latitude, report.longitude], {
+                    title: report.location
+                }).addTo(map);
+
+                marker.bindPopup(`
+                    <div style="padding: 10px;">
+                        <h4 style="margin: 0 0 10px 0; color: #003d5c;">${report.location}</h4>
+                        <p style="margin: 5px 0;"><strong>Type:</strong> ${report.type}</p>
+                        <p style="margin: 5px 0;"><strong>Size:</strong> ${report.quantity}</p>
+                        <p style="margin: 5px 0;"><strong>Reported:</strong> ${report.date}</p>
+                    </div>
+                `);
+
+                markers.push(marker);
+            });
+
+            updateReportsTable();
+        }
+
+        // Update reports table
+        function updateReportsTable() {
+            const tbody = document.getElementById('reportsTable');
+            const debrisTypeFilter = document.getElementById('debrisTypeFilter').value;
+            const sizeFilter = document.getElementById('sizeFilter').value;
+
+            const typeIcons = {
+                plastic: '🔴',
+                fishing: '🟡',
+                glass: '🟢',
+                foam: '🔵',
+                other: '⚪'
+            };
+
+            const filtered = reportData.filter(report => {
+                if (debrisTypeFilter && report.type !== debrisTypeFilter) return false;
+                if (sizeFilter && report.quantity !== sizeFilter) return false;
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="padding: var(--space-8); text-align: center; color: var(--color-text-lighter);">No reports match filters</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.slice(0, 10).map(report => `
+                <tr style="border-bottom: 1px solid var(--color-neutral-light);">
+                    <td style="padding: var(--space-3);">${typeIcons[report.type]} ${report.type}</td>
+                    <td style="padding: var(--space-3); font-size: var(--text-sm);">${report.location}</td>
+                    <td style="padding: var(--space-3);">${report.quantity}</td>
+                    <td style="padding: var(--space-3); font-size: var(--text-sm);">${report.date}</td>
+                    <td style="padding: var(--space-3);"><span style="background: #d4edda; color: #155724; padding: 2px 8px; border-radius: 12px; font-size: var(--text-xs);">Reported</span></td>
+                </tr>
+            `).join('');
+        }
+
+        // Update statistics
+        function updateStats() {
+            const debrisTypeFilter = document.getElementById('debrisTypeFilter').value;
+            const sizeFilter = document.getElementById('sizeFilter').value;
+
+            const filtered = reportData.filter(report => {
+                if (debrisTypeFilter && report.type !== debrisTypeFilter) return false;
+                if (sizeFilter && report.quantity !== sizeFilter) return false;
+                return true;
+            });
+
+            document.getElementById('totalReports').textContent = filtered.length;
+            
+            // Calculate other stats
+            const totalWeight = filtered.reduce((sum, r) => {
+                const weights = { small: 2.5, medium: 25, large: 100 };
+                return sum + (weights[r.quantity] || 50);
+            }, 0);
+            
+            document.getElementById('totalWeight').textContent = Math.round(totalWeight);
+            document.getElementById('countriesCount').textContent = new Set(reportData.map(r => r.location.split(',')[1]?.trim() || '')).size;
+            document.getElementById('cleanupCount').textContent = Math.max(1, Math.floor(reportData.length / 3));
+            document.getElementById('volunteerCount').textContent = reportData.length * 2;
+        }
+
+        // Filter event listeners
+        document.getElementById('debrisTypeFilter').addEventListener('change', () => {
+            displayReports();
+            updateStats();
+        });
+
+        document.getElementById('sizeFilter').addEventListener('change', () => {
+            displayReports();
+            updateStats();
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', initMap);
+    </script>
+
+    <style>
+        .text-center { text-align: center; }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            [style*="grid-template-columns: 1fr 300px"] {
+                grid-template-columns: 1fr !important;
+            }
+            #map { height: 400px; }
+        }
+    </style>
+</body>
+</html>
+
+

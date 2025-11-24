@@ -1,0 +1,362 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Debris - OceanCare Initiative</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../js/toast.js" defer></script>
+    <script src="../js/form-validator.js" defer></script>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header>
+        <div class="container">
+            <div class="flex-between">
+                <a href="../index.html" class="logo">🌊 OceanCare</a>
+                <nav>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../pages/projects.html">Projects</a></li>
+                        <li><a href="../pages/team.html">Team</a></li>
+                        <li><a href="../pages/login.html">Log In</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="hero hero-gradient">
+        <div class="container">
+            <div class="hero-content animate-fade-in">
+                <h1>Report Marine Debris</h1>
+                <p class="hero-subtitle">
+                    Found ocean plastic or marine debris? Report it with GPS coordinates and photos. We coordinate verified cleanup responses within 48 hours.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="section-spaced bg-secondary">
+        <div class="container">
+            <div class="section-header">
+                <h2>How Your Report Helps</h2>
+            </div>
+            <div class="grid grid-cols-3 gap-6">
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-4);">📍</div>
+                    <h3>1. Report Location</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        Share GPS coordinates and a photo. We map every report in real-time.
+                    </p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-4);">🔍</div>
+                    <h3>2. We Verify</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        Our team reviews reports and assesses cleanup urgency and feasibility.
+                    </p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: var(--space-4);">🗑️</div>
+                    <h3>3. Cleanup Happens</h3>
+                    <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                        We coordinate cleanup teams. You can track progress from your dashboard.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Report Form -->
+    <section class="section-spaced">
+        <div class="container">
+            <div class="grid grid-cols-2 gap-12">
+                <!-- Form -->
+                <div>
+                    <h2 style="margin-bottom: var(--space-6);">Submit a Report</h2>
+                    <form id="debrisForm" class="card" style="padding: var(--space-8);">
+                        <div class="form-group">
+                            <label for="reporterName">Your Name *</label>
+                            <input type="text" id="reporterName" name="reporterName" required placeholder="Your full name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reporterEmail">Email Address *</label>
+                            <input type="email" id="reporterEmail" name="reporterEmail" required placeholder="your.email@example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reporterPhone">Phone Number (optional)</label>
+                            <input type="tel" id="reporterPhone" name="reporterPhone" placeholder="(123) 456-7890">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">Location / Beach Name *</label>
+                            <input type="text" id="location" name="location" required placeholder="Beach name, city, or area">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="latitude">Latitude *</label>
+                            <input type="number" id="latitude" name="latitude" required placeholder="e.g., 37.7749" step="0.0001">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="longitude">Longitude *</label>
+                            <input type="number" id="longitude" name="longitude" required placeholder="e.g., -122.4194" step="0.0001">
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="getCurrentLocation()">
+                                    <i class="fas fa-location-arrow"></i> Use My Location
+                                </button>
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="debrisType">Type of Debris *</label>
+                            <select id="debrisType" name="debrisType" required>
+                                <option value="">-- Select debris type --</option>
+                                <option value="plastic">Plastic (bags, bottles, etc.)</option>
+                                <option value="fishing">Fishing nets & equipment</option>
+                                <option value="glass">Glass & ceramics</option>
+                                <option value="metal">Metal & aluminum</option>
+                                <option value="foam">Foam & styrofoam</option>
+                                <option value="rubber">Rubber & tires</option>
+                                <option value="wood">Wood & lumber</option>
+                                <option value="microplastics">Microplastics</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantity">Estimated Quantity *</label>
+                            <select id="quantity" name="quantity" required>
+                                <option value="">-- Select quantity --</option>
+                                <option value="small">Small (< 5 items)</option>
+                                <option value="moderate">Moderate (5-50 items)</option>
+                                <option value="large">Large (50-200 items)</option>
+                                <option value="massive">Massive (200+ items)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="accessbility">Accessibility *</label>
+                            <select id="accessibility" name="accessibility" required>
+                                <option value="">-- Select accessibility --</option>
+                                <option value="beach">Easy - On beach</option>
+                                <option value="shallow">Moderate - Shallow water</option>
+                                <option value="deep">Difficult - Deep water/offshore</option>
+                                <option value="inaccessible">Very Difficult - Remote/inaccessible</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="photos">Photo of Debris *</label>
+                            <input type="file" id="photos" name="photos" accept="image/*" required>
+                            <p style="font-size: var(--text-xs); color: var(--color-text-lighter); margin-top: var(--space-2);">
+                                Upload a clear photo showing the debris and surrounding area
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Additional Details</label>
+                            <textarea id="description" name="description" placeholder="Any additional information about the debris, wildlife impact, or urgency..." rows="4"></textarea>
+                        </div>
+
+                        <label style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-4);">
+                            <input type="checkbox" name="agree" required style="width: auto;">
+                            <span style="color: var(--color-text-light); font-size: var(--text-sm);">I confirm this information is accurate and authorize OceanCare to use this data for cleanup coordination</span>
+                        </label>
+
+                        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">Submit Report</button>
+                    </form>
+                </div>
+
+                <!-- Why Report Info -->
+                <div>
+                    <h2 style="margin-bottom: var(--space-6);">Why Report?</h2>
+
+                    <div class="card" style="margin-bottom: var(--space-4);">
+                        <h3 style="color: var(--color-primary); margin-top: 0; margin-bottom: var(--space-2);">Real Cleanup Action</h3>
+                        <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                            Your report directly triggers cleanup planning. We don't just collect data—we take action.
+                        </p>
+                    </div>
+
+                    <div class="card" style="margin-bottom: var(--space-4);">
+                        <h3 style="color: var(--color-primary); margin-top: 0; margin-bottom: var(--space-2);">Protect Marine Life</h3>
+                        <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                            Marine animals are harmed by debris every day. Your report helps us protect endangered species and ecosystems.
+                        </p>
+                    </div>
+
+                    <div class="card" style="margin-bottom: var(--space-4);">
+                        <h3 style="color: var(--color-primary); margin-top: 0; margin-bottom: var(--space-2);">Track Progress</h3>
+                        <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                            Create an account to get updates on cleanup efforts at your reported location. See the impact of your report.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="color: var(--color-primary); margin-top: 0; margin-bottom: var(--space-2);">Improve Science</h3>
+                        <p style="color: var(--color-text-light); font-size: var(--text-sm);">
+                            Your reports feed into our ocean health database. The more data we have, the better we can protect the ocean.
+                        </p>
+                    </div>
+
+                    <div style="margin-top: var(--space-8); padding: var(--space-6); background: rgba(40, 167, 69, 0.1); border-left: 4px solid #28a745; border-radius: var(--radius-base);">
+                        <h4 style="color: #28a745; margin-top: 0;">✅ Safe & Confidential</h4>
+                        <p style="color: var(--color-text-light); font-size: var(--text-sm); margin-bottom: 0;">
+                            Your personal information is secure. We only share location data with cleanup team coordinators.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="grid grid-cols-4 gap-8" style="margin-bottom: var(--space-12);">
+                <div>
+                    <h5>About</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="../pages/team.html">Our Team</a></li>
+                        <li><a href="../pages/projects.html">Our Projects</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Get Involved</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="../pages/volunteer.html">Volunteer</a></li>
+                        <li><a href="../pages/contact.html">Donate</a></li>
+                        <li><a href="../pages/report-debris.html">Report Debris</a></li>
+                        <li><a href="#">Partner With Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Support</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="../pages/contact.html">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>Legal</h5>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-top" style="padding-top: var(--space-8); text-align: center; color: rgba(255,255,255,0.7); font-size: var(--text-sm);">
+                <p>&copy; 2025 OceanCare Initiative. All rights reserved. | Protecting oceans, one action at a time.</p>
+                <div style="margin-top: var(--space-4);">
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Facebook</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Twitter</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">Instagram</a>
+                    <a href="#" style="color: rgba(255,255,255,0.7); margin: 0 var(--space-4); text-decoration: none;">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    document.getElementById('latitude').value = position.coords.latitude.toFixed(4);
+                    document.getElementById('longitude').value = position.coords.longitude.toFixed(4);
+                    alert('✅ Location captured! Coordinates: ' + position.coords.latitude.toFixed(4) + ', ' + position.coords.longitude.toFixed(4));
+                }, (error) => {
+                    alert('Unable to get your location. Please enter coordinates manually.');
+                });
+            } else {
+                alert('Geolocation not supported by your browser.');
+            }
+        }
+
+        // Form validation and submission
+        let debrisValidator;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            debrisValidator = new FormValidator(document.getElementById('debrisForm'));
+        });
+
+        document.getElementById('debrisForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Validate form
+            if (!debrisValidator.validateForm()) {
+                toast.error('Please fix all errors before submitting');
+                return;
+            }
+
+            const formData = {
+                name: document.getElementById('reporterName').value,
+                email: document.getElementById('reporterEmail').value,
+                phone: document.getElementById('reporterPhone').value,
+                location: document.getElementById('location').value,
+                latitude: parseFloat(document.getElementById('latitude').value),
+                longitude: parseFloat(document.getElementById('longitude').value),
+                debrisType: document.getElementById('debrisType').value,
+                quantity: document.getElementById('quantity').value,
+                accessibility: document.getElementById('accessibility').value,
+                description: document.getElementById('description').value
+            };
+
+            // Validate coordinates
+            if (!formData.latitude || !formData.longitude || isNaN(formData.latitude) || isNaN(formData.longitude)) {
+                toast.error('Please enter valid GPS coordinates or use "Use My Location"', 5000);
+                return;
+            }
+
+            // Set loading state
+            setFormLoading(document.getElementById('debrisForm'), true);
+
+            try {
+                const response = await fetch('/api/report-debris', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    toast.success(`✅ Thank you! Your debris report at ${formData.latitude}, ${formData.longitude} has been received. Our cleanup team will review it within 24 hours.`, 5000);
+                    debrisValidator.reset();
+                } else {
+                    const error = await response.json();
+                    toast.error(error.message || 'Failed to submit report. Please try again.', 5000);
+                }
+            } catch (error) {
+                toast.error('Network error: ' + error.message + '. Please check your connection and try again.', 5000);
+            } finally {
+                setFormLoading(document.getElementById('debrisForm'), false);
+            }
+        });
+    </script>
+
+    <style>
+        @media (max-width: 768px) {
+            .grid.grid-cols-2 { grid-template-columns: 1fr; }
+            .grid.grid-cols-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</body>
+</html>
+
+

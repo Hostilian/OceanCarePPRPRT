@@ -1,11 +1,10 @@
+// Mock node-fetch before loading the server so external calls are stubbed
+jest.mock('node-fetch');
+const fetch = require('node-fetch');
+const { Response } = jest.requireActual('node-fetch');
+
 const request = require('supertest');
 const app = require('../src/server');
-const fetch = require('node-fetch');
-
-// Mock node-fetch
-jest.mock('node-fetch');
-
-const { Response } = jest.requireActual('node-fetch');
 
 describe('OceanCare API - Comprehensive Test Suite', () => {
   // ============= NEWS ENDPOINT TESTS =============
@@ -21,7 +20,7 @@ describe('OceanCare API - Comprehensive Test Suite', () => {
       process.env = originalEnv;
     });
 
-    it('should return news articles on successful fetch', async () => {
+    it('should return normalized news articles on successful fetch', async () => {
       process.env.GNEWS_API_KEY = 'test-api-key';
 
       const mockNewsData = { articles: [{ title: 'Ocean News' }] };
@@ -33,16 +32,20 @@ describe('OceanCare API - Comprehensive Test Suite', () => {
       );
       fetch.mockImplementation(() => mockResponse);
 
-      const res = await request(app).get('/api/news');
+      const res = await request(app).get('/api/news?limit=4');
       expect(res.statusCode).toEqual(200);
-      expect(res.body).toEqual(mockNewsData);
+      expect(res.body.success).toBe(true);
+      expect(res.body.count).toBeLessThanOrEqual(4);
+      expect(Array.isArray(res.body.articles)).toBe(true);
+      expect(res.body.articles[0].title).toBe('Ocean News');
     });
 
     it('should return fallback data when GNEWS_API_KEY is not set', async () => {
       delete process.env.GNEWS_API_KEY;
       const res = await request(app).get('/api/news');
       expect(res.statusCode).toEqual(200);
-      expect(res.body.articles).toBeDefined();
+      expect(res.body.success).toBe(true);
+      expect(res.body.fallback).toBe(true);
       expect(Array.isArray(res.body.articles)).toBe(true);
     });
 
@@ -60,6 +63,8 @@ describe('OceanCare API - Comprehensive Test Suite', () => {
       const res = await request(app).get('/api/news');
 
       expect(res.statusCode).toEqual(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.fallback).toBe(true);
       expect(res.body.articles).toBeDefined();
     });
 
@@ -70,6 +75,8 @@ describe('OceanCare API - Comprehensive Test Suite', () => {
 
         const res = await request(app).get('/api/news');
         expect(res.statusCode).toEqual(200);
+        expect(res.body.success).toBe(true);
+        expect(res.body.fallback).toBe(true);
         expect(res.body.articles).toBeDefined();
     });
   });
@@ -268,13 +275,14 @@ describe('OceanCare API - Comprehensive Test Suite', () => {
       process.env = { ...originalEnv };
     });
 
-    it('should return error when OpenUV API key not configured', async () => {
+    it('should return UV index data even without OpenUV API key', async () => {
       delete process.env.OPENUV_API_KEY;
       const res = await request(app)
         .get('/api/uv-index?latitude=37.7749&longitude=-122.4194');
 
-      expect(res.statusCode).toEqual(400);
-      expect(res.body.success).toBe(false);
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data).toHaveProperty('uv_index');
     });
   });
 
@@ -287,13 +295,14 @@ describe('OceanCare API - Comprehensive Test Suite', () => {
       process.env = { ...originalEnv };
     });
 
-    it('should return error when Visual Crossing API key not configured', async () => {
+    it('should return climate data without Visual Crossing API key', async () => {
       delete process.env.VISUAL_CROSSING_API_KEY;
       const res = await request(app)
         .get('/api/climate-trends?latitude=37.7749&longitude=-122.4194');
 
-      expect(res.statusCode).toEqual(400);
-      expect(res.body.success).toBe(false);
+      expect(res.statusCode).toEqual(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data).toHaveProperty('average_temperature_f');
     });
   });
 
