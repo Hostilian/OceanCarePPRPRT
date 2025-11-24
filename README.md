@@ -140,6 +140,16 @@ heroku open
 
 See **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)** for detailed instructions.
 
+### GitHub Pages (Static Preview)
+
+GitHub Pages serves the repository root, so the production-ready marketing site lives in `public/` and the root `index.html` simply redirects there. When you update any HTML, CSS, or JS under `public/`, commit the changes directly—there is no build step.
+
+1. Make edits under `public/` (e.g., `public/index.html`, `public/pages/*`, `public/css/styles.css`).
+2. Verify locally via `npm start` (Express still serves `/public` as the static root).
+3. Push to `main`. GitHub Pages automatically serves `https://<username>.github.io/OceanCarePPRPRT/` and immediately redirects to `public/index.html`, so all relative asset URLs resolve correctly.
+
+If you add new top-level assets (images, scripts, pages), place them under `public/` so both the Express server **and** GitHub Pages can reach the same files without extra configuration.
+
 ---
 
 ## 🧪 Testing

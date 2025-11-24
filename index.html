@@ -3,401 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OceanCare Initiative - Protect Our Oceans, Make Real Impact</title>
-
-    <!-- Custom Style System -->
-    <link rel="stylesheet" href="/css/styles.css">
-
-    <!-- FontAwesome Icons CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Schema.org Structured Data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "OceanCare Initiative",
-        "url": "https://oceancare.org",
-        "logo": "https://oceancare.org/logo.png",
-        "description": "Protect our oceans through donations, volunteering, and debris reporting",
-        "sameAs": [
-            "https://www.facebook.com/oceancare",
-            "https://www.twitter.com/oceancare",
-            "https://www.instagram.com/oceancare"
-        ],
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "contactType": "Customer Support",
-            "telephone": "+1-800-OCEAN-00",
-            "email": "support@oceancare.org"
-        }
-    }
-    </script>
-
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="OceanCare Initiative - Protect Our Oceans, Make Real Impact">
-    <meta property="og:description" content="Join 1M+ ocean protectors. Donate, volunteer, and track your environmental impact.">
-    <meta property="og:image" content="/og-image.jpg">
-    <meta property="og:url" content="https://oceancare.org">
-    <meta property="og:type" content="website">
-
+    <title>OceanCare Initiative</title>
+    <meta http-equiv="refresh" content="0; url=public/index.html">
+    <link rel="canonical" href="public/index.html">
     <style>
-        /* Additional animations for fade-in effects */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        * {
+            box-sizing: border-box;
         }
-
-        .animate-fade-in {
-            animation: fadeIn 0.8s ease-out;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f0f4f8;
+            color: #0f2539;
         }
-
-        /* Subtle gradient for hero background */
-        .hero-gradient {
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-        }
-
-        /* Section spacing */
-        .section-spaced {
-            padding-top: var(--space-20);
-            padding-bottom: var(--space-20);
-        }
-
-        @media (max-width: 768px) {
-            .section-spaced {
-                padding-top: var(--space-12);
-                padding-bottom: var(--space-12);
-            }
-        }
-
-        /* Stat cards */
-        .stat-card {
+        .redirect-card {
             text-align: center;
-            padding: var(--space-6);
-            background-color: var(--color-neutral-white);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-base);
-            transition: all var(--transition-base);
+            background: #ffffff;
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(15, 37, 57, 0.12);
         }
-
-        .stat-card:hover {
-            box-shadow: var(--shadow-md);
-            transform: translateY(-4px);
+        .redirect-card h1 {
+            margin: 0 0 0.75rem;
+            font-size: 1.75rem;
         }
-
-        /* Feature cards with icon areas */
-        .feature-card {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+        .redirect-card p {
+            margin: 0 0 1.5rem;
+            font-size: 1rem;
+            color: #445566;
         }
-
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius-lg);
-            margin-bottom: var(--space-4);
-            font-size: 2rem;
-            transition: all var(--transition-base);
+        .redirect-card a {
+            color: #0077be;
+            font-weight: 600;
+            text-decoration: none;
         }
-
-        .feature-card:hover .feature-icon {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        /* CTA button group */
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: var(--space-4);
-            margin-top: var(--space-6);
-        }
-
-        @media (max-width: 640px) {
-            .btn-group {
-                flex-direction: column;
-            }
-        }
-
-        /* Hero content */
-        .hero-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .hero-subtitle {
-            font-size: var(--text-lg);
-            line-height: var(--lh-relaxed);
-            margin-bottom: var(--space-8);
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        /* Stats grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--space-6);
-            margin-top: var(--space-8);
-        }
-
-        /* News items */
-        .news-item {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .news-image {
-            height: 200px;
-            background: linear-gradient(135deg, var(--color-primary-lighter) 0%, var(--color-secondary) 100%);
-            border-radius: var(--radius-base) var(--radius-base) 0 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-        }
-
-        .news-content {
-            padding: var(--space-6);
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .news-title {
-            margin: var(--space-2) 0 var(--space-4) 0;
-            font-size: var(--text-lg);
-            font-weight: var(--fw-bold);
-            color: var(--color-primary);
-        }
-
-        .news-description {
-            flex-grow: 1;
-            margin-bottom: var(--space-4);
-            color: var(--color-text-light);
-            font-size: var(--text-sm);
-        }
-
-        .news-meta {
-            font-size: var(--text-xs);
-            color: var(--color-text-lighter);
-            margin-bottom: var(--space-3);
-        }
-
-        /* Responsive images */
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
+        .redirect-card a:hover {
+            text-decoration: underline;
         }
     </style>
+    <script>
+        const target = 'public/index.html';
+        const query = window.location.search || '';
+        const hash = window.location.hash || '';
+        window.location.replace(`${target}${query}${hash}`);
+    </script>
 </head>
 <body>
-
-    <!-- Header/Navigation -->
-    <header>
-        <div class="container">
-            <div class="flex-between">
-                <a href="/" class="logo">🌊 OceanCare</a>
-                <nav>
-                    <ul>
-                        <li><a href="#mission">Our Mission</a></li>
-                        <li><a href="#how-it-works">How It Works</a></li>
-                        <li><a href="#impact">Impact</a></li>
-                        <li><a href="#news">News & Updates</a></li>
-                        <li><a href="/pages/login.html">Log In</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero hero-gradient">
-        <div class="container">
-            <div class="hero-content animate-fade-in">
-                <h1>Protect Our Oceans.<br>Make Real Impact.</h1>
-                <p class="hero-subtitle">
-                    Join thousands of conservation champions protecting marine ecosystems. Donate, volunteer, report debris, and track your environmental impact with transparency.
-                </p>
-                <div class="btn-group">
-                    <a href="/pages/volunteer.html" class="btn btn-primary btn-lg">
-                        <i class="fas fa-hands-helping"></i> Volunteer Now
-                    </a>
-                    <a href="/pages/contact.html" class="btn btn-secondary btn-lg">
-                        <i class="fas fa-heart"></i> Make a Donation
-                    </a>
-                    <a href="/pages/report-debris.html" class="btn btn-outline btn-lg">
-                        <i class="fas fa-map-marker-alt"></i> Report Debris
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Quick Stats Section -->
-    <section class="section-spaced bg-secondary">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">1M+</div>
-                    <div class="stat-label">Ocean Protectors</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">5M+</div>
-                    <div class="stat-label">Tons of Plastic Removed</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">180+</div>
-                    <div class="stat-label">Countries Active</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Customer Support</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Mission Section -->
-    <section id="mission" class="section-spaced">
-        <div class="container">
-            <h2>Our Mission</h2>
-            <div class="grid grid-cols-2">
-                <div>
-                    <p>
-                        OceanCare Initiative is a non-profit organization dedicated to protecting marine ecosystems through conservation, education, and community action. We believe that ocean protection requires coordinated effort, transparent impact measurement, and accessible participation for everyone.
-                    </p>
-                    <p>
-                        With real-time environmental data, volunteer coordination tools, and verified impact tracking, we're building the most transparent ocean conservation platform in the world.
-                    </p>
-                </div>
-                <div>
-                    <p>
-                        <strong>Our Core Values:</strong>
-                    </p>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: var(--space-3);"><i class="fas fa-check text-accent"></i> <strong>Transparency</strong> - 100% verified impact reporting</li>
-                        <li style="margin-bottom: var(--space-3);"><i class="fas fa-check text-accent"></i> <strong>Accessibility</strong> - Free tools for global participation</li>
-                        <li style="margin-bottom: var(--space-3);"><i class="fas fa-check text-accent"></i> <strong>Science-Driven</strong> - Real-time ocean data and research</li>
-                        <li style="margin-bottom: var(--space-3);"><i class="fas fa-check text-accent"></i> <strong>Community First</strong> - Powered by volunteers and donors</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="section-spaced bg-secondary">
-        <div class="container">
-            <h2 style="text-align: center;">How You Can Help</h2>
-            <div class="grid grid-cols-3 mt-12">
-                <!-- Donate -->
-                <div class="card feature-card">
-                    <div class="feature-icon" style="background-color: #fff3cd; color: var(--color-accent);">
-                        <i class="fas fa-hand-holding-heart"></i>
-                    </div>
-                    <h3>Donate</h3>
-                    <p>Every dollar supports ocean conservation projects. Our impact calculator shows exactly what your donation achieves.</p>
-                    <a href="/pages/contact.html" class="btn btn-secondary btn-sm mt-auto">Learn More →</a>
-                </div>
-
-                <!-- Volunteer -->
-                <div class="card feature-card">
-                    <div class="feature-icon" style="background-color: #d1ecf1; color: var(--color-primary-lighter);">
-                        <i class="fas fa-people-carry"></i>
-                    </div>
-                    <h3>Volunteer</h3>
-                    <p>Join community cleanups, research expeditions, or education programs. Real activities with measurable impact.</p>
-                    <a href="/pages/volunteer.html" class="btn btn-secondary btn-sm mt-auto">Sign Up →</a>
-                </div>
-
-                <!-- Report -->
-                <div class="card feature-card">
-                    <div class="feature-icon" style="background-color: #c3e6cb; color: #155724;">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3>Report Debris</h3>
-                    <p>Found ocean plastic? Report it with GPS coordinates and photos. We coordinate cleanup responses immediately.</p>
-                    <a href="/pages/report-debris.html" class="btn btn-secondary btn-sm mt-auto">Report Now →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Impact Section -->
-    <section id="impact" class="section-spaced">
-        <div class="container">
-            <h2 style="text-align: center;">Verified Impact</h2>
-            <p style="text-align: center; max-width: 600px; margin: 0 auto var(--space-12) auto;">
-                Every action creates measurable change. Our transparent impact dashboard shows real-time results verified by conservation partners.
-            </p>
-
-            <div class="grid grid-cols-4 gap-6">
-                <div class="card text-center">
-                    <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: var(--color-accent);">
-                        <i class="fas fa-trash"></i>
-                    </div>
-                    <div class="stat-number">847K+</div>
-                    <div class="stat-label">kg Plastic Removed</div>
-                </div>
-
-                <div class="card text-center">
-                    <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: var(--color-primary-lighter);">
-                        <i class="fas fa-fish"></i>
-                    </div>
-                    <div class="stat-number">5.2M</div>
-                    <div class="stat-label">Marine Species Protected</div>
-                </div>
-
-                <div class="card text-center">
-                    <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: #28a745;">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <div class="stat-number">234K</div>
-                    <div class="stat-label">Acres of Ocean Restored</div>
-                </div>
-
-                <div class="card text-center">
-                    <div style="font-size: 2.5rem; margin-bottom: var(--space-4); color: #17a2b8;">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <div class="stat-number">182K</div>
-                    <div class="stat-label">People Educated</div>
-                </div>
-            </div>
-
-            <div class="mt-12 text-center">
-                <p class="text-text-lighter">
-                    <i class="fas fa-info-circle"></i> 
-                    Impact data updated daily. <a href="#" style="color: var(--color-primary-lighter);">View detailed verification reports →</a>
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Donor Experience Section -->
-    <section class="section-spaced bg-secondary">
-        <div class="container">
-            <h2 style="text-align: center;">For Donors</h2>
-            <p style="text-align: center; max-width: 700px; margin: 0 auto var(--space-12) auto;">
-                Transparency matters. Every donor gets a personalized dashboard showing exactly where their contributions go and what they achieve.
-            </p>
-
-            <div class="grid grid-cols-3 gap-6">
-                <div class="card">
-                    <h3>🎯 Targeted Giving</h3>
-                    <p>Choose which projects to support: coral restoration, marine cleanup, research, or education. See your impact in real-time.</p>
-                </div>
+    <div class="redirect-card">
+        <h1>Loading OceanCare...</h1>
+        <p>Redirecting you to the live experience. If nothing happens, use the button below.</p>
+        <a href="public/index.html">Continue to OceanCare</a>
+    </div>
+</body>
+</html>
 
                 <div class="card">
                     <h3>📊 Impact Calculator</h3>

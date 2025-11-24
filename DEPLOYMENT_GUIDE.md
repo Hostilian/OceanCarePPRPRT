@@ -14,9 +14,10 @@
 5. [Email Service Setup](#email-service-setup)
 6. [Deployment to Vercel](#deployment-to-vercel)
 7. [Deployment to Heroku](#deployment-to-heroku)
-8. [Post-Deployment](#post-deployment)
-9. [Monitoring & Maintenance](#monitoring--maintenance)
-10. [Troubleshooting](#troubleshooting)
+8. [GitHub Pages Static Hosting](#github-pages-static-hosting)
+9. [Post-Deployment](#post-deployment)
+10. [Monitoring & Maintenance](#monitoring--maintenance)
+11. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -372,6 +373,20 @@ heroku metrics -a oceancare-initiative
 # Check application health
 curl https://oceancare-initiative.herokuapp.com/health
 ```
+
+---
+
+## GitHub Pages Static Hosting
+
+GitHub Pages gives stakeholders a fast, serverless preview of the marketing site. Because the Express app already serves `public/` statically, both deployments rely on the same files.
+
+1. **Enable Pages:** In GitHub → *Settings → Pages*, choose the `main` branch and the **root** folder. Pages will serve `https://<user>.github.io/OceanCarePPRPRT/`.
+2. **Redirect root traffic:** The repository root `index.html` contains a lightweight redirect to `public/index.html`. No action needed—just keep the file committed.
+3. **Use relative URLs:** Every HTML file under `public/` uses paths such as `css/styles.css` or `pages/contact.html`. This keeps links valid whether the content is served from `/` (Express) or `/OceanCarePPRPRT/public/` (Pages).
+4. **Deploy changes:** Edit assets inside `public/`, run `npm start` locally to QA, then push to `main`. GitHub Pages rebuilds automatically within a minute.
+5. **New assets:** Add images/scripts/fonts somewhere under `public/` so both GitHub Pages and Express can reach them without extra configuration.
+
+> **Note:** GitHub Pages is meant for front-end previews only. Donate, volunteer, and debris-reporting flows still rely on the Express backend for API handling.
 
 ---
 
